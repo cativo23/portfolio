@@ -1,8 +1,8 @@
 ---
-id: 5
+id: 1
 image: './image.jpg'
-title: "Games"
-category: "Unity"
-description: "At Mussol, I help on the development of two games: Unstoppable Kittens and Stellar Hunter"
-item_url: https://www.behance.net/gallery/87256025/MUSSOL-GAMES
+title: "TripXpertz"
+category: "Laravel/AWS"
+description: "At Mussol I helped to develop close to 60 sites for the TripXpertz brand, for which I used Laravel and configured a CI/CD pipeline on AWS."
+item_url: https://tripxpertz.com
 ---

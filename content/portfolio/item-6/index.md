@@ -1,8 +1,8 @@
 ---
-id: 6
+id: 1
 image: './image.jpg'
-title: "Chamba Conoce la LAIP"
-category: "Unity"
-description: "Game made for the Institute of Access to Public Information of El Salvador, to make easier to understand the Access to Public Information Law (LAIP for its Spanish acronym)"
-item_url: "http://www.conexion.sv/hackfest17/rueda/chamba/index.html"
+title: "TripXpertz"
+category: "Laravel/AWS"
+description: "At Mussol I helped to develop close to 60 sites for the TripXpertz brand, for which I used Laravel and configured a CI/CD pipeline on AWS."
+item_url: https://tripxpertz.com
 ---
