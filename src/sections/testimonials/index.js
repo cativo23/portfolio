@@ -45,7 +45,7 @@ class Testimonials extends React.Component {
           <div className="content">
             <Col md={12}>
               <div className="line-text">
-                <h4>Testimonnials</h4>
+                <h4>Testimonials</h4>
               </div>
               <div className="heading">
                 <BaffleText
