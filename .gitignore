@@ -53,8 +53,8 @@ e2e-tests/gatsby-pnp/
 .eslintcache
 
 # lock files
-yarn.lock
-package-lock.json
+#yarn.lock
+#package-lock.json
 # ignore any lock file other than main lock file
 !/yarn.lock
 
