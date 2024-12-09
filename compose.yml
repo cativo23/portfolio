@@ -1,7 +1,7 @@
-version: '3.8'
-
+name: portfolio-dev
 services:
   app:
+    image: portfolio:dev-latest
     build:
       context: .
       dockerfile: docker/dev/Dockerfile

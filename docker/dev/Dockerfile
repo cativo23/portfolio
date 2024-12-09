@@ -1,6 +1,8 @@
 # Base image
 FROM node:22-bullseye
 
+LABEL org.opencontainers.image.authors="cativo23.kt@gmail.com"
+
 # Set environment variables
 ENV NODE_ENV=development
 
