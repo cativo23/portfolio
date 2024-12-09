@@ -7,6 +7,9 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
+  typescript : {
+    typeCheck: true
+  },
   /*content: {
     watch: false, 
     documentDriven: true,
