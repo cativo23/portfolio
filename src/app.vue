@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-tokyo-night-bg text-tokyo-night-text font-mono">
+  <div class="flex flex-col min-h-screen bg-tokyo-night-bg text-tokyo-night-text font-mono">
     <NuxtRouteAnnouncer>
       <template #default="{ message }">
         <p>{{ message }} was loaded.</p>
@@ -8,7 +8,7 @@
     <!-- Header -->
     <Header />
     <!-- Main Content -->
-    <main class="container mx-auto p-4">
+    <main class="container mx-auto p-4 flex-grow"">
       <NuxtPage />
     </main>
     <!-- Footer -->
