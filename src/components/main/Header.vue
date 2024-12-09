@@ -15,10 +15,10 @@
       </h1>
       <ul class="flex space-x-4">
         <li v-for="item in navItems" :key="item.name">
-          <a :href="item.link" :class="{
+            <NuxtLink :href="item.link" :class="{
             'text-tokyo-night-red font-bold': currentRoute.path === item.link,
             'hover:text-tokyo-night-cyan transition-colors duration-200': currentRoute.path !== item.link
-          }">{{ item.name }}</a>
+            }">{{ item.name }}</NuxtLink>
         </li>
       </ul>
     </nav>
