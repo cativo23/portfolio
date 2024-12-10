@@ -5,12 +5,51 @@ import typography from '@tailwindcss/typography';
 export default {
   content: [
     './pages/**/*.{vue,js,ts}',
+    './content/**/*.md',
     './components/**/*.{vue,js,ts}',
     './layouts/**/*.{vue,js,ts}',
     './app.vue',
   ],
   theme: {
     extend: {
+      typography: ({ theme }) => ({
+        tokyo: {
+          css: {
+            '--tw-prose-body': theme('colors.tokyo.night.text'),
+            '--tw-prose-headings': theme('colors.tokyo.night.highlight'),
+            '--tw-prose-lead': theme('colors.tokyo.night.muted'),
+            '--tw-prose-links': theme('colors.tokyo.night.highlight'),
+            '--tw-prose-bold': theme('colors.tokyo.night.text'),
+            '--tw-prose-counters': theme('colors.tokyo.night.gray'),
+            '--tw-prose-bullets': theme('colors.tokyo.night.cyan'),
+            '--tw-prose-hr': theme('colors.tokyo.night.dark'),
+            '--tw-prose-quotes': theme('colors.tokyo.night.text'),
+            '--tw-prose-quote-borders': theme('colors.tokyo.night.cyan'),
+            '--tw-prose-captions': theme('colors.tokyo.night.muted'),
+            '--tw-prose-code': theme('colors.tokyo.night.green'),
+            '--tw-prose-pre-code': theme('colors.tokyo.night.text'),
+            '--tw-prose-pre-bg': theme('colors.tokyo.night.dark'),
+            '--tw-prose-th-borders': theme('colors.tokyo.night.gray'),
+            '--tw-prose-td-borders': theme('colors.tokyo.night.muted'),
+            '--tw-prose-invert-body': theme('colors.tokyo.light.text'),
+            '--tw-prose-invert-headings': theme('colors.tokyo.light.text'),
+            '--tw-prose-invert-lead': theme('colors.tokyo.light.gray'),
+            '--tw-prose-invert-links': theme('colors.tokyo.light.highlight'),
+            '--tw-prose-invert-bold': theme('colors.tokyo.light.text'),
+            '--tw-prose-invert-counters': theme('colors.tokyo.light.gray'),
+            '--tw-prose-invert-bullets': theme('colors.tokyo.light.cyan'),
+            '--tw-prose-invert-hr': theme('colors.tokyo.light.dark'),
+            '--tw-prose-invert-quotes': theme('colors.tokyo.light.text'),
+            '--tw-prose-invert-quote-borders': theme('colors.tokyo.light.cyan'),
+            '--tw-prose-invert-captions': theme('colors.tokyo.light.gray'),
+            '--tw-prose-invert-code': theme('colors.tokyo.light.green'),
+            '--tw-prose-invert-pre-code': theme('colors.tokyo.light.text'),
+            '--tw-prose-invert-pre-bg': theme('colors.tokyo.light.bg'),
+            '--tw-prose-invert-th-borders': theme('colors.tokyo.light.gray'),
+            '--tw-prose-invert-td-borders': theme('colors.tokyo.light.muted'),
+          },
+        },
+      }),
       colors: {
         tokyo: {
           night: {
