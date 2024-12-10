@@ -1,18 +1,17 @@
 <template>
-  <!-- Hero Section -->
-  <Hero />
+  <div>
+    <!-- Hero Section -->
+    <Hero />
 
-  <!-- Portfolio Section -->
-   <PortfolioSection />
-  
+    <!-- Portfolio Section -->
+    <PortfolioSection />
 
-  <!-- Blog Section -->
-  <BlogSection />
+    <!-- Blog Section -->
+    <BlogSection />
 
-  <!-- Contact Section -->
-   <Contact />
-
-
+    <!-- Contact Section -->
+    <Contact />
+  </div>
 </template>
 
 <script setup lang="ts">

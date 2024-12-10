@@ -10,9 +10,8 @@ export default defineNuxtConfig({
   typescript : {
     typeCheck: true
   },
-  /*content: {
-    watch: false, 
-    documentDriven: true,
+  content: {
+    watch: false,
     highlight: {
       theme: {
         default: 'tokyo-night',
@@ -21,7 +20,7 @@ export default defineNuxtConfig({
       },
       langs: ['c', 'php', 'typescript', 'json', 'html', 'css', 'scss', 'bash'],
     }
-  },*/
+  },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
