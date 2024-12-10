@@ -24,7 +24,7 @@ export default {
             '--tw-prose-bullets': theme('colors.tokyo.night.cyan'),
             '--tw-prose-hr': theme('colors.tokyo.night.dark'),
             '--tw-prose-quotes': theme('colors.tokyo.night.text'),
-            '--tw-prose-quote-borders': theme('colors.tokyo.night.cyan'),
+            '--tw-prose-quote-borders': theme('colors.tokyo.night.red'),
             '--tw-prose-captions': theme('colors.tokyo.night.muted'),
             '--tw-prose-code': theme('colors.tokyo.night.green'),
             '--tw-prose-pre-code': theme('colors.tokyo.night.text'),

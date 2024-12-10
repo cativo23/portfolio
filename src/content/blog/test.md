@@ -1,17 +1,9 @@
 ---
-description: test null
+title: Test for implementing edit
+created_at: 2024/12/04
+author: Carlos Cativo
+description: Test Edit Blog Entry
+status: draft
 ---
 
-# Index
-
----
-
-**asdjkashdasd**
-
-**asdnasdkjnasd**
-
-```js [asdasd]
-asdadasd
-```
-
-Just testing shits
+## Some title

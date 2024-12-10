@@ -18,7 +18,7 @@ export default defineNuxtConfig({
         dark: 'tokyo-night',
         light: 'tokyo-night',
       },
-      langs: ['c', 'php', 'typescript', 'json', 'html', 'css', 'scss', 'bash'],
+      langs: ['c', 'php', 'typescript', 'json', 'html', 'css', 'scss', 'bash', 'js'],
     }
   },
   app: {
