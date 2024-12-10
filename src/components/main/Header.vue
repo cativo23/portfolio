@@ -24,36 +24,31 @@
         <ul class="flex space-x-4">
           <li v-for="item in navItems" :key="item.name">
             <NuxtLink :href="item.link" :class="{
-              'text-tokyo-night-red font-bold': currentRoute.path === item.link,
-              'hover:text-tokyo-night-cyan transition-colors duration-200': currentRoute.path !== item.link
+              'text-tokyo-night-red font-bold': isHighlightedRoute(item.link),
+              'hover:text-tokyo-night-cyan transition-colors duration-200': !isHighlightedRoute(item.link)
             }">{{ item.name }}</NuxtLink>
           </li>
         </ul>
       </div>
       <button @click="isMenuOpen = !isMenuOpen" class="md:hidden">
         <!-- Hamburger icon -->
-        <LucideMenu/>
+        <LucideMenu />
       </button>
     </nav>
-    <transition
-      enter-active-class="transition-transform transform duration-300"
-      enter-from-class="translate-x-full"
-      enter-to-class="translate-x-0"
-      leave-active-class="transition-transform transform duration-300"
-      leave-from-class="translate-x-0"
-      leave-to-class="translate-x-full"
-    >
+    <transition enter-active-class="transition-transform transform duration-300" enter-from-class="translate-x-full"
+      enter-to-class="translate-x-0" leave-active-class="transition-transform transform duration-300"
+      leave-from-class="translate-x-0" leave-to-class="translate-x-full">
       <div v-if="isMenuOpen"
         class="fixed inset-0 bg-tokyo-night-dark bg-opacity-90 z-20 flex flex-col items-center justify-center md:hidden">
         <button @click="isMenuOpen = false" class="absolute top-4 right-4">
           <!-- Close icon -->
-          <LucideX/>
+          <LucideX />
         </button>
         <ul class="space-y-4">
           <li v-for="item in navItems" :key="item.name">
             <NuxtLink @click="isMenuOpen = false" :href="item.link" :class="{
-              'text-tokyo-night-red font-bold': currentRoute.path === item.link,
-              'hover:text-tokyo-night-cyan transition-colors duration-200': currentRoute.path !== item.link
+              'text-tokyo-night-red font-bold': isHighlightedRoute(item.link),
+              'hover:text-tokyo-night-cyan transition-colors duration-200': !isHighlightedRoute(item.link)
             }">
               {{ item.name }}
             </NuxtLink>
@@ -99,4 +94,11 @@ const sentences = [
   ' Carlos Cativo',
   ' cativo23'
 ];
+
+const isHighlightedRoute = (link: string) => {
+  if (link === '/') {
+    return currentRoute.path === link;
+  }
+  return currentRoute.path.startsWith(link);
+};
 </script>
