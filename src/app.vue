@@ -20,6 +20,19 @@
 <script setup>
 import Header from '@/components/main/Header.vue';
 import Footer from '@/components/main/Footer.vue';
+
+useHead({
+  htmlAttrs: {
+    lang: 'en'
+  },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/ico',
+      href: '/favicon.ico'
+    }
+  ]
+});
 </script>
 
 <style>
