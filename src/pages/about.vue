@@ -48,6 +48,8 @@
 import { ref } from 'vue';
 import SkillPill from '@/components/about/SkillPill.vue';
 
+usePageTitle('About');
+
 const languages = ref([
   { name: 'PHP', level: 'advanced' },
   { name: 'JavaScript', level: 'advanced' },

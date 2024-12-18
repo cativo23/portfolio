@@ -28,6 +28,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+usePageTitle('Contact');
+
 const form = ref({
   name: '',
   email: '',

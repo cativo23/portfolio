@@ -1,5 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      baseTitle: 'Carlos Cativo',
+      defaultOgImage: '/img/akira.jpeg',
+      defaultOgUrl: 'https://cativo.dev',
+    },
+  },
   srcDir: 'src/',
   devtools: {
     enabled: true,
@@ -34,6 +41,6 @@ export default defineNuxtConfig({
     },
   },
   compatibilityDate: '2024-11-01',
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons', '@nuxthub/core'],
   builder: "vite",
 })

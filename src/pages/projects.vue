@@ -24,6 +24,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
+usePageTitle('Projects');
+
 const projects = ref([
   {
     title: 'API Gateway',
