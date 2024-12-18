@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts" setup>
+usePageTitle('Blog');
 
 const { data: blogs } = await useAsyncData('blogs', () => queryContent('/').find())
 </script>
