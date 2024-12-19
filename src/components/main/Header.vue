@@ -1,17 +1,19 @@
 <template>
   <header class="navbar bg-tokyo-night-dark p-4 sticky top-0 z-10">
     <nav class="container mx-auto flex justify-between items-center">
-      <NuxtLink to="/" class="md:w-[250px]">
+      <NuxtLink to="/" class="md:w-[290px]">
         <h1 class="text-2xl font-bold text-tokyo-night-cyan">
           <span class="block md:hidden">
-            <span class="text-tokyo-night-purple">{</span>CC<span class="text-tokyo-night-purple">}</span>
+            <span class="text-tokyo-night-purple">👨‍💻 {</span>
+            CC
+            <span class="text-tokyo-night-purple">}</span>
           </span> <!-- Show on mobile devices -->
           <span class="hidden md:block">
             <VueTyping :sentences="sentences" :minTypeSpeed="settings.minTypeSpeed"
               :maxTypeSpeed="settings.maxTypeSpeed" :eraseSpeed="settings.eraseSpeed" :eraseDelay="settings.eraseDelay"
               :writeDelay="settings.writeDelay" :caret="settings.caret" :loop="settings.loop">
               <template #before>
-                <span class="text-tokyo-night-purple">{</span>
+                <span class="text-tokyo-night-purple">👨‍💻 {</span>
               </template>
               <template #after>
                 <span class="text-tokyo-night-purple">}</span>
@@ -71,7 +73,7 @@ const settings = reactive({
   eraseSpeed: 50,
   eraseDelay: 1500,
   writeDelay: 150,
-  caret: undefined,
+  caret: "|",
   loop: true,
 });
 
@@ -102,3 +104,20 @@ const isHighlightedRoute = (link: string) => {
   return currentRoute.path.startsWith(link);
 };
 </script>
+<style lang="css">
+/* Add custom styles here */
+.dmn-typing .caret {
+  color: inherit;
+  animation: blink .5s infinite
+}
+
+.dmn-typing .typing {
+  animation: none
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0
+  }
+}
+</style>
