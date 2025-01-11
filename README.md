@@ -1,6 +1,4 @@
-# Nuxt Minimal Starter
-
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Portfolio
 
 ## Setup
 
@@ -18,6 +16,9 @@ yarn install
 
 # bun
 bun install
+
+#docker
+docker run --rm -v $(pwd):/app -w /app --user node node:22-alpine yarn install
 ```
 
 ## Development Server
@@ -36,6 +37,9 @@ yarn dev
 
 # bun
 bun run dev
+
+#docker
+docker compose up -d
 ```
 
 ## Production
