@@ -1,5 +1,5 @@
 # Base image
-FROM node:22-bullseye
+FROM node:23-bookworm
 
 LABEL org.opencontainers.image.authors="cativo23.kt@gmail.com"
 

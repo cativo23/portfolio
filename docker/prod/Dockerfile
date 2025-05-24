@@ -1,7 +1,7 @@
 # Dockerfile for production environment
 
 # Use the official Node.js image
-FROM node:22-alpine
+FROM node:23-alpine
 
 LABEL org.opencontainers.image.authors="cativo23.kt@gmail.com"
 
