@@ -7,14 +7,14 @@
         <h3 class="text-2xl font-bold mb-4">{{ project.title }}</h3>
         <p class="mb-4">{{ project.description }}</p>
         <div class="flex items-center text-tokyo-night-cyan mb-4">
-          <CodeIcon class="w-5 h-5 mr-2" />
+          <LucideCode class="w-5 h-5 mr-2" />
           <span>{{ project.tech.join(', ') }}</span>
         </div>
         <div class="card-actions justify-start">
-          <a :href="project.github" target="_blank" rel="noopener noreferrer"
+          <NuxtLink external :href="project.github" target="_blank" rel="noopener noreferrer"
             class="btn inline-flex items-center text-tokyo-night-purple hover:text-tokyo-night-cyan transition-colors duration-200">
-            <GithubIcon class="w-5 h-5 mr-2" />View on GitHub
-          </a>
+            <LucideGithub class="w-5 h-5 mr-2" />View on GitHub
+          </NuxtLink>
         </div>
       </div>
     </div>
@@ -22,8 +22,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { CodeIcon, GithubIcon } from 'lucide-vue-next'
+import { ref } from 'vue';
+
+usePageTitle('Projects');
 
 const projects = ref([
   {
