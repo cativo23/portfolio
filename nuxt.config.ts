@@ -48,6 +48,6 @@ export default defineNuxtConfig({
     },
   },
   compatibilityDate: '2024-11-01',
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons', '@nuxthub/core'],
   builder: "vite",
 })
