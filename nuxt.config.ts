@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  debug: true,
   runtimeConfig: {
     public: {
       baseTitle: 'Carlos Cativo',
@@ -14,18 +15,24 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
-  typescript : {
+  typescript: {
     typeCheck: true
   },
   content: {
-    watch: false,
-    highlight: {
-      theme: {
-        default: 'tokyo-night',
-        dark: 'tokyo-night',
-        light: 'tokyo-night',
+    watch: {
+      enabled: false,
+    },
+    build: {
+      markdown: {
+        highlight: {
+          theme: {
+            default: 'tokyo-night',
+            dark: 'tokyo-night',
+            light: 'tokyo-night',
+          },
+          langs: ['c', 'php', 'typescript', 'json', 'html', 'css', 'scss', 'bash', 'js'],
+        },
       },
-      langs: ['c', 'php', 'typescript', 'json', 'html', 'css', 'scss', 'bash', 'js'],
     }
   },
   app: {
@@ -41,6 +48,6 @@ export default defineNuxtConfig({
     },
   },
   compatibilityDate: '2024-11-01',
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons', '@nuxthub/core'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons'],
   builder: "vite",
 })
