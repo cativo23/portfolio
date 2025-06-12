@@ -1,8 +1,7 @@
 <template>
   <div>
     <h2 class="text-3xl font-bold mb-8 text-tokyo-night-cyan">Contact Me</h2>
-    <form @submit.prevent="submitForm"
-      class="bg-tokyo-night-dark p-6 rounded-lg shadow-lg flex flex-col gap-4 w-full">
+    <form @submit.prevent="submitForm" class="bg-tokyo-night-dark p-6 rounded-lg shadow-lg flex flex-col gap-4 w-full">
       <div class="flex flex-col gap-1">
         <label for="name" class="text-tokyo-night-cyan font-mono font-bold">Name</label>
         <input type="text" id="name" v-model="form.name" required
