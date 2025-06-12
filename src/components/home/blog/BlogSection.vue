@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="mb-16">
     <h3 class="text-2xl font-bold mb-6 text-tokyo-night-cyan">Latest Blog Posts</h3>
     <div class="space-y-6">
       <div v-for="post in blogPosts" :key="post.title">

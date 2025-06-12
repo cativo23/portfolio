@@ -1,5 +1,5 @@
 # Base image
-FROM node:22-bullseye
+FROM node:23-bookworm
 
 LABEL org.opencontainers.image.authors="cativo23.kt@gmail.com"
 
@@ -8,6 +8,9 @@ ENV NODE_ENV=development
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
     sudo \
     && rm -rf /var/lib/apt/lists/*
 
@@ -34,4 +37,4 @@ COPY --chown=node:node . .
 EXPOSE 3000
 
 # Run Nuxt in development mode
-CMD ["yarn", "run", "dev", "--host"]
+CMD ["yarn", "run", "dev"]
