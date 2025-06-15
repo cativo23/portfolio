@@ -24,6 +24,7 @@
     "@nuxthub/core": "^0.9.x",
     "@nuxtjs/tailwindcss": "^6.x",
     "@tailwindcss/typography": "^0.5.x",
-    "vue-tsc": "^2.2.10"
+    "vue-tsc": "^2.2.10",
+    "wrangler": "^4.20.0"
   }
 }
