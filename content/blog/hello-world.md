@@ -1,6 +1,6 @@
 ---
 title: "Getting Started with Nuxt Content"
-created_at: "2024/12/04"
+created_at: 2024-12-04T00:00:00Z
 image: "/img/blog/alexander-grigoryev-YSEp8dLK8K8-unsplash.jpg"
 author: "Carlos Cativo"
 description: "This is a description, just for testing"

@@ -1,4 +1,3 @@
-import daisyui from 'daisyui';
 import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
@@ -18,7 +17,7 @@ export default {
             '--tw-prose-body': theme('colors.tokyo.night.text'),
             '--tw-prose-headings': theme('colors.tokyo.night.highlight'),
             '--tw-prose-lead': theme('colors.tokyo.night.muted'),
-            '--tw-prose-links': theme('colors.tokyo.night.highlight'),
+            '--tw-prose-links': theme('colors.tokyo.night.cyan'),
             '--tw-prose-bold': theme('colors.tokyo.night.text'),
             '--tw-prose-counters': theme('colors.tokyo.night.gray'),
             '--tw-prose-bullets': theme('colors.tokyo.night.cyan'),
@@ -34,7 +33,7 @@ export default {
             '--tw-prose-invert-body': theme('colors.tokyo.light.text'),
             '--tw-prose-invert-headings': theme('colors.tokyo.light.text'),
             '--tw-prose-invert-lead': theme('colors.tokyo.light.gray'),
-            '--tw-prose-invert-links': theme('colors.tokyo.light.highlight'),
+            '--tw-prose-invert-links': theme('colors.tokyo.light.cyan'),
             '--tw-prose-invert-bold': theme('colors.tokyo.light.text'),
             '--tw-prose-invert-counters': theme('colors.tokyo.light.gray'),
             '--tw-prose-invert-bullets': theme('colors.tokyo.light.cyan'),
@@ -47,6 +46,57 @@ export default {
             '--tw-prose-invert-pre-bg': theme('colors.tokyo.light.bg'),
             '--tw-prose-invert-th-borders': theme('colors.tokyo.light.gray'),
             '--tw-prose-invert-td-borders': theme('colors.tokyo.light.muted'),
+
+            // Custom improvements for better Tokyo Night look
+            'color': theme('colors.tokyo.night.text'),
+            'background-color': theme('colors.tokyo.night.bg'),
+            'font-family': theme('fontFamily.mono').join(', '),
+            'a': {
+              color: theme('colors.tokyo.night.cyan'),
+              'text-decoration': 'underline',
+              'font-weight': 'bold',
+            },
+            'h1, h2, h3, h4, h5, h6': {
+              color: theme('colors.tokyo.night.highlight'),
+              'font-family': theme('fontFamily.mono').join(', '),
+            },
+            'code': {
+              color: theme('colors.tokyo.night.green'),
+              'background-color': theme('colors.tokyo.night.dark'),
+              'font-family': theme('fontFamily.mono').join(', '),
+              'padding': '0.2em 0.4em',
+              'border-radius': '4px',
+            },
+            'pre': {
+              color: theme('colors.tokyo.night.text'),
+              'background-color': theme('colors.tokyo.night.dark'),
+              'font-family': theme('fontFamily.mono').join(', '),
+              'border-radius': '8px',
+              'padding': '1em',
+            },
+            'blockquote': {
+              color: theme('colors.tokyo.night.text'),
+              'border-left': `4px solid ${theme('colors.tokyo.night.red')}`,
+              'padding-left': '1em',
+              'font-style': 'italic',
+            },
+            'table': {
+              color: theme('colors.tokyo.night.text'),
+              'background-color': theme('colors.tokyo.night.bg'),
+            },
+            'th': {
+              color: theme('colors.tokyo.night.highlight'),
+              'font-weight': 'bold',
+            },
+            'tr': {
+              'border-bottom': `1px solid ${theme('colors.tokyo.night.gray')}`,
+            },
+            'ul, ol': {
+              color: theme('colors.tokyo.night.text'),
+            },
+            'hr': {
+              borderColor: theme('colors.tokyo.night.dark'),
+            },
           },
         },
       }),
@@ -94,40 +144,6 @@ export default {
       },
     },
   },
-  daisyui: {
-    styled: true,
-    themes: [
-      {
-        "tokyodark": {
-          "primary": "#7aa2f7",
-          "primary-content": "#050a15",
-          "secondary": "#2ac3de",
-          "secondary-content": "#010e12",
-          "accent": "#f471B5",
-          "accent-content": "#14040c",
-          "neutral": "#a9b1d6",
-          "neutral-content": "#0a0c10",
-          "base-100": "#16161e",
-          "base-200": "#121219",
-          "base-300": "#0d0d13",
-          "base-content": "#c0caf5",
-          "info": "#bb9af7",
-          "info-content": "#0d0915",
-          "success": "#9ece6a",
-          "success-content": "#090f04",
-          "warning": "#e0af68",
-          "warning-content": "#120b04",
-          "error": "#fb7085",
-          "error-content": "#150406",
-        },
-      },
-      'night'
-    ],
-    base: true,
-    utils: true,
-    logs: true,
-    rtl: false,
-  },
-  plugins: [typography, daisyui],
+  plugins: [typography],
 }
 
