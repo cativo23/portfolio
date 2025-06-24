@@ -1,5 +1,5 @@
 <template>
-  <article class="bg-tokyo-night-dark p-6 rounded-lg hover:shadow-lg transition-shadow duration-200">
+  <article class="bg-tokyo-night-dark p-6 rounded-lg hover:shadow-lg transition-shadow duration-200 cursor-pointer">
     <h4 class="text-xl font-bold mb-2 text-tokyo-night-highlight">{{ post.title }}</h4>
     <p class="mb-4">{{ post.excerpt }}</p>
     <div class="flex justify-between items-center">

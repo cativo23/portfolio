@@ -12,6 +12,8 @@
   "dependencies": {
     "@dmncodes/vue-typing": "^1.0.5",
     "@nuxt/content": "^3.x",
+    "better-sqlite3": "^11.10.0",
+    "motion-v": "^1.2.1",
     "nuxt": "^3.x",
     "nuxt-lucide-icons": "^1.0.5",
     "typescript": "5.8.3",

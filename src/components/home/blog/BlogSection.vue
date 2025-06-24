@@ -1,9 +1,13 @@
 <template>
   <section class="mb-16">
-    <h3 class="text-2xl font-bold mb-6 text-tokyo-night-cyan">Latest Blog Posts</h3>
+    <h3 class="text-2xl font-bold mb-6">
+      <DecryptedText text="Latest Blog Posts" animateOn="view" class="text-tokyo-night-cyan font-bold"
+        encryptedClassName="text-opacity-60" :speed="40" :maxIterations="10" :sequential="true"
+        revealDirection="start" />
+    </h3>
     <div class="space-y-6">
       <div v-for="post in blogPosts" :key="post.title">
-      <LatestBlogPostCard :post="post" />
+        <LatestBlogPostCard :post="post" />
       </div>
     </div>
   </section>
@@ -20,6 +24,3 @@ const blogPosts = ref([
 ])
 </script>
 
-<style>
-
-</style>
