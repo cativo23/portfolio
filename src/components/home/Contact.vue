@@ -1,6 +1,9 @@
 <template>
   <section class="mb-16" id="contact">
-    <h3 class="text-2xl font-bold mb-6 text-tokyo-night-cyan">Contact Me :)</h3>
+    <h3 class="text-2xl font-bold mb-6">
+      <DecryptedText text="Contact me :)" animateOn="view" class="text-tokyo-night-cyan font-bold"
+        encryptedClassName="text-opacity-60" :speed="40" :maxIterations="10" :sequential="true"
+        revealDirection="start" /></h3>
     <div>
       <form class="bg-tokyo-night-dark p-6 rounded-lg shadow-lg w-full flex flex-col gap-4">
         <div class="flex flex-col gap-1">
