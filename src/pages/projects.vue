@@ -24,7 +24,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
-usePageTitle('Projects');
+usePageTitle('Projects', {
+  description: 'Explore my projects showcasing backend development skills, including API gateways, data pipelines, and microservices.',
+});
 
 const projects = ref([
   {

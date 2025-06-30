@@ -48,7 +48,9 @@
 import { ref } from 'vue';
 import SkillPill from '@/components/about/SkillPill.vue';
 
-usePageTitle('About');
+usePageTitle('About', {
+  description: 'Learn more about Carlos Cativo, a passionate backend developer with expertise in building scalable server-side applications and sharing knowledge through technical blog posts.',
+});
 
 const languages = ref([
   { name: 'PHP', level: 'advanced' },

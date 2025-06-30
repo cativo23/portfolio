@@ -31,7 +31,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-usePageTitle('Contact');
+usePageTitle('Contact', {
+  description: 'Get in touch with me! I am always open to discussing new projects, creative ideas, or opportunities to be part of your vision.'
+});
 
 const form = ref({
   name: '',
