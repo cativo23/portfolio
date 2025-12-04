@@ -2,9 +2,18 @@
   <footer class="bg-tokyo-night-dark text-center p-4 mt-16">
     <p>&copy; {{ currentYear }} Carlos Cativo. All rights reserved.</p>
     <div class="flex justify-center space-x-4 mt-2">
-      <LucideGithub />
-      <LucideLinkedin />
-      <XIcon />
+      <a href="https://github.com/cativo23" target="_blank" rel="noopener noreferrer" 
+         aria-label="GitHub" class="hover:text-tokyo-night-cyan transition-colors">
+        <LucideGithub />
+      </a>
+      <a href="https://linkedin.com/in/cativo23" target="_blank" rel="noopener noreferrer"
+         aria-label="LinkedIn" class="hover:text-tokyo-night-cyan transition-colors">
+        <LucideLinkedin />
+      </a>
+      <a href="https://x.com/cativo23" target="_blank" rel="noopener noreferrer"
+         aria-label="X (Twitter)" class="hover:text-tokyo-night-cyan transition-colors">
+        <XIcon />
+      </a>
     </div>
   </footer>
 </template>

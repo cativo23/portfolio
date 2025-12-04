@@ -31,25 +31,25 @@ const projects = ref([
     title: 'API Gateway',
     description: 'High-performance API gateway with load balancing and caching',
     tech: ['Go', 'Redis'],
-    github: 'https://github.com/johndoe/api-gateway'
+    github: 'https://github.com/cativo23/api-gateway'
   },
   {
     title: 'Data Pipeline',
     description: 'Scalable data processing pipeline for real-time analytics',
     tech: ['Python', 'Apache Kafka'],
-    github: 'https://github.com/johndoe/data-pipeline'
+    github: 'https://github.com/cativo23/data-pipeline'
   },
   {
     title: 'Auth Microservice',
     description: 'Secure authentication and authorization service',
     tech: ['Node.js', 'JWT'],
-    github: 'https://github.com/johndoe/auth-microservice'
+    github: 'https://github.com/cativo23/auth-microservice'
   },
   {
     title: 'Database Optimizer',
     description: 'Tool for optimizing database queries and schema',
     tech: ['SQL', 'Rust'],
-    github: 'https://github.com/johndoe/db-optimizer'
+    github: 'https://github.com/cativo23/db-optimizer'
   }
 ])
 </script>

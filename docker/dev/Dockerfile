@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
     make \
     g++ \
     sudo \
+    musl \
+    musl-tools \
     && rm -rf /var/lib/apt/lists/*
 
 # Ensure that the user exists and matches the host's UID and GID

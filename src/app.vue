@@ -9,7 +9,7 @@
     <!-- Header -->
     <Header />
     <!-- Main Content -->
-    <main class="container mx-auto p-4 flex-grow"">
+    <main class="container mx-auto p-4 flex-grow">
       <NuxtPage />
     </main>
     <!-- Footer -->
