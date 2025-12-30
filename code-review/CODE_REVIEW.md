@@ -16,7 +16,6 @@ This review focuses on maintainability, performance, accessibility, and develope
 
 ## Major Findings (high impact)
 
-- Types are inconsistent: several components use untyped props or `type: Object`. This increases runtime risk and reduces DX. Add precise interfaces in `types/` and use `defineProps<T>()`.
 - Image handling: many images lack optimized delivery (src/static usage, missing dimensions, no lazy loading). Use `@nuxt/image` / `<NuxtImg>` or native `loading="lazy"` and explicit width/height.
 - Accessibility: some interactive elements are missing ARIA labels and focus styles (mobile menu, footer icons). Replace `alert()` with an accessible toast/inline errors and ensure keyboard focus states.
 - Data duplication: project and blog metadata are scattered. If projects are fetched from an API, centralize at the API-consumption layer rather than a static `src/data/` file. Add a typed adapter and a single composable so components consume a normalized `Project` shape (see Actionable Next Steps below).
@@ -91,7 +90,6 @@ This review focuses on maintainability, performance, accessibility, and develope
 
 ## Quick Wins (<= 30m)
 
-- Add `.dockerignore` and small multi-stage Dockerfile fix.  
 - Update a couple of icon-only buttons with `aria-label` and focus styles.  
 - Remove remaining `console.log` and `alert` calls.  
 - Add `loading="lazy"` and width/height attributes where obvious on large images.
