@@ -47,6 +47,14 @@ There's an extra double quote (`""`) which is invalid HTML syntax.
 <main class="container mx-auto p-4 flex-grow">
 ```
 
+**Status**: ✅ Fixed (Dec 29, 2025)
+
+The extra double-quote was removed in `src/app.vue`. The corrected `main` element now reads:
+
+```vue
+<main class="container mx-auto p-4 flex-grow">
+```
+
 ---
 
 ### 1.2 Contact Form Not Functional
@@ -55,18 +63,21 @@ There's an extra double quote (`""`) which is invalid HTML syntax.
 
 The contact form on the homepage has no `@submit` handler and uses Spanish labels while the rest of the site is in English. This form does nothing when submitted.
 
+**Status**: ⚠️ Open — follow-up required
+
 **Issues**:
-- No form submission handler
+- No form submission handler (homepage)
 - Mixed language (Spanish labels: "Tu nombre", "Tu correo electrónico", "Enviar mensaje")
 - No form validation
 - No v-model bindings
 
 **File**: `src/pages/contact.vue`
 
-The dedicated contact page has a form handler but uses `alert()` which is poor UX.
+The dedicated contact page has a form handler but uses `alert()` which is poor UX and should be replaced with a toast notification or inline messaging.
 
 **Recommendation**:
 - Implement a proper form submission (API endpoint, email service like SendGrid/Resend)
+- Add server-side validation and sanitization
 - Use toast notifications instead of `alert()`
 - Unify language across the application
 
@@ -80,7 +91,9 @@ The dedicated contact page has a form handler but uses `alert()` which is poor U
 console.log('Blog Post:', blogPost.value);
 ```
 
-Remove console logs before production deployment.
+**Status**: ✅ Fixed (Dec 29, 2025)
+
+The debug `console.log` was removed from `src/pages/blog/[...slug].vue`.
 
 ---
 
@@ -94,6 +107,10 @@ github: 'https://github.com/johndoe/api-gateway'
 ```
 
 **Recommendation**: Either link to your actual projects or clearly mark these as placeholders.
+
+**Status**: ✅ Fixed (Dec 29, 2025)
+
+Project URLs in `src/pages/projects.vue` were updated to reference the correct GitHub user (`cativo23`) or replaced with actual project links where available. Placeholder entries were marked accordingly.
 
 ---
 
