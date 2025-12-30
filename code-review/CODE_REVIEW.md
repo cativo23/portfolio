@@ -30,7 +30,6 @@ This updated review summarizes what's been fixed since the original review and w
   - Documentation updated: `code-review/README.md` and `CODE_REVIEW.md` marked critical items with statuses; related doc PRs opened.
 
 - **Open / Remaining (High Priority)**
-  - Add server-side acceptance tests for `POST /contacts` (happy-path + validation errors).
   - Replace temporary UX patterns (if any) with accessible toast notifications across the site.
 
 - **Open / Remaining (Medium Priority)**
@@ -43,15 +42,9 @@ This updated review summarizes what's been fixed since the original review and w
   - Run a color-contrast/a11y audit and fix failing combinations.
   - Add end-to-end tests for key flows (navigation, contact submission, blog rendering).
 
-**Branches / PRs created**
-- `chore/remove-quick-fixes-to-develop` — removed `QUICK_FIXES.md` and opened PR to `develop`.
-- `fix/critical-code-review` — updated `CODE_REVIEW.md` and `README.md` to reflect completed critical fixes.
-- `feat/contact-form` — frontend contact form implementation (posts to API via runtime config).
-
 **Recommended next steps (short)**
 1. Create a small `src/data/projects.ts` and update components/pages to import it (priority: medium).
 2. Add TypeScript interfaces for public components (priority: medium).
-3. Add server-side acceptance tests for the `/contacts` endpoint (priority: medium).
 
 
 1. [Critical Issues](#1-critical-issues)
