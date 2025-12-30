@@ -6,28 +6,36 @@
         revealDirection="start" />
     </h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div v-for="project in projects" :key="project.title">
+      <template v-if="loading">
+        <div class="col-span-1 md:col-span-2">Loading projects...</div>
+      </template>
+      <template v-else-if="error">
+        <div class="col-span-1 md:col-span-2 text-red-400">Failed to load projects</div>
+      </template>
+      <div v-else v-for="project in displayed" :key="project.id || project.title">
         <FeatureProjectCard :project="project" />
       </div>
     </div>
   </section>
 </template>
-
 <script lang="ts" setup>
-import { ref } from 'vue';
-import FeatureProjectCard from './FeatureProjectCard.vue';
+import { onMounted, computed } from 'vue'
+import FeatureProjectCard from './FeatureProjectCard.vue'
+import { useProjects } from '~/composables/useProjects'
 
+const { projects, loading, error, fetchProjects } = useProjects()
 
-const projects = ref([
-  { title: 'API Gateway', description: 'High-performance API gateway with load balancing and caching', tech: ['Go', 'Redis'] },
-  { title: 'Data Pipeline', description: 'Scalable data processing pipeline for real-time analytics', tech: ['Python', 'Apache Kafka'] },
-  { title: 'Auth Microservice', description: 'Secure authentication and authorization service', tech: ['Node.js', 'JWT'] },
-  { title: 'Database Optimizer', description: 'Tool for optimizing database queries and schema', tech: ['SQL', 'Rust'] },
-  { title: 'API Gateway', description: 'High-performance API gateway with load balancing and caching', tech: ['Go', 'Redis'] },
-  { title: 'Data Pipeline', description: 'Scalable data processing pipeline for real-time analytics', tech: ['Python', 'Apache Kafka'] },
-  { title: 'Auth Microservice', description: 'Secure authentication and authorization service', tech: ['Node.js', 'JWT'] },
-  { title: 'Database Optimizer', description: 'Tool for optimizing database queries and schema', tech: ['SQL', 'Rust'] }
-])
+onMounted(async () => {
+  // fetch only featured projects for this section
+  try {
+    await fetchProjects({ is_featured: true })
+  } catch (e) {
+    // swallow here; `error` ref contains details
+    // TODO: surface error UI if desired
+  }
+})
+
+const displayed = computed(() => projects.value ?? [])
 </script>
 
 <style></style>
