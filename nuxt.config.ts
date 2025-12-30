@@ -6,6 +6,7 @@ export default defineNuxtConfig({
       baseTitle: 'Carlos Cativo',
       defaultOgImage: '/img/akira.jpeg',
       defaultOgUrl: 'https://cativo.dev',
+      apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:3001',
     },
   },
   srcDir: 'src/',

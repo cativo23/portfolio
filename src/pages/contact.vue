@@ -20,9 +20,12 @@
           class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono placeholder-tokyo-night-muted transition"
           placeholder="Type your message..."></textarea>
       </div>
-      <button type="submit"
-        class="mt-2 px-6 py-2 bg-tokyo-night-highlight text-tokyo-night-dark font-mono font-bold rounded shadow hover:bg-tokyo-night-cyan transition">
-        Send Message
+      <div v-if="error" class="text-red-400 font-mono">{{ error }}</div>
+      <div v-if="success" class="text-green-400 font-mono">Message sent successfully!</div>
+
+      <button :disabled="loading" type="submit"
+        class="mt-2 px-6 py-2 bg-tokyo-night-highlight text-tokyo-night-dark font-mono font-bold rounded shadow hover:bg-tokyo-night-cyan transition disabled:opacity-50">
+        {{ loading ? 'Sending...' : 'Send Message' }}
       </button>
     </form>
   </div>
@@ -30,22 +33,64 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRuntimeConfig } from '#app';
 
 usePageTitle('Contact', {
   description: 'Get in touch with me! I am always open to discussing new projects, creative ideas, or opportunities to be part of your vision.'
 });
 
-const form = ref({
-  name: '',
-  email: '',
-  message: ''
-})
+const config = useRuntimeConfig();
+const apiBase = config.public.apiBaseUrl || 'http://localhost:3001';
 
-const submitForm = () => {
-  // Here you would typically send the form data to a server
-  console.log('Form submitted:', form.value);
-  // Reset the form after submission
-  form.value = { name: '', email: '', message: '' }
-  alert('Thank you for your message! I will get back to you soon.');
+const form = ref({ name: '', email: '', message: '' });
+const loading = ref(false);
+const error = ref<string | null>(null);
+const success = ref(false);
+
+function validateForm() {
+  error.value = null;
+  const errors: string[] = [];
+  if (!form.value.name || form.value.name.length < 2 || form.value.name.length > 100) {
+    errors.push('Name must be between 2 and 100 characters');
+  }
+  if (!form.value.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) {
+    errors.push('Please enter a valid email');
+  }
+  if (!form.value.message || form.value.message.length < 10 || form.value.message.length > 1000) {
+    errors.push('Message must be between 10 and 1000 characters');
+  }
+  if (errors.length) {
+    error.value = errors.join('. ');
+    return false;
+  }
+  return true;
+}
+
+const submitForm = async () => {
+  if (!validateForm()) return;
+  loading.value = true;
+  error.value = null;
+  success.value = false;
+
+  try {
+    const res = await fetch(`${apiBase}/contacts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: form.value.name, email: form.value.email, message: form.value.message }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.status === 'success') {
+      success.value = true;
+      form.value = { name: '', email: '', message: '' };
+    } else {
+      error.value = data?.error?.message || 'Failed to send message';
+    }
+  } catch (err) {
+    error.value = 'Network error. Please try again.';
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
