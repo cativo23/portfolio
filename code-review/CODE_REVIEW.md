@@ -30,11 +30,11 @@ This updated review summarizes what's been fixed since the original review and w
   - Documentation updated: `code-review/README.md` and `CODE_REVIEW.md` marked critical items with statuses; related doc PRs opened.
 
 - **Open / Remaining (High Priority)**
-  - Contact form backend: the API `/contacts` must implement server-side validation, sanitization, rate-limiting, and a proper CORS policy allowing frontend origin. Without server changes, submissions will fail with CORS or validation errors.
+  - Contact form backend: the API `/contacts` must implement server-side validation, sanitization, and rate-limiting. Without these server-side protections, submissions may fail with validation errors or be vulnerable to abuse.
   - Add server-side acceptance tests for `POST /contacts` (happy-path + validation errors).
   - Replace temporary UX patterns (if any) with accessible toast notifications across the site.
 
-  - Contact form backend: CORS policy has been updated on the API to allow the frontend origin (confirmed Dec 29, 2025). Remaining backend work: implement server-side validation, sanitization, and rate-limiting for `/contacts`.
+  - Contact form backend: Remaining backend work: implement server-side validation, sanitization, and rate-limiting for `/contacts`.
   - Add server-side acceptance tests for `POST /contacts` (happy-path + validation errors).
   - Replace temporary UX patterns (if any) with accessible toast notifications across the site.
 
@@ -54,7 +54,7 @@ This updated review summarizes what's been fixed since the original review and w
 - `feat/contact-form` — frontend contact form implementation (posts to API via runtime config).
 
 **Recommended next steps (short)**
-1. Patch the API to enable CORS for the frontend origin and add server-side validation (priority: critical).
+1. Implement server-side validation, sanitization, and rate-limiting for the `/contacts` endpoint (priority: critical).
 2. Create a small `src/data/projects.ts` and update components/pages to import it (priority: medium).
 3. Add TypeScript interfaces for public components (priority: medium).
 
