@@ -21,8 +21,6 @@ const props = defineProps({
   },
 });
 
-import { computed } from 'vue'
-
 const techList = computed(() => {
   const t = props.project.tech
   if (!t) return ''
