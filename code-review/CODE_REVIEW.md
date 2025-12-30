@@ -15,6 +15,46 @@ This portfolio is a well-structured Nuxt 3 application with a cohesive Tokyo Nig
 ---
 
 ## Table of Contents
+## Updated Review (Dec 29, 2025)
+
+This updated review summarizes what's been fixed since the original review and what remains open. Changes below reflect repository updates and developer follow-ups performed on Dec 29, 2025.
+
+- **Fixed / Completed**
+  - `src/app.vue` HTML syntax error removed (extra quote) — page renders correctly.
+  - Development console logs removed from `src/pages/blog/[...slug].vue`.
+  - `nuxt.config.ts` debug flag moved to runtime config (disabled in production).
+  - Placeholder project URLs updated to reference `cativo23` or real project links.
+  - `code-review/QUICK_FIXES.md` removed after the quick fixes were applied.
+  - Frontend contact form implementation added on both homepage and contact page (`feat/contact-form`): v-model bindings, client-side validation, loading/error/success states, and POST to runtime-configurable API base URL (default `http://localhost:3001`).
+  - Documentation updated: `code-review/README.md` and `CODE_REVIEW.md` marked critical items with statuses; related doc PRs opened.
+
+- **Open / Remaining (High Priority)**
+  - Contact form backend: the API `/contacts` must implement server-side validation, sanitization, rate-limiting, and a proper CORS policy allowing frontend origin. Without server changes, submissions will fail with CORS or validation errors.
+  - Add server-side acceptance tests for `POST /contacts` (happy-path + validation errors).
+  - Replace temporary UX patterns (if any) with accessible toast notifications across the site.
+
+- **Open / Remaining (Medium Priority)**
+  - Centralize duplicate data (projects, blog placeholders) into a shared `src/data/*` file and import from components/pages.
+  - Add TypeScript interfaces for all component props (especially `LatestBlogPostCard.vue`, `FeatureProjectCard.vue`).
+  - Consolidate repeated Tailwind class lists into reusable classes or components (e.g., `.input-tokyo` or `BaseInput` component).
+  - Image optimization: adopt `@nuxt/image` or use optimized formats, lazy loading, and explicit width/height.
+
+- **Open / Low Priority**
+  - Run a color-contrast/a11y audit and fix failing combinations.
+  - Add end-to-end tests for key flows (navigation, contact submission, blog rendering).
+
+**Branches / PRs created**
+- `chore/remove-quick-fixes-to-develop` — removed `QUICK_FIXES.md` and opened PR to `develop`.
+- `fix/critical-code-review` — updated `CODE_REVIEW.md` and `README.md` to reflect completed critical fixes.
+- `feat/contact-form` — frontend contact form implementation (posts to API via runtime config).
+
+**Recommended next steps (short)**
+1. Patch the API to enable CORS for the frontend origin and add server-side validation (priority: critical).
+2. Create a small `src/data/projects.ts` and update components/pages to import it (priority: medium).
+3. Add TypeScript interfaces for public components (priority: medium).
+
+This updated review is a snapshot. If you want, I can (a) open issues for each remaining item, (b) implement the API CORS/validation patch (if you provide the API repo or indicate the framework), or (c) centralize the data and add basic tests next.
+
 
 1. [Critical Issues](#1-critical-issues)
 2. [Code Quality & DRY Violations](#2-code-quality--dry-violations)
