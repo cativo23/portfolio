@@ -9,9 +9,10 @@ ENV NODE_ENV=development
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     python3 \
-    make \
-    g++ \
+    build-essential \
     sudo \
+    libsqlite3-dev \
+    pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 # Ensure that the user exists and matches the host's UID and GID

@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  debug: true,
+  debug: process.env.NODE_ENV !== 'production',
   runtimeConfig: {
     public: {
       baseTitle: 'Carlos Cativo',

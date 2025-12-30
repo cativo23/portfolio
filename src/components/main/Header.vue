@@ -32,9 +32,13 @@
           </li>
         </ul>
       </div>
-      <button @click="isMenuOpen = !isMenuOpen" class="md:hidden">
-        <!-- Hamburger icon -->
-        <LucideMenu />
+      <button 
+        @click="isMenuOpen = !isMenuOpen" 
+        class="md:hidden"
+        aria-label="Toggle navigation menu"
+        :aria-expanded="isMenuOpen"
+      >
+        <LucideMenu aria-hidden="true" />
       </button>
     </nav>
     <transition enter-active-class="transition-transform transform duration-300" enter-from-class="translate-x-full"
