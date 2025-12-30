@@ -18,9 +18,6 @@ const { data: blogPost } = await useAsyncData(pageId, () => {
     .first()
 })
 
-console.log('Blog Post:', blogPost.value);
-
-
 usePageTitle(blogPost.value?.title ?? 'Default Title', {
   description: blogPost.value?.description,
   ogImage: blogPost.value?.image,
