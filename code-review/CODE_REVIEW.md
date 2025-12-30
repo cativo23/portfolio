@@ -73,4 +73,3 @@ This is a concise, action-oriented review after recent fixes. The repo is stable
 - [ ] Implement server-side contact validation + anti-spam  
 - [ ] Add image optimization & lazy loading  
 - [ ] Create `.dockerignore` and finalize production Dockerfile
-
