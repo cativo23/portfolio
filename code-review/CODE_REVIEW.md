@@ -37,14 +37,14 @@ This portfolio is a well-structured Nuxt 3 application with a cohesive Tokyo Nig
 **File**: `src/app.vue` (line 12)
 
 ```vue
-<main class="container mx-auto p-4 flex-grow"">
+<main class="container flex-grow p-4 mx-auto"">
 ```
 
 There's an extra double quote (`""`) which is invalid HTML syntax.
 
 **Fix**:
 ```vue
-<main class="container mx-auto p-4 flex-grow">
+<main class="container flex-grow p-4 mx-auto">
 ```
 
 **Status**: ✅ Fixed (Dec 29, 2025)
@@ -52,7 +52,7 @@ There's an extra double quote (`""`) which is invalid HTML syntax.
 The extra double-quote was removed in `src/app.vue`. The corrected `main` element now reads:
 
 ```vue
-<main class="container mx-auto p-4 flex-grow">
+<main class="container flex-grow p-4 mx-auto">
 ```
 
 ---
@@ -179,7 +179,7 @@ import { useRoute } from 'vue-router';
 Long repeated class strings for form inputs appear in multiple files:
 
 ```html
-class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono placeholder-tokyo-night-muted transition"
+class="w-full px-3 py-2 font-mono transition border rounded bg-tokyo-night-bg text-tokyo-night-text border-tokyo-night-gray focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan placeholder-tokyo-night-muted"
 ```
 
 **Recommendation**: Create a reusable input component or use `@apply` in CSS:
