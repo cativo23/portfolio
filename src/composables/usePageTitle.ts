@@ -1,6 +1,6 @@
 import type { MetaOptions } from "~/types/meta";
 
-export const usePageTitle = (pageTitle: string, options: MetaOptions = {}) => {
+export const usePageTitle = (pageTitle: string, options: MetaOptions = {}): void => {
   const url = useRequestURL();
   const route = useRoute();
   const fallBackUrl = url.host + route.fullPath;

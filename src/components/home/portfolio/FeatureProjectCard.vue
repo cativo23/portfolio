@@ -13,16 +13,17 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import type { Project } from '~/types/project'
 
-const props = defineProps({
-  project: {
-    type: Object,
-    required: true,
-  },
-});
+interface Props {
+  project: Project
+}
+
+const props = defineProps<Props>()
 
 const techList = computed(() => {
-  const t = props.project.tech
+  const t = props.project.techStack
   if (!t) return ''
   if (Array.isArray(t)) return t.join(', ')
   return String(t)

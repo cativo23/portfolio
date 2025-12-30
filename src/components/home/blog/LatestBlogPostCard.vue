@@ -13,13 +13,13 @@
 </template>
 
 <script lang="ts" setup>
+import type { BlogPost } from '~/types/blog'
 
-const props = defineProps({
-  post: {
-    type: Object,
-    required: true
-  }
-});
+interface Props {
+  post: BlogPost
+}
+
+const props = defineProps<Props>()
 
 </script>
 

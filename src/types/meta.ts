@@ -8,4 +8,4 @@ export interface MetaOptions {
     twitterDescription?: string;
     twitterImage?: string;
     twitterCard?: 'summary' | 'summary_large_image' | 'app' | 'player';
-  }  
+}  
