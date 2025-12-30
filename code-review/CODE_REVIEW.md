@@ -14,8 +14,6 @@ This portfolio is a well-structured Nuxt 3 application with a cohesive Tokyo Nig
 
 ---
 
-## Table of Contents
-
 ## Updated Review (Dec 29, 2025)
 
 This updated review summarizes what's been fixed since the original review and what remains open. Changes below reflect repository updates and developer follow-ups performed on Dec 29, 2025.
@@ -46,6 +44,7 @@ This updated review summarizes what's been fixed since the original review and w
 1. Create a small `src/data/projects.ts` and update components/pages to import it (priority: medium).
 2. Add TypeScript interfaces for public components (priority: medium).
 
+## Table of Contents
 
 1. [Critical Issues](#1-critical-issues)
 2. [Code Quality & DRY Violations](#2-code-quality--dry-violations)
