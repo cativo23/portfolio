@@ -2,8 +2,11 @@ export interface Project {
     id?: string | number;
     title: string;
     description: string;
+    shortDescription?: string;
     techStack: string | string[];
     repoUrl: string;
     liveUrl?: string;
-    is_featured?: boolean;
+    isFeatured?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
 }

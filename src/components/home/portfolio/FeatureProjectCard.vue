@@ -6,7 +6,7 @@
       <LucideCode class="w-5 h-5 mr-2" />
       <span>{{ techList }}</span>
     </div>
-    <div v-if="project.is_featured" class="mt-3">
+    <div v-if="project.isFeatured" class="mt-3">
       <span class="inline-block px-2 py-1 text-xs text-black rounded bg-tokyo-night-highlight">Featured</span>
     </div>
   </div>

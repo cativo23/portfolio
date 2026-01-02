@@ -1,8 +1,10 @@
 import { ref, type Ref } from 'vue'
 import type { Project } from '~/types/project'
+import type { PaginationMeta, ApiResponse } from '~/types/pagination'
 
 interface UseProjectsReturn {
     projects: Ref<Project[]>
+    pagination: Ref<PaginationMeta | null>
     loading: Ref<boolean>
     error: Ref<Error | null>
     fetchProjects: (params?: Record<string, unknown>, token?: string) => Promise<unknown>
@@ -16,6 +18,7 @@ export function useProjects(): UseProjectsReturn {
     const defaultToken = config.public?.apiToken
 
     const projects = ref<Project[]>([])
+    const pagination = ref<PaginationMeta | null>(null)
     const loading = ref(false)
     const error = ref<Error | null>(null)
 
@@ -27,19 +30,23 @@ export function useProjects(): UseProjectsReturn {
             const authToken = token ?? defaultToken
             if (authToken) headers.Authorization = `ApiKey ${authToken}`
 
-            const res = await $fetch<{ status?: string; data?: Project[]; meta?: unknown } | Project[]>(`${base}/projects`, {
+            const res = await $fetch<ApiResponse<Project>>(`${base}/projects`, {
                 method: 'GET',
                 headers,
                 query: params,
             })
 
-            // API shape: { status: 'success', data: [ ... ], meta: { ... } }
-            if (Array.isArray(res)) {
-                projects.value = res
-            } else if (res && 'data' in res && Array.isArray(res.data)) {
+            // Handle API response: { status: "success", data: [...], meta: { pagination: {...} } }
+            if (res && typeof res === 'object' && 'data' in res && 'meta' in res) {
                 projects.value = res.data
+                if (res.meta?.pagination) {
+                    pagination.value = res.meta.pagination
+                } else {
+                    pagination.value = null
+                }
             } else {
                 projects.value = []
+                pagination.value = null
             }
             return res
         } catch (err) {
@@ -77,6 +84,7 @@ export function useProjects(): UseProjectsReturn {
 
     return {
         projects,
+        pagination,
         loading,
         error,
         fetchProjects,
