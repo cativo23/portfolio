@@ -8,7 +8,7 @@ services:
     volumes:
       - .:/home/node/app # Mount the current directory to the container
     ports:
-      - '3000:3000' # Map Nuxt dev server to localhost
+      - '3001:3000' # Map Nuxt dev server to localhost
     environment:
       NODE_ENV: development
     user: 'node' # Run as node user
