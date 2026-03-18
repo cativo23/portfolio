@@ -54,6 +54,9 @@ export default defineNuxtConfig({
       },
     },
   },
+  dir: {
+    public: 'src/public',
+  },
   site: {
     url: 'https://cativo.dev',
     name: 'Carlos Cativo - Backend Developer',
@@ -67,6 +70,13 @@ export default defineNuxtConfig({
         usePolling: true,
         interval: 1000,
       },
+    },
+  },
+  image: {
+    // Use native provider in development, ipx in production
+    provider: process.env.NODE_ENV === 'production' ? 'ipx' : 'native',
+    ipx: {
+      maxAge: 3600,
     },
   },
 })
