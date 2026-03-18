@@ -7,7 +7,7 @@ export const usePageTitle = (pageTitle: string, options: MetaOptions = {}): void
   const config = useRuntimeConfig();
   const baseTitle = config.public.baseTitle;
   const defaultOgImage: string = config.public.defaultOgImage || '/default-og-image.png';
-  const defaultOgUrl: string =  fallBackUrl || config.public.defaultOgUrl;
+  const defaultOgUrl: string = config.public.defaultOgUrl || fallBackUrl;
   
   useSeoMeta({
     title: `${baseTitle} - ${pageTitle}`,
