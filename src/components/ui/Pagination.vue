@@ -1,5 +1,5 @@
 <template>
-  <nav v-if="pagination && pagination.totalPages > 1" class="flex items-center justify-center gap-2 mt-8" aria-label="Pagination">
+  <nav v-if="pagination && pagination.total_pages > 1" class="flex items-center justify-center gap-2 mt-8" aria-label="Pagination">
     <!-- Previous Button -->
     <button
       @click="goToPage(pagination.page - 1)"
@@ -37,10 +37,10 @@
     <!-- Next Button -->
     <button
       @click="goToPage(pagination.page + 1)"
-      :disabled="pagination.page === pagination.totalPages"
+      :disabled="pagination.page === pagination.total_pages"
       :class="[
         'px-4 py-2 rounded-lg transition-colors duration-200',
-        pagination.page === pagination.totalPages
+        pagination.page === pagination.total_pages
           ? 'bg-tokyo-night-dark text-tokyo-night-text opacity-50 cursor-not-allowed'
           : 'bg-tokyo-night-dark text-tokyo-night-highlight hover:bg-tokyo-night-purple hover:text-white'
       ]"
@@ -52,7 +52,7 @@
     <!-- Page Info -->
     <div class="ml-4 text-sm text-tokyo-night-text">
       <span class="sr-only">Showing</span>
-      {{ ((pagination.page - 1) * pagination.limit) + 1 }}-{{ Math.min(pagination.page * pagination.limit, pagination.totalItems) }} of {{ pagination.totalItems }}
+      {{ ((pagination.page - 1) * pagination.limit) + 1 }}-{{ Math.min(pagination.page * pagination.limit, pagination.total_items) }} of {{ pagination.total_items }}
     </div>
   </nav>
 </template>
@@ -72,7 +72,7 @@ const visiblePages = computed(() => {
   if (!props.pagination) return []
   
   const current = props.pagination.page
-  const total = props.pagination.totalPages
+  const total = props.pagination.total_pages
   const pages: (number | string)[] = []
   
   // Always show first page
@@ -113,7 +113,7 @@ const visiblePages = computed(() => {
 })
 
 function goToPage(page: number) {
-  if (page >= 1 && page <= (props.pagination?.totalPages ?? 1)) {
+  if (page >= 1 && page <= (props.pagination?.total_pages ?? 1)) {
     props.onPageChange(page)
   }
 }

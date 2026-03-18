@@ -1,8 +1,8 @@
 export interface PaginationMeta {
     page: number;
     limit: number;
-    totalItems: number;
-    totalPages: number;
+    total_items: number;
+    total_pages: number;
 }
 
 export interface ApiResponse<T> {
