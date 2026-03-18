@@ -2,7 +2,15 @@
   <section class="text-center py-5">
     <div class="hero-content flex-col lg:flex-row items-center justify-center">
       <div class="flex justify-center items-center w-full mb-4 lg:mb-0">
-        <img src="/img/akira.jpeg" class="max-w-36 rounded-full shadow-2xl" alt="Carlos Cativo profile photo" />
+        <NuxtImg
+          src="/img/akira.jpeg"
+          alt="Carlos Cativo profile photo"
+          width="144"
+          height="144"
+          loading="lazy"
+          format="webp"
+          class="max-w-36 rounded-full shadow-2xl"
+        />
       </div>
       <h2 class="text-3xl font-bold mb-4">
         <DecryptedText text="Backend Developer & Tech Enthusiast" animateOn="view"

@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const isDocker = process.env.NITRO_PRESET === 'node-server'
 
-const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons', 'motion-v/nuxt']
+const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image']
 const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
 
 export default defineNuxtConfig({
