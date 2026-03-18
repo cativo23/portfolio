@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const isDocker = process.env.NITRO_PRESET === 'node-server'
 
-const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image']
+const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image', '@nuxtjs/sitemap']
 const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
 
 export default defineNuxtConfig({
@@ -53,6 +53,13 @@ export default defineNuxtConfig({
         class: "antialiased bg-gray-50 dark:bg-black min-h-screen",
       },
     },
+  },
+  site: {
+    url: 'https://cativo.dev',
+    name: 'Carlos Cativo - Backend Developer',
+  },
+  sitemap: {
+    strictNuxtContentPaths: true,
   },
   compatibilityDate: '2024-11-01',
   modules,
