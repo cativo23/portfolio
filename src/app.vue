@@ -31,6 +31,31 @@ useHead({
       rel: 'icon',
       type: 'image/ico',
       href: '/favicon.ico'
+    },
+    {
+      rel: 'alternate',
+      type: 'application/rss+xml',
+      title: 'Carlos Cativo - Blog RSS Feed',
+      href: '/feed.xml'
+    }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: 'Carlos Cativo',
+        url: 'https://cativo.dev',
+        jobTitle: 'Backend Developer',
+        sameAs: [
+          'https://github.com/cativo23',
+          'https://linkedin.com/in/cativo23',
+          'https://x.com/cativo23'
+        ],
+        image: 'https://cativo.dev/img/akira.jpeg',
+        description: 'Backend Developer & Tech Enthusiast. Building scalable server-side solutions.',
+      })
     }
   ]
 });
