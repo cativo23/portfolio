@@ -1,0 +1,132 @@
+<template>
+  <div v-if="loading" class="flex justify-center items-center min-h-[400px]">
+    <span class="text-tokyo-night-text">Loading project...</span>
+  </div>
+
+  <div v-else-if="error || !project" class="text-center py-16">
+    <p class="text-red-400 mb-4">Project not found</p>
+    <BaseButton variant="ghost" to="/projects">
+      <LucideArrowLeft class="w-4 h-4 mr-2" />
+      Back to Projects
+    </BaseButton>
+  </div>
+
+  <article v-else class="max-w-4xl mx-auto">
+    <!-- Back Button -->
+    <BaseButton variant="ghost" size="sm" to="/projects" class="mb-6">
+      <LucideArrowLeft class="w-4 h-4 mr-2" />
+      Back to Projects
+    </BaseButton>
+
+    <!-- Featured Badge -->
+    <BaseBadge v-if="project.isFeatured" color="magenta" size="lg" class="mb-4">
+      Featured Project
+    </BaseBadge>
+
+    <!-- Title -->
+    <h1 class="mb-4 text-4xl font-bold text-tokyo-night-highlight">{{ project.title }}</h1>
+
+    <!-- Description -->
+    <p class="mb-8 text-lg text-tokyo-night-text">{{ project.description }}</p>
+
+    <!-- Tech Stack -->
+    <div class="mb-8">
+      <h2 class="mb-4 text-xl font-bold text-tokyo-night-cyan">Technologies Used</h2>
+      <div class="flex flex-wrap gap-2">
+        <BaseBadge
+          v-for="tech in project.techStack"
+          :key="tech"
+          color="cyan"
+          size="md"
+        >
+          {{ tech }}
+        </BaseBadge>
+      </div>
+    </div>
+
+    <!-- Project Links -->
+    <div class="flex gap-4">
+      <BaseButton
+        v-if="project.repoUrl"
+        variant="primary"
+        :href="project.repoUrl"
+        external
+      >
+        <LucideGithub class="w-5 h-5 mr-2" />
+        View Source Code
+      </BaseButton>
+      <BaseButton
+        v-if="project.liveUrl"
+        variant="secondary"
+        :href="project.liveUrl"
+        external
+      >
+        <LucideExternalLink class="w-5 h-5 mr-2" />
+        Live Demo
+      </BaseButton>
+    </div>
+
+    <!-- Meta Info -->
+    <div class="mt-12 pt-8 border-t border-tokyo-night-gray">
+      <dl class="grid grid-cols-2 gap-4 text-sm">
+        <div>
+          <dt class="text-tokyo-night-muted">Created</dt>
+          <dd class="text-tokyo-night-text">{{ formatDate(project.createdAt) }}</dd>
+        </div>
+        <div>
+          <dt class="text-tokyo-night-muted">Last Updated</dt>
+          <dd class="text-tokyo-night-text">{{ formatDate(project.updatedAt) }}</dd>
+        </div>
+      </dl>
+    </div>
+  </article>
+</template>
+
+<script lang="ts" setup>
+import { computed } from 'vue'
+import type { Project } from '~/types/project'
+
+const route = useRoute()
+const { fetchProject } = useProjects()
+
+const projectId = computed(() => route.params.id as string)
+
+const project = ref<Project | null>(null)
+const loading = ref(true)
+const error = ref<Error | null>(null)
+
+usePageTitle(() => project.value?.title || 'Project', {
+  description: () => project.value?.shortDescription || project.value?.description || 'Project details',
+})
+
+async function loadProject() {
+  loading.value = true
+  error.value = null
+  try {
+    const data = await fetchProject(projectId.value)
+    project.value = data || null
+  } catch (err) {
+    error.value = err instanceof Error ? err : new Error('Failed to load project')
+    project.value = null
+  } finally {
+    loading.value = false
+  }
+}
+
+function formatDate(dateString?: string) {
+  if (!dateString) return 'N/A'
+  return new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
+await useAsyncData(`project-${projectId.value}`, () => loadProject())
+</script>
+
+<style scoped>
+article {
+  @apply py-8;
+}
+</style>

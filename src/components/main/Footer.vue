@@ -1,7 +1,7 @@
 <template>
   <footer class="bg-tokyo-night-dark text-center p-4 mt-16">
     <p>&copy; {{ currentYear }} Carlos Cativo. All rights reserved.</p>
-    <div class="flex justify-center space-x-4 mt-2">
+    <div class="flex justify-center items-center space-x-4 mt-2">
       <BaseButton variant="icon" href="https://github.com/cativo23" external aria-label="GitHub">
         <LucideGithub />
       </BaseButton>
@@ -12,11 +12,15 @@
         <XIcon />
       </BaseButton>
     </div>
+    <div class="mt-3">
+      <HealthBadge />
+    </div>
   </footer>
 </template>
 
 <script lang="ts" setup>
 import { createLucideIcon } from 'lucide-vue-next';
+import HealthBadge from '~/components/ui/HealthBadge.vue';
 
 // Create the XIcon component
 const XIcon = createLucideIcon("X", [
