@@ -24,6 +24,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Force node-server preset (overrides @nuxthub/core's cloudflare preset)
+ENV NITRO_PRESET=node-server
 RUN yarn build
 
 # ---- Stage 3: Production runtime ----
