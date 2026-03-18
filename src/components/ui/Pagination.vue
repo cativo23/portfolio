@@ -63,10 +63,10 @@ import type { PaginationMeta } from '~/types/pagination'
 
 interface Props {
   pagination: PaginationMeta | null
-  onPageChange: (page: number) => void
 }
 
 const props = defineProps<Props>()
+const emit = defineEmits<{ 'page-change': [page: number] }>()
 
 const visiblePages = computed(() => {
   if (!props.pagination) return []
@@ -114,7 +114,7 @@ const visiblePages = computed(() => {
 
 function goToPage(page: number) {
   if (page >= 1 && page <= (props.pagination?.total_pages ?? 1)) {
-    props.onPageChange(page)
+    emit('page-change', page)
   }
 }
 </script>

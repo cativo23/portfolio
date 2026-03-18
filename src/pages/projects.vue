@@ -35,10 +35,10 @@
     </div>
 
     <!-- Pagination -->
-    <UiPagination 
-      v-if="pagination" 
-      :pagination="pagination" 
-      :on-page-change="handlePageChange" 
+    <UiPagination
+      v-if="pagination"
+      :pagination="pagination"
+      @page-change="handlePageChange"
     />
   </div>
 </template>
@@ -57,11 +57,12 @@ const { projects, pagination, loading, error, fetchProjects } = useProjects()
 
 // Get page from query params, default to 1
 const currentPage = computed(() => {
-  const page = route.query.page
-  return page ? parseInt(String(page), 10) : 1
+  const raw = Number(route.query.page)
+  if (!Number.isFinite(raw) || raw < 1) return 1
+  return Math.floor(raw)
 })
 
-const itemsPerPage = ref(6) // Default items per page
+const itemsPerPage = 6
 
 const displayed = computed(() => projects.value ?? [])
 
@@ -69,7 +70,7 @@ async function loadProjects(page: number = currentPage.value) {
   try {
     await fetchProjects({
       page,
-      per_page: itemsPerPage.value,
+      per_page: itemsPerPage,
     })
 
     // Update URL without navigation
@@ -96,9 +97,6 @@ function handlePageChange(page: number) {
 await useAsyncData('projects-page', () => loadProjects())
 
 function techList(project: Project) {
-  const t = project?.techStack
-  if (!t) return ''
-  if (Array.isArray(t)) return t.join(', ')
-  return String(t)
+  return project.techStack?.join(', ') ?? ''
 }
 </script>
