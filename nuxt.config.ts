@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   debug: process.env.NODE_ENV !== 'production',
   runtimeConfig: {
     apiBaseUrl: process.env.API_BASE_URL || 'http://host.docker.internal:3003',
+    apiBasePath: '/api/v1',
     apiToken: process.env.API_TOKEN || '',
     public: {
       baseTitle: 'Carlos Cativo',
@@ -73,8 +74,8 @@ export default defineNuxtConfig({
     },
   },
   image: {
-    // Use native provider in development, ipx in production
-    provider: process.env.NODE_ENV === 'production' ? 'ipx' : 'native',
+    // Use IPX provider for image optimization
+    provider: 'ipx',
     ipx: {
       maxAge: 3600,
     },
