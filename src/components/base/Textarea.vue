@@ -54,6 +54,7 @@ const textareaClasses = computed(() => [
       :minlength="minlength"
       :maxlength="maxlength"
       :class="textareaClasses"
+      :aria-required="required || undefined"
       :aria-invalid="error ? true : undefined"
       :aria-describedby="errorId"
     />
