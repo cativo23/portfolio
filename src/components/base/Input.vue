@@ -29,6 +29,8 @@ const inputId = computed(() => {
   return undefined
 })
 
+const errorId = computed(() => props.error && inputId.value ? `${inputId.value}-error` : undefined)
+
 const inputClasses = computed(() => [
   'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text rounded font-mono placeholder-tokyo-night-muted transition',
   'focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan border',
@@ -52,7 +54,9 @@ const inputClasses = computed(() => [
       :minlength="minlength"
       :maxlength="maxlength"
       :class="inputClasses"
+      :aria-invalid="error ? true : undefined"
+      :aria-describedby="errorId"
     />
-    <p v-if="error" class="text-tokyo-night-red font-mono text-sm mt-1">{{ error }}</p>
+    <p v-if="error" :id="errorId" class="text-tokyo-night-red font-mono text-sm mt-1">{{ error }}</p>
   </div>
 </template>

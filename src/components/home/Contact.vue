@@ -27,8 +27,8 @@
           :minlength="10"
           :maxlength="1000"
         />
-        <div v-if="error" class="text-red-400 font-mono">{{ error }}</div>
-        <div v-if="success" class="text-green-400 font-mono">Message sent successfully!</div>
+        <div v-if="error" class="text-tokyo-night-red font-mono">{{ error }}</div>
+        <div v-if="success" class="text-tokyo-night-green font-mono">Message sent successfully!</div>
 
         <BaseButton type="submit" :loading="loading" :disabled="loading">
           Send message
