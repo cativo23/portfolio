@@ -28,6 +28,9 @@ jobs:
       - name: Type check
         run: npx vue-tsc --noEmit
 
+      - name: Run tests
+        run: yarn test
+
       - name: Build
         run: yarn build
         env:

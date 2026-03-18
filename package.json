@@ -7,7 +7,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@dmncodes/vue-typing": "^1.0.5",
@@ -30,7 +32,13 @@
     "@nuxtjs/tailwindcss": "^6.x",
     "@tailwindcss/typography": "^0.5.x",
     "@types/node": "^25.5.0",
+    "@vue/test-utils": "^2.4.6",
+    "happy-dom": "^18.0.1",
+    "vitest": "^3.2.1",
     "vue-tsc": "^2.2.10",
     "wrangler": "^4.20.0"
+  },
+  "resolutions": {
+    "vite": "^6.0.0"
   }
 }
