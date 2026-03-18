@@ -35,7 +35,7 @@
     </div>
 
     <!-- Pagination -->
-    <UiPagination
+    <BasePagination
       v-if="pagination"
       :pagination="pagination"
       @page-change="handlePageChange"
