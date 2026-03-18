@@ -79,8 +79,10 @@ async function loadProjects(page: number = currentPage.value) {
         },
       })
     }
+    return projects.value
   } catch (_e) {
     // error ref already set by composable
+    return []
   }
 }
 

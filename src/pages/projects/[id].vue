@@ -1,17 +1,18 @@
 <template>
-  <div v-if="loading" class="flex justify-center items-center min-h-[400px]">
-    <span class="text-tokyo-night-text">Loading project...</span>
-  </div>
+  <div>
+    <div v-if="loading" class="flex justify-center items-center min-h-[400px]">
+      <span class="text-tokyo-night-text">Loading project...</span>
+    </div>
 
-  <div v-else-if="error || !project" class="text-center py-16">
-    <p class="text-red-400 mb-4">Project not found</p>
-    <BaseButton variant="ghost" to="/projects">
-      <LucideArrowLeft class="w-4 h-4 mr-2" />
-      Back to Projects
-    </BaseButton>
-  </div>
+    <div v-else-if="error || !project" class="text-center py-16">
+      <p class="text-red-400 mb-4">Project not found</p>
+      <BaseButton variant="ghost" to="/projects">
+        <LucideArrowLeft class="w-4 h-4 mr-2" />
+        Back to Projects
+      </BaseButton>
+    </div>
 
-  <article v-else class="max-w-4xl mx-auto">
+    <article v-else class="max-w-4xl mx-auto">
     <!-- Back Button -->
     <BaseButton variant="ghost" size="sm" to="/projects" class="mb-6">
       <LucideArrowLeft class="w-4 h-4 mr-2" />
@@ -80,6 +81,7 @@
       </dl>
     </div>
   </article>
+  </div>
 </template>
 
 <script lang="ts" setup>
