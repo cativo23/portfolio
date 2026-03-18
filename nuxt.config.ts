@@ -54,12 +54,8 @@ export default defineNuxtConfig({
       },
     },
   },
-  site: {
-    url: 'https://cativo.dev',
-    name: 'Carlos Cativo - Backend Developer',
-  },
-  // sitemap: {} — @nuxtjs/sitemap disabled until compat with @nuxt/content v3 is fixed
-  // See: https://github.com/nuxt/content/issues/3402
+  // @nuxtjs/sitemap disabled — incompatible with @nuxt/content v3
+  // Re-enable when https://github.com/nuxt/content/issues/3402 is resolved
   compatibilityDate: '2024-11-01',
   modules,
   builder: "vite",
