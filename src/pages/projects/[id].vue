@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div v-if="loading" class="flex justify-center items-center min-h-[400px]">
+    <div v-if="pending" class="flex justify-center items-center min-h-[400px]" role="status" aria-live="polite">
       <span class="text-tokyo-night-text">Loading project...</span>
     </div>
 
-    <div v-else-if="error || !project" class="text-center py-16">
-      <p class="text-red-400 mb-4">Project not found</p>
+    <div v-else-if="error || !project" class="text-center py-16" role="alert">
+      <p class="text-tokyo-night-red mb-4">Project not found</p>
       <BaseButton variant="ghost" to="/projects">
         <LucideArrowLeft class="w-4 h-4 mr-2" />
         Back to Projects
@@ -85,45 +85,29 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import type { Project } from '~/types/project'
-
 const route = useRoute()
 const { fetchProject } = useProjects()
 
 const projectId = computed(() => route.params.id as string)
 
-const project = ref<Project | null>(null)
-const loading = ref(true)
-const error = ref<Error | null>(null)
+const { data: project, pending, error } = await useAsyncData(
+  () => `project-${projectId.value}`,
+  () => fetchProject(projectId.value),
+  { watch: [projectId] }
+)
 
-// Set initial title
-usePageTitle('Project', {
-  description: 'Loading project details...',
+const pageTitle = computed(() => project.value?.title || 'Project')
+const pageDescription = computed(() =>
+  project.value?.shortDescription || project.value?.description || 'Project details'
+)
+
+usePageTitle(pageTitle.value, {
+  description: pageDescription.value,
 })
 
-// Update title when project loads
-watch(project, (newProject) => {
-  if (newProject?.title) {
-    usePageTitle(newProject.title, {
-      description: newProject.shortDescription || newProject.description || 'Project details',
-    })
-  }
-}, { immediate: true })
-
-async function loadProject() {
-  loading.value = true
-  error.value = null
-  try {
-    const data = await fetchProject(projectId.value)
-    project.value = data || null
-  } catch (err) {
-    error.value = err instanceof Error ? err : new Error('Failed to load project')
-    project.value = null
-  } finally {
-    loading.value = false
-  }
-}
+watch(pageTitle, (title) => {
+  usePageTitle(title, { description: pageDescription.value })
+})
 
 function formatDate(dateString?: string) {
   if (!dateString) return 'N/A'
@@ -133,8 +117,6 @@ function formatDate(dateString?: string) {
     day: 'numeric'
   })
 }
-
-await useAsyncData(`project-${projectId.value}`, () => loadProject())
 </script>
 
 <style scoped>
