@@ -52,4 +52,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   modules: ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons', '@nuxthub/core', 'motion-v/nuxt'],
   builder: "vite",
+  vite: {
+    server: {
+      watch: {
+        usePolling: true,
+        interval: 1000,
+      },
+    },
+  },
 })
