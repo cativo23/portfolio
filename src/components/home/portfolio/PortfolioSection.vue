@@ -19,21 +19,14 @@
   </section>
 </template>
 <script lang="ts" setup>
-import { onMounted, computed } from 'vue'
-import FeatureProjectCard from './FeatureProjectCard.vue'
+import { computed } from 'vue'
 import { useProjects } from '~/composables/useProjects'
 
 const { projects, loading, error, fetchProjects } = useProjects()
 
-onMounted(async () => {
-  // fetch only featured projects for this section
-  try {
-    await fetchProjects({ is_featured: true })
-  } catch (e) {
-    // swallow here; `error` ref contains details
-    // TODO: surface error UI if desired
-  }
-})
+await useAsyncData('featured-projects', () =>
+  fetchProjects({ is_featured: true }).catch(() => undefined)
+)
 
 const displayed = computed(() => projects.value ?? [])
 </script>

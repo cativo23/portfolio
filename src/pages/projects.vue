@@ -71,29 +71,29 @@ async function loadProjects(page: number = currentPage.value) {
       page,
       per_page: itemsPerPage.value,
     })
-    
+
     // Update URL without navigation
-    router.replace({
-      query: {
-        ...route.query,
-        page: page > 1 ? page : undefined,
-      },
-    })
-  } catch (e) {
-    // Optionally handle error, e.g., log or notify
-    console.error('Error fetching projects:', e)
+    if (import.meta.client) {
+      router.replace({
+        query: {
+          ...route.query,
+          page: page > 1 ? page : undefined,
+        },
+      })
+    }
+  } catch (_e) {
+    // error ref already set by composable
   }
 }
 
 function handlePageChange(page: number) {
   loadProjects(page)
-  // Scroll to top of page
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  if (import.meta.client) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 }
 
-onMounted(async () => {
-  await loadProjects()
-})
+await useAsyncData('projects-page', () => loadProjects())
 
 function techList(project: Project) {
   const t = project?.techStack
