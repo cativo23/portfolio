@@ -5,10 +5,10 @@
     <!-- Projects Grid -->
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
       <template v-if="loading">
-        <div class="col-span-1 md:col-span-2">Loading projects...</div>
+        <div class="col-span-1 md:col-span-2" role="status" aria-live="polite">Loading projects...</div>
       </template>
       <template v-else-if="error">
-        <div class="col-span-1 text-red-400 md:col-span-2">Failed to load projects</div>
+        <div class="col-span-1 text-red-400 md:col-span-2" role="alert">Failed to load projects</div>
       </template>
       <template v-else-if="displayed.length === 0">
         <div class="col-span-1 md:col-span-2 text-tokyo-night-text">No projects found.</div>
