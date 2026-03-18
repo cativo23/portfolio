@@ -158,9 +158,11 @@ Remove:
 - `<div v-if="error" class="text-tokyo-night-red font-mono">{{ error }}</div>`
 - `<div v-if="success" class="text-tokyo-night-green font-mono">Message sent successfully!</div>`
 - The `success` ref (no longer needed)
-- The `error` ref for form-level API errors (validation errors still stay inline via BaseInput/BaseTextarea `error` prop)
 
-Keep: The `error` ref can be repurposed or removed. Validation errors (from `validateForm()`) should stay inline on the form fields via the `error` prop on BaseInput/BaseTextarea. API/network errors go to toast.
+Keep:
+- The `error` ref — still used by `validateForm()` to show inline validation errors in the form. Only API/network errors move to toast.
+- `validateForm()` continues to set `error.value` for display as an inline message below the form fields (this is field-level feedback, not a transient notification).
+- The inline `<div v-if="error">` stays for validation errors only. API success/error responses move to toast.
 
 ## Constraints
 
