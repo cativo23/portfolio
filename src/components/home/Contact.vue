@@ -28,7 +28,6 @@
           :maxlength="1000"
         />
         <div v-if="error" class="text-tokyo-night-red font-mono">{{ error }}</div>
-        <div v-if="success" class="text-tokyo-night-green font-mono">Message sent successfully!</div>
 
         <BaseButton type="submit" :loading="loading" :disabled="loading">
           Send message
@@ -41,10 +40,10 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
+const toast = useToast();
 const form = ref({ name: '', email: '', message: '', subject: '' });
 const loading = ref(false);
 const error = ref<string | null>(null);
-const success = ref(false);
 
 function validateForm() {
   error.value = null;
@@ -69,7 +68,6 @@ async function submitForm() {
   if (!validateForm()) return;
   loading.value = true;
   error.value = null;
-  success.value = false;
 
   try {
     const data = await $fetch<{ status: string; error?: { message: string } }>('/api/contacts', {
@@ -78,14 +76,14 @@ async function submitForm() {
     });
 
     if (data && typeof data === 'object' && 'status' in data && data.status === 'success') {
-      success.value = true;
+      toast.success('Message sent successfully!')
       form.value = { name: '', email: '', message: '', subject: '' };
     } else {
       const msg = data.error?.message || 'Failed to send message';
-      error.value = msg;
+      toast.error(msg)
     }
   } catch (err) {
-    error.value = 'Network error. Please try again.';
+    toast.error('Network error. Please try again.')
   } finally {
     loading.value = false;
   }
