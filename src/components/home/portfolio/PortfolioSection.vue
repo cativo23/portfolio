@@ -1,10 +1,6 @@
 <template>
   <section class="mb-16">
-    <h3 class="mb-6 text-2xl font-bold">
-      <DecryptedText text="Featured Projects" animateOn="view" class="font-bold text-tokyo-night-cyan"
-        encryptedClassName="text-opacity-60" :speed="40" :maxIterations="10" :sequential="true"
-        revealDirection="start" />
-    </h3>
+    <BaseSectionHeading title="Featured Projects" animated :level="3" />
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
       <template v-if="loading">
         <div class="col-span-1 md:col-span-2">Loading projects...</div>
