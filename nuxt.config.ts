@@ -7,7 +7,7 @@ const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
 export default defineNuxtConfig({
   debug: process.env.NODE_ENV !== 'production',
   runtimeConfig: {
-    apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:3001',
+    apiBaseUrl: process.env.API_BASE_URL || 'http://host.docker.internal:3003',
     apiToken: process.env.API_TOKEN || '',
     public: {
       baseTitle: 'Carlos Cativo',

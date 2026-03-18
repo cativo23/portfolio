@@ -12,4 +12,8 @@ services:
       - '3001:3000'
     environment:
       NODE_ENV: development
+      NUXT_API_BASE_URL: http://host.docker.internal:3003
+      NUXT_API_TOKEN: ${NUXT_PUBLIC_API_TOKEN:-}
     user: 'node'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'

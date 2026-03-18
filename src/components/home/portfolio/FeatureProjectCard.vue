@@ -26,4 +26,7 @@ interface Props {
 }
 
 defineProps<Props>()
+defineOptions({
+  name: 'FeatureProjectCard'
+})
 </script>

@@ -1,20 +1,24 @@
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  const id = getRouterParam(event, 'id')
-
-  if (!id || !/^[\w-]+$/.test(id)) {
-    throw createError({ statusCode: 400, message: 'Invalid project ID' })
-  }
+  const { id } = getRouterParams(event)
 
   const headers: Record<string, string> = {}
   if (config.apiToken) {
-    headers.Authorization = `ApiKey ${config.apiToken}`
+    headers['x-api-key'] = config.apiToken
   }
 
-  const data = await $fetch(`${config.apiBaseUrl}/projects/${id}`, {
+  const data = await $fetch<{ status?: string; data?: Record<string, unknown> }>(`${config.apiBaseUrl}/projects/${id}`, {
     method: 'GET',
     headers,
   })
+
+  // Normalize techStack to always be string[]
+  if (data?.data) {
+    const project = data.data
+    project.techStack = Array.isArray(project.techStack)
+      ? project.techStack
+      : project.techStack ? [String(project.techStack)] : []
+  }
 
   return data
 })

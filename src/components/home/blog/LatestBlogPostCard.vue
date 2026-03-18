@@ -22,4 +22,7 @@ interface Props {
 }
 
 defineProps<Props>()
+defineOptions({
+  name: 'LatestBlogPostCard'
+})
 </script>

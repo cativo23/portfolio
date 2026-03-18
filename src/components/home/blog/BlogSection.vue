@@ -9,6 +9,7 @@
 
 <script lang="ts" setup>
 import type { BlogPost } from '~/types/blog'
+import LatestBlogPostCard from '~/components/home/blog/LatestBlogPostCard.vue'
 
 const { data: posts } = await useAsyncData('latest-blog-posts', () => {
   return queryCollection('blog')

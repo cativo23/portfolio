@@ -17,12 +17,12 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useProjects } from '~/composables/useProjects'
+import FeatureProjectCard from '~/components/home/portfolio/FeatureProjectCard.vue'
 
 const { projects, loading, error, fetchProjects } = useProjects()
 
-await useAsyncData('featured-projects', () =>
-  fetchProjects({ is_featured: true }).catch(() => undefined)
-)
+// Fetch featured projects
+await fetchProjects({ is_featured: true })
 
 const displayed = computed(() => projects.value ?? [])
 </script>

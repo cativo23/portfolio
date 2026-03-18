@@ -63,7 +63,7 @@ async function submitForm() {
   success.value = false;
 
   try {
-    const data = await $fetch('/api/contacts', {
+    const data = await $fetch<{ status: string; error?: { message: string } }>('/api/contacts', {
       method: 'POST',
       body: { name: form.value.name, email: form.value.email, message: form.value.message, subject: form.value.subject || undefined },
     });
@@ -72,7 +72,7 @@ async function submitForm() {
       success.value = true;
       form.value = { name: '', email: '', message: '', subject: '' };
     } else {
-      const msg = data?.error?.message || 'Failed to send message';
+      const msg = data.error?.message || 'Failed to send message';
       error.value = msg;
     }
   } catch (err) {
