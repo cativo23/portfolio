@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     headers.Authorization = `ApiKey ${config.apiToken}`
   }
 
-  const data = await $fetch(`${config.apiBaseUrl}/contacts`, {
+  const data = await $fetch(`${config.apiBaseUrl}${config.apiBasePath}/contacts`, {
     method: 'POST',
     headers,
     body,

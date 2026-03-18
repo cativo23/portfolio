@@ -2,7 +2,7 @@ export default defineEventHandler(async () => {
   const config = useRuntimeConfig()
 
   try {
-    const health = await $fetch<{ status: string; data: { summary: string; checks: Record<string, { status: string }>; checkedAt: string } }>(`${config.apiBaseUrl}/health`, {
+    const health = await $fetch<{ status: string; data: { summary: string; checks: Record<string, { status: string }>; checkedAt: string } }>(`${config.apiBaseUrl}${config.apiBasePath}/health`, {
       method: 'GET',
     })
 

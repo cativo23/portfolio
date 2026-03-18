@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     headers['x-api-key'] = config.apiToken
   }
 
-  const data = await $fetch<{ data?: Array<Record<string, unknown>>; [key: string]: unknown }>(`${config.apiBaseUrl}/projects`, {
+  const data = await $fetch<{ data?: Array<Record<string, unknown>>; [key: string]: unknown }>(`${config.apiBaseUrl}${config.apiBasePath}/projects`, {
     method: 'GET',
     headers,
     query,
