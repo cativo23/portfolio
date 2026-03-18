@@ -75,8 +75,10 @@ const typeConfig: Record<string, { border: string; icon: string; iconColor: stri
           typeConfig[toast.type].border,
         ]"
         role="alert"
+        aria-live="assertive"
         @mouseenter="pauseTimer(toast.id)"
         @mouseleave="resumeTimer(toast.id)"
+        @keydown.escape="onClose(toast.id)"
         @vue:mounted="onToastEnter(toast)"
       >
         <span :class="[typeConfig[toast.type].iconColor, 'text-base leading-none shrink-0']">
