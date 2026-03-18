@@ -11,7 +11,7 @@
       ></span>
       {{ statusText }}
     </span>
-    <span v-if="health?.version" class="text-tokyo-night-muted">v{{ health.version }}</span>
+    <span v-if="apiInfo?.version" class="text-tokyo-night-muted">v{{ apiInfo.version }}</span>
   </div>
 </template>
 

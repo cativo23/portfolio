@@ -19,7 +19,7 @@
     </BaseButton>
 
     <!-- Featured Badge -->
-    <BaseBadge v-if="project.isFeatured" color="magenta" size="lg" class="mb-4">
+    <BaseBadge v-if="project.isFeatured" color="magenta" size="md" class="mb-4">
       Featured Project
     </BaseBadge>
 
@@ -95,9 +95,19 @@ const project = ref<Project | null>(null)
 const loading = ref(true)
 const error = ref<Error | null>(null)
 
-usePageTitle(() => project.value?.title || 'Project', {
-  description: () => project.value?.shortDescription || project.value?.description || 'Project details',
+// Set initial title
+usePageTitle('Project', {
+  description: 'Loading project details...',
 })
+
+// Update title when project loads
+watch(project, (newProject) => {
+  if (newProject?.title) {
+    usePageTitle(newProject.title, {
+      description: newProject.shortDescription || newProject.description || 'Project details',
+    })
+  }
+}, { immediate: true })
 
 async function loadProject() {
   loading.value = true
