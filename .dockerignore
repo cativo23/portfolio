@@ -1,10 +1,44 @@
+# Dependencies
 node_modules
-.git
+
+# Build output
 .nuxt
 .output
+dist
+
+# Version control
+.git
+.gitignore
+
+# Environment files
 .env
 .env.*
-*.md
+
+# IDE
 .vscode
 .idea
 
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Testing & coverage
+coverage
+
+# CI/CD & tooling
+.github
+.planning
+.claude
+
+# Docker (avoid recursive copy)
+docker
+compose.yml
+compose.prod.yml
+.dockerignore
+
+# Database files
+*.sqlite
+*.db

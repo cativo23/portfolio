@@ -1,27 +1,54 @@
-# Dockerfile for production environment
+# ---- Stage 1: Install dependencies ----
+FROM node:22-bookworm-slim AS deps
 
-# Use the official Node.js image
-FROM node:23-alpine
+# Install native build tools for better-sqlite3
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    libsqlite3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+
+# Install ALL deps (devDependencies needed for build)
+RUN yarn install --frozen-lockfile
+
+# ---- Stage 2: Build the application ----
+FROM node:22-bookworm-slim AS build
+
+WORKDIR /app
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Force node-server preset (overrides @nuxthub/core's cloudflare preset)
+ENV NITRO_PRESET=node-server
+RUN yarn build
+
+# ---- Stage 3: Production runtime ----
+FROM node:22-bookworm-slim AS runtime
 
 LABEL org.opencontainers.image.authors="cativo23.kt@gmail.com"
 
-# Set the working directory inside the container
+ENV NODE_ENV=production
+
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the container
-COPY package*.json ./
+# Create non-root user
+RUN addgroup --system --gid 1001 nuxt && \
+    adduser --system --uid 1001 --ingroup nuxt nuxt
 
-# Install dependencies
-RUN yarn install --prod
+# Copy only the built output
+COPY --from=build --chown=nuxt:nuxt /app/.output ./.output
 
-# Copy the rest of the application files
-COPY . .
+USER nuxt
 
-# Expose port 3000
 EXPOSE 3000
 
-# Compile the application
-RUN yarn run build
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
+  CMD node -e "fetch('http://localhost:3000').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"
 
-# Run the application
 CMD ["node", ".output/server/index.mjs"]

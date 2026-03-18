@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2 class="text-3xl font-bold mb-8 text-tokyo-night-cyan">About Me</h2>
-    <div class="bg-tokyo-night-dark p-6 rounded-lg">
+    <BaseSectionHeading title="About Me" />
+    <BaseCard :hoverable="false">
       <p class="mb-4 text-justify">
         Hi, I'm Carlos Cativo, a passionate backend developer with over 8 years of experience in building scalable and
         efficient server-side applications.
@@ -38,7 +38,7 @@
         I'm always eager to learn new technologies and tackle challenging problems.
         Feel free to reach out if you'd like to collaborate on a project or just chat about backend development!
       </p>
-    </div>
+    </BaseCard>
   </div>
 </template>
 

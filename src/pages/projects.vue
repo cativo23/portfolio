@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2 class="mb-8 text-3xl font-bold text-tokyo-night-cyan">My Projects</h2>
-    
+    <BaseSectionHeading title="My Projects" />
+
     <!-- Projects Grid -->
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
       <template v-if="loading">
@@ -13,8 +13,7 @@
       <template v-else-if="displayed.length === 0">
         <div class="col-span-1 md:col-span-2 text-tokyo-night-text">No projects found.</div>
       </template>
-      <div v-else v-for="project in displayed" :key="project.id || project.title"
-        class="p-6 transition-shadow duration-200 rounded-lg bg-tokyo-night-dark hover:shadow-lg">
+      <BaseCard v-else v-for="project in displayed" :key="project.id || project.title">
         <h3 class="mb-4 text-2xl font-bold">{{ project.title }}</h3>
         <p class="mb-4">{{ project.description }}</p>
         <div class="flex items-center mb-4 text-tokyo-night-cyan">
@@ -22,20 +21,18 @@
           <span>{{ techList(project) }}</span>
         </div>
         <div class="justify-start card-actions">
-          <a :href="project.repoUrl" target="_blank" rel="noopener noreferrer"
-            class="inline-flex items-center transition-colors duration-200 btn text-tokyo-night-purple hover:text-tokyo-night-cyan">
+          <BaseButton variant="ghost" :href="project.repoUrl" external>
             <LucideGithub class="w-5 h-5 mr-2" />View on GitHub
-          </a>
-          <a v-if="project.liveUrl" :href="project.liveUrl" target="_blank" rel="noopener noreferrer"
-            class="inline-flex items-center p-6 duration-200 transition-colors btn text-tokyo-night-purple hover:text-tokyo-night-cyan">
+          </BaseButton>
+          <BaseButton v-if="project.liveUrl" variant="ghost" :href="project.liveUrl" external>
             <LucideExternalLink class="w-5 h-5 mr-2" />Live Demo
-          </a>
+          </BaseButton>
         </div>
-      </div>
+      </BaseCard>
     </div>
 
     <!-- Pagination -->
-    <UiPagination
+    <BasePagination
       v-if="pagination"
       :pagination="pagination"
       @page-change="handlePageChange"

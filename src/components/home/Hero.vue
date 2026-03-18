@@ -10,10 +10,7 @@
           :speed="30" :maxIterations="20" :sequential="true" revealDirection="center" />
       </h2>
       <p class="text-xl mb-8">Crafting robust server-side solutions and sharing knowledge</p>
-      <NuxtLink :to="`/projects`"
-        class="btn bg-tokyo-night-red text-tokyo-night-dark px-6 py-2 rounded hover:bg-tokyo-night-cyan transition-colors duration-200 hover:cursor-pointer">
-        View Projects
-      </NuxtLink>
+      <BaseButton to="/projects">View Projects</BaseButton>
     </div>
   </section>
 </template>

@@ -6,9 +6,10 @@ services:
       context: .
       dockerfile: docker/dev/Dockerfile
     volumes:
-      - .:/home/node/app # Mount the current directory to the container
+      - .:/home/node/app
+      - /home/node/app/node_modules  # Preserve container's node_modules
     ports:
-      - '3001:3000' # Map Nuxt dev server to localhost
+      - '3001:3000'
     environment:
       NODE_ENV: development
-    user: 'node' # Run as node user
+    user: 'node'
