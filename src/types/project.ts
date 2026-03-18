@@ -3,7 +3,7 @@ export interface Project {
     title: string;
     description: string;
     shortDescription?: string;
-    techStack: string | string[];
+    techStack: string[];
     repoUrl: string;
     liveUrl?: string;
     isFeatured?: boolean;

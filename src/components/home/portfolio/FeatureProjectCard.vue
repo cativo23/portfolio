@@ -22,12 +22,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const techList = computed(() => {
-  const t = props.project.techStack
-  if (!t) return ''
-  if (Array.isArray(t)) return t.join(', ')
-  return String(t)
-})
+const techList = computed(() => props.project.techStack?.join(', ') ?? '')
 </script>
 
 <style scoped>
