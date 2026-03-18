@@ -1,17 +1,17 @@
 <template>
-  <NuxtLink :to="post.path ?? '/blog'" class="block">
-    <article class="bg-tokyo-night-dark p-6 rounded-lg hover:shadow-lg transition-shadow duration-200 cursor-pointer">
-      <h4 class="text-xl font-bold mb-2 text-tokyo-night-highlight">{{ post.title }}</h4>
-      <p class="mb-4">{{ post.excerpt }}</p>
+  <BaseCard>
+    <h4 class="text-xl font-bold mb-2 text-tokyo-night-highlight">{{ post.title }}</h4>
+    <p class="mb-4">{{ post.excerpt }}</p>
+    <template #footer>
       <div class="flex justify-between items-center">
         <span class="text-tokyo-night-yellow">{{ post.date }}</span>
-        <span class="flex items-center text-tokyo-night-green hover:text-tokyo-night-cyan transition-colors duration-200">
+        <BaseButton v-if="post.path" variant="ghost" size="sm" :to="post.path">
           Read More
           <LucideArrowRight class="w-4 h-4 ml-2" />
-        </span>
+        </BaseButton>
       </div>
-    </article>
-  </NuxtLink>
+    </template>
+  </BaseCard>
 </template>
 
 <script lang="ts" setup>
@@ -21,8 +21,5 @@ interface Props {
   post: BlogPost
 }
 
-const props = defineProps<Props>()
-
+defineProps<Props>()
 </script>
-
-<style></style>
