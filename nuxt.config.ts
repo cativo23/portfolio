@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const isDocker = process.env.NITRO_PRESET === 'node-server'
 
-const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxtjs/sitemap', '@nuxt/content', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image']
+const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image']
 const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
 
 export default defineNuxtConfig({
@@ -58,7 +58,8 @@ export default defineNuxtConfig({
     url: 'https://cativo.dev',
     name: 'Carlos Cativo - Backend Developer',
   },
-  sitemap: {},
+  // sitemap: {} — @nuxtjs/sitemap disabled until compat with @nuxt/content v3 is fixed
+  // See: https://github.com/nuxt/content/issues/3402
   compatibilityDate: '2024-11-01',
   modules,
   builder: "vite",
