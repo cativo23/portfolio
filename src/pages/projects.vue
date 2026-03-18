@@ -27,7 +27,7 @@
             <LucideGithub class="w-5 h-5 mr-2" />View on GitHub
           </a>
           <a v-if="project.liveUrl" :href="project.liveUrl" target="_blank" rel="noopener noreferrer"
-            class="inline-flex items-center p-6 duration-200 tranition-colors btn text-tokyo-night-purple hover:text-tokyo-night-cyan">
+            class="inline-flex items-center p-6 duration-200 transition-colors btn text-tokyo-night-purple hover:text-tokyo-night-cyan">
             <LucideExternalLink class="w-5 h-5 mr-2" />Live Demo
           </a>
         </div>

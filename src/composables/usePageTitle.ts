@@ -15,7 +15,7 @@ export const usePageTitle = (pageTitle: string, options: MetaOptions = {}): void
     ogTitle: options.ogTitle || `${baseTitle} - ${pageTitle}`,
     ogDescription: options.ogDescription || options.description || `Learn more about ${baseTitle} on the ${pageTitle} page.`,
     ogImage: options.ogImage || defaultOgImage,
-    ogUrl: defaultOgUrl || options.ogUrl,
+    ogUrl: options.ogUrl || defaultOgUrl,
     twitterTitle: options.twitterTitle || `${baseTitle} - ${pageTitle}`,
     twitterDescription: options.twitterDescription || options.description || `Learn more about ${baseTitle} on the ${pageTitle} page.`,
     twitterImage: options.twitterImage || options.ogImage || defaultOgImage,
