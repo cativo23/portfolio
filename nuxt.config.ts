@@ -59,7 +59,7 @@ export default defineNuxtConfig({
     name: 'Carlos Cativo - Backend Developer',
   },
   sitemap: {
-    excludeAppSources: ['nuxt:content'],
+    sources: [],
   },
   compatibilityDate: '2024-11-01',
   modules,
