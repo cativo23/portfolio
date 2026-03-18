@@ -2,12 +2,18 @@ name: portfolio-prod
 
 services:
   app:
-    image: "portfolio:latest"
+    image: portfolio:latest
     build:
       context: .
       dockerfile: docker/prod/Dockerfile
     ports:
-      - '80:3000' # Map to port 80 for production meanwhile we set up traefik
+      - '80:3000'
     environment:
       NODE_ENV: production
-    user: 'node' # Run as node user
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
