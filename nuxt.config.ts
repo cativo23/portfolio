@@ -2,12 +2,12 @@
 export default defineNuxtConfig({
   debug: process.env.NODE_ENV !== 'production',
   runtimeConfig: {
+    apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:3001',
+    apiToken: process.env.API_TOKEN || '',
     public: {
       baseTitle: 'Carlos Cativo',
       defaultOgImage: '/img/akira.jpeg',
       defaultOgUrl: 'https://cativo.dev',
-      apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:3001',
-      apiToken: process.env.API_TOKEN || '',
     },
   },
   srcDir: 'src/',
