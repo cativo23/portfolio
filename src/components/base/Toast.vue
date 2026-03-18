@@ -51,7 +51,7 @@ onUnmounted(() => {
   timers.clear()
 })
 
-const typeConfig: Record<string, { border: string; icon: string; iconColor: string }> = {
+const typeConfig: Record<'success' | 'error' | 'warning' | 'info', { border: string; icon: string; iconColor: string }> = {
   success: { border: 'border-tokyo-night-green', icon: '✓', iconColor: 'text-tokyo-night-green' },
   error: { border: 'border-tokyo-night-red', icon: '✕', iconColor: 'text-tokyo-night-red' },
   warning: { border: 'border-tokyo-night-yellow', icon: '⚠', iconColor: 'text-tokyo-night-yellow' },
