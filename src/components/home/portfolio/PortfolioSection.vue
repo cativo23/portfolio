@@ -3,10 +3,10 @@
     <BaseSectionHeading title="Featured Projects" animated :level="3" />
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
       <template v-if="loading">
-        <div class="col-span-1 md:col-span-2">Loading projects...</div>
+        <div class="col-span-1 md:col-span-2" role="status" aria-live="polite">Loading projects...</div>
       </template>
       <template v-else-if="error">
-        <div class="col-span-1 text-red-400 md:col-span-2">Failed to load projects</div>
+        <div class="col-span-1 text-red-400 md:col-span-2" role="alert">Failed to load projects</div>
       </template>
       <div v-else v-for="project in displayed" :key="project.id || project.title">
         <FeatureProjectCard :project="project" />

@@ -4,19 +4,19 @@
     <form @submit.prevent="submitForm" class="bg-tokyo-night-dark p-6 rounded-lg shadow-lg flex flex-col gap-4 w-full">
       <div class="flex flex-col gap-1">
         <label for="name" class="text-tokyo-night-cyan font-mono font-bold">Name</label>
-        <input type="text" id="name" v-model="form.name" required
+        <input type="text" id="name" v-model="form.name" required aria-required="true"
           class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono placeholder-tokyo-night-muted transition"
           placeholder="Your name">
       </div>
       <div class="flex flex-col gap-1">
         <label for="email" class="text-tokyo-night-cyan font-mono font-bold">Email</label>
-        <input type="email" id="email" v-model="form.email" required
+        <input type="email" id="email" v-model="form.email" required aria-required="true"
           class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono placeholder-tokyo-night-muted transition"
           placeholder="you@email.com">
       </div>
       <div class="flex flex-col gap-1">
         <label for="message" class="text-tokyo-night-cyan font-mono font-bold">Message</label>
-        <textarea id="message" v-model="form.message" required rows="4"
+        <textarea id="message" v-model="form.message" required aria-required="true" rows="4"
           class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono placeholder-tokyo-night-muted transition"
           placeholder="Type your message..."></textarea>
       </div>

@@ -54,6 +54,7 @@ const inputClasses = computed(() => [
       :minlength="minlength"
       :maxlength="maxlength"
       :class="inputClasses"
+      :aria-required="required || undefined"
       :aria-invalid="error ? true : undefined"
       :aria-describedby="errorId"
     />

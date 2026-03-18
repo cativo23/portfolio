@@ -42,7 +42,7 @@ const sizeClasses = computed(() => {
 })
 
 const classes = computed(() => [
-  'relative inline-flex items-center justify-center rounded-lg cursor-pointer',
+  'relative inline-flex items-center justify-center rounded-lg cursor-pointer focus:ring-2 focus:ring-tokyo-night-cyan focus:outline-none',
   variantClasses[props.variant],
   sizeClasses.value,
   (props.disabled || props.loading) && 'opacity-50 pointer-events-none',
