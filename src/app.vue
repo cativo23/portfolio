@@ -15,6 +15,7 @@
     <!-- Footer -->
     <Footer />
   </div>
+  <BaseToast />
 </template>
 
 <script setup>
