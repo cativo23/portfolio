@@ -31,10 +31,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { useRuntimeConfig } from '#app';
-
-const config = useRuntimeConfig();
-const apiBase = config.public.apiBaseUrl || 'http://localhost:3001';
 
 const form = ref({ name: '', email: '', message: '', subject: '' });
 const loading = ref(false);
@@ -67,15 +63,12 @@ async function submitForm() {
   success.value = false;
 
   try {
-    const res = await fetch(`${apiBase}/contacts`, {
+    const data = await $fetch('/api/contacts', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: form.value.name, email: form.value.email, message: form.value.message, subject: form.value.subject || undefined }),
+      body: { name: form.value.name, email: form.value.email, message: form.value.message, subject: form.value.subject || undefined },
     });
 
-    const data = await res.json();
-
-    if (res.ok && data.status === 'success') {
+    if (data && typeof data === 'object' && 'status' in data && data.status === 'success') {
       success.value = true;
       form.value = { name: '', email: '', message: '', subject: '' };
     } else {

@@ -24,7 +24,7 @@ usePageTitle('Blog', {
   description: 'Explore my latest blog posts on backend development, technology trends, and personal insights.'
 });
 
-const { data: posts } = await useAsyncData(() => {
+const { data: posts } = await useAsyncData('blog-index', () => {
   return queryCollection('blog')
     .order('created_at', 'DESC')
     .all()
