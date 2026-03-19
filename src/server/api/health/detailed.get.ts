@@ -15,6 +15,13 @@ export default defineEventHandler(async () => {
         environment: string
         timestamp: string
         uptime: number
+        process?: {
+          pid: number
+          nodeVersion: string
+          platform: string
+          cpuUsage: { user: number; system: number }
+          memoryUsage: { rss: number; heapTotal: number; heapUsed: number; external: number }
+        }
         components: Record<string, {
           status: string
           latency?: number

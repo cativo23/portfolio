@@ -9,7 +9,7 @@
         :key="tab.id"
         :variant="selectedTab === tab.id ? 'primary' : 'ghost'"
         :size="'sm'"
-        @click="selectedTab = tab.id as 'basic' | 'live' | 'ready' | 'detailed'; loadHealth()"
+        @click="selectedTab = tab.id as 'basic' | 'detailed'; loadHealth()"
       >
         {{ tab.label }}
       </BaseButton>
@@ -43,8 +43,8 @@
           </p>
         </div>
 
-        <!-- Detailed Info -->
-        <div v-if="selectedTab === 'detailed' && health.components" class="space-y-3">
+        <!-- Components List -->
+        <div class="space-y-3">
           <div
             v-for="(component, name) in health.components"
             :key="name"
@@ -64,37 +64,16 @@
                 ></span>
                 {{ component.status === 'up' ? 'Operational' : 'Down' }}
               </span>
-              <span v-if="component.latency" class="text-tokyo-night-muted text-xs font-mono">
+              <span v-if="component.latency !== undefined" class="text-tokyo-night-muted text-xs font-mono">
                 {{ component.latency }}ms
               </span>
-              <span v-if="component.usagePercent" class="text-tokyo-night-muted text-xs font-mono">
+              <span v-if="component.usagePercent !== undefined" class="text-tokyo-night-muted text-xs font-mono">
                 {{ component.usagePercent.toFixed(1) }}%
               </span>
             </div>
             <p v-if="component.message" class="text-tokyo-night-muted text-xs mt-1">
               {{ component.message }}
             </p>
-          </div>
-        </div>
-
-        <!-- Basic/Live/Ready Checks -->
-        <div v-else class="space-y-3">
-          <div
-            v-for="(check, name) in allChecks"
-            :key="name"
-            class="flex items-center justify-between p-3 rounded bg-tokyo-night-bg"
-          >
-            <span class="text-tokyo-night-text font-mono capitalize">{{ formatServiceName(name) }}</span>
-            <span
-              class="flex items-center gap-2 text-sm"
-              :class="check.status === 'up' || check.status === 'ok' ? 'text-green-400' : 'text-red-400'"
-            >
-              <span
-                class="w-2 h-2 rounded-full"
-                :class="check.status === 'up' || check.status === 'ok' ? 'bg-green-400' : 'bg-red-400'"
-              ></span>
-              {{ check.status === 'up' || check.status === 'ok' ? 'Operational' : 'Down' }}
-            </span>
           </div>
         </div>
 
@@ -148,14 +127,18 @@ interface HealthComponent {
 
 interface HealthInfo {
   status: string
-  info?: Record<string, { status: string }>
-  error?: Record<string, { status: string; message?: string }>
-  details?: Record<string, { status: string }>
-  components?: Record<string, HealthComponent>
+  components: Record<string, HealthComponent>
   version?: string
   environment?: string
   timestamp?: string
   uptime?: number
+  process?: {
+    pid: number
+    nodeVersion: string
+    platform: string
+    cpuUsage: { user: number; system: number }
+    memoryUsage: { rss: number; heapTotal: number; heapUsed: number; external: number }
+  }
 }
 
 const healthTabs = [
@@ -169,48 +152,21 @@ const loading = ref(true)
 const error = ref<string | null>(null)
 const requestId = ref<string | null>(null)
 
-const allChecks = computed(() => {
-  if (!health.value) return {}
-  const checks: Record<string, { status: string }> = {}
-  if (health.value.info) {
-    Object.assign(checks, health.value.info)
-  }
-  if (health.value.error) {
-    Object.assign(checks, health.value.error)
-  }
-  if (health.value.details) {
-    Object.assign(checks, health.value.details)
-  }
-  return checks
-})
-
 const overallStatus = computed(() => {
   if (!health.value) return 'Unknown'
-  if (health.value.components) {
-    const allUp = Object.values(health.value.components).every(c => c.status === 'up')
-    return allUp ? 'All Systems Operational' : 'Some Services Down'
-  }
-  const allUp = Object.values(allChecks.value).every(c => c.status === 'up' || c.status === 'ok')
+  const allUp = Object.values(health.value.components).every(c => c.status === 'up')
   return allUp ? 'All Systems Operational' : 'Some Services Down'
 })
 
 const overallStatusColor = computed(() => {
   if (!health.value) return 'text-tokyo-night-muted'
-  if (health.value.components) {
-    const allUp = Object.values(health.value.components).every(c => c.status === 'up')
-    return allUp ? 'text-green-400' : 'text-red-400'
-  }
-  const allUp = Object.values(allChecks.value).every(c => c.status === 'up' || c.status === 'ok')
+  const allUp = Object.values(health.value.components).every(c => c.status === 'up')
   return allUp ? 'text-green-400' : 'text-red-400'
 })
 
 const dotColor = computed(() => {
   if (!health.value) return 'bg-tokyo-night-muted'
-  if (health.value.components) {
-    const allUp = Object.values(health.value.components).every(c => c.status === 'up')
-    return allUp ? 'bg-green-400' : 'bg-red-400'
-  }
-  const allUp = Object.values(allChecks.value).every(c => c.status === 'up' || c.status === 'ok')
+  const allUp = Object.values(health.value.components).every(c => c.status === 'up')
   return allUp ? 'bg-green-400' : 'bg-red-400'
 })
 

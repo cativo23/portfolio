@@ -1,7 +1,8 @@
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const query = getQuery(event)
-  const type = query.type || 'basic'
+  const type = query.type as string || 'basic'
 
   const headers: Record<string, string> = {}
   if (config.apiToken) {
@@ -15,14 +16,18 @@ export default defineEventHandler(async (event) => {
       status: string
       data: {
         status: string
-        info?: Record<string, { status: string }>
-        error?: Record<string, { status: string; message?: string }>
-        details?: Record<string, { status: string }>
-        components?: Record<string, { status: string; latency?: number; used?: number; total?: number; usagePercent?: number; message?: string }>
+        components: Record<string, { status: string; latency?: number; used?: number; total?: number; usagePercent?: number; message?: string }>
         version?: string
         environment?: string
         timestamp?: string
         uptime?: number
+        process?: {
+          pid: number
+          nodeVersion: string
+          platform: string
+          cpuUsage: { user: number; system: number }
+          memoryUsage: { rss: number; heapTotal: number; heapUsed: number; external: number }
+        }
       }
       request_id?: string
     }>(endpoint, {
@@ -41,9 +46,7 @@ export default defineEventHandler(async (event) => {
       status: 'error' as const,
       data: {
         status: 'error',
-        info: {},
-        error: { backend: { status: 'down', message: 'Backend unavailable' } },
-        details: {},
+        components: {},
       },
     }
   }
