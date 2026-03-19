@@ -21,7 +21,7 @@
       </div>
 
       <div v-else-if="error || !health" class="text-center py-8">
-        <p class="text-red-400 mb-4">Unable to load health status</p>
+        <p class="text-tokyo-night-red mb-4">Unable to load health status</p>
         <p class="text-tokyo-night-muted text-sm">{{ error }}</p>
       </div>
 
@@ -48,28 +48,30 @@
           <div
             v-for="(component, name) in health.components"
             :key="name"
-            class="flex items-center justify-between p-4 rounded bg-tokyo-night-bg"
+            class="p-4 rounded bg-tokyo-night-bg"
           >
-            <div class="flex items-center gap-3">
-              <span class="text-tokyo-night-text font-mono capitalize">{{ formatServiceName(name) }}</span>
-            </div>
-            <div class="flex items-center gap-4">
-              <span
-                class="flex items-center gap-2 text-sm"
-                :class="component.status === 'up' ? 'text-green-400' : 'text-red-400'"
-              >
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="text-tokyo-night-text font-mono capitalize">{{ formatServiceName(name) }}</span>
+              </div>
+              <div class="flex items-center gap-4">
                 <span
-                  class="w-2 h-2 rounded-full"
-                  :class="component.status === 'up' ? 'bg-green-400' : 'bg-red-400'"
-                ></span>
-                {{ component.status === 'up' ? 'Operational' : 'Down' }}
-              </span>
-              <span v-if="component.latency !== undefined" class="text-tokyo-night-muted text-xs font-mono">
-                {{ component.latency }}ms
-              </span>
-              <span v-if="component.usagePercent !== undefined" class="text-tokyo-night-muted text-xs font-mono">
-                {{ component.usagePercent.toFixed(1) }}%
-              </span>
+                  class="flex items-center gap-2 text-sm"
+                  :class="component.status === 'up' ? 'text-tokyo-night-green' : 'text-tokyo-night-red'"
+                >
+                  <span
+                    class="w-2 h-2 rounded-full"
+                    :class="component.status === 'up' ? 'bg-tokyo-night-green' : 'bg-tokyo-night-red'"
+                  ></span>
+                  {{ component.status === 'up' ? 'Operational' : 'Down' }}
+                </span>
+                <span v-if="component.latency !== undefined" class="text-tokyo-night-muted text-xs font-mono">
+                  {{ component.latency }}ms
+                </span>
+                <span v-if="component.usagePercent !== undefined" class="text-tokyo-night-muted text-xs font-mono">
+                  {{ component.usagePercent.toFixed(1) }}%
+                </span>
+              </div>
             </div>
             <p v-if="component.message" class="text-tokyo-night-muted text-xs mt-1">
               {{ component.message }}
@@ -161,13 +163,13 @@ const overallStatus = computed(() => {
 const overallStatusColor = computed(() => {
   if (!health.value) return 'text-tokyo-night-muted'
   const allUp = Object.values(health.value.components).every(c => c.status === 'up')
-  return allUp ? 'text-green-400' : 'text-red-400'
+  return allUp ? 'text-tokyo-night-green' : 'text-tokyo-night-red'
 })
 
 const dotColor = computed(() => {
   if (!health.value) return 'bg-tokyo-night-muted'
   const allUp = Object.values(health.value.components).every(c => c.status === 'up')
-  return allUp ? 'bg-green-400' : 'bg-red-400'
+  return allUp ? 'bg-tokyo-night-green' : 'bg-tokyo-night-red'
 })
 
 function formatServiceName(name: string): string {
@@ -197,7 +199,10 @@ async function loadHealth() {
   }
 }
 
-await useAsyncData('health-check', () => loadHealth())
+// Use callOnce for SSR — loadHealth manages its own state via refs
+if (import.meta.server) {
+  await loadHealth()
+}
 </script>
 
 <style scoped>

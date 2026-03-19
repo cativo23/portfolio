@@ -2,7 +2,11 @@
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const query = getQuery(event)
-  const type = query.type as string || 'basic'
+  const rawType = query.type as string || 'basic'
+
+  // Validate type against allowlist to prevent SSRF path traversal
+  const allowedTypes = ['basic', 'detailed', 'live', 'ready'] as const
+  const type = allowedTypes.includes(rawType as any) ? rawType : 'basic'
 
   const headers: Record<string, string> = {}
   if (config.apiToken) {
@@ -40,8 +44,8 @@ export default defineEventHandler(async (event) => {
       data: health.data,
       request_id: health.request_id,
     }
-  } catch (error) {
-    console.error(error)
+  } catch (_error) {
+    setResponseStatus(event, 503)
     return {
       status: 'error' as const,
       data: {
