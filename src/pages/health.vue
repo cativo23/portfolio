@@ -9,7 +9,7 @@
         :key="tab.id"
         :variant="selectedTab === tab.id ? 'primary' : 'ghost'"
         :size="'sm'"
-        @click="selectedTab = tab.id; loadHealth()"
+        @click="selectedTab = tab.id as 'basic' | 'live' | 'ready' | 'detailed'; loadHealth()"
       >
         {{ tab.label }}
       </BaseButton>
