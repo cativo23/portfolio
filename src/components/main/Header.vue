@@ -45,10 +45,11 @@
       enter-to-class="translate-x-0" leave-active-class="transition-transform transform duration-300"
       leave-from-class="translate-x-0" leave-to-class="translate-x-full">
       <div v-if="isMenuOpen"
-        class="fixed inset-0 bg-tokyo-night-dark bg-opacity-90 z-20 flex flex-col items-center justify-center md:hidden">
-        <button @click="isMenuOpen = false" class="absolute top-4 right-4">
+        class="fixed inset-0 bg-tokyo-night-dark bg-opacity-90 z-20 flex flex-col items-center justify-center md:hidden"
+        role="dialog" aria-modal="true" aria-label="Mobile navigation">
+        <button @click="isMenuOpen = false" class="absolute top-4 right-4" aria-label="Close menu">
           <!-- Close icon -->
-          <LucideX />
+          <LucideX aria-hidden="true" />
         </button>
         <ul class="space-y-4">
           <li v-for="item in navItems" :key="item.name">

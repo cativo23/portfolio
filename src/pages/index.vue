@@ -20,5 +20,7 @@ import Contact from '@/components/home/Contact.vue';
 import Hero from '@/components/home/Hero.vue';
 import PortfolioSection from '@/components/home/portfolio/PortfolioSection.vue';
 
-usePageTitle('Home');
+usePageTitle('Home', {
+  description: 'Welcome to my portfolio! I am a Backend Developer and Tech Enthusiast, crafting robust server-side solutions and sharing knowledge through my projects and blog posts.',
+});
 </script>

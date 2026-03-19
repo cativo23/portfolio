@@ -1,26 +1,45 @@
 <template>
   <section class="mb-16">
-    <h3 class="text-2xl font-bold mb-6">
-      <DecryptedText text="Latest Blog Posts" animateOn="view" class="text-tokyo-night-cyan font-bold"
-        encryptedClassName="text-opacity-60" :speed="40" :maxIterations="10" :sequential="true"
-        revealDirection="start" />
-    </h3>
+    <BaseSectionHeading title="Latest Blog Posts" animated :level="3" />
     <div class="space-y-6">
-      <div v-for="post in blogPosts" :key="post.title">
-        <LatestBlogPostCard :post="post" />
-      </div>
+      <LatestBlogPostCard v-for="post in blogPosts" :key="post.path || post.title" :post="post" />
     </div>
   </section>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import LatestBlogPostCard from './LatestBlogPostCard.vue';
+import type { BlogPost } from '~/types/blog'
+import LatestBlogPostCard from '~/components/home/blog/LatestBlogPostCard.vue'
 
-const blogPosts = ref([
-  { title: 'Optimizing Database Queries for Scale', excerpt: 'Learn how to optimize your database queries to handle millions of requests.', date: 'June 15, 2024' },
-  { title: 'Building Resilient Microservices', excerpt: 'Explore strategies for creating fault-tolerant and scalable microservices.', date: 'May 22, 2024' },
-  { title: 'The Future of Backend Development', excerpt: 'Discover emerging trends and technologies shaping the future of backend development.', date: 'April 10, 2024' }
-])
+const { data: posts } = await useAsyncData('latest-blog-posts', () => {
+  return queryCollection('blog')
+    .order('created_at', 'DESC')
+    .all()
+})
+
+const blogPosts = computed(() => {
+  if (!posts.value) return []
+
+  return posts.value.slice(0, 3).map((post): BlogPost => ({
+    title: post.title || '',
+    description: post.description,
+    excerpt: post.description,
+    created_at: post.created_at,
+    date: formatDate(post.created_at),
+    path: post.path,
+    image: post.image,
+    author: post.author,
+    tags: post.tags,
+  }))
+})
+
+function formatDate(dateString?: string | Date) {
+  if (!dateString) return ''
+  const date = typeof dateString === 'string' ? new Date(dateString) : dateString
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
 </script>
-

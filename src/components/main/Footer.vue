@@ -1,25 +1,26 @@
 <template>
   <footer class="bg-tokyo-night-dark text-center p-4 mt-16">
     <p>&copy; {{ currentYear }} Carlos Cativo. All rights reserved.</p>
-    <div class="flex justify-center space-x-4 mt-2">
-      <a href="https://github.com/cativo23" target="_blank" rel="noopener noreferrer" 
-         aria-label="GitHub" class="hover:text-tokyo-night-cyan transition-colors">
+    <div class="flex justify-center items-center space-x-4 mt-2">
+      <BaseButton variant="icon" href="https://github.com/cativo23" external aria-label="GitHub">
         <LucideGithub />
-      </a>
-      <a href="https://linkedin.com/in/cativo23" target="_blank" rel="noopener noreferrer"
-         aria-label="LinkedIn" class="hover:text-tokyo-night-cyan transition-colors">
+      </BaseButton>
+      <BaseButton variant="icon" href="https://linkedin.com/in/cativo23" external aria-label="LinkedIn">
         <LucideLinkedin />
-      </a>
-      <a href="https://x.com/cativo23" target="_blank" rel="noopener noreferrer"
-         aria-label="X (Twitter)" class="hover:text-tokyo-night-cyan transition-colors">
+      </BaseButton>
+      <BaseButton variant="icon" href="https://x.com/cativo23" external aria-label="X (Twitter)">
         <XIcon />
-      </a>
+      </BaseButton>
+    </div>
+    <div class="mt-3">
+      <HealthBadge />
     </div>
   </footer>
 </template>
 
 <script lang="ts" setup>
 import { createLucideIcon } from 'lucide-vue-next';
+import HealthBadge from '~/components/ui/HealthBadge.vue';
 
 // Create the XIcon component
 const XIcon = createLucideIcon("X", [

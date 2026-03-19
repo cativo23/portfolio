@@ -1,24 +1,32 @@
 <template>
-  <div class="bg-tokyo-night-dark p-6 rounded-lg hover:shadow-lg transition-shadow duration-200 cursor-pointer">
-    <h4 class="text-xl text-tokyo-night-highlight font-bold mb-2">{{ project.title }}</h4>
+  <BaseCard :to="`/projects/${project.id}`" hoverable>
+    <template v-if="project.isFeatured" #badge>
+      <BaseBadge>Featured</BaseBadge>
+    </template>
+    <h4 class="mb-2 text-xl font-bold text-tokyo-night-highlight">{{ project.title }}</h4>
     <p class="mb-4">{{ project.description }}</p>
-    <div class="flex items-center text-tokyo-night-green">
-      <LucideCode class="w-5 h-5 mr-2" />
-      <span>{{ project.tech.join(', ') }}</span>
+    <div class="flex flex-wrap gap-1 mb-4" v-if="project.techStack?.length">
+      <BaseBadge
+        v-for="tech in project.techStack"
+        :key="tech"
+        color="magenta"
+        size="sm"
+      >
+        {{ tech }}
+      </BaseBadge>
     </div>
-  </div>
+  </BaseCard>
 </template>
 
 <script setup lang="ts">
+import type { Project } from '~/types/project'
 
-const props = defineProps({
-  project: {
-    type: Object,
-    required: true
-  }
-});
+interface Props {
+  project: Project
+}
+
+defineProps<Props>()
+defineOptions({
+  name: 'FeatureProjectCard'
+})
 </script>
-
-<style scoped>
-/* Add your styles here */
-</style>

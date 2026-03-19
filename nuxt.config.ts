@@ -1,7 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const isDocker = process.env.NITRO_PRESET === 'node-server'
+
+const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxtjs/sitemap', '@nuxt/content', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image']
+const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
+
 export default defineNuxtConfig({
   debug: process.env.NODE_ENV !== 'production',
   runtimeConfig: {
+    apiBaseUrl: process.env.API_BASE_URL || 'http://host.docker.internal:3003',
+    apiBasePath: '/api/v1',
+    apiToken: process.env.API_TOKEN || '',
     public: {
       baseTitle: 'Carlos Cativo',
       defaultOgImage: '/img/akira.jpeg',
@@ -9,6 +17,7 @@ export default defineNuxtConfig({
     },
   },
   srcDir: 'src/',
+  serverDir: 'src/server',
   devtools: {
     enabled: true,
     timeline: {
@@ -47,7 +56,29 @@ export default defineNuxtConfig({
       },
     },
   },
+  dir: {
+    public: 'src/public',
+  },
+  site: {
+    url: 'https://cativo.dev',
+    name: 'Carlos Cativo - Backend Developer',
+  },
   compatibilityDate: '2024-11-01',
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/content', 'nuxt-lucide-icons', '@nuxthub/core', 'motion-v/nuxt'],
+  modules,
   builder: "vite",
+  vite: {
+    server: {
+      watch: {
+        usePolling: true,
+        interval: 1000,
+      },
+    },
+  },
+  image: {
+    // Use IPX provider for image optimization
+    provider: 'ipx',
+    ipx: {
+      maxAge: 3600,
+    },
+  },
 })

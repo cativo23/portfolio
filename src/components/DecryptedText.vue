@@ -21,18 +21,31 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, onBeforeUnmount, computed, nextTick, type Ref } from 'vue'
 
-const props = defineProps({
-    text: { type: String, required: true },
-    speed: { type: Number, default: 50 },
-    maxIterations: { type: Number, default: 10 },
-    sequential: { type: Boolean, default: false },
-    revealDirection: { type: String, default: 'start' },
-    useOriginalCharsOnly: { type: Boolean, default: false },
-    characters: { type: String, default: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+' },
-    class: { type: String, default: '' }, // Use 'class' instead of 'className'
-    containerClass: { type: String, default: '' },
-    encryptedClassName: { type: String, default: '' },
-    animateOn: { type: String, default: 'hover' },
+interface Props {
+    text: string
+    speed?: number
+    maxIterations?: number
+    sequential?: boolean
+    revealDirection?: 'start' | 'end' | 'center'
+    useOriginalCharsOnly?: boolean
+    characters?: string
+    class?: string
+    containerClass?: string
+    encryptedClassName?: string
+    animateOn?: 'hover' | 'view'
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    speed: 50,
+    maxIterations: 10,
+    sequential: false,
+    revealDirection: 'start',
+    useOriginalCharsOnly: false,
+    characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+',
+    class: '',
+    containerClass: '',
+    encryptedClassName: '',
+    animateOn: 'hover',
 })
 
 const displayText = ref('')
@@ -91,7 +104,7 @@ const shuffleText = (originalText: string, currentRevealed: Set<number>) => {
             .map((p) => p.char)
         for (let i = nonSpaceChars.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1))
-                ;[nonSpaceChars[i], nonSpaceChars[j]] = [nonSpaceChars[j], nonSpaceChars[i]]
+                ;[nonSpaceChars[i], nonSpaceChars[j]] = [nonSpaceChars[j]!, nonSpaceChars[i]!]
         }
         let charIndex = 0
         return positions

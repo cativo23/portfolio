@@ -1,42 +1,34 @@
-# Base image
-FROM node:23-bookworm
+FROM node:22-bookworm
 
 LABEL org.opencontainers.image.authors="cativo23.kt@gmail.com"
 
-# Set environment variables
 ENV NODE_ENV=development
 
-# Install dependencies
+# Install native build dependencies for better-sqlite3
 RUN apt-get update && apt-get install -y \
     python3 \
-    make \
-    g++ \
-    sudo \
-    musl \
-    musl-tools \
+    build-essential \
+    libsqlite3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Ensure that the user exists and matches the host's UID and GID
+# Allow node user sudo access
 RUN echo "node ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# Set user to avoid permission issues
 USER node
 
-# Set the working directory
 WORKDIR /home/node/app
 
-# Copy package.json and yarn-lock.json to install dependencies
-COPY --chown=node:node package.json ./
-COPY --chown=node:node yarn.lock ./
+# Copy dependency files first for layer caching
+COPY --chown=node:node package.json yarn.lock ./
 
-# Install dependencies
-RUN yarn install
+# Install all dependencies (including devDependencies)
+RUN yarn install --frozen-lockfile
 
-# Copy the project files
+# Source files come from volume mount in compose.yml
+# COPY is here as fallback when running without compose
 COPY --chown=node:node . .
 
-# Expose the development port
 EXPOSE 3000
 
-# Run Nuxt in development mode
-CMD ["yarn", "run", "dev"]
+# Listen on all interfaces for Docker accessibility
+CMD ["yarn", "dev", "--host", "0.0.0.0"]
