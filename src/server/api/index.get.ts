@@ -2,7 +2,7 @@ export default defineEventHandler(async () => {
   const config = useRuntimeConfig()
 
   try {
-    const info = await $fetch<{ status: string; data: { name: string; version: string; description: string; environment: string; documentation: string; health: string; status: string; timestamp: string } }>(`${config.apiBaseUrl}${config.apiBasePath}/`, {
+    const info = await $fetch<{ status: string; data: { name: string; version: string; description: string; environment: string; documentation: string; health: string; status: string; timestamp: string } }>(`${config.apiBaseUrl}/`, {
       method: 'GET',
     })
 
