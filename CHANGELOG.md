@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.1] - 2026-03-19
+
+### Changed
+- Auto-release workflow now uses RELEASE_PAT for GitHub API authentication
+
+---
+
 ## [1.0.0] - 2026-03-19
 
 ### Added
