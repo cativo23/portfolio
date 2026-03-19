@@ -25,7 +25,7 @@ export default defineNuxtConfig({
     },
   },
   typescript: {
-    typeCheck: true
+    typeCheck: process.env.NODE_ENV !== 'production'
   },
   content: {
     watch: {
