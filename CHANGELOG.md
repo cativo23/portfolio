@@ -9,9 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [1.0.0] - 2026-03-19
+
+### Added
+- Health status page with live/ready endpoints
+- Auto-release and deploy workflows (GitHub Actions)
+- CI workflow with build, type check, and auto-format
+- Documentation: AGENTS.md, CHANGELOG.md, RELEASE_WORKFLOW.md
+- Vitest testing setup with useToast unit tests
+
+### Changed
+- Health API response structure
+- Upgraded to Nuxt 4 with Vue 3
+
 ### Fixed
+- Dynamic routing for projects (`blog/[...slug].vue`)
+- TypeScript errors in project detail page
+- Hydration mismatches in async data
 - Health endpoint and page issues
 - Critical CI/CD security issues
+- Project card links and navigation
 
 ---
 
