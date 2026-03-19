@@ -21,8 +21,8 @@ import FeatureProjectCard from '~/components/home/portfolio/FeatureProjectCard.v
 
 const { projects, loading, error, fetchProjects } = useProjects()
 
-// Fetch featured projects
-await fetchProjects({ is_featured: true })
+// Fetch featured projects on server-side
+await useAsyncData('featured-projects', () => fetchProjects({ is_featured: true }))
 
 const displayed = computed(() => projects.value ?? [])
 </script>

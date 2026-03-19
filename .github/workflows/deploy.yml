@@ -1,0 +1,109 @@
+name: Deploy
+
+# This workflow deploys to production when:
+# A GitHub Release is published (created via GitHub UI or gh cli)
+# This ensures deployment only happens after code is merged to main and properly tagged
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ secrets.DOCKER_USERNAME }}/portfolio
+          tags: |
+            type=raw,value=${{ github.event.release.tag_name }}
+            type=raw,value=latest
+            type=sha
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/prod/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/portfolio:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/portfolio:buildcache,mode=max
+
+  deploy:
+    name: Deploy to Home Server
+    needs: build
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Copy compose file to server
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "compose.prod.yml"
+          target: "/home/cativo23/deploy/portfolio-deploy"
+          debug: true
+          timeout: 10m
+          command_timeout: 10m
+          proxy_timeout: 10m
+          tar_exec: tar
+          tar_dereference: true
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          envs: DOCKER_USERNAME,DOCKER_PASSWORD
+          script: |
+            cd /home/cativo23/deploy/portfolio-deploy
+
+            # Login to Docker Hub on server
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+            # Pull latest image
+            docker compose -f compose.prod.yml pull
+
+            # Stop and remove old containers (but keep volumes)
+            docker compose -f compose.prod.yml down || true
+
+            # Start new containers
+            docker compose -f compose.prod.yml up -d
+
+            # Wait for services to be healthy
+            sleep 10
+
+            # Clean up old images
+            docker image prune -f
+
+            # Show logs
+            echo "=== Deployment Logs ==="
+            docker compose -f compose.prod.yml logs --tail=50
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

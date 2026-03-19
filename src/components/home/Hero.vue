@@ -8,8 +8,8 @@
           width="144"
           height="144"
           loading="lazy"
-          format="webp"
           class="max-w-36 rounded-full shadow-2xl"
+          quality="80"
         />
       </div>
       <h2 class="text-3xl font-bold mb-4">
