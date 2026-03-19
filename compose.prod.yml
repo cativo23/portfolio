@@ -2,7 +2,7 @@ name: portfolio-prod
 
 services:
   app:
-    image: ${DOCKER_USERNAME:-cativo23}/portfolio-api:latest
+    image: ${DOCKER_USERNAME:-cativo23}/portfolio:latest
     restart: unless-stopped
     environment:
       NODE_ENV: production
