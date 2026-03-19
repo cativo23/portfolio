@@ -25,7 +25,7 @@ export default defineEventHandler(async () => {
         }>
       }
       request_id?: string
-    }>(`${config.apiBaseUrl}${config.apiBasePath}/health/detailed`, {
+    }>(`${config.apiBaseUrl}/health/detailed`, {
       method: 'GET',
       headers,
     })

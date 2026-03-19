@@ -160,12 +160,10 @@ interface HealthInfo {
 
 const healthTabs = [
   { id: 'basic', label: 'Basic' },
-  { id: 'live', label: 'Live' },
-  { id: 'ready', label: 'Ready' },
   { id: 'detailed', label: 'Detailed' },
 ]
 
-const selectedTab = ref<'basic' | 'live' | 'ready' | 'detailed'>('basic')
+const selectedTab = ref<'basic' | 'detailed'>('basic')
 const health = ref<HealthInfo | null>(null)
 const loading = ref(true)
 const error = ref<string | null>(null)
