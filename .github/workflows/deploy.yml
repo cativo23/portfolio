@@ -60,10 +60,10 @@ jobs:
       - name: Copy compose file to server
         uses: appleboy/scp-action@v1
         with:
-          host: 186.32.90.71
+          host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 52222
+          port: ${{ secrets.SSH_PORT }}
           source: "compose.prod.yml"
           target: "/home/cativo23/deploy/portfolio-deploy"
           debug: true
@@ -75,17 +75,16 @@ jobs:
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 186.32.90.71
+          host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 52222
+          port: ${{ secrets.SSH_PORT }}
+          envs: DOCKER_USERNAME,DOCKER_PASSWORD
           script: |
-            export DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
-
             cd /home/cativo23/deploy/portfolio-deploy
 
             # Login to Docker Hub on server
-            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
             # Pull latest image
             docker compose -f compose.prod.yml pull
@@ -105,3 +104,6 @@ jobs:
             # Show logs
             echo "=== Deployment Logs ==="
             docker compose -f compose.prod.yml logs --tail=50
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

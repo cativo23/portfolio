@@ -1,6 +1,3 @@
-permissions:
-  contents: write
-
 name: CI
 
 on:
@@ -12,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -52,14 +51,12 @@ jobs:
 
       - name: Apply formatting and push (develop only)
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           yarn format --write . 2>/dev/null || true
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           if [[ -n $(git status --porcelain) ]]; then
-            git add .
+            git add -u
             git commit -m "chore: apply code formatting [ci skip]"
             git push
           fi
