@@ -2,18 +2,27 @@ name: portfolio-prod
 
 services:
   app:
-    image: portfolio:latest
-    build:
-      context: .
-      dockerfile: docker/prod/Dockerfile
-    ports:
-      - '80:3000'
+    image: ${DOCKER_USERNAME:-cativo23}/portfolio-api:latest
+    restart: unless-stopped
     environment:
       NODE_ENV: production
-    restart: unless-stopped
+      NUXT_API_BASE_URL: http://api:3000
+      NUXT_API_BASE_PATH: /api/v1
+      NUXT_API_TOKEN: ${API_TOKEN:-}
+      PORT: 3000
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"]
       interval: 30s
       timeout: 5s
       start_period: 10s
       retries: 3
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portfolio.rule=Host(`cativo.dev`)"
+      - "traefik.http.routers.portfolio.entrypoints=websecure"
+      - "traefik.http.routers.portfolio.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.portfolio.loadbalancer.server.port=3000"
+      - "traefik.docker.network=space-server_web"
+networks:
+  space-server_web:
+    external: true
