@@ -26,6 +26,15 @@ COPY . .
 
 # Force node-server preset (overrides @nuxthub/core's cloudflare preset)
 ENV NITRO_PRESET=node-server
+
+# Build-time environment variables for Nuxt (embedded at build time)
+ARG NUXT_API_BASE_URL
+ARG NUXT_API_BASE_PATH
+ARG NUXT_API_TOKEN
+ENV NUXT_API_BASE_URL=${NUXT_API_BASE_URL}
+ENV NUXT_API_BASE_PATH=${NUXT_API_BASE_PATH}
+ENV NUXT_API_TOKEN=${NUXT_API_TOKEN}
+
 RUN yarn build
 
 # ---- Stage 3: Production runtime ----

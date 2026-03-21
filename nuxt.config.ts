@@ -7,9 +7,9 @@ const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
 export default defineNuxtConfig({
   debug: process.env.NODE_ENV !== 'production',
   runtimeConfig: {
-    apiBaseUrl: process.env.API_BASE_URL || 'http://host.docker.internal:3003',
-    apiBasePath: '/api/v1',
-    apiToken: process.env.API_TOKEN || '',
+    apiBaseUrl: process.env.NUXT_API_BASE_URL || 'http://api:3000',
+    apiBasePath: process.env.NUXT_API_BASE_PATH || '/api/v1',
+    apiToken: process.env.NUXT_API_TOKEN || '',
     public: {
       baseTitle: 'Carlos Cativo',
       defaultOgImage: '/img/akira.jpeg',
