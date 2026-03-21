@@ -1,21 +1,26 @@
 <template>
-    <motion tag="span" :class="['inline-block whitespace-pre-wrap', containerClass, 'transition-all duration-500']"
-        v-on="hoverProps" :initial="{ opacity: 0, y: 10 }" :animate="{ opacity: 1, y: 0 }"
-        :whileHover="{ scale: 1.05 }">
-        <span ref="containerRef">
-            <span class="sr-only">{{ displayText }}</span>
-            <span aria-hidden="true">
-                <span v-for="(char, index) in displayText.split('')" :key="index" :class="[
-                    revealedIndices.has(index)
-                        ? (props.class || '')
-                        : (encryptedClassName ? encryptedClassName : 'text-gray-400 dark:text-gray-600 opacity-60'),
-                    'inline-block transition-all duration-300',
-                ]">
-                    {{ char }}
+    <ClientOnly>
+        <motion tag="span" :class="['inline-block whitespace-pre-wrap', containerClass, 'transition-all duration-500']"
+            v-on="hoverProps" :initial="{ opacity: 0, y: 10 }" :animate="{ opacity: 1, y: 0 }"
+            :whileHover="{ scale: 1.05 }">
+            <span ref="containerRef">
+                <span class="sr-only">{{ displayText }}</span>
+                <span aria-hidden="true">
+                    <span v-for="(char, index) in displayText.split('')" :key="index" :class="[
+                        revealedIndices.has(index)
+                            ? (props.class || '')
+                            : (encryptedClassName ? encryptedClassName : 'text-gray-400 dark:text-gray-600 opacity-60'),
+                        'inline-block transition-all duration-300',
+                    ]">
+                        {{ char }}
+                    </span>
                 </span>
             </span>
-        </span>
-    </motion>
+        </motion>
+        <template #fallback>
+            <span :class="['inline-block whitespace-pre-wrap', containerClass]">{{ text }}</span>
+        </template>
+    </ClientOnly>
 </template>
 
 <script setup lang="ts">

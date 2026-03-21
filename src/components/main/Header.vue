@@ -9,16 +9,23 @@
             <span class="text-tokyo-night-purple">}</span>
           </span> <!-- Show on mobile devices -->
           <span class="hidden md:block">
-            <VueTyping :sentences="sentences" :minTypeSpeed="settings.minTypeSpeed"
-              :maxTypeSpeed="settings.maxTypeSpeed" :eraseSpeed="settings.eraseSpeed" :eraseDelay="settings.eraseDelay"
-              :writeDelay="settings.writeDelay" :caret="settings.caret" :loop="settings.loop">
-              <template #before>
-                <span class="text-tokyo-night-purple">👨‍💻 {</span>
+            <ClientOnly>
+              <VueTyping :sentences="sentences" :minTypeSpeed="settings.minTypeSpeed"
+                :maxTypeSpeed="settings.maxTypeSpeed" :eraseSpeed="settings.eraseSpeed"
+                :eraseDelay="settings.eraseDelay" :writeDelay="settings.writeDelay" :caret="settings.caret"
+                :loop="settings.loop">
+                <template #before>
+                  <span class="text-tokyo-night-purple">👨‍💻 {</span>
+                </template>
+                <template #after>
+                  <span class="text-tokyo-night-purple">}</span>
+                </template>
+              </VueTyping>
+              <template #fallback>
+                <span class="text-tokyo-night-purple">👨‍💻 {</span> Carlos Cativo <span
+                  class="text-tokyo-night-purple">}</span>
               </template>
-              <template #after>
-                <span class="text-tokyo-night-purple">}</span>
-              </template>
-            </VueTyping>
+            </ClientOnly>
           </span>
         </h1>
       </NuxtLink>
@@ -32,12 +39,8 @@
           </li>
         </ul>
       </div>
-      <button 
-        @click="isMenuOpen = !isMenuOpen" 
-        class="md:hidden"
-        aria-label="Toggle navigation menu"
-        :aria-expanded="isMenuOpen"
-      >
+      <button @click="isMenuOpen = !isMenuOpen" class="md:hidden" aria-label="Toggle navigation menu"
+        :aria-expanded="isMenuOpen">
         <LucideMenu aria-hidden="true" />
       </button>
     </nav>

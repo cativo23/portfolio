@@ -6,9 +6,9 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      NUXT_PUBLIC_API_BASE_URL: ${NUXT_API_BASE_URL:-http://api:3000}
-      NUXT_PUBLIC_API_BASE_PATH: /api/v1
-      NUXT_PUBLIC_API_TOKEN: ${API_TOKEN:-}
+      NUXT_API_BASE_URL: ${NUXT_API_BASE_URL:-}
+      NUXT_API_BASE_PATH: /api/v1
+      NUXT_API_TOKEN: ${NUXT_API_TOKEN:-}
       PORT: 3000
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"]
@@ -23,6 +23,8 @@ services:
       - "traefik.http.routers.portfolio.tls.certresolver=letsencryptresolver"
       - "traefik.http.services.portfolio.loadbalancer.server.port=3000"
       - "traefik.docker.network=space-server_web"
+    networks:
+      - space-server_web
 networks:
   space-server_web:
     external: true
