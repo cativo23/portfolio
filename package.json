@@ -21,17 +21,13 @@
     "motion-v": "^1.2.1",
     "nuxt": "^4.4.2",
     "nuxt-lucide-icons": "^1.0.5",
+    "sharp": "^0.34.0",
     "typescript": "5.8.3",
     "vite": "^6.x",
     "vue": "^3.x",
     "vue-router": "^4.x"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
-  "optionalDependencies": {
-    "sharp": "^0.34.0",
-    "@img/sharp-libvips-linux-x64": "^1.0.0",
-    "@img/sharp-libvips-linuxmusl-x64": "^1.0.0"
-  },
   "devDependencies": {
     "@nuxthub/core": "^0.9.x",
     "@nuxtjs/sitemap": "^7.6.0",

@@ -37,7 +37,22 @@ ENV NUXT_API_TOKEN=${NUXT_API_TOKEN}
 
 RUN yarn build
 
-# ---- Stage 3: Production runtime ----
+# ---- Stage 3: Production dependencies ----
+FROM node:22-bookworm-slim AS production-deps
+
+WORKDIR /app
+
+# Install libvips BEFORE installing sharp so it compiles against system libvips
+RUN apt-get update && apt-get install -y \
+    libvips-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY package.json yarn.lock ./
+
+# Install only production dependencies (includes sharp - will compile against system libvips)
+RUN yarn install --frozen-lockfile --production
+
+# ---- Stage 4: Production runtime ----
 FROM node:22-bookworm-slim AS runtime
 
 LABEL org.opencontainers.image.authors="cativo23.kt@gmail.com"
@@ -46,11 +61,19 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
+# Install libvips runtime (same as production-deps stage)
+RUN apt-get update && apt-get install -y \
+    libvips-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Create non-root user
 RUN addgroup --system --gid 1001 nuxt && \
     adduser --system --uid 1001 --ingroup nuxt nuxt
 
-# Copy only the built output
+# Copy production dependencies
+COPY --from=production-deps --chown=nuxt:nuxt /app/node_modules ./node_modules
+
+# Copy built output
 COPY --from=build --chown=nuxt:nuxt /app/.output ./.output
 
 USER nuxt
