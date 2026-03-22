@@ -142,7 +142,7 @@
 
             <!-- Markdown Content rendered with MDC component -->
             <div v-if="project.content" class="prose prose-invert prose-tokyo max-w-none">
-              <MDC :value="project.content" tag="article" />
+              <MDC :key="project.id" :value="project.content" tag="article" />
             </div>
 
             <!-- Fallback if no rich content -->
