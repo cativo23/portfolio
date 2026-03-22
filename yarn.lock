@@ -1650,7 +1650,7 @@
     unstorage "^1.15.0"
     zod "^3.25.34"
 
-"@nuxtjs/mdc@^0.20.1":
+"@nuxtjs/mdc@^0.20.1", "@nuxtjs/mdc@^0.20.2":
   version "0.20.2"
   resolved "https://registry.yarnpkg.com/@nuxtjs/mdc/-/mdc-0.20.2.tgz#55f250d6c49e2b84ce798e07a7404985b08916f7"
   integrity sha512-afAJKnXKdvDtoNOGARQMpZoGprL1T3OGnj+K9edJjX+WdhCwvVabBijhi8BAlpx+YzA/DpcZx8bDFZk/aoSJmA==
