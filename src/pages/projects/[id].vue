@@ -156,7 +156,7 @@
 </template>
 
 <script lang="ts" setup>
-import { parseMarkdown } from '@nuxt/content'
+import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 
 const route = useRoute()
 const { fetchProject } = useProjects()
