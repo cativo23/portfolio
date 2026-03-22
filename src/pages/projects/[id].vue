@@ -140,8 +140,8 @@
           <section class="mb-12">
             <h2 class="text-2xl font-bold text-tokyo-night-purple mb-6 pb-2 border-b border-tokyo-night-gray">Project Overview</h2>
 
-            <!-- Safe Markdown Rendering with prose-tokyo theme -->
-            <div v-if="renderedContent" class="prose prose-invert prose-tokyo max-w-none" v-html="renderedContent"></div>
+            <!-- Content from API (HTML or plain text) -->
+            <div v-if="project.content" class="prose prose-invert prose-tokyo max-w-none" v-html="project.content"></div>
 
             <!-- Fallback if no rich content -->
             <p v-else class="text-lg text-tokyo-night-text leading-relaxed">
@@ -156,8 +156,6 @@
 </template>
 
 <script lang="ts" setup>
-import { parseMarkdown } from '@nuxtjs/mdc/runtime'
-
 const route = useRoute()
 const { fetchProject } = useProjects()
 
@@ -174,27 +172,6 @@ const { data: project, pending, error } = await useAsyncData(
   () => `project-${projectId.value}`,
   () => fetchProject(projectId.value),
   { watch: [projectId] }
-)
-
-// Parse markdown content reactively
-const renderedContent = ref<string>('')
-
-watch(
-  () => project.value?.content,
-  async (content) => {
-    if (content) {
-      try {
-        const parsed = await parseMarkdown(content)
-        renderedContent.value = parsed.data.body || ''
-      } catch (e) {
-        console.error('Failed to parse markdown:', e)
-        renderedContent.value = ''
-      }
-    } else {
-      renderedContent.value = ''
-    }
-  },
-  { immediate: true }
 )
 
 const pageTitle = computed(() => project.value?.title || 'Project')
