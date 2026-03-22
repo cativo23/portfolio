@@ -38,58 +38,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { useContactForm } from '~/composables/useContactForm';
 
-const toast = useToast();
-const form = ref({ name: '', email: '', message: '', subject: '' });
-const loading = ref(false);
-const error = ref<string | null>(null);
-
-function validateForm() {
-  error.value = null;
-  const errors: string[] = [];
-  if (!form.value.name || form.value.name.length < 2 || form.value.name.length > 100) {
-    errors.push('Name must be between 2 and 100 characters');
-  }
-  if (!form.value.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) {
-    errors.push('Please enter a valid email');
-  }
-  if (!form.value.message || form.value.message.length < 10 || form.value.message.length > 1000) {
-    errors.push('Message must be between 10 and 1000 characters');
-  }
-  if (errors.length) {
-    error.value = errors.join('. ');
-    return false;
-  }
-  return true;
-}
-
-async function submitForm() {
-  if (!validateForm()) return;
-  loading.value = true;
-  error.value = null;
-
-  try {
-    const data = await $fetch<{ status: string; error?: { message: string } }>('/api/contacts', {
-      method: 'POST',
-      body: { name: form.value.name, email: form.value.email, message: form.value.message, subject: form.value.subject || undefined },
-    });
-
-    if (data && typeof data === 'object' && 'status' in data && data.status === 'success') {
-      toast.success('Message sent successfully!')
-      form.value = { name: '', email: '', message: '', subject: '' };
-    } else {
-      const msg = data.error?.message || 'Failed to send message';
-      toast.error(msg)
-    }
-  } catch (err) {
-    toast.error('Network error. Please try again.')
-  } finally {
-    loading.value = false;
-  }
-}
-
-
+const { form, loading, error, submitForm } = useContactForm();
 </script>
 
 <style></style>
