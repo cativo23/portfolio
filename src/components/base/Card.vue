@@ -7,11 +7,13 @@ interface Props {
   to?: string
   href?: string
   external?: boolean
+  prefetch?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
   hoverable: true,
   padded: true,
+  prefetch: true,
 })
 
 const slots = useSlots()
@@ -21,6 +23,7 @@ const slots = useSlots()
   <NuxtLink
     v-if="to"
     :to="to"
+    :prefetch="prefetch"
     :class="[
       'relative bg-tokyo-night-dark rounded-lg transition-shadow duration-200 block',
       hoverable && 'hover:shadow-lg',

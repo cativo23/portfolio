@@ -13,7 +13,7 @@
       <template v-else-if="displayed.length === 0">
         <div class="col-span-1 md:col-span-2 text-tokyo-night-text">No projects found.</div>
       </template>
-      <BaseCard v-else :to="`/projects/${project.id}`" :key="project.id || project.title" v-for="project in displayed">
+      <BaseCard v-else :to="`/projects/${project.id}`" :key="project.id || project.title" :prefetch="false" v-for="project in displayed">
         <h3 class="mb-4 text-2xl font-bold">{{ project.title }}</h3>
         <p class="mb-4">{{ project.description }}</p>
         <div class="flex items-center mb-4 text-tokyo-night-cyan">
