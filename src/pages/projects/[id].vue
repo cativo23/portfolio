@@ -140,10 +140,8 @@
           <section class="mb-12">
             <h2 class="text-2xl font-bold text-tokyo-night-purple mb-6 pb-2 border-b border-tokyo-night-gray">Project Overview</h2>
 
-            <!-- Markdown Content rendered with MDCRenderer -->
-            <div v-if="parsedContent" class="prose prose-invert prose-tokyo max-w-none">
-              <MDCRenderer :body="parsedContent.body" :data="parsedContent.data" />
-            </div>
+            <!-- Markdown Content rendered with marked -->
+            <div v-if="renderedContent" class="prose prose-invert prose-tokyo max-w-none" v-html="renderedContent"></div>
 
             <!-- Fallback if no rich content -->
             <p v-else class="text-lg text-tokyo-night-text leading-relaxed">
@@ -158,7 +156,7 @@
 </template>
 
 <script lang="ts" setup>
-import { parseMarkdown } from '@nuxtjs/mdc/runtime'
+import { marked } from 'marked'
 
 const route = useRoute()
 const { fetchProject } = useProjects()
@@ -178,12 +176,12 @@ const { data: project, pending, error } = await useAsyncData(
   { watch: [projectId] }
 )
 
-// Parse markdown content reactively when project changes
-const { data: parsedContent } = await useAsyncData(
+// Render markdown content reactively when project changes
+const { data: renderedContent } = await useAsyncData(
   () => `markdown-${projectId.value}`,
   async () => {
     if (project.value?.content) {
-      return await parseMarkdown(project.value.content)
+      return await marked(project.value.content)
     }
     return null
   },
