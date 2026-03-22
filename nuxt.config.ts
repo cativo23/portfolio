@@ -78,6 +78,11 @@ export default defineNuxtConfig({
         interval: 1000,
       },
     },
+    resolve: {
+      alias: {
+        debug: 'debug/src/node.js',
+      },
+    },
   },
   image: {
     provider: 'none',
