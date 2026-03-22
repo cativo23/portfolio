@@ -5,6 +5,11 @@ const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxtjs/sitemap', '@nuxt/
 const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
 
 export default defineNuxtConfig({
+  nitro: {
+    externals: {
+      external: ['better-sqlite3']
+    }
+  },
   debug: process.env.NODE_ENV !== 'production',
   runtimeConfig: {
     apiBaseUrl: process.env.NUXT_API_BASE_URL || 'http://api:3000',
@@ -75,10 +80,6 @@ export default defineNuxtConfig({
     },
   },
   image: {
-    // Use IPX provider for image optimization
-    provider: 'ipx',
-    ipx: {
-      maxAge: 3600,
-    },
+    provider: 'none',
   },
 })
