@@ -80,19 +80,26 @@ export default defineNuxtConfig({
     },
     resolve: {
       alias: {
-        debug: 'debug/src/node.js',
+        debug: require.resolve('debug/src/node.js'),
       },
+    },
+    optimizeDeps: {
+      include: ['debug'],
     },
     plugins: [
       {
         name: 'node-globals-polyfill',
         transform(code) {
+          let newCode = code
           if (code.includes('util.deprecate')) {
-            return {
-              code: code.replace(/util\.deprecate/g, 'function(a){return a}'),
-              map: null,
-            }
+            newCode = newCode.replace(/util\.deprecate/g, 'function(a){return a}')
           }
+          if (code.includes('console.colors') || code.includes('useColors')) {
+            newCode = newCode
+              .replace(/console\.colors/g, '{}')
+              .replace(/useColors/g, 'false')
+          }
+          return newCode !== code ? { code: newCode, map: null } : null
         },
       },
     ],
