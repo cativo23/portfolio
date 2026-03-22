@@ -140,8 +140,10 @@
           <section class="mb-12">
             <h2 class="text-2xl font-bold text-tokyo-night-purple mb-6 pb-2 border-b border-tokyo-night-gray">Project Overview</h2>
 
-            <!-- Content from API (HTML or plain text) -->
-            <div v-if="project.content" class="prose prose-invert prose-tokyo max-w-none" v-html="project.content"></div>
+            <!-- Markdown Content rendered with MDC component -->
+            <div v-if="project.content" class="prose prose-invert prose-tokyo max-w-none">
+              <MDC :value="project.content" tag="article" />
+            </div>
 
             <!-- Fallback if no rich content -->
             <p v-else class="text-lg text-tokyo-night-text leading-relaxed">
