@@ -83,6 +83,19 @@ export default defineNuxtConfig({
         debug: 'debug/src/node.js',
       },
     },
+    plugins: [
+      {
+        name: 'node-globals-polyfill',
+        transform(code) {
+          if (code.includes('util.deprecate')) {
+            return {
+              code: code.replace(/util\.deprecate/g, 'function(a){return a}'),
+              map: null,
+            }
+          }
+        },
+      },
+    ],
   },
   image: {
     provider: 'none',
