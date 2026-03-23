@@ -1,19 +1,34 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue'
+
+interface Props {
   loading?: boolean
   error?: Error | string | null
   empty?: boolean
   loadingText?: string
   errorText?: string
   emptyText?: string
-}>()
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  loadingText: 'Loading...',
+  errorText: 'An error occurred',
+  emptyText: 'No data available'
+})
 
 defineSlots<{
-  loading?: () => unknown
-  error?: (props: { error: Error | string | null }) => unknown
-  empty?: () => unknown
-  default?: () => unknown
+  loading?: () => void
+  error?: (props: { error: Error | string | null }) => void
+  empty?: () => void
+  default?: () => void
 }>()
+
+// Sanitized error message for display (prevents leaking sensitive info)
+const sanitizedError = computed(() => {
+  if (!props.error) return null
+  if (typeof props.error === 'string') return props.error
+  return props.error.message || 'An unexpected error occurred'
+})
 </script>
 
 <template>
@@ -26,7 +41,7 @@ defineSlots<{
 
     <div v-else-if="error" class="text-center py-8 text-tokyo-night-red" role="alert">
       <slot name="error" :error="error">
-        <p>{{ typeof error === 'string' ? error : errorText }}</p>
+        <p>{{ sanitizedError ?? errorText }}</p>
       </slot>
     </div>
 

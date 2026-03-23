@@ -64,9 +64,9 @@
               <h3 class="text-xs font-bold text-tokyo-night-muted uppercase tracking-wider mb-4">Links</h3>
               <div class="flex flex-col gap-3">
                 <BaseButton
-                  v-if="project.repoUrl"
+                  v-if="sanitizeUrl(project.repoUrl)"
                   variant="primary"
-                  :href="project.repoUrl"
+                  :href="sanitizeUrl(project.repoUrl)"
                   external
                   class="w-full justify-center"
                 >
@@ -74,9 +74,9 @@
                   View Source Code
                 </BaseButton>
                 <BaseButton
-                  v-if="project.liveUrl"
+                  v-if="sanitizeUrl(project.liveUrl)"
                   variant="secondary"
-                  :href="project.liveUrl"
+                  :href="sanitizeUrl(project.liveUrl)"
                   external
                   class="w-full justify-center"
                 >
@@ -146,9 +146,28 @@
 </template>
 
 <script lang="ts" setup>
+import { ref, watch } from 'vue'
 
 const route = useRoute()
 const { fetchProject } = useProjects()
+
+// Validate external URLs to prevent open redirect attacks
+const ALLOWED_EXTERNAL_DOMAINS = ['github.com', 'www.github.com']
+
+function isValidExternalUrl(url: string | undefined): boolean {
+  if (!url) return false
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol !== 'https:') return false
+    return ALLOWED_EXTERNAL_DOMAINS.some(domain => parsed.hostname === domain || parsed.hostname.endsWith(`.${domain}`))
+  } catch {
+    return false
+  }
+}
+
+function sanitizeUrl(url: string | undefined): string | undefined {
+  return isValidExternalUrl(url) ? url : undefined
+}
 
 const projectId = computed(() => route.params.id as string)
 
