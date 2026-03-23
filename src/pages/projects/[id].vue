@@ -141,8 +141,10 @@
             <h2 class="text-2xl font-bold text-tokyo-night-purple mb-6 pb-2 border-b border-tokyo-night-gray">Project Overview</h2>
 
             <!-- Project content -->
-            <div class="text-lg text-tokyo-night-text leading-relaxed whitespace-pre-line">
-              {{ project.content || project.description }}
+            <div class="text-lg text-tokyo-night-text leading-relaxed prose dark:prose-invert max-w-none">
+              <template v-if="project?.content || project?.description">
+                <MDC :value="project.content || project.description" />
+              </template>
             </div>
           </section>
 
