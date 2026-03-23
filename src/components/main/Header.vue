@@ -56,7 +56,7 @@
         </button>
         <ul class="space-y-4">
           <li v-for="item in navItems" :key="item.name">
-            <NuxtLink :to="item.link" @click="isMenuOpen = false" :class="{
+            <NuxtLink :to="item.link" @click="closeMenu" :class="{
               'text-tokyo-night-red font-bold': isHighlightedRoute(item.link),
               'hover:text-tokyo-night-cyan transition-colors duration-200': !isHighlightedRoute(item.link)
             }">
@@ -110,6 +110,10 @@ const isHighlightedRoute = (link: string) => {
     return currentRoute.path === link;
   }
   return currentRoute.path.startsWith(link);
+};
+
+const closeMenu = () => {
+  isMenuOpen.value = false;
 };
 </script>
 <style lang="css">

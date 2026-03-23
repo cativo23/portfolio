@@ -4,15 +4,28 @@
 
     <!-- Projects Grid -->
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+      <!-- Loading State -->
       <template v-if="loading">
-        <div class="col-span-1 md:col-span-2" role="status" aria-live="polite">Loading projects...</div>
+        <div class="col-span-1 md:col-span-2 text-center py-8" role="status" aria-live="polite">
+          <span class="text-tokyo-night-muted">Loading projects...</span>
+        </div>
       </template>
+
+      <!-- Error State -->
       <template v-else-if="error">
-        <div class="col-span-1 text-red-400 md:col-span-2" role="alert">Failed to load projects</div>
+        <div class="col-span-1 md:col-span-2 text-center py-8 text-red-400" role="alert">
+          Failed to load projects
+        </div>
       </template>
+
+      <!-- Empty State -->
       <template v-else-if="displayed.length === 0">
-        <div class="col-span-1 md:col-span-2 text-tokyo-night-text">No projects found.</div>
+        <div class="col-span-1 md:col-span-2 text-center py-8 text-tokyo-night-text">
+          No projects found.
+        </div>
       </template>
+
+      <!-- Projects -->
       <BaseCard v-else :to="`/projects/${project.id}`" :key="project.id || project.title" :prefetch="false" v-for="project in displayed">
         <h3 class="mb-4 text-2xl font-bold">{{ project.title }}</h3>
         <p class="mb-4">{{ project.description }}</p>
@@ -21,10 +34,10 @@
           <span>{{ techList(project) }}</span>
         </div>
         <div class="justify-start card-actions" @click.stop>
-          <BaseButton variant="ghost" :href="project.repoUrl" external>
+          <BaseButton variant="ghost" :href="sanitizeRepoUrl(project.repoUrl)" external>
             <LucideGithub class="w-5 h-5 mr-2" />View on GitHub
           </BaseButton>
-          <BaseButton v-if="project.liveUrl" variant="ghost" :href="project.liveUrl" external>
+          <BaseButton v-if="sanitizeLiveUrl(project.liveUrl)" variant="ghost" :href="sanitizeLiveUrl(project.liveUrl)" external>
             <LucideExternalLink class="w-5 h-5 mr-2" />Live Demo
           </BaseButton>
         </div>
@@ -43,6 +56,42 @@
 <script lang="ts" setup>
 import { useProjects } from '~/composables/useProjects'
 import type { Project } from '~/types/project'
+
+// Validate external URLs to prevent open redirect attacks
+const ALLOWED_REPO_DOMAINS = ['github.com', 'www.github.com', 'gitlab.com', 'www.gitlab.com', 'bitbucket.org', 'www.bitbucket.org']
+const ALLOWED_LIVE_DOMAINS = ['cativo.dev', 'www.cativo.dev']
+
+function isValidRepoUrl(url: string | undefined): boolean {
+  if (!url) return false
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol !== 'https:') return false
+    return ALLOWED_REPO_DOMAINS.some(domain => parsed.hostname === domain || parsed.hostname.endsWith(`.${domain}`))
+  } catch {
+    return false
+  }
+}
+
+function isValidLiveUrl(url: string | undefined): boolean {
+  if (!url) return false
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol !== 'https:') return false
+    // Allow cativo.dev subdomains OR any other HTTPS URL
+    const isCativoDev = ALLOWED_LIVE_DOMAINS.some(domain => parsed.hostname === domain || parsed.hostname.endsWith(`.${domain}`))
+    return isCativoDev || parsed.hostname.includes('.') // Allow any valid domain with TLD
+  } catch {
+    return false
+  }
+}
+
+function sanitizeRepoUrl(url: string | undefined): string | undefined {
+  return isValidRepoUrl(url) ? url : undefined
+}
+
+function sanitizeLiveUrl(url: string | undefined): string | undefined {
+  return isValidLiveUrl(url) ? url : undefined
+}
 
 usePageTitle('Projects', {
   description: 'Explore my projects showcasing backend development skills, including API gateways, data pipelines, and microservices.',

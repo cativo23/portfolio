@@ -64,9 +64,9 @@
               <h3 class="text-xs font-bold text-tokyo-night-muted uppercase tracking-wider mb-4">Links</h3>
               <div class="flex flex-col gap-3">
                 <BaseButton
-                  v-if="project.repoUrl"
+                  v-if="sanitizeRepoUrl(project.repoUrl)"
                   variant="primary"
-                  :href="project.repoUrl"
+                  :href="sanitizeRepoUrl(project.repoUrl)"
                   external
                   class="w-full justify-center"
                 >
@@ -74,9 +74,9 @@
                   View Source Code
                 </BaseButton>
                 <BaseButton
-                  v-if="project.liveUrl"
+                  v-if="sanitizeLiveUrl(project.liveUrl)"
                   variant="secondary"
-                  :href="project.liveUrl"
+                  :href="sanitizeLiveUrl(project.liveUrl)"
                   external
                   class="w-full justify-center"
                 >
@@ -104,18 +104,9 @@
             <!-- Meta Info -->
             <div class="pt-6 border-t border-tokyo-night-gray">
               <dl class="space-y-3 text-sm">
-                <div class="flex justify-between items-center" v-if="project.status">
-                  <dt class="text-tokyo-night-muted">Status</dt>
-                  <dd class="text-tokyo-night-green font-medium">{{ project.status }}</dd>
-                </div>
-                <div class="flex justify-between items-center" v-if="project.createdAt">
-                  <dt class="text-tokyo-night-muted">Created</dt>
-                  <dd class="text-tokyo-night-text">{{ formatDate(project.createdAt) }}</dd>
-                </div>
-                <div class="flex justify-between items-center" v-if="project.updatedAt">
-                  <dt class="text-tokyo-night-muted">Updated</dt>
-                  <dd class="text-tokyo-night-text">{{ formatDate(project.updatedAt) }}</dd>
-                </div>
+                <MetaInfoPair v-if="project.status" label="Status" :value="project.status" color="success" horizontal />
+                <MetaInfoPair v-if="project.createdAt" label="Created" :value="formatDate(project.createdAt)" horizontal />
+                <MetaInfoPair v-if="project.updatedAt" label="Updated" :value="formatDate(project.updatedAt)" horizontal />
               </dl>
             </div>
 
@@ -155,9 +146,46 @@
 </template>
 
 <script lang="ts" setup>
+import { ref, watch } from 'vue'
 
 const route = useRoute()
 const { fetchProject } = useProjects()
+
+// Validate external URLs to prevent open redirect attacks
+const ALLOWED_REPO_DOMAINS = ['github.com', 'www.github.com', 'gitlab.com', 'www.gitlab.com', 'bitbucket.org', 'www.bitbucket.org']
+const ALLOWED_LIVE_DOMAINS = ['cativo.dev', 'www.cativo.dev']
+
+function isValidRepoUrl(url: string | undefined): boolean {
+  if (!url) return false
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol !== 'https:') return false
+    return ALLOWED_REPO_DOMAINS.some(domain => parsed.hostname === domain || parsed.hostname.endsWith(`.${domain}`))
+  } catch {
+    return false
+  }
+}
+
+function isValidLiveUrl(url: string | undefined): boolean {
+  if (!url) return false
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol !== 'https:') return false
+    // Allow cativo.dev subdomains OR any other HTTPS URL
+    const isCativoDev = ALLOWED_LIVE_DOMAINS.some(domain => parsed.hostname === domain || parsed.hostname.endsWith(`.${domain}`))
+    return isCativoDev || parsed.hostname.includes('.') // Allow any valid domain with TLD
+  } catch {
+    return false
+  }
+}
+
+function sanitizeRepoUrl(url: string | undefined): string | undefined {
+  return isValidRepoUrl(url) ? url : undefined
+}
+
+function sanitizeLiveUrl(url: string | undefined): string | undefined {
+  return isValidLiveUrl(url) ? url : undefined
+}
 
 const projectId = computed(() => route.params.id as string)
 
