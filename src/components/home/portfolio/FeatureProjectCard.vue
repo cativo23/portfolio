@@ -5,15 +5,14 @@
     </template>
     <h4 class="mb-2 text-xl font-bold text-tokyo-night-highlight">{{ project.title }}</h4>
     <p class="mb-4">{{ project.description }}</p>
-    <div class="flex flex-wrap gap-1 mb-4" v-if="project.techStack?.length">
-      <BaseBadge
+    <div class="flex flex-wrap gap-2 mb-4" v-if="project.techStack?.length">
+      <span
         v-for="tech in project.techStack"
         :key="tech"
-        color="magenta"
-        size="sm"
+        class="text-tokyo-night-green font-mono text-xs"
       >
-        {{ tech }}
-      </BaseBadge>
+        [{{ tech }}]
+      </span>
     </div>
   </BaseCard>
 </template>

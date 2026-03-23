@@ -1,8 +1,8 @@
 <template>
-  <header class="navbar bg-tokyo-night-dark p-4 sticky top-0 z-10">
+  <header class="navbar bg-tokyo-night-bg border-b border-tokyo-night-gray/30 p-4 sticky top-0 z-10">
     <nav class="container mx-auto flex justify-between items-center">
       <NuxtLink to="/" class="md:w-[290px]">
-        <h1 class="text-2xl font-bold text-tokyo-night-cyan">
+        <h1 class="text-xl md:text-2xl font-bold text-tokyo-night-purple font-mono">
           <span class="block md:hidden">
             <span class="text-tokyo-night-purple">👨‍💻 {</span>
             CC
@@ -29,17 +29,19 @@
           </span>
         </h1>
       </NuxtLink>
-      <div class="hidden md:flex space-x-4">
-        <ul class="flex space-x-4">
+      <div class="hidden md:flex space-x-6">
+        <ul class="flex space-x-6">
           <li v-for="item in navItems" :key="item.name">
             <NuxtLink :href="item.link" :class="{
               'text-tokyo-night-red font-bold': isHighlightedRoute(item.link),
-              'hover:text-tokyo-night-cyan transition-colors duration-200': !isHighlightedRoute(item.link)
-            }">{{ item.name }}</NuxtLink>
+              'text-tokyo-night-muted hover:text-tokyo-night-cyan': !isHighlightedRoute(item.link)
+            }" class="transition-colors duration-200 font-mono text-sm">
+              {{ item.name }}
+            </NuxtLink>
           </li>
         </ul>
       </div>
-      <button @click="isMenuOpen = !isMenuOpen" class="md:hidden" aria-label="Toggle navigation menu"
+      <button @click="isMenuOpen = !isMenuOpen" class="md:hidden text-tokyo-night-muted" aria-label="Toggle navigation menu"
         :aria-expanded="isMenuOpen">
         <LucideMenu aria-hidden="true" />
       </button>
@@ -48,19 +50,18 @@
       enter-to-class="translate-x-0" leave-active-class="transition-transform transform duration-300"
       leave-from-class="translate-x-0" leave-to-class="translate-x-full">
       <div v-if="isMenuOpen"
-        class="fixed inset-0 bg-tokyo-night-dark bg-opacity-90 z-20 flex flex-col items-center justify-center md:hidden"
+        class="fixed inset-0 bg-tokyo-night-bg bg-opacity-95 z-20 flex flex-col items-center justify-center md:hidden"
         role="dialog" aria-modal="true" aria-label="Mobile navigation">
-        <button @click="isMenuOpen = false" class="absolute top-4 right-4" aria-label="Close menu">
-          <!-- Close icon -->
+        <button @click="isMenuOpen = false" class="absolute top-4 right-4 text-tokyo-night-muted" aria-label="Close menu">
           <LucideX aria-hidden="true" />
         </button>
-        <ul class="space-y-4">
+        <ul class="space-y-6">
           <li v-for="item in navItems" :key="item.name">
             <NuxtLink :to="item.link" @click="closeMenu" :class="{
               'text-tokyo-night-red font-bold': isHighlightedRoute(item.link),
-              'hover:text-tokyo-night-cyan transition-colors duration-200': !isHighlightedRoute(item.link)
-            }">
-              {{ item.name }}
+              'text-tokyo-night-muted hover:text-tokyo-night-cyan': !isHighlightedRoute(item.link)
+            }" class="transition-colors duration-200 font-mono text-lg">
+              ❯ {{ item.name }}
             </NuxtLink>
           </li>
         </ul>

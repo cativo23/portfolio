@@ -24,9 +24,10 @@ const slots = useSlots()
 <template>
   <div class="mb-6">
     <component :is="'h' + level" :class="[
-      'font-bold text-tokyo-night-cyan',
+      'font-bold text-tokyo-night-cyan font-mono',
       level === 2 ? 'text-3xl' : 'text-2xl',
     ]">
+      <span class="text-tokyo-night-purple">❯</span>
       <DecryptedText
         v-if="animated"
         :text="title"
@@ -40,7 +41,7 @@ const slots = useSlots()
       />
       <template v-else>{{ title }}</template>
     </component>
-    <p v-if="slots.subtitle" class="text-tokyo-night-muted mt-2">
+    <p v-if="slots.subtitle" class="text-tokyo-night-muted mt-2 font-mono">
       <slot name="subtitle" />
     </p>
   </div>
