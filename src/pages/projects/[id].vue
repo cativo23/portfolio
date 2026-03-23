@@ -140,13 +140,10 @@
           <section class="mb-12">
             <h2 class="text-2xl font-bold text-tokyo-night-purple mb-6 pb-2 border-b border-tokyo-night-gray">Project Overview</h2>
 
-            <!-- Markdown Content rendered with marked -->
-            <div v-if="renderedContent" class="prose prose-invert prose-tokyo max-w-none" v-html="renderedContent"></div>
-
-            <!-- Fallback if no rich content -->
-            <p v-else class="text-lg text-tokyo-night-text leading-relaxed">
-              {{ project.description }}
-            </p>
+            <!-- Project content -->
+            <div class="text-lg text-tokyo-night-text leading-relaxed whitespace-pre-line">
+              {{ project.content || project.description }}
+            </div>
           </section>
 
         </main>
@@ -156,7 +153,6 @@
 </template>
 
 <script lang="ts" setup>
-import { marked } from 'marked'
 
 const route = useRoute()
 const { fetchProject } = useProjects()
@@ -174,18 +170,6 @@ const { data: project, pending, error } = await useAsyncData(
   () => `project-${projectId.value}`,
   () => fetchProject(projectId.value),
   { watch: [projectId] }
-)
-
-// Render markdown content reactively when project changes
-const { data: renderedContent } = await useAsyncData(
-  () => `markdown-${projectId.value}`,
-  async () => {
-    if (project.value?.content) {
-      return await marked(project.value.content)
-    }
-    return null
-  },
-  { watch: [project] }
 )
 
 const pageTitle = computed(() => project.value?.title || 'Project')
