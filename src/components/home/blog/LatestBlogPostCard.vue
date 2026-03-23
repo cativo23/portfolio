@@ -1,6 +1,6 @@
 <template>
   <BaseCard>
-    <h4 class="text-xl font-bold mb-2 text-tokyo-night-highlight">{{ post.title }}</h4>
+    <h4 class="text-xl font-bold mb-2 text-tokyo-night-blue">{{ post.title }}</h4>
     <p class="mb-4">{{ post.excerpt }}</p>
     <template #footer>
       <div class="flex justify-between items-center">
