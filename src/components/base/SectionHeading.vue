@@ -24,7 +24,7 @@ const slots = useSlots()
 <template>
   <div class="mb-6">
     <component :is="'h' + level" :class="[
-      'font-bold text-tokyo-night-highlight font-mono',
+      'font-bold text-tokyo-night-blue font-mono',
       level === 2 ? 'text-3xl' : 'text-2xl',
     ]">
       <span class="text-tokyo-night-purple">❯</span>
