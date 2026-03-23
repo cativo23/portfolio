@@ -56,7 +56,7 @@
         </button>
         <ul class="space-y-4">
           <li v-for="item in navItems" :key="item.name">
-            <NuxtLink @click="isMenuOpen = false" :href="item.link" :class="{
+            <NuxtLink :to="item.link" @click="isMenuOpen = false" :class="{
               'text-tokyo-night-red font-bold': isHighlightedRoute(item.link),
               'hover:text-tokyo-night-cyan transition-colors duration-200': !isHighlightedRoute(item.link)
             }">
