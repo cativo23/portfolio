@@ -44,36 +44,26 @@
     <section class="mt-12">
       <BaseSectionHeading title="API Info" :level="3" />
       <BaseCard>
-        <div v-if="apiLoading" class="text-center py-8">
-          <span class="text-tokyo-night-muted">Loading API info...</span>
-        </div>
-
-        <div v-else-if="apiError || !apiInfo" class="text-center py-8">
-          <span class="text-red-400">Unable to load API information</span>
-        </div>
-
-        <div v-else class="space-y-4">
+        <AsyncState :loading="apiLoading" :error="apiError" empty-text="No API information available">
+        <template #error="{ error }">
+          <span class="text-red-400">{{ error }}</span>
+        </template>
+        <div v-if="apiInfo" class="space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <dt class="text-tokyo-night-muted text-sm">API Name</dt>
-              <dd class="text-tokyo-night-text font-mono">{{ apiInfo.name }}</dd>
-            </div>
-            <div>
-              <dt class="text-tokyo-night-muted text-sm">Version</dt>
-              <dd class="text-tokyo-night-text font-mono">v{{ apiInfo.version }}</dd>
-            </div>
-            <div>
-              <dt class="text-tokyo-night-muted text-sm">Environment</dt>
-              <dd class="text-tokyo-night-text font-mono">
-                <span :class="environmentColor">{{ apiInfo.environment }}</span>
-              </dd>
-            </div>
-            <div>
-              <dt class="text-tokyo-night-muted text-sm">Status</dt>
-              <dd class="text-tokyo-night-text font-mono">
-                <span :class="statusColor">{{ apiInfo.status }}</span>
-              </dd>
-            </div>
+            <MetaInfoPair label="API Name" :value="apiInfo.name" horizontal />
+            <MetaInfoPair label="Version" :value="`v${apiInfo.version}`" horizontal />
+            <MetaInfoPair
+              label="Environment"
+              :value="apiInfo.environment"
+              :color="apiInfo.environment === 'production' ? 'success' : 'warning'"
+              horizontal
+            />
+            <MetaInfoPair
+              label="Status"
+              :value="apiInfo.status"
+              :color="apiInfo.status === 'operational' ? 'success' : 'error'"
+              horizontal
+            />
           </div>
 
           <div class="flex flex-wrap gap-4 mt-6">
@@ -96,6 +86,7 @@
             </BaseButton>
           </div>
         </div>
+        </AsyncState>
       </BaseCard>
     </section>
   </div>
@@ -104,8 +95,10 @@
 
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import SkillPill from '@/components/about/SkillPill.vue';
+import MetaInfoPair from '~/components/ui/MetaInfoPair.vue';
+import AsyncState from '~/components/base/AsyncState.vue';
 
 usePageTitle('About', {
   description: 'Learn more about Carlos Cativo, a passionate backend developer with expertise in building scalable server-side applications and sharing knowledge through technical blog posts.',
@@ -125,16 +118,6 @@ interface ApiInfo {
 const apiInfo = ref<ApiInfo | null>(null);
 const apiLoading = ref(true);
 const apiError = ref<string | null>(null);
-
-const environmentColor = computed(() => {
-  if (!apiInfo.value) return 'text-tokyo-night-muted';
-  return apiInfo.value.environment === 'production' ? 'text-green-400' : 'text-yellow-400';
-});
-
-const statusColor = computed(() => {
-  if (!apiInfo.value) return 'text-tokyo-night-muted';
-  return apiInfo.value.status === 'operational' ? 'text-green-400' : 'text-red-400';
-});
 
 async function loadApiInfo() {
   apiLoading.value = true;

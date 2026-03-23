@@ -3,41 +3,33 @@
     <BaseSectionHeading title="System Health" />
 
     <!-- Health Type Tabs -->
-    <div class="flex gap-2 mb-6 overflow-x-auto">
+    <div class="flex gap-2 mb-6 overflow-x-auto" role="tablist" aria-label="Health check view options">
       <BaseButton
         v-for="tab in healthTabs"
         :key="tab.id"
         :variant="selectedTab === tab.id ? 'primary' : 'ghost'"
         :size="'sm'"
-        @click="selectedTab = tab.id as 'basic' | 'detailed'; loadHealth()"
+        role="tab"
+        :aria-pressed="selectedTab === tab.id"
+        :aria-selected="selectedTab === tab.id"
+        @click="selectTab(tab.id as 'basic' | 'detailed')"
       >
         {{ tab.label }}
       </BaseButton>
     </div>
 
     <BaseCard>
-      <div v-if="loading" class="text-center py-8">
-        <span class="text-tokyo-night-muted">Loading health status...</span>
-      </div>
-
-      <div v-else-if="error || !health" class="text-center py-8">
-        <p class="text-tokyo-night-red mb-4">Unable to load health status</p>
-        <p class="text-tokyo-night-muted text-sm">{{ error }}</p>
-      </div>
-
-      <div v-else class="space-y-6">
+      <AsyncState :loading="loading" :error="error || (health === null ? 'No data' : undefined)" loading-text="Loading health status..." error-text="Unable to load health status">
+        <template #error="{ error }">
+          <p class="text-tokyo-night-red mb-4">Unable to load health status</p>
+          <p class="text-tokyo-night-muted text-sm">{{ error }}</p>
+        </template>
+        <div v-if="health" class="space-y-6" aria-live="polite">
         <!-- Summary -->
         <div class="text-center">
-          <div
-            class="inline-flex items-center gap-2 text-2xl font-bold"
-            :class="overallStatusColor"
-          >
-            <span
-              class="w-4 h-4 rounded-full animate-pulse"
-              :class="dotColor"
-            ></span>
-            {{ overallStatus }}
-          </div>
+          <span class="flex items-center px-3 py-1 rounded-full border bg-tokyo-night-surface shadow-sm font-mono text-sm" :class="Object.values(health.components).every(c => c.status === 'up') ? 'text-tokyo-night-green' : 'text-tokyo-night-red'">
+            <StatusIndicator :status="summaryStatusIndicator" :text="overallStatus" pulse size="lg" />
+          </span>
           <p v-if="health.status" class="text-tokyo-night-muted mt-2 capitalize">
             Status: {{ health.status }}
           </p>
@@ -55,16 +47,7 @@
                 <span class="text-tokyo-night-text font-mono capitalize">{{ formatServiceName(name) }}</span>
               </div>
               <div class="flex items-center gap-4">
-                <span
-                  class="flex items-center gap-2 text-sm"
-                  :class="component.status === 'up' ? 'text-tokyo-night-green' : 'text-tokyo-night-red'"
-                >
-                  <span
-                    class="w-2 h-2 rounded-full"
-                    :class="component.status === 'up' ? 'bg-tokyo-night-green' : 'bg-tokyo-night-red'"
-                  ></span>
-                  {{ component.status === 'up' ? 'Operational' : 'Down' }}
-                </span>
+                <StatusIndicator :status="component.status === 'up' ? 'success' : 'error'" :text="component.status === 'up' ? 'Operational' : 'Down'" size="md" />
                 <span v-if="component.latency !== undefined" class="text-tokyo-night-muted text-xs font-mono">
                   {{ component.latency }}ms
                 </span>
@@ -81,22 +64,10 @@
 
         <!-- Meta Info -->
         <div class="pt-4 border-t border-tokyo-night-gray grid grid-cols-2 gap-4 text-sm">
-          <div v-if="health.version">
-            <span class="text-tokyo-night-muted">Version:</span>
-            <span class="text-tokyo-night-text font-mono ml-2">{{ health.version }}</span>
-          </div>
-          <div v-if="health.environment">
-            <span class="text-tokyo-night-muted">Environment:</span>
-            <span class="text-tokyo-night-text font-mono ml-2 capitalize">{{ health.environment }}</span>
-          </div>
-          <div v-if="health.uptime">
-            <span class="text-tokyo-night-muted">Uptime:</span>
-            <span class="text-tokyo-night-text font-mono ml-2">{{ health.uptime }}s</span>
-          </div>
-          <div v-if="requestId">
-            <span class="text-tokyo-night-muted">Request ID:</span>
-            <span class="text-tokyo-night-text font-mono ml-2 text-xs">{{ requestId }}</span>
-          </div>
+          <MetaInfoPair v-if="health.version" label="Version" :value="health.version" horizontal />
+          <MetaInfoPair v-if="health.environment" label="Environment" :value="health.environment" horizontal />
+          <MetaInfoPair v-if="health.uptime" label="Uptime" :value="`${health.uptime}s`" horizontal />
+          <MetaInfoPair v-if="requestId" label="Request ID" :value="requestId" horizontal />
         </div>
 
         <!-- Refresh Button -->
@@ -106,13 +77,17 @@
             Refresh
           </BaseButton>
         </div>
-      </div>
+        </div>
+      </AsyncState>
     </BaseCard>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import StatusIndicator from '~/components/ui/StatusIndicator.vue'
+import MetaInfoPair from '~/components/ui/MetaInfoPair.vue'
+import AsyncState from '~/components/base/AsyncState.vue'
 
 usePageTitle('Health Check', {
   description: 'System health status and monitoring for the portfolio API.',
@@ -160,17 +135,16 @@ const overallStatus = computed(() => {
   return allUp ? 'All Systems Operational' : 'Some Services Down'
 })
 
-const overallStatusColor = computed(() => {
-  if (!health.value) return 'text-tokyo-night-muted'
-  const allUp = Object.values(health.value.components).every(c => c.status === 'up')
-  return allUp ? 'text-tokyo-night-green' : 'text-tokyo-night-red'
+const summaryStatusIndicator = computed(() => {
+  if (overallStatus.value === 'All Systems Operational') return 'success'
+  if (overallStatus.value === 'Some Services Down') return 'error'
+  return 'unknown'
 })
 
-const dotColor = computed(() => {
-  if (!health.value) return 'bg-tokyo-night-muted'
-  const allUp = Object.values(health.value.components).every(c => c.status === 'up')
-  return allUp ? 'bg-tokyo-night-green' : 'bg-tokyo-night-red'
-})
+function selectTab(tabId: 'basic' | 'detailed') {
+  selectedTab.value = tabId
+  loadHealth()
+}
 
 function formatServiceName(name: string): string {
   return name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
