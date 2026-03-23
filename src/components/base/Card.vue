@@ -25,8 +25,7 @@ const slots = useSlots()
     :to="to"
     :prefetch="prefetch"
     :class="[
-      'relative bg-tokyo-night-dark rounded-lg transition-shadow duration-200 block',
-      hoverable && 'hover:shadow-lg',
+      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block',      hoverable && 'hover:border-tokyo-night-blue',
     ]"
   >
     <div v-if="slots.badge" class="absolute top-3 right-3 z-10">
@@ -38,7 +37,7 @@ const slots = useSlots()
     <div :class="padded && 'p-6'">
       <slot />
     </div>
-    <div v-if="slots.footer" class="border-t border-tokyo-night-gray/20 pt-4 mt-4 px-6 pb-6">
+    <div v-if="slots.footer" class="border-t border-tokyo-night-gray/30 pt-4 mt-4 px-6 pb-6">
       <slot name="footer" />
     </div>
   </NuxtLink>
@@ -49,8 +48,8 @@ const slots = useSlots()
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
     :class="[
-      'relative bg-tokyo-night-dark rounded-lg transition-shadow duration-200 block',
-      hoverable && 'hover:shadow-lg',
+      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block',
+      hoverable && 'hover:border-tokyo-night-blue',
     ]"
   >
     <div v-if="slots.badge" class="absolute top-3 right-3 z-10">
@@ -62,7 +61,7 @@ const slots = useSlots()
     <div :class="padded && 'p-6'">
       <slot />
     </div>
-    <div v-if="slots.footer" class="border-t border-tokyo-night-gray/20 pt-4 mt-4 px-6 pb-6">
+    <div v-if="slots.footer" class="border-t border-tokyo-night-gray/30 pt-4 mt-4 px-6 pb-6">
       <slot name="footer" />
     </div>
   </a>
@@ -70,8 +69,8 @@ const slots = useSlots()
   <div
     v-else
     :class="[
-      'relative bg-tokyo-night-dark rounded-lg transition-shadow duration-200',
-      hoverable && 'hover:shadow-lg',
+      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200',
+      hoverable && 'hover:border-tokyo-night-blue',
     ]"
   >
     <div v-if="slots.badge" class="absolute top-3 right-3 z-10">
@@ -83,7 +82,7 @@ const slots = useSlots()
     <div :class="padded && 'p-6'">
       <slot />
     </div>
-    <div v-if="slots.footer" class="border-t border-tokyo-night-gray/20 pt-4 mt-4 px-6 pb-6">
+    <div v-if="slots.footer" class="border-t border-tokyo-night-gray/30 pt-4 mt-4 px-6 pb-6">
       <slot name="footer" />
     </div>
   </div>

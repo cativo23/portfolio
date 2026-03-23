@@ -3,13 +3,13 @@
     <BaseSectionHeading title="Blog Posts" />
     <div class="space-y-8">
       <BaseCard v-for="post in posts" :key="post.path">
-        <h3 class="mb-2 text-2xl font-bold">{{ post.title }}</h3>
-        <p class="mb-4">{{ post.description }}</p>
+        <h3 class="mb-2 text-2xl font-bold font-mono text-tokyo-night-blue">{{ post.title }}</h3>
+        <p class="mb-4 font-mono text-tokyo-night-muted">{{ post.description }}</p>
         <template #footer>
           <div class="flex justify-between items-center">
-            <span class="text-tokyo-night-purple">{{ formatDate(post.created_at) }}</span>
-            <BaseButton variant="ghost" :to="post.path ?? '/404'" size="sm">
-              Read More
+            <span class="text-tokyo-night-purple font-mono text-sm">{{ formatDate(post.created_at) }}</span>
+            <BaseButton variant="ghost" :to="post.path ?? '/404'" size="sm" class="font-mono">
+              ❯ Read More
               <LucideArrowRight class="w-4 h-4 ml-2" />
             </BaseButton>
           </div>

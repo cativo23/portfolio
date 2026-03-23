@@ -21,8 +21,8 @@
     <BaseCard>
       <AsyncState :loading="loading" :error="error || (health === null ? 'No data' : undefined)" loading-text="Loading health status..." error-text="Unable to load health status">
         <template #error="{ error }">
-          <p class="text-tokyo-night-red mb-4">Unable to load health status</p>
-          <p class="text-tokyo-night-muted text-sm">{{ error }}</p>
+          <p class="text-tokyo-night-red mb-4 font-mono">Unable to load health status</p>
+          <p class="text-tokyo-night-muted text-sm font-mono">{{ error }}</p>
         </template>
         <div v-if="health" class="space-y-6" aria-live="polite">
         <!-- Summary -->
@@ -72,9 +72,9 @@
 
         <!-- Refresh Button -->
         <div class="flex justify-center mt-4">
-          <BaseButton variant="ghost" @click="loadHealth" :disabled="loading">
+          <BaseButton variant="ghost" @click="loadHealth" :disabled="loading" class="font-mono">
             <LucideRefreshCw class="w-4 h-4 mr-2" :class="{ 'animate-spin': loading }" />
-            Refresh
+            ❯ Refresh
           </BaseButton>
         </div>
         </div>
