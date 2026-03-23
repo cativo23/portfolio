@@ -1,15 +1,8 @@
 <template>
   <div class="flex items-center gap-3 text-xs font-mono">
     <span class="text-tokyo-night-muted">API Status:</span>
-    <span
-      class="flex items-center gap-1.5"
-      :class="statusColor"
-    >
-      <span
-        class="w-2 h-2 rounded-full animate-pulse"
-        :class="dotColor"
-      ></span>
-      {{ statusText }}
+    <span class="flex items-center" :class="statusColor">
+      <StatusIndicator :status="healthStatus === 'up' ? 'success' : healthStatus === 'down' ? 'error' : healthStatus === 'degraded' ? 'warning' : 'unknown'" :text="statusText" pulse size="sm" />
     </span>
     <span v-if="apiInfo?.version" class="text-tokyo-night-muted">v{{ apiInfo.version }}</span>
     <NuxtLink
@@ -24,6 +17,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from 'vue'
+import StatusIndicator from './StatusIndicator.vue'
 
 interface HealthComponent {
   status: string
@@ -64,12 +58,16 @@ const statusColor = computed(() => {
   return allUp ? 'text-green-400' : 'text-yellow-400'
 })
 
-const dotColor = computed(() => {
-  if (loading.value) return 'bg-tokyo-night-muted'
-  if (!health.value) return 'bg-red-400'
+const healthStatus = computed(() => {
+  if (loading.value) return 'unknown'
+  if (!health.value) return 'down'
 
   const allUp = Object.values(health.value.components).every(c => c.status === 'up')
-  return allUp ? 'bg-green-400' : 'bg-yellow-400'
+  const anyDegraded = Object.values(health.value.components).some(c => c.status === 'degraded')
+
+  if (allUp) return 'up'
+  if (anyDegraded) return 'degraded'
+  return 'down'
 })
 
 async function fetchHealth() {

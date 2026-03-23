@@ -4,16 +4,17 @@
 
     <!-- Projects Grid -->
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-      <template v-if="loading">
-        <div class="col-span-1 md:col-span-2" role="status" aria-live="polite">Loading projects...</div>
-      </template>
-      <template v-else-if="error">
-        <div class="col-span-1 text-red-400 md:col-span-2" role="alert">Failed to load projects</div>
-      </template>
-      <template v-else-if="displayed.length === 0">
-        <div class="col-span-1 md:col-span-2 text-tokyo-night-text">No projects found.</div>
-      </template>
-      <BaseCard v-else :to="`/projects/${project.id}`" :key="project.id || project.title" :prefetch="false" v-for="project in displayed">
+      <AsyncState :loading="loading" :error="error" :empty="displayed.length === 0">
+        <template #loading>
+          <div class="col-span-1 md:col-span-2" role="status" aria-live="polite">Loading projects...</div>
+        </template>
+        <template #error>
+          <div class="col-span-1 text-red-400 md:col-span-2" role="alert">Failed to load projects</div>
+        </template>
+        <template #empty>
+          <div class="col-span-1 md:col-span-2 text-tokyo-night-text">No projects found.</div>
+        </template>
+        <BaseCard :to="`/projects/${project.id}`" :key="project.id || project.title" :prefetch="false" v-for="project in displayed">
         <h3 class="mb-4 text-2xl font-bold">{{ project.title }}</h3>
         <p class="mb-4">{{ project.description }}</p>
         <div class="flex items-center mb-4 text-tokyo-night-cyan">
@@ -29,6 +30,7 @@
           </BaseButton>
         </div>
       </BaseCard>
+      </AsyncState>
     </div>
 
     <!-- Pagination -->

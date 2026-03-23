@@ -104,18 +104,9 @@
             <!-- Meta Info -->
             <div class="pt-6 border-t border-tokyo-night-gray">
               <dl class="space-y-3 text-sm">
-                <div class="flex justify-between items-center" v-if="project.status">
-                  <dt class="text-tokyo-night-muted">Status</dt>
-                  <dd class="text-tokyo-night-green font-medium">{{ project.status }}</dd>
-                </div>
-                <div class="flex justify-between items-center" v-if="project.createdAt">
-                  <dt class="text-tokyo-night-muted">Created</dt>
-                  <dd class="text-tokyo-night-text">{{ formatDate(project.createdAt) }}</dd>
-                </div>
-                <div class="flex justify-between items-center" v-if="project.updatedAt">
-                  <dt class="text-tokyo-night-muted">Updated</dt>
-                  <dd class="text-tokyo-night-text">{{ formatDate(project.updatedAt) }}</dd>
-                </div>
+                <MetaInfoPair v-if="project.status" label="Status" :value="project.status" color="success" horizontal />
+                <MetaInfoPair v-if="project.createdAt" label="Created" :value="formatDate(project.createdAt)" horizontal />
+                <MetaInfoPair v-if="project.updatedAt" label="Updated" :value="formatDate(project.updatedAt)" horizontal />
               </dl>
             </div>
 
