@@ -141,7 +141,7 @@
             <h2 class="text-2xl font-bold text-tokyo-night-purple mb-6 pb-2 border-b border-tokyo-night-gray">Project Overview</h2>
 
             <!-- Project content -->
-            <div class="text-lg text-tokyo-night-text leading-relaxed prose dark:prose-invert max-w-none">
+            <div class="text-lg text-tokyo-night-text leading-relaxed prose prose-tokyo dark:prose-invert max-w-none">
               <template v-if="project?.content || project?.description">
                 <MDC :value="project.content || project.description" />
               </template>
@@ -199,6 +199,7 @@ function formatDate(dateString?: string) {
 
 <style scoped>
 article {
-  @apply py-8;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 </style>

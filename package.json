@@ -30,7 +30,7 @@
     "@nuxtjs/mdc": "^0.20.2",
     "@nuxtjs/sitemap": "^7.6.0",
     "@nuxtjs/tailwindcss": "^6.x",
-    "@tailwindcss/typography": "^0.5.x",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^25.5.0",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^18.0.1",
