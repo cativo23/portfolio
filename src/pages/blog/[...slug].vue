@@ -3,7 +3,7 @@
     <NuxtLink to="/blog" class="btn flex items-center mb-4 text-tokyo-night-cyan hover:text-tokyo-night-blue font-mono">
       <LucideArrowLeft class="w-4 h-4 mr-2" />❯ Back to Blog
     </NuxtLink>
-    <h1 v-if="blogPost" class="text-3xl font-bold text-tokyo-night-text font-mono">
+    <h1 v-if="blogPost" class="text-3xl font-bold text-tokyo-night-blue font-mono">
       <span class="text-tokyo-night-purple">❯</span> {{ blogPost.title }}
     </h1>
     <ContentRenderer v-if="blogPost" :value="blogPost" class="prose-tokyo" />
