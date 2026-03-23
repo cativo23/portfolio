@@ -15,6 +15,8 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 interface Props {
   status: 'success' | 'error' | 'warning' | 'info' | 'unknown';
   text?: string;

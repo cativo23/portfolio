@@ -1,15 +1,17 @@
 <template>
   <div :class="wrapperClasses">
-    <dt :class="labelClasses">
+    <span :class="labelClasses">
       <slot name="label">{{ label }}</slot>
-    </dt>
-    <dd :class="valueClasses">
+    </span>
+    <span :class="valueClasses">
       <slot>{{ value }}</slot>
-    </dd>
+    </span>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 interface Props {
   label: string;
   value: string | number;
