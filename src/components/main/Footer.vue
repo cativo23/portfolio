@@ -9,8 +9,8 @@
 
         <!-- Center: API Status -->
         <div class="flex items-center gap-2 text-tokyo-night-muted">
-          <span :class="apiStatusDotColor">●</span>
-          <span>API Status: <span :class="apiStatusTextColor">{{ apiStatus }}</span></span>
+          <span :class="getApiStatusColor(apiStatus)">●</span>
+          <span>API Status: <span :class="getApiStatusColor(apiStatus)">{{ apiStatus }}</span></span>
           <span class="text-tokyo-night-gray/30">|</span>
           <span class="text-tokyo-night-blue">v2.4.1</span>
         </div>
@@ -37,8 +37,7 @@
 
 <script lang="ts" setup>
 import { createLucideIcon } from 'lucide-vue-next';
-import { computed } from 'vue';
-import HealthBadge from '~/components/ui/HealthBadge.vue';
+import { ref } from 'vue';
 
 // Create the XIcon component
 const XIcon = createLucideIcon("X", [
@@ -56,17 +55,12 @@ const XIcon = createLucideIcon("X", [
 const currentYear = new Date().getFullYear();
 
 // API Status - TODO: Replace with actual API health check
-const apiStatus: 'Operational' | 'Degraded' | 'Down' = 'Degraded';
-const apiStatusDotColor = computed(() => {
-  if (apiStatus === 'Operational') return 'text-tokyo-night-green';
-  if (apiStatus === 'Degraded') return 'text-tokyo-night-yellow';
+const apiStatus = ref<'Operational' | 'Degraded' | 'Down'>('Degraded');
+const getApiStatusColor = (status: string) => {
+  if (status === 'Operational') return 'text-tokyo-night-green';
+  if (status === 'Degraded') return 'text-tokyo-night-yellow';
   return 'text-tokyo-night-red';
-});
-const apiStatusTextColor = computed(() => {
-  if (apiStatus === 'Operational') return 'text-tokyo-night-green';
-  if (apiStatus === 'Degraded') return 'text-tokyo-night-yellow';
-  return 'text-tokyo-night-red';
-});
+};
 </script>
 
 <style></style>
