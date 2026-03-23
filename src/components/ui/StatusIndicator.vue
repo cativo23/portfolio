@@ -1,5 +1,9 @@
 <template>
-  <span class="inline-flex items-center gap-1.5" role="status">
+  <span
+    class="inline-flex items-center gap-1.5"
+    role="status"
+    :aria-label="ariaLabel || (text ? undefined : status)"
+  >
     <span
       :class="[
         'rounded-full',
@@ -22,11 +26,13 @@ interface Props {
   text?: string;
   pulse?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  ariaLabel?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   pulse: false,
-  size: 'md'
+  size: 'md',
+  ariaLabel: ''
 });
 
 const colorMap: Record<Props['status'], string> = {

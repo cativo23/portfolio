@@ -44,15 +44,11 @@
     <section class="mt-12">
       <BaseSectionHeading title="API Info" :level="3" />
       <BaseCard>
-        <div v-if="apiLoading" class="text-center py-8">
-          <span class="text-tokyo-night-muted">Loading API info...</span>
-        </div>
-
-        <div v-else-if="apiError || !apiInfo" class="text-center py-8">
-          <span class="text-red-400">Unable to load API information</span>
-        </div>
-
-        <div v-else class="space-y-4">
+        <AsyncState :loading="apiLoading" :error="apiError" empty-text="No API information available">
+        <template #error="{ error }">
+          <span class="text-red-400">{{ error }}</span>
+        </template>
+        <div v-if="apiInfo" class="space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <MetaInfoPair label="API Name" :value="apiInfo.name" horizontal />
             <MetaInfoPair label="Version" :value="`v${apiInfo.version}`" horizontal />
@@ -90,6 +86,7 @@
             </BaseButton>
           </div>
         </div>
+        </AsyncState>
       </BaseCard>
     </section>
   </div>
@@ -101,6 +98,7 @@
 import { ref } from 'vue';
 import SkillPill from '@/components/about/SkillPill.vue';
 import MetaInfoPair from '~/components/ui/MetaInfoPair.vue';
+import AsyncState from '~/components/base/AsyncState.vue';
 
 usePageTitle('About', {
   description: 'Learn more about Carlos Cativo, a passionate backend developer with expertise in building scalable server-side applications and sharing knowledge through technical blog posts.',

@@ -2,7 +2,7 @@
   <div class="flex items-center gap-3 text-xs font-mono">
     <span class="text-tokyo-night-muted">API Status:</span>
     <span class="flex items-center" :class="statusColor">
-      <StatusIndicator :status="healthStatus === 'up' ? 'success' : healthStatus === 'down' ? 'error' : healthStatus === 'degraded' ? 'warning' : 'unknown'" :text="statusText" pulse size="sm" />
+      <StatusIndicator :status="indicatorStatus" :text="statusText" pulse size="sm" />
     </span>
     <span v-if="apiInfo?.version" class="text-tokyo-night-muted">v{{ apiInfo.version }}</span>
     <NuxtLink
@@ -69,6 +69,17 @@ const healthStatus = computed(() => {
   if (anyDegraded) return 'degraded'
   return 'down'
 })
+
+const statusIndicatorMap = {
+  up: 'success',
+  down: 'error',
+  degraded: 'warning',
+  unknown: 'unknown'
+} as const
+
+const indicatorStatus = computed(() =>
+  statusIndicatorMap[healthStatus.value]
+)
 
 async function fetchHealth() {
   try {

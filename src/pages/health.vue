@@ -3,13 +3,16 @@
     <BaseSectionHeading title="System Health" />
 
     <!-- Health Type Tabs -->
-    <div class="flex gap-2 mb-6 overflow-x-auto">
+    <div class="flex gap-2 mb-6 overflow-x-auto" role="tablist" aria-label="Health check view options">
       <BaseButton
         v-for="tab in healthTabs"
         :key="tab.id"
         :variant="selectedTab === tab.id ? 'primary' : 'ghost'"
         :size="'sm'"
-        @click="selectedTab = tab.id as 'basic' | 'detailed'; loadHealth()"
+        role="tab"
+        :aria-pressed="selectedTab === tab.id"
+        :aria-selected="selectedTab === tab.id"
+        @click="selectTab(tab.id as 'basic' | 'detailed')"
       >
         {{ tab.label }}
       </BaseButton>
@@ -21,11 +24,11 @@
           <p class="text-tokyo-night-red mb-4">Unable to load health status</p>
           <p class="text-tokyo-night-muted text-sm">{{ error }}</p>
         </template>
-        <div v-if="health" class="space-y-6">
+        <div v-if="health" class="space-y-6" aria-live="polite">
         <!-- Summary -->
         <div class="text-center">
           <span class="flex items-center px-3 py-1 rounded-full border bg-tokyo-night-surface shadow-sm font-mono text-sm" :class="Object.values(health.components).every(c => c.status === 'up') ? 'text-tokyo-night-green' : 'text-tokyo-night-red'">
-            <StatusIndicator :status="overallStatus === 'All Systems Operational' ? 'success' : overallStatus === 'Some Services Down' ? 'error' : 'unknown'" :text="overallStatus" pulse size="lg" />
+            <StatusIndicator :status="summaryStatusIndicator" :text="overallStatus" pulse size="lg" />
           </span>
           <p v-if="health.status" class="text-tokyo-night-muted mt-2 capitalize">
             Status: {{ health.status }}
@@ -132,6 +135,16 @@ const overallStatus = computed(() => {
   return allUp ? 'All Systems Operational' : 'Some Services Down'
 })
 
+const summaryStatusIndicator = computed(() => {
+  if (overallStatus.value === 'All Systems Operational') return 'success'
+  if (overallStatus.value === 'Some Services Down') return 'error'
+  return 'unknown'
+})
+
+function selectTab(tabId: 'basic' | 'detailed') {
+  selectedTab.value = tabId
+  loadHealth()
+}
 
 function formatServiceName(name: string): string {
   return name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
