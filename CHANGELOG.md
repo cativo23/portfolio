@@ -11,6 +11,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] - 2026-03-23
+
+### Added
+- Terminal-like UI/UX redesign with modern minimalist aesthetic
+- Horizontal header layout with typing effect and navigation
+- Footer status bar with API Status indicator
+
+### Changed
+- Updated all text colors to use bright Tokyo Night blue (#7aa2f7) for better contrast
+- Redesigned cards with border styling instead of shadows
+- Applied font-mono class to headings and text elements throughout
+- Added ❯ prefix to section headings and navigation elements
+- Updated tech stack display to use [Tech] format instead of badges
+
+### Fixed
+- SSR hydration bug in featured projects loading on home page refresh
+- Text contrast issues on blog and project titles
+- BaseCard link text color inheritance
+
+### Security
+- URL validation for external links to prevent open redirect attacks
+
+---
+
 ## [1.2.0] - 2026-03-23
 
 ### Added
