@@ -11,6 +11,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] - 2026-03-23
+
+### Added
+- **New reusable UI components** for consistent Tailwind patterns:
+  - `StatusIndicator.vue` - Colored status dot with optional pulse animation and text label
+  - `MetaInfoPair.vue` - Semantic label/value pairs for metadata display
+  - `AsyncState.vue` - Wrapper component for loading, error, and empty states
+- Accessibility improvements:
+  - `aria-label` support in StatusIndicator for screen readers
+  - `aria-pressed` and `role="tab"` for health check tab buttons
+  - `aria-live` regions for dynamic content announcements
+- URL validation for external links to prevent open redirect attacks:
+  - Strict validation for repository URLs (GitHub, GitLab, Bitbucket)
+  - Flexible validation for live demo URLs (HTTPS required)
+
+### Changed
+- Refactored health page to use new UI components with cleaner computed properties
+- Updated about page to use AsyncState for API info loading states
+- Improved grid layout for projects pages by using inline state templates
+- Enhanced TypeScript type safety in AsyncState slot definitions
+- Error messages now sanitized to prevent information leakage
+
+### Fixed
+- Missing `computed` import in StatusIndicator and MetaInfoPair components
+- Invalid HTML structure in MetaInfoPair (changed `<dt>/<dd>` to `<span>` elements)
+- TypeScript error in Header.vue click handler
+- Grid layout issues caused by AsyncState wrapper breaking CSS grid
+- Complex ternary expressions extracted to computed properties for readability
+
+### Security
+- Added URL sanitization for all external links in project pages
+- Error messages sanitized before display to prevent sensitive info exposure
+
+---
+
 ## [1.1.0] - 2026-03-22
 
 ### Added
