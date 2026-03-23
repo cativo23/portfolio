@@ -9,4 +9,8 @@ export interface Project {
     isFeatured?: boolean;
     createdAt?: string;
     updatedAt?: string;
+    content?: string;
+    heroImage?: string;
+    features?: string[];
+    status?: string;
 }

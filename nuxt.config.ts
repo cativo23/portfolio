@@ -1,10 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const isDocker = process.env.NITRO_PRESET === 'node-server'
 
-const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxtjs/sitemap', '@nuxt/content', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image']
+const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxtjs/sitemap', '@nuxt/content', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image', '@nuxtjs/mdc']
 const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
 
 export default defineNuxtConfig({
+  build: {
+    transpile: ['debug', 'extend'],
+  },
   nitro: {
     externals: {
       external: ['better-sqlite3']
@@ -77,6 +80,9 @@ export default defineNuxtConfig({
         usePolling: true,
         interval: 1000,
       },
+    },
+    optimizeDeps: {
+      // Removed 'extend' as it causes default export 500 errors
     },
   },
   image: {
