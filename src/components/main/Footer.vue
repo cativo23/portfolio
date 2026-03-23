@@ -1,26 +1,43 @@
 <template>
-  <footer class="bg-tokyo-night-dark text-center p-4 mt-16">
-    <p>&copy; {{ currentYear }} Carlos Cativo. All rights reserved.</p>
-    <div class="flex justify-center items-center space-x-4 mt-2">
-      <BaseButton variant="icon" href="https://github.com/cativo23" external aria-label="GitHub">
-        <LucideGithub />
-      </BaseButton>
-      <BaseButton variant="icon" href="https://linkedin.com/in/cativo23" external aria-label="LinkedIn">
-        <LucideLinkedin />
-      </BaseButton>
-      <BaseButton variant="icon" href="https://x.com/cativo23" external aria-label="X (Twitter)">
-        <XIcon />
-      </BaseButton>
-    </div>
-    <div class="mt-3">
-      <HealthBadge />
+  <footer class="bg-tokyo-night-dark border-t border-tokyo-night-gray/30">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-3 font-mono text-xs">
+        <!-- Left: Copyright -->
+        <div class="text-tokyo-night-muted">
+          <span class="text-tokyo-night-purple">© {{ currentYear }}</span> Carlos Cativo
+        </div>
+
+        <!-- Center: API Status -->
+        <div class="flex items-center gap-2 text-tokyo-night-muted">
+          <span :class="getApiStatusColor(apiStatus)">●</span>
+          <span>API Status: <span :class="getApiStatusColor(apiStatus)">{{ apiStatus }}</span></span>
+          <span class="text-tokyo-night-gray/30">|</span>
+          <span class="text-tokyo-night-blue">v2.4.1</span>
+        </div>
+
+        <!-- Right: Social Links -->
+        <div class="flex items-center gap-4">
+          <a href="https://github.com/cativo23" target="_blank" rel="noopener noreferrer"
+             class="text-tokyo-night-blue hover:text-tokyo-night-cyan transition-colors">
+            GitHub
+          </a>
+          <a href="https://linkedin.com/in/cativo23" target="_blank" rel="noopener noreferrer"
+             class="text-tokyo-night-blue hover:text-tokyo-night-cyan transition-colors">
+            LinkedIn
+          </a>
+          <a href="https://x.com/cativo23" target="_blank" rel="noopener noreferrer"
+             class="text-tokyo-night-blue hover:text-tokyo-night-cyan transition-colors">
+            X
+          </a>
+        </div>
+      </div>
     </div>
   </footer>
 </template>
 
 <script lang="ts" setup>
 import { createLucideIcon } from 'lucide-vue-next';
-import HealthBadge from '~/components/ui/HealthBadge.vue';
+import { ref } from 'vue';
 
 // Create the XIcon component
 const XIcon = createLucideIcon("X", [
@@ -36,6 +53,14 @@ const XIcon = createLucideIcon("X", [
 
 // Add a reactive property for the current year
 const currentYear = new Date().getFullYear();
+
+// API Status - TODO: Replace with actual API health check
+const apiStatus = ref<'Operational' | 'Degraded' | 'Down'>('Degraded');
+const getApiStatusColor = (status: string) => {
+  if (status === 'Operational') return 'text-tokyo-night-green';
+  if (status === 'Degraded') return 'text-tokyo-night-yellow';
+  return 'text-tokyo-night-red';
+};
 </script>
 
 <style></style>

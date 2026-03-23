@@ -8,17 +8,18 @@
           width="144"
           height="144"
           loading="lazy"
-          class="max-w-36 rounded-full shadow-2xl"
+          class="max-w-36 rounded-full border-2 border-tokyo-night-blue"
           quality="80"
         />
       </div>
-      <h2 class="text-3xl font-bold mb-4">
+      <h2 class="text-3xl font-bold mb-4 font-mono">
+        <span class="text-tokyo-night-purple">❯</span>
         <DecryptedText text="Backend Developer & Tech Enthusiast" animateOn="view"
           class="text-tokyo-night-cyan font-bold break-keep" encryptedClassName="text-opacity-60"
           :speed="30" :maxIterations="20" :sequential="true" revealDirection="center" />
       </h2>
-      <p class="text-xl mb-8">Crafting robust server-side solutions and sharing knowledge</p>
-      <BaseButton to="/projects">View Projects</BaseButton>
+      <p class="text-xl mb-8 font-mono text-tokyo-night-muted">Crafting robust server-side solutions and sharing knowledge</p>
+      <BaseButton to="/projects" class="font-mono">❯ View Projects</BaseButton>
     </div>
   </section>
 </template>
