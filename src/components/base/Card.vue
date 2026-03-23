@@ -25,7 +25,7 @@ const slots = useSlots()
     :to="to"
     :prefetch="prefetch"
     :class="[
-      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block',
+      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block text-tokyo-night-blue',
       hoverable && 'hover:border-tokyo-night-blue',
     ]"
   >
@@ -49,7 +49,7 @@ const slots = useSlots()
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
     :class="[
-      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block',
+      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block text-tokyo-night-blue',
       hoverable && 'hover:border-tokyo-night-blue',
     ]"
   >
