@@ -3,7 +3,7 @@
     <template v-if="project.isFeatured" #badge>
       <BaseBadge>Featured</BaseBadge>
     </template>
-    <h4 class="mb-2 text-xl font-bold text-tokyo-night-highlight">{{ project.title }}</h4>
+    <h4 class="mb-2 text-xl font-bold text-tokyo-night-blue">{{ project.title }}</h4>
     <p class="mb-4">{{ project.description }}</p>
     <div class="flex flex-wrap gap-2 mb-4" v-if="project.techStack?.length">
       <span

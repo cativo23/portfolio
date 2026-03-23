@@ -3,7 +3,7 @@
     <BaseSectionHeading title="Blog Posts" />
     <div class="space-y-8">
       <BaseCard v-for="post in posts" :key="post.path">
-        <h3 class="mb-2 text-2xl font-bold font-mono text-tokyo-night-text">{{ post.title }}</h3>
+        <h3 class="mb-2 text-2xl font-bold font-mono text-tokyo-night-blue">{{ post.title }}</h3>
         <p class="mb-4 font-mono text-tokyo-night-muted">{{ post.description }}</p>
         <template #footer>
           <div class="flex justify-between items-center">
