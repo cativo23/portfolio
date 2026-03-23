@@ -28,7 +28,7 @@
           {{ project.status }}
         </BaseBadge>
 
-        <h1 class="mb-4 text-4xl md:text-5xl font-bold text-tokyo-night-highlight font-mono">
+        <h1 class="mb-4 text-4xl md:text-5xl font-bold text-tokyo-night-text font-mono">
           <span class="text-tokyo-night-purple">❯</span> {{ project.title }}
         </h1>
         <p class="text-xl text-tokyo-night-text max-w-3xl mx-auto">

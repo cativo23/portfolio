@@ -1,9 +1,9 @@
 <template>
   <main class="prose prose-lg mx-auto py-2 px-2 sm:p-6 lg:p-8 max-w-full sm:max-w-3xl lg:max-w-full text-justify">
-    <NuxtLink to="/blog" class="btn flex items-center mb-4 text-tokyo-night-highlight hover:text-tokyo-night-cyan font-mono">
+    <NuxtLink to="/blog" class="btn flex items-center mb-4 text-tokyo-night-cyan hover:text-tokyo-night-blue font-mono">
       <LucideArrowLeft class="w-4 h-4 mr-2" />❯ Back to Blog
     </NuxtLink>
-    <h1 v-if="blogPost" class="text-3xl font-bold text-tokyo-night-highlight font-mono">
+    <h1 v-if="blogPost" class="text-3xl font-bold text-tokyo-night-text font-mono">
       <span class="text-tokyo-night-purple">❯</span> {{ blogPost.title }}
     </h1>
     <ContentRenderer v-if="blogPost" :value="blogPost" class="prose-tokyo" />

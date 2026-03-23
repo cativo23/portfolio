@@ -27,7 +27,7 @@
 
       <!-- Projects -->
       <BaseCard v-else :to="`/projects/${project.id}`" :key="project.id || project.title" :prefetch="false" v-for="project in displayed">
-        <h3 class="mb-4 text-2xl font-bold font-mono text-tokyo-night-highlight">{{ project.title }}</h3>
+        <h3 class="mb-4 text-2xl font-bold font-mono text-tokyo-night-text">{{ project.title }}</h3>
         <p class="mb-4 font-mono text-tokyo-night-muted">{{ project.description }}</p>
         <div class="flex flex-wrap gap-2 mb-4">
           <span
