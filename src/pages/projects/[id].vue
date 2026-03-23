@@ -5,30 +5,32 @@
     </div>
 
     <div v-else-if="error || !project" class="text-center py-16" role="alert">
-      <p class="text-tokyo-night-red mb-4">Project not found</p>
-      <BaseButton variant="ghost" to="/projects">
+      <p class="text-tokyo-night-red mb-4 font-mono">Project not found</p>
+      <BaseButton variant="ghost" to="/projects" class="font-mono">
         <LucideArrowLeft class="w-4 h-4 mr-2" />
-        Back to Projects
+        ❯ Back to Projects
       </BaseButton>
     </div>
 
     <article v-else class="max-w-[1200px] mx-auto px-4 py-8">
       <!-- Back Button -->
-      <BaseButton variant="ghost" size="sm" to="/projects" class="mb-6">
+      <BaseButton variant="ghost" size="sm" to="/projects" class="mb-6 font-mono">
         <LucideArrowLeft class="w-4 h-4 mr-2" />
-        Back to Projects
+        ❯ Back to Projects
       </BaseButton>
 
       <!-- Hero Header (Full Width) -->
-      <header class="mb-10 text-center border-b border-tokyo-night-gray pb-8">
-        <BaseBadge v-if="project.isFeatured" color="magenta" size="md" class="mb-4">
+      <header class="mb-10 text-center border-b border-tokyo-night-gray/30 pb-8">
+        <BaseBadge v-if="project.isFeatured" color="magenta" size="md" class="mb-4 font-mono">
           Featured Project
         </BaseBadge>
-        <BaseBadge v-if="project.status" color="green" size="md" class="mb-4 ml-2">
+        <BaseBadge v-if="project.status" color="green" size="md" class="mb-4 ml-2 font-mono">
           {{ project.status }}
         </BaseBadge>
 
-        <h1 class="mb-4 text-4xl md:text-5xl font-bold text-tokyo-night-highlight">{{ project.title }}</h1>
+        <h1 class="mb-4 text-4xl md:text-5xl font-bold text-tokyo-night-highlight font-mono">
+          <span class="text-tokyo-night-purple">❯</span> {{ project.title }}
+        </h1>
         <p class="text-xl text-tokyo-night-text max-w-3xl mx-auto">
           {{ project.shortDescription || project.description }}
         </p>
@@ -46,9 +48,9 @@
           @error="imageError = true"
         />
         <!-- Fallback state if no image or error -->
-        <div v-else class="text-tokyo-night-muted flex flex-col items-center p-12">
+        <div v-else class="text-tokyo-night-muted flex flex-col items-center p-12 font-mono">
           <LucideImage class="w-16 h-16 mb-4 opacity-30" />
-          <span class="text-lg">No preview available</span>
+          <span class="text-lg">❯ No preview available</span>
         </div>
       </div>
 
@@ -61,43 +63,42 @@
 
             <!-- Links -->
             <div class="mb-8">
-              <h3 class="text-xs font-bold text-tokyo-night-muted uppercase tracking-wider mb-4">Links</h3>
+              <h3 class="text-xs font-bold text-tokyo-night-muted uppercase tracking-wider mb-4 font-mono">Links</h3>
               <div class="flex flex-col gap-3">
                 <BaseButton
                   v-if="sanitizeRepoUrl(project.repoUrl)"
                   variant="primary"
                   :href="sanitizeRepoUrl(project.repoUrl)"
                   external
-                  class="w-full justify-center"
+                  class="w-full justify-center font-mono"
                 >
                   <LucideGithub class="w-5 h-5 mr-2" />
-                  View Source Code
+                  ❯ View Source Code
                 </BaseButton>
                 <BaseButton
                   v-if="sanitizeLiveUrl(project.liveUrl)"
                   variant="secondary"
                   :href="sanitizeLiveUrl(project.liveUrl)"
                   external
-                  class="w-full justify-center"
+                  class="w-full justify-center font-mono"
                 >
                   <LucideExternalLink class="w-5 h-5 mr-2" />
-                  Live Demo
+                  ❯ Live Demo
                 </BaseButton>
               </div>
             </div>
 
             <!-- Tech Stack -->
             <div class="mb-8">
-              <h3 class="text-xs font-bold text-tokyo-night-muted uppercase tracking-wider mb-4">Technologies</h3>
+              <h3 class="text-xs font-bold text-tokyo-night-muted uppercase tracking-wider mb-4 font-mono">Technologies</h3>
               <div class="flex flex-wrap gap-2">
-                <BaseBadge
+                <span
                   v-for="tech in project.techStack"
                   :key="tech"
-                  color="cyan"
-                  size="sm"
+                  class="text-tokyo-night-green font-mono text-xs"
                 >
-                  {{ tech }}
-                </BaseBadge>
+                  [{{ tech }}]
+                </span>
               </div>
             </div>
 
@@ -118,18 +119,22 @@
 
           <!-- Key Features -->
           <section v-if="project.features && project.features.length > 0" class="mb-12">
-            <h2 class="text-2xl font-bold text-tokyo-night-purple mb-6 pb-2 border-b border-tokyo-night-gray">Key Features</h2>
+            <h2 class="text-2xl font-bold text-tokyo-night-purple mb-6 pb-2 border-b border-tokyo-night-gray/30 font-mono">
+              <span class="text-tokyo-night-cyan">❯</span> Key Features
+            </h2>
             <ul class="space-y-3">
               <li v-for="(feature, index) in project.features" :key="index" class="flex items-start">
                 <LucideCheckCircle2 class="w-5 h-5 text-tokyo-night-green mr-3 mt-0.5 flex-shrink-0" />
-                <span class="text-tokyo-night-text text-lg">{{ feature }}</span>
+                <span class="text-tokyo-night-text text-lg font-mono">{{ feature }}</span>
               </li>
             </ul>
           </section>
 
           <!-- Overview / Content -->
           <section class="mb-12">
-            <h2 class="text-2xl font-bold text-tokyo-night-purple mb-6 pb-2 border-b border-tokyo-night-gray">Project Overview</h2>
+            <h2 class="text-2xl font-bold text-tokyo-night-purple mb-6 pb-2 border-b border-tokyo-night-gray/30 font-mono">
+              <span class="text-tokyo-night-cyan">❯</span> Project Overview
+            </h2>
 
             <!-- Project content -->
             <div class="text-lg text-tokyo-night-text leading-relaxed prose prose-tokyo dark:prose-invert max-w-none">
