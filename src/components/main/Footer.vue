@@ -56,7 +56,7 @@ const XIcon = createLucideIcon("X", [
 const currentYear = new Date().getFullYear();
 
 // API Status - TODO: Replace with actual API health check
-const apiStatus = 'Degraded';
+const apiStatus: 'Operational' | 'Degraded' | 'Down' = 'Degraded';
 const apiStatusDotColor = computed(() => {
   if (apiStatus === 'Operational') return 'text-tokyo-night-green';
   if (apiStatus === 'Degraded') return 'text-tokyo-night-yellow';
