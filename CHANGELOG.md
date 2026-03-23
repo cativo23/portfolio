@@ -11,6 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-03-22
+
+### Added
+- Redesigned 'Case Study + Sidebar' layout for project detail pages
+- Hero image and sticky sidebar in project details
+- `useContactForm` composable for modular contact logic
+
+### Changed
+- Refactored Dockerfile to use `alpine` base image
+- Replaced `@nuxt/image` ipx provider with `none` to simplify build
+- Updated `@tailwindcss/typography` to `^0.5.19`
+
+### Fixed
+- Markdown rendering in project detail page using `@nuxtjs/mdc` and `<MDC>` component
+- NuxtLink `href` syntax changed to `to`
+
+---
+
 ## [1.0.3] - 2026-03-19
 
 ### Fixed
