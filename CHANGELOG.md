@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.0] - 2026-03-26
+
+### Fixed
+- Footer API status now displays real-time health check instead of hardcoded "Degraded" value
+- Footer now fetches and displays actual API version from backend
+
+---
+
 ## [1.4.0] - 2026-03-25
 
 ### Changed
