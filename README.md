@@ -1,9 +1,9 @@
 <pre align="center">
- ____           _              ____      _   _
-/ ___|__ _ _ __| | ___  ___   / ___|__ _| |_(_)_   _____
-| |   / _` | '__| |/ _ \/ __| | |   / _` | __| \ \ / / _ \
-| |__| (_| | |  | | (_) \__ \ | |__| (_| | |_| |\ V / (_) |
-\____\__,_|_|  |_|\___/|___/  \____\__,_|\__|_| \_/ \___/
+ ____            _    __       _ _
+|  _ \ ___  _ __| |_ / _| ___ | (_) ___
+| |_) / _ \| '__| __| |_ / _ \| | |/ _ \
+|  __/ (_) | |  | |_|  _| (_) | | | (_) |
+|_|   \___/|_|   \__|_|  \___/|_|_|\___/
 </pre>
 
 <p align="center">
@@ -25,37 +25,37 @@
 
 ## Overview
 
-Portfolio personal y blog técnico construido con **Nuxt 4** y **Vue 3**. Una plataforma moderna tipo terminal que muestra proyectos, artículos y experiencia profesional con una estética minimalista y retro-futurista.
+Personal portfolio and tech blog built with **Nuxt 4** and **Vue 3**. A modern terminal-style platform showcasing projects, articles, and professional experience with a minimalist, retro-futuristic aesthetic.
 
-El proyecto resuelve la necesidad de tener presencia online con identidad propia, combinando diseño terminal (inspirado en IDEs y terminales reales) con las mejores prácticas de desarrollo web moderno: SSR, SEO optimizado, y deployment automatizado.
+The project solves the need for an online presence with unique identity, combining terminal design (inspired by real IDEs and terminals) with modern web development best practices: SSR, SEO optimization, and automated deployment.
 
 ---
 
 ## ✨ Features
 
-- **Diseño Terminal UI/UX** - Estética retro tipo consola con paleta Tokyo Night
-- **Blog con Markdown** - Sistema de contenido con `@nuxt/content` v3 y MDC
-- **Health Check en Tiempo Real** - Monitoreo de API con indicadores de estado
-- **SEO Optimizado** - Sitemap, RSS, JSON-LD y meta tags automáticos
-- **CI/CD Automatizado** - GitHub Actions para build, test y deploy
-- **Docker Ready** - Contenedores para desarrollo y producción
-- **Type-Safe** - TypeScript estricto en todo el código
-- **Testing** - Vitest para unit tests con cobertura >80%
+- **Terminal UI/UX Design** - Retro console aesthetic with Tokyo Night color palette
+- **Markdown Blog** - Content system powered by `@nuxt/content` v3 and MDC
+- **Real-time Health Check** - API monitoring with status indicators
+- **SEO Optimized** - Sitemap, RSS, JSON-LD, and automatic meta tags
+- **Automated CI/CD** - GitHub Actions for build, test, and deploy
+- **Docker Ready** - Containers for development and production
+- **Type-Safe** - Strict TypeScript throughout the codebase
+- **Testing** - Vitest unit tests with >80% coverage
 
 ---
 
 ## 🛠 Tech Stack
 
-| Stack | Versión | Propósito |
-|-------|---------|-----------|
-| **Nuxt** | 4.4.x | Framework SSR/SSG |
-| **Vue** | 3.x | Framework reactivo |
+| Stack | Version | Purpose |
+|-------|---------|---------|
+| **Nuxt** | 4.4.x | SSR/SSG Framework |
+| **Vue** | 3.x | Reactive Framework |
 | **TypeScript** | 5.8.x | Type safety |
-| **TailwindCSS** | 6.x | Estilos utilitarios |
+| **TailwindCSS** | 6.x | Utility-first CSS |
 | **Vitest** | 3.2.x | Unit testing |
-| **@nuxt/content** | 3.12.x | Blog markdown |
-| **Motion-V** | 1.2.x | Animaciones |
-| **Better-SQLite3** | 11.10.x | Base de datos local |
+| **@nuxt/content** | 3.12.x | Markdown blog |
+| **Motion-V** | 1.2.x | Animations |
+| **Better-SQLite3** | 11.10.x | Local database |
 | **Wrangler** | 4.20.x | Cloudflare Workers |
 
 ---
@@ -67,14 +67,24 @@ El proyecto resuelve la necesidad de tener presencia online con identidad propia
 git clone https://github.com/cativo23/portfolio.git
 cd portfolio
 
-# 2. Install
+# 2. Install dependencies
 yarn install
 
 # 3. Run dev server
 yarn dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000)
+### Using Docker
+
+```bash
+# Development
+docker compose up -d
+
+# Production
+docker compose -f compose.prod.yml up -d
+```
+
+Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
@@ -105,9 +115,9 @@ portfolio/
 ```
 
 **Data Flow:**
-1. Pages usan `useFetch`/`useAsyncData` para SSR
-2. Server routes en `src/server/api/` hacen proxy a API externa
-3. Composables centralizan lógica de estado
+1. Pages use `useFetch`/`useAsyncData` for SSR
+2. Server routes in `src/server/api/` proxy to external API
+3. Composables centralize state logic
 
 ---
 
@@ -116,7 +126,7 @@ portfolio/
 - [Nuxt 4 Docs](https://nuxt.com/docs)
 - [Vue 3 Docs](https://vuejs.org/)
 - [TailwindCSS](https://tailwindcss.com/)
-- [AGENTS.md](./AGENTS.md) - Guía de desarrollo y contribución
+- [AGENTS.md](./AGENTS.md) - Development and contribution guide
 
 ---
 
@@ -137,7 +147,7 @@ yarn test:cov
 
 ## 📦 Deployment
 
-### Docker (Producción)
+### Docker (Production)
 
 ```bash
 # Build and run
@@ -149,9 +159,9 @@ docker compose -f compose.prod.yml logs -f
 
 ### GitHub Actions
 
-- **CI**: Build + type check en cada PR
-- **Auto-Release**: Crea release al mergear a `main`
-- **Deploy**: Deploy automático en release tags
+- **CI**: Build + type check on every PR
+- **Auto-Release**: Creates release when merging to `main`
+- **Deploy**: Automatic deploy on release tags
 
 ---
 
