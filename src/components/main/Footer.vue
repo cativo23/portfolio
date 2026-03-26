@@ -10,9 +10,9 @@
         <!-- Center: API Status -->
         <div class="flex items-center gap-2 text-tokyo-night-muted">
           <span :class="getApiStatusColor(apiStatus)">●</span>
-          <span>API Status: <span :class="getApiStatusColor(apiStatus)">{{ apiStatus }}</span></span>
+          <span>API Status: <span :class="getApiStatusColor(apiStatus)">{{ loading ? 'Checking...' : apiStatus }}</span></span>
           <span class="text-tokyo-night-gray/30">|</span>
-          <span class="text-tokyo-night-blue">v2.4.1</span>
+          <span class="text-tokyo-night-blue">v{{ apiVersion }}</span>
         </div>
 
         <!-- Right: Social Links -->
@@ -21,7 +21,7 @@
              class="text-tokyo-night-blue hover:text-tokyo-night-cyan transition-colors">
             GitHub
           </a>
-          <a href="https://linkedin.com/in/cativo23" target="_blank" rel="noopener noreferrer"
+          <a href="https://linkedin.com/in/carlos-cativo" target="_blank" rel="noopener noreferrer"
              class="text-tokyo-night-blue hover:text-tokyo-night-cyan transition-colors">
             LinkedIn
           </a>
@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import { createLucideIcon } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 // Create the XIcon component
 const XIcon = createLucideIcon("X", [
@@ -54,13 +54,44 @@ const XIcon = createLucideIcon("X", [
 // Add a reactive property for the current year
 const currentYear = new Date().getFullYear();
 
-// API Status - TODO: Replace with actual API health check
-const apiStatus = ref<'Operational' | 'Degraded' | 'Down'>('Degraded');
+// API Status
+const apiStatus = ref<'Operational' | 'Degraded' | 'Down'>('Operational');
+const apiVersion = ref<string>('');
+const loading = ref(true);
+
 const getApiStatusColor = (status: string) => {
   if (status === 'Operational') return 'text-tokyo-night-green';
   if (status === 'Degraded') return 'text-tokyo-night-yellow';
   return 'text-tokyo-night-red';
 };
+
+async function fetchApiStatus() {
+  try {
+    const [healthRes, infoRes] = await Promise.all([
+      $fetch<{ status: string; data: { components: Record<string, { status: string }> } }>('/api/health').catch(() => null),
+      $fetch<{ status: string; data: { version?: string } }>('/api').catch(() => null),
+    ]);
+    if (healthRes?.status === 'success') {
+      const allUp = Object.values(healthRes.data.components).every(c => c.status === 'up');
+      apiStatus.value = allUp ? 'Operational' : 'Degraded';
+    } else {
+      apiStatus.value = 'Down';
+    }
+    if (infoRes?.status === 'success' && infoRes.data.version) {
+      apiVersion.value = infoRes.data.version;
+    }
+  } catch {
+    apiStatus.value = 'Down';
+  } finally {
+    loading.value = false;
+  }
+}
+
+if (import.meta.client) {
+  onMounted(() => {
+    fetchApiStatus();
+  });
+}
 </script>
 
 <style></style>
