@@ -3,40 +3,50 @@
     <BaseSectionHeading title="About Me" />
     <BaseCard :hoverable="false">
       <p class="mb-4 text-justify">
-        Hi, I'm Carlos Cativo, a passionate backend developer with over 8 years of experience in building scalable and
-        efficient server-side applications.
-        My expertise lies in designing and implementing high-performance APIs, microservices, and data processing
-        systems.
+        Hi, I'm Carlos Cativo — a Full-Stack Software Engineer based in El Salvador with a strong backend focus
+        and growing specialization in AI-powered systems. I build healthcare platforms, payment processing services,
+        and conversational AI agents at <span class="text-tokyo-night-purple font-semibold">Blue Medical</span>.
       </p>
       <p class="mb-4 text-justify">
-        I'm particularly interested in distributed systems, database optimization, and cloud-native technologies.
-        When I'm not coding, I enjoy writing technical blog posts to share my knowledge and experiences with the
-        developer community.
+        I've built microservices from scratch handling payment gateway integrations (Visa ISO 8583, SOAP/XML),
+        electronic invoicing systems (FEL), and a voice AI agent that automates patient scheduling via natural
+        conversation in Spanish. My day-to-day involves Laravel, NestJS, Python, and integrating systems that
+        talk to ERPs, WhatsApp bots, and payment processors.
+      </p>
+      <p class="mb-4 text-justify">
+        On the side, I build things like multi-agent AI trading bots, AI-powered legal contract auditors,
+        and open-source developer tooling. I also self-host my own production infrastructure on this domain.
       </p>
       <h3 class="text-2xl font-bold mb-4 text-tokyo-night-purple">Skills</h3>
       <ul class="list-disc list-inside mb-4">
         <li>Languages:
           <SkillPill v-for="language in languages" :key="language.name" :name="language.name" :level="language.level" />
         </li>
+        <li>Backend:
+          <SkillPill v-for="framework in backends" :key="framework.name" :name="framework.name" :level="framework.level" />
+        </li>
+        <li>Frontend:
+          <SkillPill v-for="framework in frontends" :key="framework.name" :name="framework.name" :level="framework.level" />
+        </li>
         <li>Databases:
           <SkillPill v-for="database in databases" :key="database.name" :name="database.name" :level="database.level" />
         </li>
-        <li> Message Brokers:
+        <li>Message Brokers:
           <SkillPill v-for="broker in brokers" :key="broker.name" :name="broker.name" :level="broker.level" />
         </li>
-        <li>Cloud Platforms:
-          <SkillPill v-for="platform in platforms" :key="platform.name" :name="platform.name" :level="platform.level" />
+        <li>AI / Integrations:
+          <SkillPill v-for="tool in ai" :key="tool.name" :name="tool.name" :level="tool.level" />
         </li>
-        <li>DevOps:
-          <SkillPill v-for="tool in devOps" :key="tool.name" :name="tool.name" :level="tool.level" />
+        <li>Infrastructure:
+          <SkillPill v-for="tool in infra" :key="tool.name" :name="tool.name" :level="tool.level" />
         </li>
-        <li>API Design:
-          <SkillPill v-for="api in apis" :key="api.name" :name="api.name" :level="api.level" />
+        <li>Payments & Invoicing:
+          <SkillPill v-for="tool in payments" :key="tool.name" :name="tool.name" :level="tool.level" />
         </li>
       </ul>
       <p>
-        I'm always eager to learn new technologies and tackle challenging problems.
-        Feel free to reach out if you'd like to collaborate on a project or just chat about backend development!
+        Always looking for interesting problems to solve. If you need someone who can own a system end-to-end —
+        from database design to deployment pipeline — let's talk.
       </p>
     </BaseCard>
 
@@ -101,7 +111,7 @@ import MetaInfoPair from '~/components/ui/MetaInfoPair.vue';
 import AsyncState from '~/components/base/AsyncState.vue';
 
 usePageTitle('About', {
-  description: 'Learn more about Carlos Cativo, a passionate backend developer with expertise in building scalable server-side applications and sharing knowledge through technical blog posts.',
+  description: 'Carlos Cativo — Full-Stack Software Engineer specializing in backend development, AI-powered systems, and payment integrations. Based in El Salvador.',
 });
 
 interface ApiInfo {
@@ -139,39 +149,59 @@ async function loadApiInfo() {
 await useAsyncData('api-info', () => loadApiInfo());
 
 const languages = ref([
+  { name: 'TypeScript', level: 'advanced' },
   { name: 'PHP', level: 'advanced' },
   { name: 'JavaScript', level: 'advanced' },
   { name: 'Python', level: 'intermediate' },
-  { name: 'Go', level: 'beginner' },
+  { name: 'Bash', level: 'intermediate' },
+  { name: 'SQL', level: 'advanced' },
+]);
+
+const backends = ref([
+  { name: 'NestJS', level: 'advanced' },
+  { name: 'Laravel', level: 'advanced' },
+  { name: 'FastAPI', level: 'intermediate' },
+]);
+
+const frontends = ref([
+  { name: 'Nuxt / Vue 3', level: 'advanced' },
+  { name: 'Angular', level: 'intermediate' },
+  { name: 'TailwindCSS', level: 'advanced' },
 ]);
 
 const databases = ref([
-  { name: 'MySQL', level: 'advanced' },
   { name: 'PostgreSQL', level: 'advanced' },
-  { name: 'MongoDB', level: 'intermediate' },
+  { name: 'MySQL', level: 'advanced' },
   { name: 'Redis', level: 'intermediate' },
+  { name: 'Meilisearch', level: 'intermediate' },
 ]);
 
 const brokers = ref([
   { name: 'Apache Kafka', level: 'advanced' },
-  { name: 'RabbitMQ', level: 'intermediate' }
+  { name: 'RabbitMQ', level: 'intermediate' },
 ]);
 
-const platforms = [
-  { name: 'AWS', level: 'intermediate' },
-  { name: 'Google Cloud Platform', level: 'intermediate' }
-];
+const ai = ref([
+  { name: 'Anthropic Claude API', level: 'advanced' },
+  { name: 'OpenAI API', level: 'intermediate' },
+  { name: 'ElevenLabs ConvAI', level: 'advanced' },
+  { name: 'n8n', level: 'intermediate' },
+]);
 
-const devOps = [
+const infra = ref([
   { name: 'Docker', level: 'advanced' },
-  { name: 'CI/CD pipelines', level: 'intermediate' },
-  { name: 'Kubernetes', level: 'beginner' },
-];
+  { name: 'AWS (S3, ECR, EC2)', level: 'intermediate' },
+  { name: 'Traefik', level: 'intermediate' },
+  { name: 'GitHub Actions', level: 'advanced' },
+  { name: 'Bitbucket Pipelines', level: 'advanced' },
+]);
 
-const apis = [
-  { name: 'RESTful APIs', level: 'advanced' },
-  { name: 'GraphQL', level: 'beginner' },
-];
+const payments = ref([
+  { name: 'Visa ISO 8583', level: 'advanced' },
+  { name: 'SOAP/XML', level: 'advanced' },
+  { name: 'FEL (Electronic Invoicing)', level: 'advanced' },
+  { name: 'Stripe', level: 'intermediate' },
+]);
 </script>
 
 <style></style>
