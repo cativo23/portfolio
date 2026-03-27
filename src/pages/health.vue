@@ -72,9 +72,13 @@
 
         <!-- Refresh Button -->
         <div class="flex justify-center mt-4">
-          <BaseButton variant="ghost" @click="loadHealth" :disabled="loading" class="font-mono">
-            <LucideRefreshCw class="w-4 h-4 mr-2" :class="{ 'animate-spin': loading }" />
-            ❯ Refresh
+          <BaseButton variant="ghost" @click="loadHealth(true)" :disabled="refreshing || loading" class="font-mono">
+            <span class="flex items-center gap-2">
+              <span :class="{ 'animate-spin': refreshing }">
+                <LucideRefreshCw class="w-4 h-4" />
+              </span>
+              Refresh
+            </span>
           </BaseButton>
         </div>
         </div>
@@ -84,7 +88,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import StatusIndicator from '~/components/ui/StatusIndicator.vue'
 import MetaInfoPair from '~/components/ui/MetaInfoPair.vue'
 import AsyncState from '~/components/base/AsyncState.vue'
@@ -126,6 +130,7 @@ const healthTabs = [
 const selectedTab = ref<'basic' | 'detailed'>('basic')
 const health = ref<HealthInfo | null>(null)
 const loading = ref(true)
+const refreshing = ref(false)
 const error = ref<string | null>(null)
 const requestId = ref<string | null>(null)
 
@@ -150,8 +155,12 @@ function formatServiceName(name: string): string {
   return name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
 }
 
-async function loadHealth() {
-  loading.value = true
+async function loadHealth(isRefresh = false) {
+  if (isRefresh) {
+    refreshing.value = true
+  } else {
+    loading.value = true
+  }
   error.value = null
   requestId.value = null
   try {
@@ -170,12 +179,15 @@ async function loadHealth() {
     error.value = e instanceof Error ? e.message : 'Unable to connect to health endpoint'
   } finally {
     loading.value = false
+    refreshing.value = false
   }
 }
 
-// Use callOnce for SSR — loadHealth manages its own state via refs
+// Load health check on mount (SSR + client)
 if (import.meta.server) {
   await loadHealth()
+} else {
+  onMounted(() => loadHealth())
 }
 </script>
 

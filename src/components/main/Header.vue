@@ -2,12 +2,10 @@
   <header class="navbar bg-tokyo-night-bg border-b border-tokyo-night-gray/30 p-4 sticky top-0 z-10">
     <nav class="container mx-auto flex justify-between items-center">
       <NuxtLink to="/" class="md:w-[290px]">
-        <h1 class="text-xl md:text-2xl font-bold text-tokyo-night-purple font-mono">
+        <h1 class="text-xl md:text-2xl font-bold font-mono">
           <span class="block md:hidden">
-            <span class="text-tokyo-night-purple">👨‍💻 {</span>
-            CC
-            <span class="text-tokyo-night-purple">}</span>
-          </span> <!-- Show on mobile devices -->
+            <span class="text-tokyo-night-purple">👨‍💻 {</span><span class="text-tokyo-night-red">CC</span><span class="text-tokyo-night-purple">}</span>
+          </span>
           <span class="hidden md:block">
             <ClientOnly>
               <VueTyping :sentences="sentences" :minTypeSpeed="settings.minTypeSpeed"
@@ -22,7 +20,7 @@
                 </template>
               </VueTyping>
               <template #fallback>
-                <span class="text-tokyo-night-purple">👨‍💻 {</span> Carlos Cativo <span
+                <span class="text-tokyo-night-purple">👨‍💻 {</span><span class="text-tokyo-night-red">Carlos Cativo</span><span
                   class="text-tokyo-night-purple">}</span>
               </template>
             </ClientOnly>
