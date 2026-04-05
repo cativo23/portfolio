@@ -21,6 +21,6 @@ import Hero from '@/components/home/Hero.vue';
 import PortfolioSection from '@/components/home/portfolio/PortfolioSection.vue';
 
 usePageTitle('Home', {
-  description: 'Welcome to my portfolio! I am a Backend Developer and Tech Enthusiast, crafting robust server-side solutions and sharing knowledge through my projects and blog posts.',
+  description: 'Carlos Cativo - Tech Lead & Full-Stack Software Engineer. 9 years building healthcare platforms, payment systems, and AI-powered products.',
 });
 </script>
