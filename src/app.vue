@@ -1,30 +1,17 @@
 <template>
-  <div class="flex flex-col min-h-screen bg-tokyo-night-bg text-tokyo-night-text font-mono">
-    <NuxtLoadingIndicator :height="1" :throttle="100" color="#f471B5" />
-    <NuxtRouteAnnouncer>
-      <template #default="{ message }">
-        <p>{{ message }} was loaded.</p>
-      </template>
-    </NuxtRouteAnnouncer>
-    <!-- Header (hidden on admin routes) -->
-    <Header v-if="!isAdminRoute" />
-    <!-- Main Content -->
-    <main :class="isAdminRoute ? 'flex-grow' : 'container mx-auto p-4 flex-grow'">
-      <NuxtPage />
-    </main>
-    <!-- Footer (hidden on admin routes) -->
-    <Footer v-if="!isAdminRoute" />
-  </div>
+  <NuxtLoadingIndicator :height="1" :throttle="100" color="#f471B5" />
+  <NuxtRouteAnnouncer>
+    <template #default="{ message }">
+      <p>{{ message }} was loaded.</p>
+    </template>
+  </NuxtRouteAnnouncer>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
   <BaseToast />
 </template>
 
 <script setup>
-import Header from '@/components/main/Header.vue';
-import Footer from '@/components/main/Footer.vue';
-
-const route = useRoute()
-const isAdminRoute = computed(() => route.path.startsWith('/admin'))
-
 useHead({
   htmlAttrs: {
     lang: 'en'
@@ -77,6 +64,6 @@ useHead({
 }
 
 .page-leave-to {
-  transform: translate(-100%);
+  transform: translateX(-100%);
 }
 </style>
