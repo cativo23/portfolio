@@ -6,14 +6,14 @@
         <p>{{ message }} was loaded.</p>
       </template>
     </NuxtRouteAnnouncer>
-    <!-- Header -->
-    <Header />
+    <!-- Header (hidden on admin routes) -->
+    <Header v-if="!isAdminRoute" />
     <!-- Main Content -->
-    <main class="container mx-auto p-4 flex-grow">
+    <main :class="isAdminRoute ? 'flex-grow' : 'container mx-auto p-4 flex-grow'">
       <NuxtPage />
     </main>
-    <!-- Footer -->
-    <Footer />
+    <!-- Footer (hidden on admin routes) -->
+    <Footer v-if="!isAdminRoute" />
   </div>
   <BaseToast />
 </template>
@@ -21,6 +21,9 @@
 <script setup>
 import Header from '@/components/main/Header.vue';
 import Footer from '@/components/main/Footer.vue';
+
+const route = useRoute()
+const isAdminRoute = computed(() => route.path.startsWith('/admin'))
 
 useHead({
   htmlAttrs: {
