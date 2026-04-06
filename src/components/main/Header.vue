@@ -55,12 +55,14 @@
         </button>
         <ul class="space-y-6">
           <li v-for="item in navItems" :key="item.name">
-            <NuxtLink :to="item.link" @click="closeMenu" :class="{
-              'text-tokyo-night-red font-bold': isHighlightedRoute(item.link),
-              'text-tokyo-night-muted hover:text-tokyo-night-cyan': !isHighlightedRoute(item.link)
-            }" class="transition-colors duration-200 font-mono text-lg">
+            <span @click="closeMenu">
+              <NuxtLink :to="item.link" :class="{
+                'text-tokyo-night-red font-bold': isHighlightedRoute(item.link),
+                'text-tokyo-night-muted hover:text-tokyo-night-cyan': !isHighlightedRoute(item.link)
+              }" class="transition-colors duration-200 font-mono text-lg">
               ❯ {{ item.name }}
             </NuxtLink>
+            </span>
           </li>
         </ul>
       </div>

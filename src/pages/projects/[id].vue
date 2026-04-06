@@ -45,7 +45,7 @@
           class="w-full h-full object-cover"
           sizes="sm:100vw md:1200px lg:1200px"
           placeholder
-          @error="imageError = true"
+          @error="() => (imageError = true)"
         />
         <!-- Fallback state if no image or error -->
         <div v-else class="text-tokyo-night-muted flex flex-col items-center p-12 font-mono">
