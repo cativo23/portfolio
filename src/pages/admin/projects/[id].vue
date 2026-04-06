@@ -169,7 +169,7 @@ async function saveProject() {
 
   try {
     await $fetch(`/api/projects/${projectId.value}`, {
-      method: 'patch',
+      method: 'patch' as any,
       headers,
       body: {
         title: form.title,
@@ -204,7 +204,7 @@ async function deleteProject() {
 
   try {
     await $fetch(`/api/projects/${projectId.value}`, {
-      method: 'delete',
+      method: 'delete' as any,
       headers: { Authorization: `Bearer ${token}` },
     })
     navigateTo('/admin/projects')

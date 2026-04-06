@@ -188,7 +188,7 @@ async function saveProject() {
 
   try {
     await $fetch('/api/projects', {
-      method: 'post',
+      method: 'post' as any,
       headers,
       body: {
         title: form.title,
