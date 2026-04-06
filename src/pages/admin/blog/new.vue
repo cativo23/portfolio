@@ -122,7 +122,7 @@ async function savePost() {
     const tags = form.tags.split(',').map(t => t.trim()).filter(Boolean)
 
     await $fetch('/api/admin/blog', {
-      method: 'POST',
+      method: 'post',
       body: {
         title: form.title,
         description: form.description,

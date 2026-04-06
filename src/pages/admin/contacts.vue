@@ -147,7 +147,7 @@ async function deleteContact(id: number) {
 
   try {
     await $fetch(`/api/admin/contacts/${id}`, {
-      method: 'DELETE',
+      method: 'delete',
       headers: { Authorization: `Bearer ${token}` },
     })
     contacts.value = contacts.value.filter(c => c.id !== id)
