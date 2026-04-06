@@ -1,8 +1,7 @@
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  const query = getQuery(event)
-  const cookie = getCookie(event, 'admin_token')
   const authHeader = getRequestHeader(event, 'authorization')
+  const cookie = getCookie(event, 'admin_token')
 
   const headers: Record<string, string> = {}
   if (authHeader) {
@@ -11,9 +10,11 @@ export default defineEventHandler(async (event) => {
     headers.Authorization = `Bearer ${cookie}`
   }
 
-  return $fetch(`${config.apiBaseUrl}${config.apiBasePath}/contacts`, {
-    method: 'GET',
+  const body = await readBody(event)
+
+  return $fetch(`${config.apiBaseUrl}${config.apiBasePath}/projects`, {
+    method: 'POST',
     headers,
-    query,
+    body,
   })
 })
