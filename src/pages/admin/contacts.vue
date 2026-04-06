@@ -121,13 +121,13 @@ onMounted(async () => {
   const headers = { Authorization: `Bearer ${token}` }
 
   try {
-    const res = await $fetch('/api/admin/contacts', { headers })
-    contacts.value = res?.data || []
+    const res = await $fetch<Record<string, unknown>>('/api/admin/contacts', { headers })
+    contacts.value = (res?.data as AdminContact[]) || []
   } catch {
     // Try unauthenticated for dev
     try {
-      const res = await $fetch('/api/admin/contacts')
-      contacts.value = res?.data || []
+      const res = await $fetch<Record<string, unknown>>('/api/admin/contacts')
+      contacts.value = (res?.data as AdminContact[]) || []
     } catch { /* ignore */ }
   } finally {
     loading.value = false

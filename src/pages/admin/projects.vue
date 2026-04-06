@@ -91,13 +91,13 @@ onMounted(async () => {
   const headers = { Authorization: `Bearer ${token}` }
 
   try {
-    const res = await $fetch('/api/admin/projects', { headers })
-    projects.value = res?.data || []
+    const res = await $fetch<Record<string, unknown>>('/api/admin/projects', { headers })
+    projects.value = (res?.data as AdminProject[]) || []
   } catch {
     // Try unauthenticated (for dev without auth)
     try {
-      const res = await $fetch('/api/projects')
-      projects.value = res?.data || []
+      const res = await $fetch<Record<string, unknown>>('/api/projects')
+      projects.value = (res?.data as AdminProject[]) || []
     } catch { /* ignore */ }
   } finally {
     loading.value = false

@@ -1,4 +1,5 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import type { ComputedRef } from 'vue'
 
 interface AdminUser {
   id: number
@@ -25,6 +26,8 @@ const user = ref<AdminUser | null>(null)
 
 export function useAdminAuth(): UseAdminAuthReturn {
   const isAuthenticated = computed(() => !!token.value)
+  const userComputed = computed(() => user.value)
+  const tokenComputed = computed(() => token.value)
 
   async function login(email: string, password: string): Promise<boolean> {
     try {
@@ -37,7 +40,6 @@ export function useAdminAuth(): UseAdminAuthReturn {
         token.value = response.data.access_token
         user.value = response.data.user
 
-        // Persist in cookie (httpOnly not possible from client, but we use it server-side too)
         useCookie('admin_token', { maxAge: 60 * 60 * 24 * 7, sameSite: 'lax' }).value = token.value
         useCookie('admin_user', { maxAge: 60 * 60 * 24 * 7, sameSite: 'lax' }).value = JSON.stringify(user.value)
 
@@ -72,8 +74,8 @@ export function useAdminAuth(): UseAdminAuthReturn {
 
   return {
     isAuthenticated,
-    user,
-    token,
+    user: userComputed,
+    token: tokenComputed,
     login,
     logout,
     loadFromCookie,

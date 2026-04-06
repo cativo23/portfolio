@@ -35,7 +35,7 @@ function parseFrontmatter(content: string, filename: string): Record<string, unk
     }
   }
 
-  const frontmatter = match[1]
+  const frontmatter = match[1] || ''
   const title = frontmatter.match(/title:\s*["']?([^"'\n]+)["']?/)?.[1] || filename.replace('.md', '')
   const description = frontmatter.match(/description:\s*["']?([^"'\n]+)["']?/)?.[1] || ''
   const created_at = frontmatter.match(/created_at:\s*(\S+)/)?.[1] || ''

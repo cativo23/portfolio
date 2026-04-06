@@ -76,9 +76,12 @@ onMounted(async () => {
 
   try {
     const [projects, contacts] = await Promise.all([
-      $fetch('/api/projects', { headers }).catch(() => ({ data: [] })),
-      $fetch('/api/admin/contacts', { headers }).catch(() => ({ data: [] })),
+      $fetch<Record<string, unknown>>('/api/projects', { headers }).catch(() => ({ data: [] })),
+      $fetch<Record<string, unknown>>('/api/admin/contacts', { headers }).catch(() => ({ data: [] })),
     ])
+
+    const projectsData = projects as Record<string, unknown>
+    const contactsData = contacts as Record<string, unknown>
 
     // Blog count from content API
     try {
@@ -86,8 +89,10 @@ onMounted(async () => {
       blogCount.value = posts.length
     } catch { /* ignore */ }
 
-    projectCount.value = projects?.data?.length || 0
-    unreadContacts.value = contacts?.data?.filter((c: any) => !c.isRead)?.length || 0
+    const projArray = (projectsData.data as unknown[]) || []
+    const contactArray = (contactsData.data as Array<Record<string, unknown>>) || []
+    projectCount.value = projArray.length
+    unreadContacts.value = contactArray.filter(c => !c.isRead).length
   } catch { /* ignore */ }
 })
 </script>

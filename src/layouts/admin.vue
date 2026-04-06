@@ -63,12 +63,12 @@
 <script setup lang="ts">
 const { user: authUser, logout } = useAdminAuth()
 
-const navItems = ref([
+const navItems = [
   { path: '/admin', label: 'Dashboard', icon: 'LucideLayoutDashboard' },
   { path: '/admin/projects', label: 'Projects', icon: 'LucideFolderOpen' },
   { path: '/admin/blog', label: 'Blog Posts', icon: 'LucideFileText' },
   { path: '/admin/contacts', label: 'Contacts', icon: 'LucideMail' },
-])
+]
 
 const route = useRoute()
 
