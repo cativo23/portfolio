@@ -43,10 +43,10 @@
 </template>
 
 <script setup lang="ts">
-import '@toast-ui/editor/dist/toastui-editor.css'
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight'
-import Editor from '@toast-ui/editor'
-import Prism from 'prismjs'
+// Import CSS on client only — SSR doesn't need it
+if (import.meta.client) {
+  import('@toast-ui/editor/dist/toastui-editor.css')
+}
 
 const props = defineProps<{
   modelValue: string
@@ -65,31 +65,25 @@ const modes = [
 const activeMode = ref<'wysiwyg' | 'markdown' | 'preview'>('wysiwyg')
 const wysiwygRef = ref<HTMLElement | null>(null)
 const markdownRef = ref<HTMLTextAreaElement | null>(null)
-const editorInstance = ref<Editor | null>(null)
+const editorInstance = ref<any>(null)
 
-// Raw markdown content (synced from editor)
 const markdownContent = ref(props.modelValue)
 const parsedContent = ref<any>(null)
 
 let syncing = false
 
 function setMode(mode: typeof activeMode.value) {
-  // Save current editor state before switching
   if (editorInstance.value && mode !== 'wysiwyg') {
     markdownContent.value = editorInstance.value.getMarkdown()
   }
-
-  // When entering WYSIWYG mode, update the editor with latest markdown
   if (mode === 'wysiwyg' && editorInstance.value) {
     editorInstance.value.setMarkdown(markdownContent.value)
   }
-
   activeMode.value = mode
 }
 
 function onMarkdownInput() {
   emit('update:modelValue', markdownContent.value)
-  // Parse preview in background
   parseMarkdownPreview(markdownContent.value)
 }
 
@@ -104,10 +98,7 @@ function onEditorChange() {
 }
 
 async function parseMarkdownPreview(md: string) {
-  if (!md.trim()) {
-    parsedContent.value = null
-    return
-  }
+  if (!md.trim()) { parsedContent.value = null; return }
   try {
     parsedContent.value = await $fetch('/api/admin/mdc/parse', { method: 'post', body: { content: md } })
   } catch {
@@ -122,9 +113,17 @@ const words = computed(() => {
   return text.trim() ? text.trim().split(/\s+/).length : 0
 })
 
-// Init editor on mount
-onMounted(() => {
+// Dynamic import of TUI Editor to avoid SSR "window is not defined"
+onMounted(async () => {
   if (!wysiwygRef.value) return
+
+  const [{ default: Editor }, { default: codeSyntaxHighlight }] = await Promise.all([
+    import('@toast-ui/editor'),
+    import('@toast-ui/editor-plugin-code-syntax-highlight'),
+  ])
+
+  // Prism is used by the code highlight plugin
+  const Prism = await import('prismjs')
 
   editorInstance.value = new Editor({
     el: wysiwygRef.value,
@@ -132,14 +131,13 @@ onMounted(() => {
     initialEditType: 'wysiwyg',
     height: '560px',
     plugins: [[codeSyntaxHighlight, { highlighter: (code: string, lang: string) => Prism.highlight(code, Prism.languages[lang] || Prism.languages.markup, lang) }]],
-    hideModeSwitch: true, // We handle mode switching ourselves
+    hideModeSwitch: true,
     events: {
       change: onEditorChange,
     },
   })
 })
 
-// Cleanup
 onUnmounted(() => {
   editorInstance.value?.destroy()
 })
