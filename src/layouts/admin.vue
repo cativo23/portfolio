@@ -31,7 +31,7 @@
               :key="child.path"
               :to="child.path"
               class="flex items-center gap-2 mx-2 px-3 py-1.5 rounded-md text-xs transition-colors cursor-pointer"
-              :class="getNavClass(child.path)"
+              :class="getNavChildClass(child.path)"
             >
               <component :is="child.icon" class="w-3.5 h-3.5 shrink-0" />
               {{ child.label }}
@@ -132,7 +132,15 @@ function getNavClass(path: string): string {
       ? 'bg-tokyo-night-cyan/10 text-tokyo-night-cyan font-medium'
       : 'text-tokyo-night-muted hover:text-tokyo-night-text hover:bg-tokyo-night-highlight/30'
   }
+  // Parent items: active if route starts with path
   return isActiveRoute(path)
+    ? 'bg-tokyo-night-cyan/10 text-tokyo-night-cyan font-medium'
+    : 'text-tokyo-night-muted hover:text-tokyo-night-text hover:bg-tokyo-night-highlight/30'
+}
+
+function getNavChildClass(path: string): string {
+  // Child items: active only on exact match
+  return isExactRoute(path)
     ? 'bg-tokyo-night-cyan/10 text-tokyo-night-cyan font-medium'
     : 'text-tokyo-night-muted hover:text-tokyo-night-text hover:bg-tokyo-night-highlight/30'
 }
