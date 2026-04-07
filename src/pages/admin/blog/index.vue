@@ -43,6 +43,9 @@
                 <NuxtLink :to="`/admin/blog/${post.path.replace(/\//g, '--')}`" class="font-mono text-xs text-tokyo-night-blue hover:text-tokyo-night-cyan">
                   Edit
                 </NuxtLink>
+                <button @click="deletePost(post)" class="font-mono text-xs text-tokyo-night-red/70 hover:text-tokyo-night-red">
+                  Delete
+                </button>
               </div>
             </td>
           </tr>
@@ -53,6 +56,24 @@
     <!-- Empty -->
     <div v-else class="py-12 font-mono text-center text-tokyo-night-muted">
       No blog posts found.
+    </div>
+
+    <!-- Delete confirmation -->
+    <div v-if="deletingPost" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+      <div class="bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded-lg p-6 max-w-sm w-full mx-4">
+        <h3 class="text-lg font-bold text-tokyo-night-text mb-2">Delete Post</h3>
+        <p class="text-sm text-tokyo-night-muted mb-6">
+          Are you sure you want to delete "<strong class="text-tokyo-night-text">{{ deletingPost.title }}</strong>"? This cannot be undone.
+        </p>
+        <div class="flex justify-end gap-3">
+          <button @click="deletingPost = null" class="px-4 py-2 text-sm text-tokyo-night-muted hover:text-tokyo-night-text transition font-mono">
+            Cancel
+          </button>
+          <button @click="confirmDelete" class="px-4 py-2 text-sm bg-tokyo-night-red/20 text-tokyo-night-red border border-tokyo-night-red/30 rounded hover:bg-tokyo-night-red/30 transition font-mono">
+            Delete
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -73,6 +94,7 @@ interface BlogPostAdmin {
 
 const posts = ref<BlogPostAdmin[]>([])
 const loading = ref(true)
+const deletingPost = ref<BlogPostAdmin | null>(null)
 
 onMounted(async () => {
   try {
@@ -105,6 +127,25 @@ onMounted(async () => {
     loading.value = false
   }
 })
+
+function deletePost(post: BlogPostAdmin) {
+  deletingPost.value = post
+}
+
+async function confirmDelete() {
+  if (!deletingPost.value) return
+  const post = deletingPost.value
+  const pathSlug = post.path.replace('/blog/', '')
+
+  try {
+    await $fetch(`/api/admin/blog/${pathSlug}`, { method: 'delete' as any })
+    posts.value = posts.value.filter(p => p.path !== post.path)
+  } catch {
+    // silently ignore — post may have been deleted already
+  } finally {
+    deletingPost.value = null
+  }
+}
 
 function formatDate(dateStr?: string): string {
   if (!dateStr) return 'N/A'
