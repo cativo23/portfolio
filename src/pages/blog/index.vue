@@ -24,11 +24,15 @@ usePageTitle('Blog', {
   description: 'Explore my latest blog posts on backend development, technology trends, and personal insights.'
 });
 
-const { data: posts } = await useAsyncData('blog-index', () => {
+const { data: allPosts } = await useAsyncData('blog-index', () => {
   return queryCollection('blog')
     .order('created_at', 'DESC')
     .all()
 })
+
+const posts = computed(() =>
+  (allPosts.value || []).filter(p => !p.path.includes('/drafts/'))
+)
 
 function formatDate(dateString?: string) {
   if (!dateString) return ''
