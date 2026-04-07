@@ -2,7 +2,9 @@ import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 
 export default defineEventHandler(async (event) => {
-  const pathParam = getRouterParam(event, 'path')
+  // Catch-all returns array of path segments
+  const pathParts = getRouterParam(event, 'path')
+  const pathParam = Array.isArray(pathParts) ? pathParts.join('/') : pathParts
   const basePath = resolve(process.cwd(), 'content/blog')
 
   let filePath: string

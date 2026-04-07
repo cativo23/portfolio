@@ -39,9 +39,9 @@
       <!-- Markdown editor with live preview -->
       <div>
         <label class="block text-sm text-tokyo-night-cyan font-mono mb-1">Content (Markdown)</label>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-tokyo-night-gray rounded overflow-hidden">
-          <div class="flex flex-col">
-            <div class="px-3 py-1.5 bg-tokyo-night-dark border-b border-tokyo-night-gray/30 text-xs text-tokyo-night-muted font-mono flex items-center justify-between">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-tokyo-night-gray rounded overflow-hidden h-[600px]">
+          <div class="flex flex-col min-h-0">
+            <div class="px-3 py-1.5 bg-tokyo-night-dark border-b border-tokyo-night-gray/30 text-xs text-tokyo-night-muted font-mono flex items-center justify-between shrink-0">
               <span>Editor</span>
               <div class="flex gap-2">
                 <button type="button" @click="insertMd('**', '**')" class="hover:text-tokyo-night-text transition" title="Bold"><LucideBold class="w-3.5 h-3.5" /></button>
@@ -57,18 +57,17 @@
               id="content"
               ref="editorRef"
               v-model="form.content"
-              rows="24"
-              class="flex-1 w-full px-4 py-3 bg-tokyo-night-bg text-tokyo-night-text font-mono text-sm resize-y focus:outline-none"
+              class="flex-1 w-full px-4 py-3 bg-tokyo-night-bg text-tokyo-night-text font-mono text-sm resize-none focus:outline-none min-h-0"
               placeholder="Write your post in Markdown..."
               @keydown.tab.prevent="insertTab"
             ></textarea>
           </div>
-          <div class="flex flex-col border-l border-tokyo-night-gray">
-            <div class="px-3 py-1.5 bg-tokyo-night-dark border-b border-tokyo-night-gray/30 text-xs text-tokyo-night-muted font-mono">
+          <div class="flex flex-col border-l border-tokyo-night-gray min-h-0">
+            <div class="px-3 py-1.5 bg-tokyo-night-dark border-b border-tokyo-night-gray/30 text-xs text-tokyo-night-muted font-mono shrink-0">
               Preview
             </div>
-            <div class="flex-1 overflow-auto px-4 py-3 prose prose-invert prose-tokyo max-w-none">
-              <MDC v-if="form.content" :value="form.content" />
+            <div class="flex-1 overflow-auto min-h-0 px-4 py-3 prose prose-invert prose-tokyo max-w-none">
+              <MDCRenderer v-if="parsedContent" :body="parsedContent.body" />
               <p v-else class="text-tokyo-night-muted text-sm italic">Nothing to preview yet...</p>
             </div>
           </div>
@@ -102,6 +101,17 @@ const form = reactive({
   content: '',
   status: 'draft' as 'draft' | 'published',
 })
+
+const parsedContent = ref<any>(null)
+
+watch(() => form.content, async (val) => {
+  if (!val) { parsedContent.value = null; return }
+  try {
+    parsedContent.value = await $fetch('/api/admin/mdc/parse', { method: 'post', body: { content: val } })
+  } catch {
+    parsedContent.value = null
+  }
+}, { immediate: true })
 
 const saving = ref(false)
 const error = ref<string | null>(null)
