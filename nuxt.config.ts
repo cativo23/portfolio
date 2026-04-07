@@ -6,12 +6,23 @@ const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
 
 export default defineNuxtConfig({
   build: {
-    transpile: ['debug', 'extend'],
+    transpile: ['debug'],
   },
   nitro: {
     externals: {
-      external: ['better-sqlite3']
-    }
+      external: ['better-sqlite3'],
+    },
+  },
+  vite: {
+    server: {
+      watch: {
+        usePolling: true,
+        interval: 1000,
+      },
+    },
+    optimizeDeps: {
+      include: ['extend'],
+    },
   },
   debug: process.env.NODE_ENV !== 'production',
   runtimeConfig: {
@@ -37,7 +48,7 @@ export default defineNuxtConfig({
   },
   content: {
     watch: {
-      enabled: false,
+      enabled: true,
     },
     build: {
       markdown: {
@@ -53,7 +64,6 @@ export default defineNuxtConfig({
     }
   },
   app: {
-    pageTransition: { name: "page", mode: "out-in" },
     head: {
       htmlAttrs: {
         lang: "en",
@@ -74,17 +84,6 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   modules,
   builder: "vite",
-  vite: {
-    server: {
-      watch: {
-        usePolling: true,
-        interval: 1000,
-      },
-    },
-    optimizeDeps: {
-      // Removed 'extend' as it causes default export 500 errors
-    },
-  },
   image: {
     provider: 'none',
   },

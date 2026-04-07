@@ -5,13 +5,17 @@
       <p>{{ message }} was loaded.</p>
     </template>
   </NuxtRouteAnnouncer>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <div :class="route.path.startsWith('/admin') ? '' : 'page-transition-wrapper'">
+    <NuxtLayout>
+      <NuxtPage :transition="route.path.startsWith('/admin') ? false : { name: 'page', mode: 'out-in' }" />
+    </NuxtLayout>
+  </div>
   <BaseToast />
 </template>
 
 <script setup>
+const route = useRoute()
+
 useHead({
   htmlAttrs: {
     lang: 'en'
@@ -52,18 +56,18 @@ useHead({
 </script>
 
 <style>
-.page-enter-active,
-.page-leave-active {
+.page-transition-wrapper .page-enter-active,
+.page-transition-wrapper .page-leave-active {
   position: fixed;
   left: 0;
   transition: all .2s linear;
 }
 
-.page-enter-from {
+.page-transition-wrapper .page-enter-from {
   transform: translateX(100%);
 }
 
-.page-leave-to {
+.page-transition-wrapper .page-leave-to {
   transform: translateX(-100%);
 }
 </style>
