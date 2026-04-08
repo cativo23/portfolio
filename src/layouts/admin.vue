@@ -106,6 +106,14 @@ const navItems = ref([
     ],
   },
   {
+    path: '/admin/users',
+    label: 'Users',
+    icon: 'LucideUsers',
+    children: [
+      { path: '/admin/users', label: 'All Users', icon: 'LucideList' },
+    ],
+  },
+  {
     path: '/admin/contacts',
     label: 'Contacts',
     icon: 'LucideMail',
@@ -154,6 +162,7 @@ const currentPageTitle = computed(() => {
   if (path.startsWith('/admin/blog/new')) return 'Blog / New Post'
   if (path.startsWith('/admin/blog/')) return 'Blog / Edit Post'
   if (path === '/admin/blog') return 'Blog Posts'
+  if (path === '/admin/users') return 'Users'
   if (path === '/admin/contacts') return 'Contacts'
   return 'Admin'
 })
