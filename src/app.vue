@@ -55,6 +55,7 @@ useHead({
 });
 </script>
 
+<style src="assets/css/main.css"></style>
 <style>
 .page-transition-wrapper .page-enter-active,
 .page-transition-wrapper .page-leave-active {

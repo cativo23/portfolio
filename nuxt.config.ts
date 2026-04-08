@@ -5,6 +5,10 @@ const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxtjs/sitemap', '@nuxt/
 const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
 
 export default defineNuxtConfig({
+  css: [
+    'assets/css/main.css',
+    '@toast-ui/editor/dist/toastui-editor.css',
+  ],
   build: {
     transpile: ['debug'],
   },
@@ -44,7 +48,7 @@ export default defineNuxtConfig({
     },
   },
   typescript: {
-    typeCheck: true
+    typeCheck: 'build'
   },
   content: {
     watch: {
