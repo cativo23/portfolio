@@ -1,7 +1,6 @@
 ---
 title: "Fuck Tutorials: What Building Real Backends Actually Looks Like"
-created_at: 2025-12-30T18:00:00Z
-image: "/img/blog/alexander-grigoryev-YSEp8dLK8K8-unsplash.jpg"
+created_at: 2026-04-07T22:04:34.934Z
 author: "Carlos Cativo"
 description: "The real backend development lessons nobody tells you - the stuff you only learn when things break in production at 3am."
 tags: ["backend", "career", "learning", "software-development"]
