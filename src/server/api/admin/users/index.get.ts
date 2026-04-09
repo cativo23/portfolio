@@ -1,14 +1,14 @@
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  const authHeader = getRequestHeader(event, 'authorization')
+  const cookie = getCookie(event, 'admin_token')
 
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-  if (authHeader) headers.Authorization = authHeader
+  const headers: Record<string, string> = {}
+  if (cookie) {
+    headers.Authorization = `Bearer ${cookie}`
+  }
 
-  const users = await $fetch(`${config.apiBaseUrl}${config.apiBasePath}/admin/users`, {
+  return $fetch(`${config.apiBaseUrl}${config.apiBasePath}/admin/users`, {
     method: 'GET',
     headers,
   })
-
-  return users
 })

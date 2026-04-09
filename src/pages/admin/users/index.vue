@@ -244,7 +244,18 @@ async function saveUser() {
       await fetchUsers()
     }, 1000)
   } catch (e: any) {
-    formError.value = e?.data?.error || e?.statusMessage || 'Failed to save user'
+    const responseData = e?.data ?? e?.response?._data ?? e
+    const apiError = responseData?.error ?? responseData
+
+    if (apiError?.details && typeof apiError.details === 'object') {
+      formError.value = Object.values(apiError.details).join('; ')
+    } else if (typeof apiError?.message === 'string') {
+      formError.value = apiError.message
+    } else if (typeof apiError === 'string') {
+      formError.value = apiError
+    } else {
+      formError.value = e?.statusMessage || 'Failed to save user'
+    }
   } finally {
     saving.value = false
   }
