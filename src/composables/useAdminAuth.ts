@@ -40,8 +40,12 @@ export function useAdminAuth(): UseAdminAuthReturn {
         token.value = response.data.access_token
         user.value = response.data.user
 
-        useCookie('admin_token', { maxAge: 60 * 60 * 24 * 7, sameSite: 'lax' }).value = token.value
-        useCookie('admin_user', { maxAge: 60 * 60 * 24 * 7, sameSite: 'lax' }).value = JSON.stringify(user.value)
+        // Cookie is set by the server route via Set-Cookie header
+        useCookie('admin_user', {
+          maxAge: 60 * 60 * 24 * 7,
+          sameSite: 'lax',
+          secure: process.env.NODE_ENV === 'production',
+        }).value = JSON.stringify(user.value)
 
         return true
       }
