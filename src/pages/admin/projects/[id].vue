@@ -241,7 +241,7 @@ async function saveProject() {
     if (Object.keys(details).length > 0) {
       fieldErrors.value = details
     } else {
-      const apiError = responseData?.error ?? responseData
+      const apiError = e?.data?.data?.error ?? e?.data?.error ?? e
       generalError.value = apiError?.message ?? e?.statusMessage ?? 'Failed to update project'
     }
   } finally {

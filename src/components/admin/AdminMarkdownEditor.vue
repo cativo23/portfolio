@@ -52,7 +52,9 @@ const emit = defineEmits<{
   'update:modelValue': [value: string]
 }>()
 
-const modes = [
+type EditorMode = 'wysiwyg' | 'markdown' | 'preview'
+
+const modes: { label: string; value: EditorMode }[] = [
   { label: 'Visual', value: 'wysiwyg' },
   { label: 'Markdown', value: 'markdown' },
   { label: 'Preview', value: 'preview' },
