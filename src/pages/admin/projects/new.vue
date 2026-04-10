@@ -16,9 +16,13 @@
           v-model="form.title"
           type="text"
           required
-          class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono"
+          :class="[
+            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
+            fieldErrors.title ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+          ]"
           placeholder="My Awesome Project"
         >
+        <p v-if="fieldErrors.title" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.title }}</p>
       </div>
 
       <!-- Short Description -->
@@ -29,9 +33,13 @@
           v-model="form.shortDescription"
           type="text"
           required
-          class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono"
+          :class="[
+            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
+            fieldErrors.shortDescription ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+          ]"
           placeholder="One-line description"
         >
+        <p v-if="fieldErrors.shortDescription" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.shortDescription }}</p>
       </div>
 
       <!-- Full Description -->
@@ -41,9 +49,13 @@
           id="description"
           v-model="form.description"
           rows="6"
-          class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono resize-y"
+          :class="[
+            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2 resize-y',
+            fieldErrors.description ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+          ]"
           placeholder="Full project description in Markdown..."
         ></textarea>
+        <p v-if="fieldErrors.description" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.description }}</p>
       </div>
 
       <!-- Tech Stack -->
@@ -53,9 +65,13 @@
           id="techStack"
           v-model="form.techStack"
           type="text"
-          class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono"
+          :class="[
+            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
+            fieldErrors.techStack ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+          ]"
           placeholder="NestJS, TypeScript, Docker"
         >
+        <p v-if="fieldErrors.techStack" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.techStack }}</p>
       </div>
 
       <!-- URLs -->
@@ -66,9 +82,13 @@
             id="repoUrl"
             v-model="form.repoUrl"
             type="url"
-            class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono"
+            :class="[
+              'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
+              fieldErrors.repoUrl ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+            ]"
             placeholder="https://github.com/..."
           >
+          <p v-if="fieldErrors.repoUrl" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.repoUrl }}</p>
         </div>
         <div>
           <label for="liveUrl" class="block text-sm text-tokyo-night-cyan font-mono mb-1">Live Demo URL</label>
@@ -76,9 +96,13 @@
             id="liveUrl"
             v-model="form.liveUrl"
             type="url"
-            class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono"
+            :class="[
+              'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
+              fieldErrors.liveUrl ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+            ]"
             placeholder="https://..."
           >
+          <p v-if="fieldErrors.liveUrl" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.liveUrl }}</p>
         </div>
       </div>
 
@@ -89,13 +113,17 @@
           <select
             id="status"
             v-model="form.status"
-            class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono"
+            :class="[
+              'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
+              fieldErrors.status ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+            ]"
           >
             <option value="active">Active</option>
             <option value="completed">Completed</option>
             <option value="archived">Archived</option>
             <option value="draft">Draft</option>
           </select>
+          <p v-if="fieldErrors.status" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.status }}</p>
         </div>
         <div class="flex items-end">
           <label class="flex items-center gap-2 cursor-pointer py-2">
@@ -112,9 +140,13 @@
           id="heroImage"
           v-model="form.heroImage"
           type="text"
-          class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono"
+          :class="[
+            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
+            fieldErrors.heroImage ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+          ]"
           placeholder="/img/projects/my-project.png"
         >
+        <p v-if="fieldErrors.heroImage" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.heroImage }}</p>
       </div>
 
       <!-- Features -->
@@ -124,12 +156,16 @@
           id="features"
           v-model="form.features"
           rows="4"
-          class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono resize-y"
+          :class="[
+            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2 resize-y',
+            fieldErrors.features ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+          ]"
           placeholder="Feature 1&#10;Feature 2&#10;Feature 3"
         ></textarea>
+        <p v-if="fieldErrors.features" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.features }}</p>
       </div>
 
-      <p v-if="error" class="text-red-400 text-sm font-mono" role="alert">{{ error }}</p>
+      <p v-if="generalError" class="text-red-400 text-sm font-mono" role="alert">{{ generalError }}</p>
       <p v-if="success" class="text-tokyo-night-green text-sm font-mono">{{ success }}</p>
 
       <!-- Actions -->
@@ -170,12 +206,27 @@ const form = reactive({
 })
 
 const saving = ref(false)
-const error = ref<string | null>(null)
+const generalError = ref<string | null>(null)
+const fieldErrors = ref<Record<string, string>>({})
 const success = ref<string | null>(null)
+
+function mapFieldErrors(e: any): Record<string, string> {
+  const data = e?.data ?? e
+  const errorObj = data?.data?.error ?? data?.error ?? {}
+  const details = errorObj?.details ?? {}
+  const mapped: Record<string, string> = {}
+
+  for (const [key, value] of Object.entries(details)) {
+    mapped[key] = Array.isArray(value) ? value.join('; ') : String(value)
+  }
+
+  return mapped
+}
 
 async function saveProject() {
   saving.value = true
-  error.value = null
+  generalError.value = null
+  fieldErrors.value = {}
   success.value = null
 
   const auth = useAdminAuth()
@@ -207,7 +258,14 @@ async function saveProject() {
     success.value = 'Project created successfully!'
     setTimeout(() => navigateTo('/admin/projects'), 1000)
   } catch (e: any) {
-    error.value = e?.data?.error?.message || e?.statusMessage || 'Failed to create project'
+    const details = mapFieldErrors(e)
+
+    if (Object.keys(details).length > 0) {
+      fieldErrors.value = details
+    } else {
+      const errorObj = e?.data?.data?.error ?? e?.data?.error ?? e
+      generalError.value = errorObj?.message ?? e?.statusMessage ?? 'Failed to create project'
+    }
   } finally {
     saving.value = false
   }
