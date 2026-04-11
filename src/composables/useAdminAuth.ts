@@ -7,11 +7,6 @@ interface AdminUser {
   username: string
 }
 
-interface LoginResponse {
-  access_token: string
-  user: AdminUser
-}
-
 interface UseAdminAuthReturn {
   isAuthenticated: ComputedRef<boolean>
   user: Ref<AdminUser | null>
@@ -24,13 +19,13 @@ const user = ref<AdminUser | null>(null)
 export function useAdminAuth(): UseAdminAuthReturn {
   async function login(email: string, password: string): Promise<boolean> {
     try {
-      const response = await $fetch<{ status: string; data: LoginResponse }>('/api/admin/login', {
+      const response = await $fetch<{ status: string; user: AdminUser }>('/api/admin/login', {
         method: 'POST',
         body: { email, password },
       })
 
-      if (response.status === 'success' && response.data?.access_token) {
-        user.value = response.data.user
+      if (response.status === 'success' && response.user) {
+        user.value = response.user
         return true
       }
       return false

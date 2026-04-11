@@ -1,18 +1,14 @@
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const id = getRouterParam(event, 'id')
-  const authHeader = getRequestHeader(event, 'authorization')
   const cookie = getCookie(event, 'admin_token')
 
-  const headers: Record<string, string> = {}
-  if (authHeader) {
-    headers.Authorization = authHeader
-  } else if (cookie) {
-    headers.Authorization = `Bearer ${cookie}`
+  if (!id) {
+    throw createError({ statusCode: 400, statusMessage: 'Missing project ID' })
   }
 
   return $fetch(`${config.apiBaseUrl}${config.apiBasePath}/projects/${id}`, {
     method: 'DELETE',
-    headers,
+    headers: { Authorization: `Bearer ${cookie ?? ''}` },
   })
 })

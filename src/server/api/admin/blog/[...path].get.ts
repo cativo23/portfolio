@@ -15,6 +15,11 @@ export default defineEventHandler(async (event) => {
     filePath = resolve(basePath, `${pathParam}.md`)
   }
 
+  // Prevent path traversal
+  if (!filePath.startsWith(basePath + '/') && filePath !== basePath) {
+    throw createError({ statusCode: 403, statusMessage: 'Forbidden' })
+  }
+
   try {
     const content = await readFile(filePath, 'utf-8')
     return { content }

@@ -48,13 +48,18 @@ export default defineEventHandler(async (event) => {
       ? path.join(draftsDir, existingPath.replace('/blog/drafts/', '') + '.md')
       : path.join(blogDir, existingPath.replace('/blog/', '') + '.md')
 
+    const resolvedOld = path.resolve(oldPath)
+    if (!resolvedOld.startsWith(path.resolve(draftsDir) + '/') && !resolvedOld.startsWith(path.resolve(blogDir) + '/')) {
+      throw createError({ statusCode: 403, statusMessage: 'Forbidden' })
+    }
+
     try {
       await fs.unlink(oldPath)
     } catch { /* file might not exist */ }
   }
 
   // Build frontmatter — escape YAML special characters in user input
-  const escapeYamlString = (s: string) => s.replace(/\\/g, '\\\\').replace(/"/g, '\\"')
+  const escapeYamlString = (s: string) => s.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/:/g, '\\:').replace(/\|/g, '\\|').replace(/>/g, '\\>')
 
   const frontmatter = `---
 title: "${escapeYamlString(title)}"

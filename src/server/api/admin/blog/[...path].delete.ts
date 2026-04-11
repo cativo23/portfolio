@@ -14,6 +14,11 @@ export default defineEventHandler(async (event) => {
     filePath = resolve(basePath, `${pathParam}.md`)
   }
 
+  // Prevent path traversal — resolved path must stay under basePath
+  if (!filePath.startsWith(basePath + '/') && filePath !== basePath) {
+    throw createError({ statusCode: 403, statusMessage: 'Forbidden' })
+  }
+
   try {
     await unlink(filePath)
     return { deleted: pathParam }

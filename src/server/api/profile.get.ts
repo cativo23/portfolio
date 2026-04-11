@@ -15,7 +15,8 @@ export default defineEventHandler(async () => {
     });
 
     return data;
-  } catch {
+  } catch (err) {
+    console.error('[profile] API unreachable, serving fallback:', err)
     // Fallback for when API doesn't have /profile endpoint yet
     // Once the API is updated, this fallback will no longer be needed
     return {

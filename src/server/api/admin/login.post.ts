@@ -40,5 +40,7 @@ export default defineEventHandler(async (event) => {
     path: '/',
   })
 
-  return data
+  // Never leak the access_token or internal fields to the client — it's set as httpOnly cookie
+  const user = data.user ?? data.data?.user ?? {}
+  return { status: 'success', user }
 })

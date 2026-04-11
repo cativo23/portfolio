@@ -23,10 +23,7 @@ describe('useAdminAuth', () => {
     it('returns true and stores user on successful login', async () => {
       vi.stubGlobal('$fetch', vi.fn(() => Promise.resolve({
         status: 'success',
-        data: {
-          access_token: 'abc123',
-          user: { id: 1, email: 'admin@test.com', username: 'admin' },
-        },
+        user: { id: 1, email: 'admin@test.com', username: 'admin' },
       })))
 
       const { isAuthenticated, login } = useAdminAuth()
@@ -41,7 +38,6 @@ describe('useAdminAuth', () => {
     it('returns false on invalid credentials', async () => {
       vi.stubGlobal('$fetch', vi.fn(() => Promise.resolve({
         status: 'error',
-        data: { access_token: null },
       })))
 
       const { login } = useAdminAuth()
@@ -64,10 +60,7 @@ describe('useAdminAuth', () => {
     it('clears user and navigates to login', async () => {
       vi.stubGlobal('$fetch', vi.fn(() => Promise.resolve({
         status: 'success',
-        data: {
-          access_token: 'abc123',
-          user: { id: 1, email: 'admin@test.com', username: 'admin' },
-        },
+        user: { id: 1, email: 'admin@test.com', username: 'admin' },
       })))
 
       const { login, logout, isAuthenticated } = useAdminAuth()
