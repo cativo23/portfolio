@@ -15,19 +15,15 @@ interface LoginResponse {
 interface UseAdminAuthReturn {
   isAuthenticated: ComputedRef<boolean>
   user: ComputedRef<AdminUser | null>
-  token: ComputedRef<string | null>
   login: (email: string, password: string) => Promise<boolean>
   logout: () => void
-  loadFromCookie: () => void
 }
 
-const token = ref<string | null>(null)
 const user = ref<AdminUser | null>(null)
 
 export function useAdminAuth(): UseAdminAuthReturn {
-  const isAuthenticated = computed(() => !!token.value)
+  const isAuthenticated = computed(() => !!user.value)
   const userComputed = computed(() => user.value)
-  const tokenComputed = computed(() => token.value)
 
   async function login(email: string, password: string): Promise<boolean> {
     try {
@@ -37,10 +33,8 @@ export function useAdminAuth(): UseAdminAuthReturn {
       })
 
       if (response.status === 'success' && response.data?.access_token) {
-        token.value = response.data.access_token
         user.value = response.data.user
 
-        // Cookie is set by the server route via Set-Cookie header
         useCookie('admin_user', {
           maxAge: 60 * 60 * 24 * 7,
           sameSite: 'lax',
@@ -56,32 +50,16 @@ export function useAdminAuth(): UseAdminAuthReturn {
   }
 
   function logout() {
-    token.value = null
     user.value = null
-    useCookie('admin_token').value = null
     useCookie('admin_user').value = null
+    // admin_token is httpOnly — cleared by calling the logout endpoint
     navigateTo('/admin/login')
-  }
-
-  function loadFromCookie() {
-    const tokenCookie = useCookie('admin_token').value
-    const userCookie = useCookie('admin_user').value
-    if (tokenCookie) token.value = tokenCookie
-    if (userCookie) {
-      try {
-        user.value = JSON.parse(userCookie)
-      } catch {
-        user.value = null
-      }
-    }
   }
 
   return {
     isAuthenticated,
     user: userComputed,
-    token: tokenComputed,
     login,
     logout,
-    loadFromCookie,
   }
 }

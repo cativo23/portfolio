@@ -1,15 +1,27 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-  const token = useCookie('admin_token').value
+  const isAdminLogin = to.path === '/admin/login'
+  const isAdminRoute = to.path.startsWith('/admin')
+
+  // SSR: read cookie from request headers (works with httpOnly)
+  const isSSR = typeof window === 'undefined'
+  let hasToken = false
+
+  if (isSSR) {
+    const headers = useRequestHeaders(['cookie'])
+    hasToken = headers.cookie?.includes('admin_token=') ?? false
+  }
 
   // If going to login and already authenticated, redirect to dashboard
-  if (to.path === '/admin/login') {
-    if (token && typeof window !== 'undefined') {
+  if (isAdminLogin) {
+    if (hasToken) {
+      return navigateTo('/admin', { redirectCode: 302 })
+    }
+    // On client, try validating against API
+    if (typeof window !== 'undefined') {
       try {
         await $fetch('/api/admin/me')
         return navigateTo('/admin', { redirectCode: 302 })
       } catch {
-        useCookie('admin_token').value = null
-        useCookie('admin_user').value = null
         return
       }
     }
@@ -17,18 +29,16 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   // All other /admin routes require valid token
-  if (to.path.startsWith('/admin')) {
-    if (!token) {
+  if (isAdminRoute) {
+    if (isSSR && !hasToken) {
       return navigateTo('/admin/login', { redirectCode: 302 })
     }
 
-    // Validate token against API only on client-side
+    // On client, validate token. Browser sends httpOnly cookie automatically.
     if (typeof window !== 'undefined') {
       try {
         await $fetch('/api/admin/me')
       } catch {
-        useCookie('admin_token').value = null
-        useCookie('admin_user').value = null
         return navigateTo('/admin/login', { redirectCode: 302 })
       }
     }

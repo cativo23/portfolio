@@ -66,18 +66,10 @@ const unreadContacts = ref(0)
 
 // Load stats from API
 onMounted(async () => {
-  const auth = useAdminAuth()
-  auth.loadFromCookie()
-  const token = auth.token.value
-
-  if (!token) return
-
-  const headers = { Authorization: `Bearer ${token}` }
-
   try {
     const [projects, contacts] = await Promise.all([
-      $fetch<Record<string, unknown>>('/api/projects', { headers }).catch(() => ({ data: [] })),
-      $fetch<Record<string, unknown>>('/api/admin/contacts', { headers }).catch(() => ({ data: [] })),
+      $fetch<Record<string, unknown>>('/api/projects').catch(() => ({ data: [] })),
+      $fetch<Record<string, unknown>>('/api/admin/contacts').catch(() => ({ data: [] })),
     ])
 
     const projectsData = projects as Record<string, unknown>

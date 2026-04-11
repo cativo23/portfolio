@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const data = await $fetch(`${config.apiBaseUrl}${config.apiBasePath}/auth/login`, {
+  const data: Record<string, any> = await $fetch(`${config.apiBaseUrl}${config.apiBasePath}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: { email: trimmedEmail, password: body.password },
@@ -32,8 +32,8 @@ export default defineEventHandler(async (event) => {
 
   const isSecure = process.env.NODE_ENV === 'production'
 
-  setCookie(event, 'admin_token', (data as any).access_token ?? data?.data?.access_token ?? '', {
-    httpOnly: false,
+  setCookie(event, 'admin_token', data.access_token ?? data?.data?.access_token ?? '', {
+    httpOnly: true,
     secure: isSecure,
     sameSite: 'lax',
     maxAge: 60 * 60 * 24 * 7,

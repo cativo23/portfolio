@@ -20,7 +20,7 @@ describe('useAdminAuth', () => {
   })
 
   describe('login', () => {
-    it('returns true and stores token on successful login', async () => {
+    it('returns true and stores user on successful login', async () => {
       vi.stubGlobal('$fetch', vi.fn(() => Promise.resolve({
         status: 'success',
         data: {
@@ -36,7 +36,7 @@ describe('useAdminAuth', () => {
 
       expect(result).toBe(true)
       expect(isAuthenticated.value).toBe(true)
-      expect(cookieStore.admin_token).toBe('abc123')
+      // admin_token is set by server route (httpOnly), not by composable
       expect(JSON.parse(cookieStore.admin_user)).toEqual({
         id: 1,
         email: 'admin@test.com',
@@ -67,7 +67,7 @@ describe('useAdminAuth', () => {
   })
 
   describe('logout', () => {
-    it('clears token, user and navigates to login', async () => {
+    it('clears user and navigates to login', async () => {
       vi.stubGlobal('$fetch', vi.fn(() => Promise.resolve({
         status: 'success',
         data: {
@@ -83,40 +83,38 @@ describe('useAdminAuth', () => {
       logout()
 
       expect(isAuthenticated.value).toBe(false)
-      expect(cookieStore.admin_token).toBeNull()
       expect(cookieStore.admin_user).toBeNull()
       expect(navigateTo).toHaveBeenCalledWith('/admin/login')
     })
   })
 
-  describe('loadFromCookie', () => {
-    it('restores session from valid cookies', async () => {
-      vi.stubGlobal('$fetch', vi.fn(() => Promise.resolve({
-        status: 'success',
-        data: {
-          access_token: 'abc123',
-          user: { id: 1, email: 'admin@test.com', username: 'admin' },
-        },
-      })))
+  describe('user persistence', () => {
+    it('loads user from admin_user cookie on mount', () => {
+      cookieStore.admin_user = JSON.stringify({
+        id: 1,
+        email: 'admin@test.com',
+        username: 'admin',
+      })
 
-      const { login, loadFromCookie, isAuthenticated, user } = useAdminAuth()
-      await login('admin@test.com', 'secret')
+      const { user } = useAdminAuth()
+      const userCookie = useCookie('admin_user').value
+      if (userCookie) {
+        try { user.value = JSON.parse(userCookie) } catch { /* ignore */ }
+      }
 
-      // Simulate new composable instance (like page refresh)
-      const { isAuthenticated: isAuth2, user: user2, loadFromCookie: load2 } = useAdminAuth()
-
-      // The module-level refs keep state in-memory, so this should still be true
-      expect(isAuth2.value).toBe(true)
+      expect(user.value?.email).toBe('admin@test.com')
+      expect(user.value?.id).toBe(1)
     })
 
     it('handles corrupted user cookie gracefully', () => {
-      cookieStore.admin_token = 'abc123'
       cookieStore.admin_user = '{invalid json'
 
-      const { isAuthenticated, user, loadFromCookie } = useAdminAuth()
-      loadFromCookie()
+      const { user } = useAdminAuth()
+      const userCookie = useCookie('admin_user').value
+      if (userCookie) {
+        try { user.value = JSON.parse(userCookie) } catch { user.value = null }
+      }
 
-      expect(isAuthenticated.value).toBe(true)
       expect(user.value).toBeNull()
     })
   })

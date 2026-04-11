@@ -112,16 +112,8 @@ const loading = ref(true)
 const selectedContact = ref<AdminContact | null>(null)
 
 onMounted(async () => {
-  const auth = useAdminAuth()
-  auth.loadFromCookie()
-  const token = auth.token.value
-
-  if (!token) return
-
-  const headers = { Authorization: `Bearer ${token}` }
-
   try {
-    const res = await $fetch<Record<string, unknown>>('/api/admin/contacts', { headers })
+    const res = await $fetch<Record<string, unknown>>('/api/admin/contacts')
     contacts.value = (res?.data as AdminContact[]) || []
   } catch {
     // Try unauthenticated for dev
@@ -141,15 +133,8 @@ function viewContact(contact: AdminContact) {
 async function deleteContact(id: number) {
   if (!confirm('Are you sure you want to delete this contact?')) return
 
-  const auth = useAdminAuth()
-  const token = auth.token.value
-  if (!token) return
-
   try {
-    await $fetch(`/api/admin/contacts/${id}`, {
-      method: 'delete' as any,
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    await $fetch(`/api/admin/contacts/${id}`, { method: 'delete' as any })
     contacts.value = contacts.value.filter(c => c.id !== id)
   } catch {
     alert('Failed to delete contact')

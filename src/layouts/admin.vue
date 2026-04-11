@@ -173,6 +173,13 @@ const userInitial = computed(() => {
 })
 
 onMounted(() => {
-  useAdminAuth().loadFromCookie()
+  const userCookie = useCookie('admin_user').value
+  if (userCookie) {
+    try {
+      const parsed = JSON.parse(userCookie)
+      const { user } = useAdminAuth()
+      ;(user as any).value = parsed
+    } catch { /* ignore */ }
+  }
 })
 </script>

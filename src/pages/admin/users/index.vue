@@ -175,13 +175,8 @@ const form = reactive({
 })
 
 async function fetchUsers() {
-  const auth = useAdminAuth()
-  auth.loadFromCookie()
-  const token = auth.token.value
-  const headers: Record<string, string> | undefined = token ? { Authorization: `Bearer ${token}` } : undefined
-
   try {
-    const res = await $fetch<Record<string, unknown>>('/api/admin/users', { headers })
+    const res = await $fetch<Record<string, unknown>>('/api/admin/users')
     const data = (res as any)?.data as AdminUser[] | undefined
     users.value = Array.isArray(data) ? data : []
   } catch (e: any) {
@@ -220,10 +215,6 @@ async function saveUser() {
   formError.value = null
   formSuccess.value = null
 
-  const auth = useAdminAuth()
-  const token = auth.token.value
-  const headers: Record<string, string> | undefined = token ? { Authorization: `Bearer ${token}` } : undefined
-
   const body: Record<string, string> = {
     username: form.username,
     email: form.email,
@@ -232,10 +223,10 @@ async function saveUser() {
 
   try {
     if (modalUser.value === null) {
-      await $fetch('/api/admin/users', { method: 'post' as any, headers, body })
+      await $fetch('/api/admin/users', { method: 'post' as any, body })
       formSuccess.value = 'User created!'
     } else {
-      await $fetch(`/api/admin/users/${modalUser.value!.id}`, { method: 'put' as any, headers, body })
+      await $fetch(`/api/admin/users/${modalUser.value!.id}`, { method: 'put' as any, body })
       formSuccess.value = 'User updated!'
     }
 
@@ -269,12 +260,8 @@ async function confirmDelete() {
   if (!deletingUser.value) return
   const user = deletingUser.value
 
-  const auth = useAdminAuth()
-  const token = auth.token.value
-  const headers: Record<string, string> | undefined = token ? { Authorization: `Bearer ${token}` } : undefined
-
   try {
-    await $fetch(`/api/admin/users/${user.id}`, { method: 'delete' as any, headers })
+    await $fetch(`/api/admin/users/${user.id}`, { method: 'delete' as any })
     users.value = users.value.filter(u => u.id !== user.id)
   } catch {
     formError.value = 'Failed to delete user'

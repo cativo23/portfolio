@@ -229,18 +229,12 @@ async function saveProject() {
   fieldErrors.value = {}
   success.value = null
 
-  const auth = useAdminAuth()
-  auth.loadFromCookie()
-  const token = auth.token.value
-  const headers: HeadersInit = token ? { Authorization: `Bearer ${token}` } : {}
-
   const techStack = form.techStack.split(',').map(t => t.trim()).filter(Boolean)
   const features = form.features.split('\n').map(f => f.trim()).filter(Boolean)
 
   try {
     await $fetch('/api/projects', {
       method: 'post' as any,
-      headers,
       body: {
         title: form.title,
         description: form.description,

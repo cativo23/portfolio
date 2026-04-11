@@ -82,16 +82,8 @@ const projects = ref<AdminProject[]>([])
 const loading = ref(true)
 
 onMounted(async () => {
-  const auth = useAdminAuth()
-  auth.loadFromCookie()
-  const token = auth.token.value
-
-  if (!token) return
-
-  const headers = { Authorization: `Bearer ${token}` }
-
   try {
-    const res = await $fetch<Record<string, unknown>>('/api/admin/projects', { headers })
+    const res = await $fetch<Record<string, unknown>>('/api/admin/projects')
     projects.value = (res?.data as AdminProject[]) || []
   } catch {
     // Try unauthenticated (for dev without auth)

@@ -165,13 +165,8 @@ const form = reactive({
 })
 
 onMounted(async () => {
-  const auth = useAdminAuth()
-  auth.loadFromCookie()
-  const token = auth.token.value
-  const headers: HeadersInit = token ? { Authorization: `Bearer ${token}` } : {}
-
   try {
-    const res = await $fetch<Record<string, unknown>>(`/api/admin/projects/${projectId.value}`, { headers })
+    const res = await $fetch<Record<string, unknown>>(`/api/admin/projects/${projectId.value}`)
     const project = (res?.data || res) as Record<string, unknown>
 
     form.title = (project.title as string) || ''
@@ -208,18 +203,12 @@ async function saveProject() {
   fieldErrors.value = {}
   success.value = null
 
-  const auth = useAdminAuth()
-  auth.loadFromCookie()
-  const token = auth.token.value
-  const headers: HeadersInit = token ? { Authorization: `Bearer ${token}` } : {}
-
   const techStack = form.techStack.split(',').map(t => t.trim()).filter(Boolean)
   const features = form.features.split('\n').map(f => f.trim()).filter(Boolean)
 
   try {
     await $fetch(`/api/projects/${projectId.value}`, {
       method: 'patch' as any,
-      headers,
       body: {
         title: form.title,
         description: form.description,
@@ -252,16 +241,8 @@ async function saveProject() {
 async function deleteProject() {
   if (!confirm('Are you sure you want to delete this project? This cannot be undone.')) return
 
-  const auth = useAdminAuth()
-  auth.loadFromCookie()
-  const token = auth.token.value
-  if (!token) return
-
   try {
-    await $fetch(`/api/projects/${projectId.value}`, {
-      method: 'delete' as any,
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    await $fetch(`/api/projects/${projectId.value}`, { method: 'delete' as any })
     navigateTo('/admin/projects')
   } catch {
     generalError.value = 'Failed to delete project'
