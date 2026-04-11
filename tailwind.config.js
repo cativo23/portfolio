@@ -3,11 +3,11 @@ import typography from '@tailwindcss/typography';
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './pages/**/*.{vue,js,ts}',
-    './content/**/*.md',
-    './components/**/*.{vue,js,ts}',
-    './layouts/**/*.{vue,js,ts}',
-    './app.vue',
+    './src/pages/**/*.{vue,js,ts}',
+    './src/content/**/*.md',
+    './src/components/**/*.{vue,js,ts}',
+    './src/layouts/**/*.{vue,js,ts}',
+    './src/app.vue',
   ],
   theme: {
     extend: {

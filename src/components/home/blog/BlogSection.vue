@@ -20,7 +20,9 @@ const { data: posts } = await useAsyncData('latest-blog-posts', () => {
 const blogPosts = computed(() => {
   if (!posts.value) return []
 
-  return posts.value.slice(0, 3).map((post): BlogPost => ({
+  const published = posts.value.filter(p => !p.path.includes('/drafts/'))
+
+  return published.slice(0, 3).map((post): BlogPost => ({
     title: post.title || '',
     description: post.description,
     excerpt: post.description,

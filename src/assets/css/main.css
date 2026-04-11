@@ -1,5 +1,166 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
 /* Apply a fallback font-family */
 body {
   font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* TUI Editor — Tokyo Night theme */
+.toast-editor-container .toastui-editor-defaultUI {
+  font-family: 'Source Code Pro', ui-monospace, monospace;
+  border: none;
+  border-radius: 0;
+}
+
+.toast-editor-container .toastui-editor-defaultUI-toolbar {
+  background-color: #16161e !important;
+  border-bottom: 1px solid #292e42 !important;
+}
+
+.toast-editor-container .toastui-editor-toolbar-group button {
+  color: #565f89 !important;
+}
+
+.toast-editor-container .toastui-editor-toolbar-group button:hover {
+  background-color: #292e42 !important;
+  color: #a9b1d6 !important;
+}
+
+.toast-editor-container .toastui-editor-toolbar-group button.active {
+  background-color: #1a1b26 !important;
+  color: #7dcfff !important;
+}
+
+.toast-editor-container .toastui-editor-ww-container,
+.toast-editor-container .toastui-editor-md-container {
+  background-color: #1a1b26;
+}
+
+.toast-editor-container .toastui-editor-ww-container .ProseMirror,
+.toast-editor-container .toastui-editor-md-editor {
+  background-color: #1a1b26 !important;
+  color: #a9b1d6 !important;
+}
+
+.toast-editor-container .toastui-editor-contents,
+.toast-editor-container .ProseMirror,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror div,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror p,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror span,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror h1,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror h2,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror h3,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror h4,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror h5,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror h6,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror li,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror td,
+.toast-editor-container .toastui-editor-ww-container .ProseMirror th {
+  font-family: 'Source Code Pro', ui-monospace, monospace !important;
+  color: #a9b1d6 !important;
+}
+
+.toast-editor-container .toastui-editor-ww-container .ProseMirror p.is-editor-empty:first-child::before {
+  color: #565f89 !important;
+}
+
+.toast-editor-container .toastui-editor-md-editor textarea {
+  background-color: #1a1b26 !important;
+  color: #a9b1d6 !important;
+  font-family: 'Source Code Pro', ui-monospace, monospace;
+}
+
+.toast-editor-container .toastui-editor-popup {
+  background-color: #1a1b26 !important;
+  border: 1px solid #292e42 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+.toast-editor-container .toastui-editor-popup-body label {
+  color: #a9b1d6 !important;
+}
+
+.toast-editor-container .toastui-editor-popup-body input {
+  background-color: #16161e !important;
+  border: 1px solid #292e42 !important;
+  color: #a9b1d6 !important;
+  border-radius: 4px;
+}
+
+.toast-editor-container .toastui-editor-popup-body button {
+  background-color: #7dcfff !important;
+  color: #1a1b26 !important;
+  border-radius: 4px;
+}
+
+.toast-editor-container .toastui-editor-popup-table {
+  background-color: #1a1b26 !important;
+  border: 1px solid #292e42 !important;
+}
+
+.toast-editor-container .toastui-editor-popup-table button {
+  background-color: #292e42 !important;
+  border-color: #1a1b26 !important;
+}
+
+.toast-editor-container .toastui-editor-contents h1,
+.toast-editor-container .ProseMirror h1,
+.toast-editor-container .toastui-editor-contents h2,
+.toast-editor-container .ProseMirror h2,
+.toast-editor-container .toastui-editor-contents h3,
+.toast-editor-container .ProseMirror h3 {
+  color: #7aa2f7 !important;
+}
+
+.toast-editor-container .toastui-editor-contents a,
+.toast-editor-container .ProseMirror a {
+  color: #7dcfff !important;
+}
+
+.toast-editor-container .toastui-editor-contents pre,
+.toast-editor-container .ProseMirror pre {
+  background-color: #16161e !important;
+  border: 1px solid #292e42 !important;
+  border-radius: 6px;
+}
+
+.toast-editor-container .toastui-editor-contents code,
+.toast-editor-container .ProseMirror code {
+  background-color: #16161e !important;
+  color: #9ece6a !important;
+}
+
+.toast-editor-container .toastui-editor-contents blockquote,
+.toast-editor-container .ProseMirror blockquote {
+  border-left: 3px solid #f7768e !important;
+  color: #a9b1d6 !important;
+}
+
+.toast-editor-container .toastui-editor-contents table th,
+.toast-editor-container .ProseMirror table th {
+  background-color: #16161e !important;
+  color: #7aa2f7 !important;
+  border-color: #292e42 !important;
+}
+
+.toast-editor-container .toastui-editor-contents table td,
+.toast-editor-container .ProseMirror table td {
+  border-color: #292e42 !important;
+  color: #a9b1d6 !important;
+}
+
+.toast-editor-container .ProseMirror::-webkit-scrollbar,
+.toast-editor-container .toastui-editor-md-editor textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+.toast-editor-container .ProseMirror::-webkit-scrollbar-track,
+.toast-editor-container .toastui-editor-md-editor textarea::-webkit-scrollbar-track {
+  background: #1a1b26;
+}
+
+.toast-editor-container .ProseMirror::-webkit-scrollbar-thumb,
+.toast-editor-container .toastui-editor-md-editor textarea::-webkit-scrollbar-thumb {
+  background: #292e42;
+  border-radius: 3px;
 }

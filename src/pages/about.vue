@@ -1,117 +1,143 @@
 <template>
-  <div>
-    <BaseSectionHeading title="About Me" />
-    <BaseCard :hoverable="false">
-      <p class="mb-4 text-justify">
-        Hi, I'm Carlos Cativo — a Full-Stack Software Engineer based in El Salvador with a strong backend focus
-        and growing specialization in AI-powered systems. I build healthcare platforms, payment processing services,
-        and conversational AI agents at <span class="text-tokyo-night-purple font-semibold">Blue Medical</span>.
-      </p>
-      <p class="mb-4 text-justify">
-        I've built microservices from scratch handling payment gateway integrations (Visa ISO 8583, SOAP/XML),
-        electronic invoicing systems (FEL), and a voice AI agent that automates patient scheduling via natural
-        conversation in Spanish. My day-to-day involves Laravel, NestJS, Python, and integrating systems that
-        talk to ERPs, WhatsApp bots, and payment processors.
-      </p>
-      <p class="mb-4 text-justify">
-        On the side, I build things like multi-agent AI trading bots, AI-powered legal contract auditors,
-        and open-source developer tooling. I also self-host my own production infrastructure on this domain.
-      </p>
-      <h3 class="text-2xl font-bold mb-4 text-tokyo-night-purple">Skills</h3>
-      <ul class="list-disc list-inside mb-4">
-        <li>Languages:
-          <SkillPill v-for="language in languages" :key="language.name" :name="language.name" :level="language.level" />
-        </li>
-        <li>Backend:
-          <SkillPill v-for="framework in backends" :key="framework.name" :name="framework.name" :level="framework.level" />
-        </li>
-        <li>Frontend:
-          <SkillPill v-for="framework in frontends" :key="framework.name" :name="framework.name" :level="framework.level" />
-        </li>
-        <li>Databases:
-          <SkillPill v-for="database in databases" :key="database.name" :name="database.name" :level="database.level" />
-        </li>
-        <li>Message Brokers:
-          <SkillPill v-for="broker in brokers" :key="broker.name" :name="broker.name" :level="broker.level" />
-        </li>
-        <li>AI / Integrations:
-          <SkillPill v-for="tool in ai" :key="tool.name" :name="tool.name" :level="tool.level" />
-        </li>
-        <li>Infrastructure:
-          <SkillPill v-for="tool in infra" :key="tool.name" :name="tool.name" :level="tool.level" />
-        </li>
-        <li>Payments & Invoicing:
-          <SkillPill v-for="tool in payments" :key="tool.name" :name="tool.name" :level="tool.level" />
-        </li>
-      </ul>
-      <p>
-        Always looking for interesting problems to solve. If you need someone who can own a system end-to-end —
-        from database design to deployment pipeline — let's talk.
-      </p>
-    </BaseCard>
+  <div class="space-y-12">
+    <!-- Loading State -->
+    <div v-if="loading" class="flex justify-center items-center min-h-[400px]" role="status" aria-live="polite">
+      <span class="text-tokyo-night-muted font-mono">Loading profile...</span>
+    </div>
 
-    <!-- API Information Section -->
-    <section class="mt-12">
-      <BaseSectionHeading title="API Info" :level="3" />
-      <BaseCard>
-        <AsyncState :loading="apiLoading" :error="apiError" empty-text="No API information available">
-        <template #error="{ error }">
-          <span class="text-red-400">{{ error }}</span>
-        </template>
-        <div v-if="apiInfo" class="space-y-4">
+    <!-- Error State -->
+    <div v-else-if="error" class="text-center py-12" role="alert">
+      <p class="text-red-400 font-mono mb-4">Failed to load profile data</p>
+      <BaseButton variant="ghost" @click="loadProfile" class="font-mono">
+        ❯ Retry
+      </BaseButton>
+    </div>
+
+    <!-- Content -->
+    <template v-else-if="profile">
+      <!-- About Me -->
+      <section>
+        <BaseSectionHeading title="About Me" />
+        <BaseCard :hoverable="false">
+          <div class="space-y-4 text-tokyo-night-text leading-relaxed">
+            <p v-html="summaryHtml" />
+          </div>
+        </BaseCard>
+      </section>
+
+      <!-- Career Timeline -->
+      <section>
+        <BaseSectionHeading title="Career Timeline" :level="3" />
+        <BaseCard :hoverable="false">
+          <Timeline :items="timelineItems" />
+        </BaseCard>
+      </section>
+
+      <!-- Skills -->
+      <section>
+        <BaseSectionHeading title="Technical Skills" :level="3" />
+        <SkillsGrid :categories="profile.skills" />
+      </section>
+
+      <!-- Key Differentiators -->
+      <section>
+        <BaseSectionHeading title="What I Bring" :level="3" />
+        <BaseCard :hoverable="false">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <MetaInfoPair label="API Name" :value="apiInfo.name" horizontal />
-            <MetaInfoPair label="Version" :value="`v${apiInfo.version}`" horizontal />
-            <MetaInfoPair
-              label="Environment"
-              :value="apiInfo.environment"
-              :color="apiInfo.environment === 'production' ? 'success' : 'warning'"
-              horizontal
-            />
-            <MetaInfoPair
-              label="Status"
-              :value="apiInfo.status"
-              :color="apiInfo.status === 'operational' ? 'success' : 'error'"
-              horizontal
-            />
+            <div
+              v-for="(diff, index) in differentiatorItems"
+              :key="index"
+              class="flex gap-3 p-3 rounded-lg bg-tokyo-night-dark/50 border border-tokyo-night-gray/20"
+            >
+              <span class="text-tokyo-night-cyan mt-0.5 shrink-0">
+                <component :is="diff.icon" class="w-5 h-5" />
+              </span>
+              <div>
+                <h4 class="text-sm font-bold text-tokyo-night-text mb-1">{{ diff.title }}</h4>
+                <p class="text-xs text-tokyo-night-muted leading-relaxed">{{ diff.description }}</p>
+              </div>
+            </div>
           </div>
+        </BaseCard>
+      </section>
 
-          <div class="flex flex-wrap gap-4 mt-6">
-            <BaseButton
-              v-if="apiInfo.documentation"
-              variant="ghost"
-              :href="apiInfo.documentation"
-              external
-            >
-              <LucideBook class="w-4 h-4 mr-2" />
-              Documentation
-            </BaseButton>
-            <BaseButton
-              variant="ghost"
-              :href="apiInfo.health"
-              external
-            >
-              <LucideActivity class="w-4 h-4 mr-2" />
-              Health Check
-            </BaseButton>
-          </div>
+      <!-- Social Links -->
+      <section>
+        <BaseSectionHeading title="Connect" :level="3" />
+        <div class="flex flex-wrap gap-4">
+          <BaseButton variant="ghost" :href="profile.github" external>
+            <LucideGithub class="w-5 h-5 mr-2" />
+            GitHub
+          </BaseButton>
+          <BaseButton variant="ghost" :href="profile.linkedin" external>
+            <LucideLinkedin class="w-5 h-5 mr-2" />
+            LinkedIn
+          </BaseButton>
+          <BaseButton variant="ghost" :href="profile.website" external>
+            <LucideGlobe class="w-5 h-5 mr-2" />
+            Website
+          </BaseButton>
         </div>
-        </AsyncState>
-      </BaseCard>
-    </section>
+      </section>
+
+      <!-- API Info -->
+      <section>
+        <BaseSectionHeading title="API Info" :level="3" />
+        <BaseCard :hoverable="false">
+          <AsyncState :loading="apiLoading" :error="apiError" empty-text="No API information available">
+            <template #error="{ error }">
+              <span class="text-red-400">{{ error }}</span>
+            </template>
+            <div v-if="apiInfo" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <MetaInfoPair label="API Name" :value="apiInfo.name" horizontal />
+                <MetaInfoPair label="Version" :value="`v${apiInfo.version}`" horizontal />
+                <MetaInfoPair
+                  label="Environment"
+                  :value="apiInfo.environment"
+                  :color="apiInfo.environment === 'production' ? 'success' : 'warning'"
+                  horizontal
+                />
+                <MetaInfoPair
+                  label="Status"
+                  :value="apiInfo.status"
+                  :color="apiInfo.status === 'operational' ? 'success' : 'error'"
+                  horizontal
+                />
+              </div>
+              <div class="flex flex-wrap gap-4 mt-6">
+                <BaseButton
+                  v-if="apiInfo.documentation"
+                  variant="ghost"
+                  :href="apiInfo.documentation"
+                  external
+                >
+                  <LucideBook class="w-4 h-4 mr-2" />
+                  Documentation
+                </BaseButton>
+                <BaseButton variant="ghost" :href="apiInfo.health" external>
+                  <LucideActivity class="w-4 h-4 mr-2" />
+                  Health Check
+                </BaseButton>
+              </div>
+            </div>
+          </AsyncState>
+        </BaseCard>
+      </section>
+    </template>
   </div>
 </template>
 
-
-
 <script lang="ts" setup>
-import { ref } from 'vue';
-import SkillPill from '@/components/about/SkillPill.vue';
+import { ref, computed } from 'vue';
+import Timeline from '@/components/about/Timeline.vue';
+import SkillsGrid from '@/components/about/SkillsGrid.vue';
 import MetaInfoPair from '~/components/ui/MetaInfoPair.vue';
 import AsyncState from '~/components/base/AsyncState.vue';
+import type { Profile } from '~/types/profile';
 
 usePageTitle('About', {
-  description: 'Carlos Cativo — Full-Stack Software Engineer specializing in backend development, AI-powered systems, and payment integrations. Based in El Salvador.',
+  description: 'Carlos Cativo - Tech Lead & Full-Stack Software Engineer. 9 years building healthcare platforms, payment systems, and AI-powered products.',
 });
 
 interface ApiInfo {
@@ -125,9 +151,28 @@ interface ApiInfo {
   timestamp: string;
 }
 
+const profile = ref<Profile | null>(null);
+const loading = ref(true);
+const error = ref<string | null>(null);
+
 const apiInfo = ref<ApiInfo | null>(null);
 const apiLoading = ref(true);
 const apiError = ref<string | null>(null);
+
+async function loadProfile() {
+  loading.value = true;
+  error.value = null;
+  try {
+    const response = await $fetch<{ data: Profile }>('/api/profile');
+    profile.value = response.data;
+  } catch {
+    error.value = 'Failed to connect to API. Using local data.';
+    // Fallback: set to null so the template shows error state
+    // In production you might want a full local fallback
+  } finally {
+    loading.value = false;
+  }
+}
 
 async function loadApiInfo() {
   apiLoading.value = true;
@@ -146,62 +191,56 @@ async function loadApiInfo() {
   }
 }
 
+await useAsyncData('profile-data', () => loadProfile());
 await useAsyncData('api-info', () => loadApiInfo());
 
-const languages = ref([
-  { name: 'TypeScript', level: 'advanced' },
-  { name: 'PHP', level: 'advanced' },
-  { name: 'JavaScript', level: 'advanced' },
-  { name: 'Python', level: 'intermediate' },
-  { name: 'Bash', level: 'intermediate' },
-  { name: 'SQL', level: 'advanced' },
-]);
+// Map differentiator strings to objects with icons
+const differentiatorIcons = [
+  'LucideBrain',
+  'LucideCreditCard',
+  'LucideHeartPulse',
+  'LucideRocket',
+  'LucideServer',
+  'LucideShield',
+];
 
-const backends = ref([
-  { name: 'NestJS', level: 'advanced' },
-  { name: 'Laravel', level: 'advanced' },
-  { name: 'FastAPI', level: 'intermediate' },
-]);
+const differentiatorItems = computed(() => {
+  if (!profile.value) return [];
+  return profile.value.differentiators.map((diff, i) => {
+    const parts = diff.split(' — ');
+    return {
+      title: parts[0] || diff,
+      description: parts.slice(1).join(' — ') || diff,
+      icon: differentiatorIcons[i] || 'LucideStar',
+    };
+  });
+});
 
-const frontends = ref([
-  { name: 'Nuxt / Vue 3', level: 'advanced' },
-  { name: 'Angular', level: 'intermediate' },
-  { name: 'TailwindCSS', level: 'advanced' },
-]);
+// Map experience to timeline items
+const timelineItems = computed(() => {
+  if (!profile.value) return [];
+  return profile.value.experience.map((exp) => ({
+    title: exp.role,
+    company: exp.company,
+    period: exp.period,
+    location: exp.location,
+  }));
+});
 
-const databases = ref([
-  { name: 'PostgreSQL', level: 'advanced' },
-  { name: 'MySQL', level: 'advanced' },
-  { name: 'Redis', level: 'intermediate' },
-  { name: 'Meilisearch', level: 'intermediate' },
-]);
-
-const brokers = ref([
-  { name: 'Apache Kafka', level: 'advanced' },
-  { name: 'RabbitMQ', level: 'intermediate' },
-]);
-
-const ai = ref([
-  { name: 'Anthropic Claude API', level: 'advanced' },
-  { name: 'OpenAI API', level: 'intermediate' },
-  { name: 'ElevenLabs ConvAI', level: 'advanced' },
-  { name: 'n8n', level: 'intermediate' },
-]);
-
-const infra = ref([
-  { name: 'Docker', level: 'advanced' },
-  { name: 'AWS (S3, ECR, EC2)', level: 'intermediate' },
-  { name: 'Traefik', level: 'intermediate' },
-  { name: 'GitHub Actions', level: 'advanced' },
-  { name: 'Bitbucket Pipelines', level: 'advanced' },
-]);
-
-const payments = ref([
-  { name: 'Visa ISO 8583', level: 'advanced' },
-  { name: 'SOAP/XML', level: 'advanced' },
-  { name: 'FEL (Electronic Invoicing)', level: 'advanced' },
-  { name: 'Stripe', level: 'intermediate' },
-]);
+// Parse summary into paragraphs for HTML rendering
+const summaryHtml = computed(() => {
+  if (!profile.value) return '';
+  // Split summary on double newlines or periods with capital letters for paragraph breaks
+  const paragraphs = profile.value.summary.split(/(?<=[.!?])\s+(?=[A-Z])/);
+  return paragraphs
+    .map((p) => {
+      // Highlight key terms
+      let formatted = p
+        .replace(/(9 years of experience)/g, '<span class="text-tokyo-night-cyan font-semibold">$1</span>')
+        .replace(/(Blue Medical)/g, '<span class="text-tokyo-night-purple font-semibold">$1</span>')
+        .replace(/(NestJS|Laravel|Python|AI integration)/g, '<span class="text-tokyo-night-blue font-medium">$1</span>');
+      return `<p>${formatted}</p>`;
+    })
+    .join('');
+});
 </script>
-
-<style></style>
