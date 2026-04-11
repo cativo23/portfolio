@@ -36,12 +36,6 @@ describe('useAdminAuth', () => {
 
       expect(result).toBe(true)
       expect(isAuthenticated.value).toBe(true)
-      // admin_token is set by server route (httpOnly), not by composable
-      expect(JSON.parse(cookieStore.admin_user)).toEqual({
-        id: 1,
-        email: 'admin@test.com',
-        username: 'admin',
-      })
     })
 
     it('returns false on invalid credentials', async () => {
@@ -83,40 +77,7 @@ describe('useAdminAuth', () => {
       logout()
 
       expect(isAuthenticated.value).toBe(false)
-      expect(cookieStore.admin_user).toBeNull()
       expect(navigateTo).toHaveBeenCalledWith('/admin/login')
-    })
-  })
-
-  describe('user persistence', () => {
-    it('loads user from admin_user cookie on mount', () => {
-      cookieStore.admin_user = JSON.stringify({
-        id: 1,
-        email: 'admin@test.com',
-        username: 'admin',
-      })
-
-      const auth = useAdminAuth()
-      const userCookie = useCookie('admin_user').value
-      if (userCookie) {
-        try { auth.user.value = JSON.parse(userCookie) } catch { /* ignore */ }
-      }
-
-      expect(auth.user.value?.email).toBe('admin@test.com')
-      expect(auth.user.value?.id).toBe(1)
-      expect(auth.isAuthenticated.value).toBe(true)
-    })
-
-    it('handles corrupted user cookie gracefully', () => {
-      cookieStore.admin_user = '{invalid json'
-
-      const auth = useAdminAuth()
-      const userCookie = useCookie('admin_user').value
-      if (userCookie) {
-        try { auth.user.value = JSON.parse(userCookie) } catch { auth.user.value = null }
-      }
-
-      expect(auth.user.value).toBeNull()
     })
   })
 })

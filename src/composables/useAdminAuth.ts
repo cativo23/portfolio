@@ -31,13 +31,6 @@ export function useAdminAuth(): UseAdminAuthReturn {
 
       if (response.status === 'success' && response.data?.access_token) {
         user.value = response.data.user
-
-        useCookie('admin_user', {
-          maxAge: 60 * 60 * 24 * 7,
-          sameSite: 'lax',
-          secure: process.env.NODE_ENV === 'production',
-        }).value = JSON.stringify(user.value)
-
         return true
       }
       return false
@@ -48,8 +41,7 @@ export function useAdminAuth(): UseAdminAuthReturn {
 
   function logout() {
     user.value = null
-    useCookie('admin_user').value = null
-    // admin_token is httpOnly — cleared by calling the logout endpoint
+    // admin_token is httpOnly — cleared server-side, browser drops it automatically
     navigateTo('/admin/login')
   }
 

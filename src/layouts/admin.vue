@@ -172,14 +172,11 @@ const userInitial = computed(() => {
   return authUser.value.email?.[0]?.toUpperCase() || 'A'
 })
 
-onMounted(() => {
-  const userCookie = useCookie('admin_user').value
-  if (userCookie) {
-    try {
-      const parsed = JSON.parse(userCookie)
-      const { user } = useAdminAuth()
-      ;(user as any).value = parsed
-    } catch { /* ignore */ }
-  }
+onMounted(async () => {
+  try {
+    const data = await $fetch('/api/admin/me')
+    const { user } = useAdminAuth()
+    ;(user as any).value = data
+  } catch { /* already handled by interceptor */ }
 })
 </script>

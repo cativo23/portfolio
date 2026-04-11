@@ -31,17 +31,16 @@ export default defineEventHandler(async (event) => {
   await fs.mkdir(blogDir, { recursive: true })
   await fs.mkdir(draftsDir, { recursive: true })
 
-  // Build frontmatter
-  const frontmatter = `---
-title: "${title}"
-created_at: ${new Date().toISOString()}
-author: "Carlos Cativo"
-description: "${description}"
-tags: [${tags.map(t => `"${t}"`).join(', ')}]
----
-`
-
-  const fileContent = frontmatter + content
+  // Check for slug collisions
+  const targetDir = status === 'draft' ? draftsDir : blogDir
+  const targetPath = path.join(targetDir, filename)
+  try {
+    await fs.stat(targetPath)
+    throw createError({ statusCode: 409, statusMessage: `A blog post with the title "${title}" already exists` })
+  } catch (err: any) {
+    if (err.statusCode === 409) throw err
+    // File doesn't exist — proceed
+  }
 
   // If editing an existing post, delete the old file
   if (existingPath) {
@@ -54,9 +53,19 @@ tags: [${tags.map(t => `"${t}"`).join(', ')}]
     } catch { /* file might not exist */ }
   }
 
-  // Write to appropriate directory
-  const targetDir = status === 'draft' ? draftsDir : blogDir
-  const targetPath = path.join(targetDir, filename)
+  // Build frontmatter — escape YAML special characters in user input
+  const escapeYamlString = (s: string) => s.replace(/\\/g, '\\\\').replace(/"/g, '\\"')
+
+  const frontmatter = `---
+title: "${escapeYamlString(title)}"
+created_at: ${new Date().toISOString()}
+author: "Carlos Cativo"
+description: "${escapeYamlString(description || '')}"
+tags: [${(tags || []).map(t => `"${escapeYamlString(t)}"`).join(', ')}]
+---
+`
+
+  const fileContent = frontmatter + content
 
   await fs.writeFile(targetPath, fileContent, 'utf-8')
 
