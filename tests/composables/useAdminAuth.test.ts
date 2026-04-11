@@ -96,26 +96,27 @@ describe('useAdminAuth', () => {
         username: 'admin',
       })
 
-      const { user } = useAdminAuth()
+      const auth = useAdminAuth()
       const userCookie = useCookie('admin_user').value
       if (userCookie) {
-        try { user.value = JSON.parse(userCookie) } catch { /* ignore */ }
+        try { auth.user.value = JSON.parse(userCookie) } catch { /* ignore */ }
       }
 
-      expect(user.value?.email).toBe('admin@test.com')
-      expect(user.value?.id).toBe(1)
+      expect(auth.user.value?.email).toBe('admin@test.com')
+      expect(auth.user.value?.id).toBe(1)
+      expect(auth.isAuthenticated.value).toBe(true)
     })
 
     it('handles corrupted user cookie gracefully', () => {
       cookieStore.admin_user = '{invalid json'
 
-      const { user } = useAdminAuth()
+      const auth = useAdminAuth()
       const userCookie = useCookie('admin_user').value
       if (userCookie) {
-        try { user.value = JSON.parse(userCookie) } catch { user.value = null }
+        try { auth.user.value = JSON.parse(userCookie) } catch { auth.user.value = null }
       }
 
-      expect(user.value).toBeNull()
+      expect(auth.user.value).toBeNull()
     })
   })
 })

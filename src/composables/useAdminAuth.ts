@@ -1,5 +1,5 @@
-import { ref } from 'vue'
-import type { ComputedRef } from 'vue'
+import { ref, computed } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 
 interface AdminUser {
   id: number
@@ -14,7 +14,7 @@ interface LoginResponse {
 
 interface UseAdminAuthReturn {
   isAuthenticated: ComputedRef<boolean>
-  user: ComputedRef<AdminUser | null>
+  user: Ref<AdminUser | null>
   login: (email: string, password: string) => Promise<boolean>
   logout: () => void
 }
@@ -22,9 +22,6 @@ interface UseAdminAuthReturn {
 const user = ref<AdminUser | null>(null)
 
 export function useAdminAuth(): UseAdminAuthReturn {
-  const isAuthenticated = computed(() => !!user.value)
-  const userComputed = computed(() => user.value)
-
   async function login(email: string, password: string): Promise<boolean> {
     try {
       const response = await $fetch<{ status: string; data: LoginResponse }>('/api/admin/login', {
@@ -57,8 +54,8 @@ export function useAdminAuth(): UseAdminAuthReturn {
   }
 
   return {
-    isAuthenticated,
-    user: userComputed,
+    isAuthenticated: computed(() => !!user.value),
+    user,
     login,
     logout,
   }
