@@ -11,6 +11,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.6.0] - 2026-04-11
+
+### Added
+- **Admin Panel** — Full admin area with cookie-based authentication, project CRUD, blog management, contact inbox, and user management
+- **Blog Editor** — Toast UI Editor integration for rich Markdown blog post creation with draft/publish workflow
+- **About Page Redesign** — Timeline view, experience cards, and skills grid with real professional data
+- **Profile API** — `/api/profile` endpoint with local data fallback when external API is unreachable
+- **Contact Form** — Improved validation using `useContactForm` composable with per-field error display
+- **Admin Dashboard** — Projects, blog posts, users, and contacts management with sidebar navigation
+- **Auth System** — Cookie-based authentication with httpOnly tokens, global 401 interceptor, and `/api/admin/me` endpoint
+- **Admin UX** — Per-field validation errors, dynamic SSR-safe component loading, and nav highlighting
+
+### Fixed
+- Draft blog posts no longer leak in public listing
+- Toast UI Editor SSR crash resolved with dynamic loading
+- Nav highlighting now correctly reflects active routes
+- Routing conflicts between admin and public pages
+- TUI Editor SSR crash fixed with dynamic component loading
+- Removed test blog post from production content
+
+### Security
+- Cookie-based authentication with httpOnly tokens
+- Global 401 interceptor for admin API routes
+- Token validation against external API with redirect on failure
+- Per-field validation error display to prevent information leakage
+
+---
+
 ## [1.5.0] - 2026-03-26
 
 ### Fixed
