@@ -58,16 +58,17 @@ export default defineEventHandler(async (event) => {
     } catch { /* file might not exist */ }
   }
 
-  // Fix #3: Use the `yaml` npm package for proper frontmatter serialization
-  // This handles all YAML special characters (#, &, *, [, ], {, }, @, etc.) correctly
-  const yaml = await import('yaml').then(m => m.default || m)
-  const frontmatter = `---\n${yaml.stringify({
-    title,
-    created_at: new Date().toISOString(),
-    author: 'Carlos Cativo',
-    description: description || '',
-    tags: tags || [],
-  }).replace(/^---\s*/m, '')}---\n`
+  // Build frontmatter — escape YAML special characters in user input
+  const escapeYamlString = (s: string) => s.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/:/g, '\\:').replace(/\|/g, '\\|').replace(/>/g, '\\>')
+
+  const frontmatter = `---
+title: "${escapeYamlString(title)}"
+created_at: ${new Date().toISOString()}
+author: "Carlos Cativo"
+description: "${escapeYamlString(description || '')}"
+tags: [${(tags || []).map(t => `"${escapeYamlString(t)}"`).join(', ')}]
+---
+`
 
   const fileContent = frontmatter + content
 

@@ -3,9 +3,9 @@ export default defineNuxtPlugin((nuxtApp) => {
     onResponseError({ response, request }) {
       const urlString = typeof request === 'string' ? request : request?.toString?.() ?? ''
       if (response?.status === 401 && urlString.includes('/api/admin/')) {
-        // Fix #2 (Critical): Cannot delete httpOnly cookie from JS — call server endpoint instead
+        const tokenCookie = useCookie('admin_token')
+        tokenCookie.value = null
         if (typeof window !== 'undefined') {
-          $fetch('/api/admin/logout', { method: 'POST' }).catch(() => {})
           navigateTo('/admin/login', { replace: true })
         }
       }
