@@ -11,6 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.6.1] - 2026-04-14
+
+### Security
+- httpOnly cookie logout: server-side endpoint clears cookie instead of attempting client-side deletion
+- Fire-and-forget logout pattern prevents blocking redirect on slow responses
+- YAML injection prevention: `yaml` package replaces manual frontmatter escaping
+- Body size limits (64KB) and proper 400/413 error responses on MDC parse endpoint
+- Auth guard consistency: removed redundant checks in users endpoint, aligned with middleware
+
+### Fixed
+- User rehydration after page refresh via `/api/admin/me` initialization check
+- Health page double API call: replaced manual SSR/client branching with `useAsyncData`
+- Dead imports and type mismatches in health.vue and useAdminAuth
+
+---
+
 ## [1.6.0] - 2026-04-11
 
 ### Added
