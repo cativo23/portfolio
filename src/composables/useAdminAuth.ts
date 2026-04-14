@@ -16,6 +16,24 @@ interface UseAdminAuthReturn {
 
 const user = ref<AdminUser | null>(null)
 
+// Fix #1: Rehydrate user from cookie on init — after page refresh the module-scoped ref is lost
+let initialized = false
+async function ensureInitialized() {
+  if (initialized || typeof window === 'undefined') return
+  initialized = true
+  try {
+    const me = await $fetch<AdminUser>('/api/admin/me')
+    if (me) user.value = me
+  } catch {
+    // No valid session — leave user as null
+  }
+}
+
+// Run init check once on client side
+if (typeof window !== 'undefined') {
+  ensureInitialized()
+}
+
 export function useAdminAuth(): UseAdminAuthReturn {
   async function login(email: string, password: string): Promise<boolean> {
     try {
@@ -36,7 +54,9 @@ export function useAdminAuth(): UseAdminAuthReturn {
 
   function logout() {
     user.value = null
-    // admin_token is httpOnly — cleared server-side, browser drops it automatically
+    // Fix #2: Fire-and-forget server logout to clear httpOnly cookie
+    // Mirrors the interceptor pattern — don't block redirect on slow responses
+    $fetch('/api/admin/logout', { method: 'POST' }).catch(() => {})
     navigateTo('/admin/login')
   }
 
