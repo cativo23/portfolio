@@ -67,7 +67,7 @@ describe('useAdminAuth', () => {
       await login('admin@test.com', 'secret')
       expect(isAuthenticated.value).toBe(true)
 
-      logout()
+      await logout()
 
       expect(isAuthenticated.value).toBe(false)
       expect(navigateTo).toHaveBeenCalledWith('/admin/login')
