@@ -25,7 +25,8 @@ const slots = useSlots()
     :to="to"
     :prefetch="prefetch"
     :class="[
-      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block',      hoverable && 'hover:border-tokyo-night-blue',
+      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block h-full flex flex-col',
+      hoverable && 'hover:border-tokyo-night-blue',
     ]"
   >
     <div v-if="slots.badge" class="absolute top-3 right-3 z-10">
@@ -48,7 +49,7 @@ const slots = useSlots()
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
     :class="[
-      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block',
+      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block h-full flex flex-col',
       hoverable && 'hover:border-tokyo-night-blue',
     ]"
   >
@@ -69,7 +70,7 @@ const slots = useSlots()
   <div
     v-else
     :class="[
-      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200',
+      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 h-full flex flex-col',
       hoverable && 'hover:border-tokyo-night-blue',
     ]"
   >

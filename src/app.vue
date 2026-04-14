@@ -1,26 +1,20 @@
 <template>
-  <div class="flex flex-col min-h-screen bg-tokyo-night-bg text-tokyo-night-text font-mono">
-    <NuxtLoadingIndicator :height="1" :throttle="100" color="#f471B5" />
-    <NuxtRouteAnnouncer>
-      <template #default="{ message }">
-        <p>{{ message }} was loaded.</p>
-      </template>
-    </NuxtRouteAnnouncer>
-    <!-- Header -->
-    <Header />
-    <!-- Main Content -->
-    <main class="container mx-auto p-4 flex-grow">
-      <NuxtPage />
-    </main>
-    <!-- Footer -->
-    <Footer />
+  <NuxtLoadingIndicator :height="1" :throttle="100" color="#f471B5" />
+  <NuxtRouteAnnouncer>
+    <template #default="{ message }">
+      <p>{{ message }} was loaded.</p>
+    </template>
+  </NuxtRouteAnnouncer>
+  <div :class="route.path.startsWith('/admin') ? '' : 'page-transition-wrapper'">
+    <NuxtLayout>
+      <NuxtPage :transition="route.path.startsWith('/admin') ? false : { name: 'page', mode: 'out-in' }" />
+    </NuxtLayout>
   </div>
   <BaseToast />
 </template>
 
 <script setup>
-import Header from '@/components/main/Header.vue';
-import Footer from '@/components/main/Footer.vue';
+const route = useRoute()
 
 useHead({
   htmlAttrs: {
@@ -61,19 +55,20 @@ useHead({
 });
 </script>
 
+<style src="assets/css/main.css"></style>
 <style>
-.page-enter-active,
-.page-leave-active {
+.page-transition-wrapper .page-enter-active,
+.page-transition-wrapper .page-leave-active {
   position: fixed;
   left: 0;
   transition: all .2s linear;
 }
 
-.page-enter-from {
+.page-transition-wrapper .page-enter-from {
   transform: translateX(100%);
 }
 
-.page-leave-to {
-  transform: translate(-100%);
+.page-transition-wrapper .page-leave-to {
+  transform: translateX(-100%);
 }
 </style>

@@ -72,9 +72,13 @@
 
         <!-- Refresh Button -->
         <div class="flex justify-center mt-4">
-          <BaseButton variant="ghost" @click="loadHealth" :disabled="loading" class="font-mono">
-            <LucideRefreshCw class="w-4 h-4 mr-2" :class="{ 'animate-spin': loading }" />
-            ❯ Refresh
+          <BaseButton variant="ghost" @click="loadHealth(true)" :disabled="refreshing || loading" class="font-mono">
+            <span class="flex items-center gap-2">
+              <span :class="{ 'animate-spin': refreshing }">
+                <LucideRefreshCw class="w-4 h-4" />
+              </span>
+              Refresh
+            </span>
           </BaseButton>
         </div>
         </div>
@@ -84,7 +88,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import StatusIndicator from '~/components/ui/StatusIndicator.vue'
 import MetaInfoPair from '~/components/ui/MetaInfoPair.vue'
 import AsyncState from '~/components/base/AsyncState.vue'
@@ -126,6 +130,7 @@ const healthTabs = [
 const selectedTab = ref<'basic' | 'detailed'>('basic')
 const health = ref<HealthInfo | null>(null)
 const loading = ref(true)
+const refreshing = ref(false)
 const error = ref<string | null>(null)
 const requestId = ref<string | null>(null)
 
@@ -150,32 +155,28 @@ function formatServiceName(name: string): string {
   return name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
 }
 
-async function loadHealth() {
-  loading.value = true
-  error.value = null
-  requestId.value = null
-  try {
-    const endpoint = selectedTab.value === 'basic'
-      ? '/api/health'
-      : `/api/health/${selectedTab.value}`
-
+// Fix #4: useAsyncData replaces manual SSR/client branching for automatic deduplication
+const { data: healthData, pending, error: fetchError, refresh } = await useAsyncData(
+  'health',
+  async () => {
+    const endpoint = selectedTab.value === 'basic' ? '/api/health' : `/api/health/${selectedTab.value}`
     const response = await $fetch<{ status: string; data: HealthInfo; request_id?: string }>(endpoint)
-    if (response.status === 'success') {
-      health.value = response.data
-      requestId.value = response.request_id || null
-    } else {
-      error.value = 'Failed to load health status'
-    }
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : 'Unable to connect to health endpoint'
-  } finally {
-    loading.value = false
-  }
-}
+    if (response.status !== 'success') throw new Error('Failed to load health status')
+    requestId.value = response.request_id || null
+    return response.data
+  },
+  { watch: [selectedTab] }
+)
 
-// Use callOnce for SSR — loadHealth manages its own state via refs
-if (import.meta.server) {
-  await loadHealth()
+// Sync to refs for template compatibility
+watch(healthData, (v) => { health.value = v ?? null }, { immediate: true })
+watch(pending, (v) => { loading.value = v }, { immediate: true })
+watch(fetchError, (v) => { error.value = v?.message ?? null }, { immediate: true })
+
+async function loadHealth(isRefresh = false) {
+  if (isRefresh) refreshing.value = true
+  await refresh()
+  refreshing.value = false
 }
 </script>
 

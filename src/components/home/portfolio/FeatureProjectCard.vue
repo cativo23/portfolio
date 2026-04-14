@@ -1,5 +1,5 @@
 <template>
-  <BaseCard :to="`/projects/${project.id}`" hoverable>
+  <BaseCard :to="`/projects/${project.id}`" hoverable class="h-full">
     <template v-if="project.isFeatured" #badge>
       <BaseBadge>Featured</BaseBadge>
     </template>
