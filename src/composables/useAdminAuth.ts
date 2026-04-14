@@ -11,7 +11,7 @@ interface UseAdminAuthReturn {
   isAuthenticated: ComputedRef<boolean>
   user: Ref<AdminUser | null>
   login: (email: string, password: string) => Promise<boolean>
-  logout: () => Promise<void>
+  logout: () => void
 }
 
 const user = ref<AdminUser | null>(null)
@@ -52,14 +52,11 @@ export function useAdminAuth(): UseAdminAuthReturn {
     }
   }
 
-  async function logout() {
+  function logout() {
     user.value = null
-    // Fix #2: Call server logout to clear httpOnly cookie before redirecting
-    try {
-      await $fetch('/api/admin/logout', { method: 'POST' })
-    } catch {
-      // Continue redirect even if logout call fails
-    }
+    // Fix #2: Fire-and-forget server logout to clear httpOnly cookie
+    // Mirrors the interceptor pattern — don't block redirect on slow responses
+    $fetch('/api/admin/logout', { method: 'POST' }).catch(() => {})
     navigateTo('/admin/login')
   }
 
