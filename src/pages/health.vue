@@ -155,39 +155,27 @@ function formatServiceName(name: string): string {
   return name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
 }
 
-async function loadHealth(isRefresh = false) {
-  if (isRefresh) {
-    refreshing.value = true
-  } else {
-    loading.value = true
-  }
-  error.value = null
-  requestId.value = null
-  try {
-    const endpoint = selectedTab.value === 'basic'
-      ? '/api/health'
-      : `/api/health/${selectedTab.value}`
-
+// Fix #4: useAsyncData replaces manual SSR/client branching for automatic deduplication
+const { data: healthData, pending, error: fetchError, refresh } = await useAsyncData(
+  () => `health-${selectedTab.value}`,
+  async () => {
+    const endpoint = selectedTab.value === 'basic' ? '/api/health' : `/api/health/${selectedTab.value}`
     const response = await $fetch<{ status: string; data: HealthInfo; request_id?: string }>(endpoint)
-    if (response.status === 'success') {
-      health.value = response.data
-      requestId.value = response.request_id || null
-    } else {
-      error.value = 'Failed to load health status'
-    }
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : 'Unable to connect to health endpoint'
-  } finally {
-    loading.value = false
-    refreshing.value = false
-  }
-}
+    if (response.status !== 'success') throw new Error('Failed to load health status')
+    requestId.value = response.request_id || null
+    return response.data
+  },
+)
 
-// Load health check on mount (SSR + client)
-if (import.meta.server) {
-  await loadHealth()
-} else {
-  onMounted(() => loadHealth())
+// Sync to refs for template compatibility
+watch(healthData, (v) => { health.value = v ?? null }, { immediate: true })
+watch(pending, (v) => { loading.value = v }, { immediate: true })
+watch(fetchError, (v) => { error.value = v?.message ?? null }, { immediate: true })
+
+async function loadHealth(isRefresh = false) {
+  if (isRefresh) refreshing.value = true
+  await refresh()
+  refreshing.value = false
 }
 </script>
 
