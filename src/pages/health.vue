@@ -157,7 +157,7 @@ function formatServiceName(name: string): string {
 
 // Fix #4: useAsyncData replaces manual SSR/client branching for automatic deduplication
 const { data: healthData, pending, error: fetchError, refresh } = await useAsyncData(
-  () => `health-${selectedTab.value}`,
+  'health',
   async () => {
     const endpoint = selectedTab.value === 'basic' ? '/api/health' : `/api/health/${selectedTab.value}`
     const response = await $fetch<{ status: string; data: HealthInfo; request_id?: string }>(endpoint)
@@ -165,6 +165,7 @@ const { data: healthData, pending, error: fetchError, refresh } = await useAsync
     requestId.value = response.request_id || null
     return response.data
   },
+  { watch: [selectedTab] }
 )
 
 // Sync to refs for template compatibility
