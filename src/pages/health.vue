@@ -88,7 +88,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import StatusIndicator from '~/components/ui/StatusIndicator.vue'
 import MetaInfoPair from '~/components/ui/MetaInfoPair.vue'
 import AsyncState from '~/components/base/AsyncState.vue'

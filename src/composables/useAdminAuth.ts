@@ -11,7 +11,7 @@ interface UseAdminAuthReturn {
   isAuthenticated: ComputedRef<boolean>
   user: Ref<AdminUser | null>
   login: (email: string, password: string) => Promise<boolean>
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 const user = ref<AdminUser | null>(null)
