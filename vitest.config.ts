@@ -9,6 +9,10 @@ export default defineConfig({
     globals: true,
     root: '.',
     include: ['tests/**/*.test.ts'],
+    coverage: {
+      include: ['src/**/*.{ts,vue}'],
+      exclude: ['src/pages/**/*', 'src/layouts/**/*', 'src/middleware/**/*'],
+    },
   },
   resolve: {
     alias: {

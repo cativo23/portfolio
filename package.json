@@ -10,7 +10,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@dmncodes/vue-typing": "^1.0.5",
@@ -33,13 +34,15 @@
     "@nuxtjs/mdc": "^0.20.2",
     "@nuxtjs/sitemap": "^7.6.0",
     "@nuxtjs/tailwindcss": "^6.x",
+    "@playwright/test": "^1.59.1",
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^25.5.0",
+    "@vitest/coverage-v8": "4.1.4",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^18.0.1",
     "typescript": "5.8.3",
     "vite": "^6.x",
-    "vitest": "^3.2.1",
+    "vitest": "4.1.4",
     "vue-tsc": "^2.2.10",
     "wrangler": "^4.20.0"
   },

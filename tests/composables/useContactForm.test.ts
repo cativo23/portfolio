@@ -31,6 +31,10 @@ describe('useContactForm', () => {
     mockState.contactsResponse = undefined
   })
 
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
   describe('validateForm', () => {
     it('rejects empty form', () => {
       const { form, validateForm, error } = useContactForm()

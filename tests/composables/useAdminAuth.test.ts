@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { computed, ref } from 'vue'
 
 const cookieStore: Record<string, any> = {}
@@ -17,6 +17,10 @@ describe('useAdminAuth', () => {
   beforeEach(() => {
     Object.keys(cookieStore).forEach(k => delete cookieStore[k])
     vi.clearAllMocks()
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
   })
 
   describe('login', () => {
