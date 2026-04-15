@@ -105,17 +105,14 @@ describe('HealthBadge', () => {
         }
       }
     })
-    
-    // Call the internal fetchHealth function explicitly just to be sure it executes in our test environment
-    await wrapper.vm.fetchHealth?.()
-    
+
     // Wait for the onMounted fetchHealth to complete
     await flushPromises()
-    
+
     const indicator = wrapper.findComponent(StatusIndicatorMock)
     expect(indicator.props('status')).toBe('success')
     expect(indicator.props('text')).toBe('Operational')
-    
+
     expect(wrapper.text()).toContain('v1.2.3')
   })
 
@@ -135,7 +132,7 @@ describe('HealthBadge', () => {
       }
       return Promise.resolve(null)
     })
-    
+
     const wrapper = mount(HealthBadge, {
       global: {
         components: {
@@ -145,10 +142,10 @@ describe('HealthBadge', () => {
         }
       }
     })
-    
-    await wrapper.vm.fetchHealth?.()
+
+    // Wait for the onMounted fetchHealth to complete
     await flushPromises()
-    
+
     const indicator = wrapper.findComponent(StatusIndicatorMock)
     expect(indicator.props('status')).toBe('warning')
     expect(indicator.props('text')).toBe('Degraded')
@@ -156,7 +153,7 @@ describe('HealthBadge', () => {
 
   it('renders unavailable state when fetch fails', async () => {
     fetchMock.mockRejectedValue(new Error('Network error'))
-    
+
     const wrapper = mount(HealthBadge, {
       global: {
         components: {
@@ -166,8 +163,8 @@ describe('HealthBadge', () => {
         }
       }
     })
-    
-    await wrapper.vm.fetchHealth?.()
+
+    // Wait for the onMounted fetchHealth to complete
     await flushPromises()
     
     const indicator = wrapper.findComponent(StatusIndicatorMock)

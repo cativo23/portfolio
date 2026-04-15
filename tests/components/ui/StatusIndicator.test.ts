@@ -9,13 +9,13 @@ describe('StatusIndicator', () => {
         status: 'success'
       }
     })
-    
-    // Default size is md (w-2 h-2)
-    const indicator = wrapper.find('span.rounded-full')
+
+    // The root element has role="status"; the first child span is the indicator dot
+    const indicator = wrapper.find('[role="status"] > span:first-child')
     expect(indicator.classes()).toContain('w-2')
     expect(indicator.classes()).toContain('h-2')
     expect(indicator.classes()).toContain('bg-tokyo-night-green')
-    
+
     // No text rendered by default
     expect(wrapper.text()).toBe('')
   })
@@ -27,19 +27,19 @@ describe('StatusIndicator', () => {
       }
     })
     
-    let indicator = wrapper.find('span.rounded-full')
+    let indicator = wrapper.find('[role="status"] > span:first-child')
     expect(indicator.classes()).toContain('bg-tokyo-night-red')
     
     await wrapper.setProps({ status: 'warning' })
-    indicator = wrapper.find('span.rounded-full')
+    indicator = wrapper.find('[role="status"] > span:first-child')
     expect(indicator.classes()).toContain('bg-tokyo-night-yellow')
     
     await wrapper.setProps({ status: 'info' })
-    indicator = wrapper.find('span.rounded-full')
+    indicator = wrapper.find('[role="status"] > span:first-child')
     expect(indicator.classes()).toContain('bg-tokyo-night-cyan')
     
     await wrapper.setProps({ status: 'unknown' })
-    indicator = wrapper.find('span.rounded-full')
+    indicator = wrapper.find('[role="status"] > span:first-child')
     expect(indicator.classes()).toContain('bg-tokyo-night-muted')
   })
   
@@ -75,7 +75,7 @@ describe('StatusIndicator', () => {
       }
     })
     
-    const indicator = wrapper.find('span.rounded-full')
+    const indicator = wrapper.find('[role="status"] > span:first-child')
     expect(indicator.classes()).toContain('animate-pulse')
   })
 
@@ -87,12 +87,12 @@ describe('StatusIndicator', () => {
       }
     })
     
-    let indicator = wrapper.find('span.rounded-full')
+    let indicator = wrapper.find('[role="status"] > span:first-child')
     expect(indicator.classes()).toContain('w-1.5')
     expect(indicator.classes()).toContain('h-1.5')
     
     await wrapper.setProps({ size: 'lg' })
-    indicator = wrapper.find('span.rounded-full')
+    indicator = wrapper.find('[role="status"] > span:first-child')
     expect(indicator.classes()).toContain('w-3')
     expect(indicator.classes()).toContain('h-3')
   })

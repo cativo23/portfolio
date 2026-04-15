@@ -1,54 +1,92 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-const mockConfig = {
-  apiBaseUrl: 'https://api.example.com',
-  apiBasePath: '/v1'
+// ---------- Nuxt auto-import stubs ----------
+const runtimeConfig = {
+  apiBaseUrl: 'http://localhost:3001',
+  apiBasePath: '/api/v1',
 }
-vi.stubGlobal('useRuntimeConfig', () => mockConfig)
 
-const mockGetCookie = vi.fn()
-vi.stubGlobal('getCookie', mockGetCookie)
-vi.stubGlobal('getQuery', () => ({ search: 'test' }))
+vi.stubGlobal('useRuntimeConfig', () => runtimeConfig)
+vi.stubGlobal('getQuery', vi.fn(() => ({})))
+vi.stubGlobal('getCookie', vi.fn(() => undefined))
+vi.stubGlobal('createError', vi.fn((opts: any) => {
+  const err: any = new Error(opts.statusMessage ?? 'Error')
+  err.statusCode = opts.statusCode
+  return err
+}))
+vi.stubGlobal('defineEventHandler', vi.fn((handler: Function) => handler))
+vi.stubGlobal('$fetch', vi.fn(() => Promise.resolve({ data: [] })))
 
-const mockFetch = vi.fn()
-vi.stubGlobal('$fetch', mockFetch)
-vi.stubGlobal('defineEventHandler', (handler: any) => handler)
+// ---------- Import handler after stubs are set up ----------
+const { default: handler } = await import('~/server/api/admin/contacts.get')
 
-describe('Admin API - Contacts', () => {
-  let handler: any
-
-  beforeEach(async () => {
+describe('GET /api/admin/contacts', () => {
+  beforeEach(() => {
     vi.clearAllMocks()
-    const module = await import('~/server/api/admin/contacts.get')
-    handler = module.default
   })
 
-  it('fetches contacts with auth cookie', async () => {
-    mockGetCookie.mockReturnValue('valid-token')
-    mockFetch.mockResolvedValue({ data: [] })
+  it('should forward request with Bearer token when auth cookie is present', async () => {
+    const token = 'valid-jwt-token'
+    vi.mocked(getCookie).mockReturnValue(token)
+    vi.mocked(getQuery).mockReturnValue({ page: '1' })
+    vi.mocked($fetch).mockResolvedValue({ data: [{ id: 1, name: 'Test' }] })
 
-    const event = {} as any
+    const event = { path: '/api/admin/contacts', node: { req: { method: 'GET' } } } as any
     const result = await handler(event)
 
-    expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/v1/contacts', {
-      method: 'GET',
-      headers: { Authorization: 'Bearer valid-token' },
-      query: { search: 'test' }
-    })
-    expect(result).toEqual({ data: [] })
+    expect(getCookie).toHaveBeenCalledWith(event, 'admin_token')
+    expect($fetch).toHaveBeenCalledWith(
+      `${runtimeConfig.apiBaseUrl}${runtimeConfig.apiBasePath}/contacts`,
+      expect.objectContaining({
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+        query: { page: '1' },
+      }),
+    )
+    expect(result).toEqual({ data: [{ id: 1, name: 'Test' }] })
   })
 
-  it('fetches contacts with empty auth cookie if not present', async () => {
-    mockGetCookie.mockReturnValue(undefined)
-    mockFetch.mockResolvedValue({ data: [] })
+  // HIGH #1: Verify that when no cookie is present, the handler sends an
+  // empty Bearer token to the upstream API. Authentication enforcement is
+  // delegated to the admin-auth middleware (tested separately) which runs
+  // before this handler and rejects unauthenticated requests with 401.
+  // The handler itself does NOT perform auth — it just proxies.
+  it('should send empty Bearer token when cookie is absent (auth delegated to middleware)', async () => {
+    vi.mocked(getCookie).mockReturnValue(undefined)
+    vi.mocked($fetch).mockResolvedValue({ data: [] })
 
-    const event = {} as any
+    const event = { path: '/api/admin/contacts', node: { req: { method: 'GET' } } } as any
     await handler(event)
 
-    expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/v1/contacts', {
-      method: 'GET',
-      headers: { Authorization: 'Bearer ' },
-      query: { search: 'test' }
-    })
+    expect($fetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        headers: { Authorization: 'Bearer ' },
+      }),
+    )
+  })
+
+  it('should propagate upstream API errors', async () => {
+    vi.mocked(getCookie).mockReturnValue('token')
+    vi.mocked($fetch).mockRejectedValue(new Error('Upstream 500'))
+
+    const event = { path: '/api/admin/contacts', node: { req: { method: 'GET' } } } as any
+    await expect(handler(event)).rejects.toThrow('Upstream 500')
+  })
+
+  it('should forward query parameters to upstream API', async () => {
+    vi.mocked(getCookie).mockReturnValue('token')
+    vi.mocked(getQuery).mockReturnValue({ page: '2', limit: '10' })
+    vi.mocked($fetch).mockResolvedValue({ data: [] })
+
+    const event = { path: '/api/admin/contacts', node: { req: { method: 'GET' } } } as any
+    await handler(event)
+
+    expect($fetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        query: { page: '2', limit: '10' },
+      }),
+    )
   })
 })

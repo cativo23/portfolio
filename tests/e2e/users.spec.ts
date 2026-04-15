@@ -44,7 +44,8 @@ test.describe('User Management', () => {
 
   test('should open edit user modal', async ({ page }) => {
     await page.goto('/admin/users');
-    await page.waitForTimeout(2000); // Wait for users to load
+    // Wait for users table or empty state to appear before interacting
+    await page.locator('table, :text-matches("no users found", "i")').first().waitFor({ state: 'visible' });
 
     const editBtn = page.getByRole('button', { name: /edit/i }).first();
     if (await editBtn.isVisible()) {

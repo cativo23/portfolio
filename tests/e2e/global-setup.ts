@@ -17,9 +17,11 @@ async function globalSetup(config: FullConfig) {
   const body = await response.json();
 
   if (response.status() !== 200 || body.status !== 'success') {
-    // Fall back to UI login attempt, but for E2E tests we want the auth state
-    console.warn(`Login API failed with status ${response.status()}. Body:`, JSON.stringify(body));
-    console.warn('E2E tests will run without auth state. Set TEST_ADMIN_EMAIL/PASSWORD env vars.');
+    await browser.close();
+    throw new Error(
+      `Login API failed with status ${response.status()}. Body: ${JSON.stringify(body)}. ` +
+      'E2E authenticated tests require valid auth state. Set TEST_ADMIN_EMAIL/PASSWORD env vars.'
+    );
   } else {
     // Save cookies (includes the httpOnly admin_token) to auth file
     const authDir = path.dirname('tests/e2e/.auth/admin.json');
