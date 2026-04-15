@@ -11,6 +11,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.7.0] - 2026-04-14
+
+### Added
+- **Comprehensive Test Suite** — 221 unit tests across 34 test files covering all composables, base UI components, server API endpoints, and middleware
+- **E2E Tests** — Playwright test coverage for admin flows, blog, projects, and users
+- **Blog Content** — 18 blog posts rewritten in personal voice, covering self-hosting, Nova-ID dev log, and CLI tooling
+- **About Page Components** — SkillPill, SkillsGrid, Timeline, and ExperienceCard with full test coverage
+- **Server Middleware** — Admin auth middleware with httpOnly cookie validation
+- **E2E Test Infrastructure** — Playwright setup with global auth session
+
+### Changed
+- Blog posts rewritten to match raw, personal voice
+- tsconfig path fix for server-side tests
+- Docker dev container running on develop
+
+---
+
 ## [1.6.1] - 2026-04-14
 
 ### Security
