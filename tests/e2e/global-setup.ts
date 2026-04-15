@@ -1,5 +1,4 @@
 import { chromium, FullConfig } from '@playwright/test';
-import * as path from 'path';
 
 async function globalSetup(config: FullConfig) {
   const baseURL = config.projects[0].use?.baseURL || 'http://localhost:3000';
@@ -24,7 +23,6 @@ async function globalSetup(config: FullConfig) {
     );
   } else {
     // Save cookies (includes the httpOnly admin_token) to auth file
-    const authDir = path.dirname('tests/e2e/.auth/admin.json');
     await page.context().storageState({ path: 'tests/e2e/.auth/admin.json' });
     console.log('Auth state saved.');
   }
