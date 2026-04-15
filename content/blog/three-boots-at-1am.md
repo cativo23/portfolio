@@ -35,7 +35,7 @@ The fix was obvious: move root to the big disk. Shrink the ext4 filesystem on th
 
 ## The Plan
 
-I'd spent the entire day installing Arch from scratch — wiped Windows, configured everything from the bootloader up, fought with drivers, got Hyprland running, set up my whole environment. By 1am I was done, running `df -h` out of habit, and that's when I saw root sitting at 88% on the Optane. The system I'd just spent twelve hours building was already out of space. I was not going to reinstall. Not tonight. Not after all that. I knew how to do the migration manually — I'd done partition work before — but at 1am, tired, on my only machine, with no backup? My hands would be the most dangerous thing in the room. So the logic was simple: let the AI write the script, review it carefully, and if it fails, I'm reinstalling anyway — same outcome as if I fat-fingered `parted` at 1am by myself, except this way I might actually sleep tonight.
+I'd spent the entire day installing Arch from scratch — wiped Windows, configured everything from the bootloader up, fought with drivers, got Hyprland running, set up my whole environment. By 1am I was done, running `df -h` out of habit, and that's when I saw root sitting at 88% on the Optane. The system I'd just spent twelve hours building was already out of space. Fuck. I was not going to reinstall. Not tonight. Not after all that. I knew how to do the migration manually — I'd done partition work before — but at 1am, tired, on my only machine, with no backup? My hands would be the most dangerous thing in the room. So the logic was simple: let the AI write the script, review it carefully, and if it fails, I'm reinstalling anyway — same outcome as if I fat-fingered `parted` at 1am by myself, except this way I might actually sleep tonight.
 
 So I asked Claude Code to write a script that would repartition my only computer. No backup disk. No second machine. No Timeshift snapshot. But I didn't type "plz fix my disks" and wait for magic. That's not how any of this works. I gave it the full picture: the current partition layout, the target layout, the exact sizes in GiB, which disk was which, what filesystem each partition used, where the EFI partition lived, that this had to run from a live USB where nothing is mounted by default. I told it the script needed to be interactive — confirmations at every step — because I wasn't going to let 400 lines of bash run unattended on my only machine. I told it to use `set -euo pipefail` and to verify UUIDs at the end. The more specific you are with the prompt, the less the AI has to guess. And when you're repartitioning live, you want zero guessing.
 
@@ -45,7 +45,7 @@ It produced 400 lines of bash with 9 interactive steps. Colored output — cyan 
 
 ## The Reviews That Saved Everything
 
-Here's the thing about AI-generated code: the first draft is never the one you run. Not on production. Not on your only machine at 1am.
+Here's the thing about AI-generated code: the first draft is never the one you run. Not on production. Not on your only machine at 1am. If you run the first draft, you deserve what happens next.
 
 Before running anything, I told Claude to review its own script — not once, but using multiple subagents in parallel, each one focused on a different class of problem. One checked the resize arithmetic. Another looked at error handling with `set -e`. Another traced every device path to see if they were consistent. Another checked the GRUB and fstab logic. They came back with five bugs. Two of them would have destroyed my filesystem.
 
@@ -61,7 +61,7 @@ parted resizepart 1 432GiB        # partition END at 432 GiB from disk start
 # filesystem overflows partition by 1 MiB → silent corruption
 ```
 
-The filesystem would have been bigger than its container by one megabyte. The superblock wouldn't know. `fsck` wouldn't catch it. Writes near the end of the filesystem would land in unallocated space past the partition boundary. Not an error. Not a warning. Just data going to a place that doesn't belong to anyone, waiting to be overwritten by the next `mkfs`.
+The filesystem would have been bigger than its container by one megabyte. The superblock wouldn't know. `fsck` wouldn't catch it. Writes near the end of the filesystem would land in unallocated space past the partition boundary. Not an error. Not a warning. Just data going to a place that doesn't belong to anyone, waiting to be overwritten by the next `mkfs`. The kind of silent corruption that doesn't announce itself — it just waits until you need the data, and then it's gone.
 
 The fix was two gigabytes of headroom:
 
@@ -80,6 +80,8 @@ e2fsck -f /dev/nvme1n1p1  # returns 1 = "I fixed things"
 # you are now staring at a half-checked filesystem
 ```
 
+Brilliant. The filesystem checker successfully repairs something, reports its success, and bash murders the entire script in response. `set -e` doesn't know what success means — it only knows what zero means.
+
 The fix was a wrapper that treats exit codes 0 and 1 as success, because `e2fsck` has its own ideas about what success means.
 
 There were three more: a bare `grep` that would trigger `set -e` and kill the script if GRUB used a different config format (grep returns 1 on no match — sensing a pattern?), `rsync` without `--numeric-ids` which would scramble UID/GID mappings when run from a live USB where `cativo23` doesn't exist, and a hardcoded `root=UUID=...` in `/etc/default/grub` that would survive `grub-mkconfig` and point the bootloader at a partition that's no longer root.
@@ -94,7 +96,7 @@ AI code generation is not magic. It's a first draft that's really fast and mostl
 
 I booted the Arch USB, mounted /home, ran the script. It died immediately. Well — it didn't die. It tried to `resize2fs` the Optane, which would have been worse.
 
-The script had every device path hardcoded. `/dev/nvme0n1` was the Optane in my running system. But the kernel on the USB stick enumerated them in reverse. The Optane was now `nvme1n1`. The NAND was `nvme0n1`. The script was about to shrink a 27-gigabyte drive to 430 gigs.
+The script had every device path hardcoded. `/dev/nvme0n1` was the Optane in my running system. But the kernel on the USB stick enumerated them in reverse. The Optane was now `nvme1n1`. The NAND was `nvme0n1`. The script was about to shrink a 27-gigabyte drive to 430 gigs. That's not how physics works, but bash doesn't know that — it would have tried, and the error message would have been the least of my problems.
 
 Linux does not guarantee NVMe enumeration order between boots. The kernel walks the PCIe topology, finds controllers, and assigns `/dev/nvme*` in whatever order the bus scan completes. Reboot with a USB plugged in and the timing changes. It's not a bug. It's not documented as a feature either. It's just how `nvme_init_ctrl` works, and it will humble you at 1am.
 
@@ -120,7 +122,7 @@ Twenty-seven is always less than fifty. The Optane can't lie about being small.
 
 ## Second Attempt: The Chicken and the Egg
 
-The script lived on /home. /home lived on the NAND. The script needed to `umount` the NAND to run `resize2fs` on it — because you can't resize a mounted ext4 filesystem downward, only upward. But if /home is unmounted, bash can't read the script, because the script is on /home. Classic deadlock. The kind of thing that makes you question whether you thought about this at all.
+The script lived on /home. /home lived on the NAND. The script needed to `umount` the NAND to run `resize2fs` on it — because you can't resize a mounted ext4 filesystem downward, only upward. But if /home is unmounted, bash can't read the script, because the script is on /home. Classic deadlock. The kind of shit that makes you question whether you thought about this at all.
 
 I tried `umount -l` (lazy unmount) first, because it sounded clever. It detaches the mountpoint from the VFS but keeps the underlying block device busy until all file descriptors close. Which means `resize2fs` would still refuse to touch it. Lazy unmount: the systemd of unmounting. Sounds helpful, does nothing useful.
 
@@ -164,7 +166,7 @@ nvme1n1      27.3G
 └─nvme1n1p2  26.2G ext4
 ```
 
-Twenty-nine gigabytes free. `findmnt` confirmed root on `nvme0n1p2`. `cat /etc/fstab` showed all UUIDs matching. `efibootmgr -v` showed GRUB still loading from the Optane's EFI partition. Everything pointed where it should.
+Twenty-nine gigabytes free. Holy shit, it actually worked. `findmnt` confirmed root on `nvme0n1p2`. `cat /etc/fstab` showed all UUIDs matching. `efibootmgr -v` showed GRUB still loading from the Optane's EFI partition. Everything pointed where it should.
 
 The old root on the Optane still intact, untouched, a fallback I hope I never need. If the new root ever corrupts, I can boot the USB, mount `nvme1n1p2`, fix GRUB, and be back in business. It's 22 gigs of insurance. Cheap.
 
@@ -205,7 +207,7 @@ Two hundred megabytes of logs is more than enough to debug anything you'll actua
 
 The Optane sits empty now. Twenty-seven gigabytes of 3D XPoint doing nothing. Intel designed that chip for caching — it was supposed to sit between the CPU and the NAND, accelerating reads with its absurdly low latency. That low latency — roughly 10 microseconds for Optane versus 20-100 for NAND flash — makes it a decent swap device, since swap is all about random small reads under memory pressure. `mkswap /dev/nvme1n1p2` and a line in fstab. Someday. For now it just holds the old root, untouched, a snapshot of the system from before I rearranged its organs at 1am because `df -h` hurt my feelings.
 
-I spent more time protecting 44 gigabytes than most people spend on backups.
+I spent more time protecting 44 gigabytes than most people spend on backups. But that's what happens when it's your only machine and you're too stubborn to reinstall.
 
 ---
 

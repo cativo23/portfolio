@@ -15,11 +15,11 @@ A month after the last migration, I ran `df -h` and laughed. Not the good kind.
 /dev/nvme0n1p1  432G   89G  321G  22% /home
 ```
 
-Ninety-one percent. Four gigs free. The same feeling as last time — a large disk sitting mostly empty while root chokes on its own organs. Except this time I had 44 gigabytes, not 26. I'd moved Docker to /home. I'd enabled paccache.timer. I'd capped journald at 200 megs. I'd done everything right, and root was full anyway, because 44 gigabytes is not a root partition — it's a grace period.
+Ninety-one percent. Four gigs free. The same goddamn feeling as last time — a large disk sitting mostly empty while root chokes on its own organs. Except this time I had 44 gigabytes, not 26. I'd moved Docker to /home. I'd enabled paccache.timer. I'd capped journald at 200 megs. I'd done everything right, and root was full anyway, because 44 gigabytes is not a root partition — it's a grace period.
 
 Flatpaks. That's what killed it this time. Flatpak stores everything in `/var/lib/flatpak`, which lives on root, because of course it does. Each app pulls its own runtime — a frozen slice of GNOME or KDE or freedesktop.org, duplicated per application because isolation is more important than your disk space. Install five apps, get three copies of `org.gnome.Platform`. Each one weighs a gigabyte. Flatpak doesn't ask. It doesn't warn. It just fills your root like water filling a basement.
 
-I could have moved Flatpak to /home too. Symlink `/var/lib/flatpak` to `/home/flatpak`, the same trick I'd used for Docker. But I was running out of things to relocate. Docker on /home. Flatpak on /home. Pacman cache on /home. At some point you're not managing a partition — you're managing an elaborate system of redirects that exists solely because you drew the wrong line on a disk five months ago.
+I could have moved Flatpak to /home too. Symlink `/var/lib/flatpak` to `/home/flatpak`, the same trick I'd used for Docker. But I was running out of things to relocate. Docker on /home. Flatpak on /home. Pacman cache on /home. At some point you're not managing a partition — you're managing an elaborate system of redirects that exists solely because you drew the wrong line on a disk five months ago. That's not system administration. That's bullshit.
 
 The two-partition layout was the problem. Not Docker, not Flatpak, not systemd's logging habits. The problem was that I had 477 gigabytes and I'd split them into a place where things live and a place where things work, and the place where things work was always too small, and the place where things live was always too empty. Two partitions on a single-user laptop is a solution to a problem I don't have.
 
@@ -58,7 +58,7 @@ The catch: nvme0n1p1 was /home. nvme0n1p2 was root. I couldn't just delete p2 an
 
 So: back up root to nvme1n1p2 (the 26G spare partition that still had the old backup from last time — ironic), delete nvme0n1p2, grow nvme0n1p1 from 432G to 477G, copy root files from the backup into the now-merged partition. Update fstab. Reinstall GRUB. Pray.
 
-Same recipe as last time. Except this time, the data I cared about — /home — was on the partition I was *resizing*. Last time, /home was untouched. This time, one wrong flag to `parted` and my entire home directory would be reformatted into a blank ext4. The margin for error went from "you'll have to reinstall" to "you'll lose everything."
+Same recipe as last time. Except this time, the data I cared about — /home — was on the partition I was *resizing*. Last time, /home was untouched. This time, one wrong flag to `parted` and my entire home directory would be reformatted into a blank ext4. My projects, my dotfiles, my SSH keys — all of it. The margin for error went from "you'll have to reinstall" to "you'll lose everything."
 
 I was not doing this by hand.
 
@@ -70,7 +70,7 @@ Last time, Claude wrote one script and I ran it after one round of review. It wo
 
 I asked Claude Code for two scripts: `backup.sh` to run on the live system, and `automigrate.sh` to run from a live USB. Separation of concerns — the backup happens while everything is stable and mounted, the dangerous work happens when nothing is mounted and nothing can go wrong except everything.
 
-`backup.sh` was straightforward. Verify disk layout, check sizes, format the spare 26G partition, `rsync` everything on `/` to it, save metadata, write a sentinel file (`.backup-complete`) so the migration script can verify the backup finished. The sentinel matters because `rsync` can be interrupted — if you kill it mid-copy and the migration script trusts the partial backup, you'll restore a root filesystem missing half of `/usr/lib`. The sentinel is a timestamp written after rsync and verification both pass. No sentinel, no migration.
+`backup.sh` was straightforward. Verify disk layout, check sizes, format the spare 26G partition, `rsync` everything on `/` to it, save metadata, write a sentinel file (`.backup-complete`) so the migration script can verify the backup finished. The sentinel matters because `rsync` can be interrupted — if you kill it mid-copy and the migration script trusts the partial backup, you'll restore a root filesystem missing half of `/usr/lib`. Good luck booting that. The sentinel is a timestamp written after rsync and verification both pass. No sentinel, no migration.
 
 `automigrate.sh` was the scary one. 470 lines of bash that deletes a partition, resizes another one while your data is on it, copies a root filesystem, writes an fstab, installs GRUB from inside a chroot, and verifies every UUID in the chain from BIOS to kernel. The kind of script where a misplaced `mkfs` or a wrong device path means you're restoring from backups — assuming you have backups, assuming the backup script didn't also have bugs.
 
@@ -86,19 +86,19 @@ They found ten bugs across those rounds. Some were cosmetic. Some would have kil
 
 ## The Bugs That Would Have Killed It
 
-The first draft used `sgdisk` to delete partition 2, then used `sgdisk` again to recreate partition 1 at a larger size. Delete and recreate. The problem: between the delete and the recreate, the partition table has no entry for partition 1. If the power goes out — if the kernel panics, if someone trips over the power cord, if the battery dies because you forgot to plug in the laptop — the disk has zero partitions. Your /home data is still on the raw blocks, but the partition table doesn't know that. You'd need a partition recovery tool and a lot of patience.
+The first draft used `sgdisk` to delete partition 2, then used `sgdisk` again to recreate partition 1 at a larger size. Delete and recreate. The problem: between the delete and the recreate, the partition table has no entry for partition 1. If the power goes out — if the kernel panics, if someone trips over the power cord, if the battery dies because you forgot to plug in the laptop — the disk has zero partitions. Your /home data is still on the raw blocks, but the partition table doesn't know that. You'd need a partition recovery tool and a lot of patience. And probably a drink.
 
 The fix was `parted resizepart 1 100%` — a single atomic operation that grows the partition in place. No delete step. No window where the partition entry is missing. The data on p1 never moves, because ext4 block addresses are relative to the partition start, and the start doesn't change. Only the end moves. `parted` updates the GPT entry, the kernel rereads the table, and the partition is bigger. If the power fails during the operation, the old size is still valid — you just didn't grow it yet.
 
-The e2fsck bug came back. Different script, same lesson. `set -euo pipefail` and `e2fsck` still don't agree on what exit code 1 means. But this time the agents caught something deeper: what if `e2fsck` finds *serious* corruption? Exit codes 0-3 are fixable. Exit code 4 means uncorrected errors — the kind of corruption where letting `e2fsck -y` auto-repair might make things worse, rewriting directory structures based on guesses about what the filesystem was supposed to look like. On a clean system, `-y` is fine. On a filesystem with deep structural damage, `-y` is a coin flip that might delete your files while "fixing" them.
+The e2fsck bug came back. Same shit, different script. `set -euo pipefail` and `e2fsck` still don't agree on what exit code 1 means. But this time the agents caught something deeper: what if `e2fsck` finds *serious* corruption? Exit codes 0-3 are fixable. Exit code 4 means uncorrected errors — the kind of corruption where letting `e2fsck -y` auto-repair might make things worse, rewriting directory structures based on guesses about what the filesystem was supposed to look like. On a clean system, `-y` is fine. On a filesystem with deep structural damage, `-y` is a coin flip that might delete your files while "fixing" them.
 
 The fix was a two-pass approach: first `e2fsck -f -n` (read-only, don't touch anything), check the exit code. If it's 4 or higher, abort with a message that says "DO NOT auto-repair /home — run e2fsck manually." If it's 0-3, proceed with `e2fsck -f -y` for actual repair. The read-only pass costs thirty seconds and prevents the script from cheerfully destroying a corrupted filesystem on autopilot.
 
-Then round five found the thing that made me sit back in my chair.
+Then round five found the thing that made me sit back in my chair and say "oh, fuck."
 
 When nvme0n1p1 was mounted as `/home` in the original system, the filesystem root contained `cativo23/` directly — not `home/cativo23/`. That's how mount points work: you mount a partition at `/home`, and the top-level directories on that partition *become* what's under `/home`. The partition itself doesn't know it's called `/home`. It just has a directory called `cativo23/` at its root.
 
-After the migration, that partition *is* root. The filesystem root now contains `cativo23/` where it should contain `home/cativo23/`. Without relocation, the user's home directory would be at `/cativo23` instead of `/home/cativo23`. Every dotfile, every path in every config, every `$HOME` reference — wrong. The system would boot, but nothing would work the way it should.
+After the migration, that partition *is* root. The filesystem root now contains `cativo23/` where it should contain `home/cativo23/`. Without relocation, the user's home directory would be at `/cativo23` instead of `/home/cativo23`. Every dotfile, every path in every config, every `$HOME` reference — wrong. The system would boot, but nothing would work the way it should. Every application that reads `$HOME` would point to the right path but find nothing there. Login might work. Everything after that would be broken.
 
 ```bash
 if [ -d "$NEWROOT/cativo23" ] && [ ! -d "$NEWROOT/home/cativo23" ]; then
@@ -109,7 +109,7 @@ fi
 
 Four lines. The `mv` is atomic on ext4 — it's a single directory rename within the same filesystem, so there's no partial state if the power fails mid-operation. The conditional makes it idempotent: if you run the script twice, the second run sees `/home/cativo23` already exists and skips the move. The kind of fix that's obvious *after* someone points it out, and invisible *before*.
 
-A dry-run simulator found it. An agent that was told "mentally execute every line with this exact filesystem layout" and traced what each directory check would see. It flagged the user relocation as CRITICAL because it simulated what `/mnt/newroot/cativo23` would look like after mounting a partition that had been /home. None of the other agents — the code reviewer, the chaos engineer, the boot specialist — noticed. They were looking at the code. The simulator was looking at the data.
+A dry-run simulator found it. An agent that was told "mentally execute every line with this exact filesystem layout" and traced what each directory check would see. It flagged the user relocation as CRITICAL because it simulated what `/mnt/newroot/cativo23` would look like after mounting a partition that had been /home. None of the other agents — the code reviewer, the chaos engineer, the boot specialist — noticed. They were looking at the code. The simulator was looking at the data. That's why you run different agents with different perspectives. They don't find the same bugs, and the bug that matters is always the one nobody else was looking for.
 
 ---
 
@@ -117,11 +117,11 @@ A dry-run simulator found it. An agent that was told "mentally execute every lin
 
 Not every fix was dramatic. Some were the kind of thing you'd miss reading the script at midnight but would bite you at runtime.
 
-`grep -oP` — the Perl-compatible regex flag — doesn't exist on every system. Some minimal environments ship `grep` without PCRE support. On a live USB, you're running whatever the ISO packed. The script extracted UUIDs from GRUB config using `-oP` with `|| true` to suppress errors, which meant if PCRE wasn't supported, grep would fail silently, the UUID variable would be empty, and the mismatch check would pass because you can't mismatch against nothing. The fix was `grep -oE` (extended regex, always available) plus `sed` for the extraction.
+`grep -oP` — the Perl-compatible regex flag — doesn't exist on every system. Some minimal environments ship `grep` without PCRE support. On a live USB, you're running whatever the ISO packed. The script extracted UUIDs from GRUB config using `-oP` with `|| true` to suppress errors, which meant if PCRE wasn't supported, grep would fail silently, the UUID variable would be empty, and the mismatch check would pass because you can't mismatch against nothing. Sneaky as hell. The fix was `grep -oE` (extended regex, always available) plus `sed` for the extraction.
 
 The backup script used `blockdev --getsize64` to check partition size before formatting. The command was wrapped in `|| true` on the assignment line — standard shell defensiveness. But `|| true` on an assignment means the assignment *always succeeds*: if `blockdev` fails, the variable is empty, and `|| true` prevents `set -e` from catching it. The subsequent arithmetic would either fail with "integer expression expected" (ugly) or silently compute with zero (dangerous). The fix was removing `|| true` from the assignment and adding an explicit check for empty or zero afterward.
 
-The GRUB UUID check deserves its own paragraph. The script checked `/etc/default/grub` for hardcoded `root=UUID=` entries that might not match the new root UUID. The first draft warned about the mismatch but didn't pause — it printed a warning, then ran `grub-mkconfig`, which dutifully generated a `grub.cfg` pointing at the wrong partition. The system would boot, GRUB would load, and the kernel would panic because root doesn't exist at that UUID. A NO-GO finding from round four: the warning must pause with `read -r` and let you fix the file *before* grub-mkconfig runs, not after.
+The GRUB UUID check deserves its own paragraph. The script checked `/etc/default/grub` for hardcoded `root=UUID=` entries that might not match the new root UUID. The first draft warned about the mismatch but didn't pause — it printed a warning, then ran `grub-mkconfig`, which dutifully generated a `grub.cfg` pointing at the wrong partition. The system would boot, GRUB would load, and the kernel would panic because root doesn't exist at that UUID. A NO-GO finding from round four: the warning must pause with `read -r` and let you fix the file *before* grub-mkconfig runs, not after. Print a warning after the damage is done? That's not a warning. That's a postmortem.
 
 ---
 
@@ -153,7 +153,7 @@ Reboot. Pull the USB. Wait.
 
 Wait. `nvme1n1`?
 
-The disks swapped names *again*. What was `nvme0n1` during the migration is now `nvme1n1` after reboot. The 477G NAND is now `nvme1n1`. The Optane is `nvme0n1`. The kernel, once again, enumerated them in a different order because PCIe bus topology is a suggestion, not a contract.
+The disks swapped names *again*. What was `nvme0n1` during the migration is now `nvme1n1` after reboot. The 477G NAND is now `nvme1n1`. The Optane is `nvme0n1`. The kernel, once again, enumerated them in a different order because PCIe bus topology is a suggestion, not a contract. This fucking kernel, I swear.
 
 But it didn't matter. The fstab uses UUIDs. GRUB uses UUIDs. The kernel command line uses UUIDs. Nothing in the boot chain references `/dev/nvme*` by name. The disk can call itself whatever it wants. The UUID doesn't change when the name does.
 
