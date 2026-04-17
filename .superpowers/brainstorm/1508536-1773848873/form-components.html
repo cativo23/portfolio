@@ -1,0 +1,157 @@
+<h2>Form Component APIs</h2>
+<p class="subtitle">Review props, slots, and visual preview</p>
+
+<!-- BaseInput -->
+<div class="section">
+  <h3>1. BaseInput</h3>
+  <p>Text input with integrated label and error display. Supports v-model.</p>
+
+  <div class="mockup">
+    <div class="mockup-header">Props</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.8;">
+      <div><strong>modelValue</strong>: string <span style="color:#7dcfff">— v-model binding</span></div>
+      <div><strong>label</strong>?: string <span style="color:#7dcfff">— renders label above input</span></div>
+      <div><strong>id</strong>?: string <span style="color:#7dcfff">— auto-generated from label if omitted</span></div>
+      <div><strong>type</strong>?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' <span style="color:#7dcfff">— default: 'text'</span></div>
+      <div><strong>placeholder</strong>?: string</div>
+      <div><strong>required</strong>?: boolean</div>
+      <div><strong>disabled</strong>?: boolean</div>
+      <div><strong>error</strong>?: string <span style="color:#7dcfff">— red error message below input</span></div>
+      <div><strong>minlength</strong>?: number</div>
+      <div><strong>maxlength</strong>?: number</div>
+    </div>
+  </div>
+
+  <div class="mockup" style="margin-top: 12px;">
+    <div class="mockup-header">Usage</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.6; white-space: pre; overflow-x: auto;">&lt;BaseInput
+  v-model="form.name"
+  label="Name"
+  placeholder="Write your name"
+  required
+  :minlength="2"
+  :maxlength="100"
+  :error="errors.name"
+/&gt;
+
+&lt;BaseInput
+  v-model="form.email"
+  label="Email"
+  type="email"
+  placeholder="email@example.com"
+  required
+  :error="errors.email"
+/&gt;</div>
+  </div>
+
+  <div style="margin-top: 16px; max-width: 400px;">
+    <div style="margin-bottom: 16px;">
+      <label style="display: block; color: #7dcfff; font-family: monospace; font-weight: 700; margin-bottom: 4px; font-size: 14px;">Name</label>
+      <input style="width: 100%; padding: 8px 12px; background: #1a1b26; color: #a9b1d6; border: 1px solid #565f89; border-radius: 4px; font-family: monospace; font-size: 14px; outline: none;" placeholder="Write your name" value="Carlos" />
+    </div>
+    <div style="margin-bottom: 4px;">
+      <label style="display: block; color: #7dcfff; font-family: monospace; font-weight: 700; margin-bottom: 4px; font-size: 14px;">Email</label>
+      <input style="width: 100%; padding: 8px 12px; background: #1a1b26; color: #a9b1d6; border: 1px solid #f7768e; border-radius: 4px; font-family: monospace; font-size: 14px; outline: none;" placeholder="email@example.com" value="bad-email" />
+      <p style="color: #f7768e; font-family: monospace; font-size: 12px; margin-top: 4px;">Please enter a valid email</p>
+    </div>
+  </div>
+</div>
+
+<!-- BaseTextarea -->
+<div class="section" style="margin-top: 32px;">
+  <h3>2. BaseTextarea</h3>
+  <p>Same API as BaseInput but renders a textarea. Adds <code>rows</code> prop.</p>
+
+  <div class="mockup">
+    <div class="mockup-header">Props</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.8;">
+      <div><strong>modelValue</strong>: string <span style="color:#7dcfff">— v-model binding</span></div>
+      <div><strong>label</strong>?: string</div>
+      <div><strong>id</strong>?: string</div>
+      <div><strong>placeholder</strong>?: string</div>
+      <div><strong>required</strong>?: boolean</div>
+      <div><strong>disabled</strong>?: boolean</div>
+      <div><strong>error</strong>?: string</div>
+      <div><strong>rows</strong>?: number <span style="color:#7dcfff">— default: 4</span></div>
+      <div><strong>minlength</strong>?: number</div>
+      <div><strong>maxlength</strong>?: number</div>
+    </div>
+  </div>
+
+  <div class="mockup" style="margin-top: 12px;">
+    <div class="mockup-header">Usage</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.6; white-space: pre; overflow-x: auto;">&lt;BaseTextarea
+  v-model="form.message"
+  label="Message"
+  placeholder="Write your message here"
+  required
+  :rows="4"
+  :minlength="10"
+  :maxlength="1000"
+  :error="errors.message"
+/&gt;</div>
+  </div>
+
+  <div style="margin-top: 16px; max-width: 400px;">
+    <label style="display: block; color: #7dcfff; font-family: monospace; font-weight: 700; margin-bottom: 4px; font-size: 14px;">Message</label>
+    <textarea style="width: 100%; padding: 8px 12px; background: #1a1b26; color: #a9b1d6; border: 1px solid #565f89; border-radius: 4px; font-family: monospace; font-size: 14px; outline: none; resize: vertical;" rows="4" placeholder="Write your message here"></textarea>
+  </div>
+</div>
+
+<!-- Refactored Contact Form -->
+<div class="section" style="margin-top: 32px;">
+  <h3>3. Refactored Contact.vue</h3>
+  <p>Before: 20 lines of template with repeated Tailwind classes. After: ~15 lines, clean and readable.</p>
+
+  <div class="split">
+    <div class="mockup">
+      <div class="mockup-header">Before (current)</div>
+      <div class="mockup-body" style="font-family: monospace; font-size: 11px; line-height: 1.5; white-space: pre; overflow-x: auto;">&lt;div class="flex flex-col gap-1"&gt;
+  &lt;label for="name" class="text-tokyo-
+    night-cyan font-mono font-bold"&gt;
+    Name
+  &lt;/label&gt;
+  &lt;input v-model="form.name"
+    type="text" id="name"
+    placeholder="Write your name"
+    required minlength="2" maxlength="100"
+    class="w-full px-3 py-2 bg-tokyo-
+      night-bg text-tokyo-night-text
+      border border-tokyo-night-gray
+      rounded focus:outline-none
+      focus:ring-2 focus:ring-tokyo-
+      night-cyan font-mono placeholder-
+      tokyo-night-muted transition" /&gt;
+&lt;/div&gt;
+<span style="color:#565f89;">× 3 fields = ~45 lines</span></div>
+    </div>
+    <div class="mockup">
+      <div class="mockup-header">After (refactored)</div>
+      <div class="mockup-body" style="font-family: monospace; font-size: 11px; line-height: 1.5; white-space: pre; overflow-x: auto;">&lt;BaseInput
+  v-model="form.name"
+  label="Name"
+  placeholder="Write your name"
+  required
+  :minlength="2"
+  :maxlength="100"
+/&gt;
+
+&lt;BaseInput
+  v-model="form.email"
+  label="Email"
+  type="email"
+  placeholder="email@example.com"
+  required
+/&gt;
+
+&lt;BaseTextarea
+  v-model="form.message"
+  label="Message"
+  placeholder="Write your message"
+  required :rows="4"
+  :minlength="10" :maxlength="1000"
+/&gt;
+<span style="color:#9ece6a;">= ~25 lines, zero repeated classes</span></div>
+    </div>
+  </div>
+</div>

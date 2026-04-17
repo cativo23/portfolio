@@ -1,0 +1,162 @@
+<h2>Component API Designs</h2>
+<p class="subtitle">Review the props, slots, and usage for each component</p>
+
+<!-- BaseButton -->
+<div class="section">
+  <h3>1. BaseButton</h3>
+  <p>Polymorphic — renders as <code>&lt;button&gt;</code>, <code>&lt;NuxtLink&gt;</code>, or <code>&lt;a&gt;</code> based on props.</p>
+
+  <div class="mockup">
+    <div class="mockup-header">Props</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.8;">
+      <div><strong>variant</strong>: 'primary' | 'secondary' | 'ghost' | 'icon' <span style="color:#7dcfff">— default: 'primary'</span></div>
+      <div><strong>size</strong>: 'sm' | 'md' | 'lg' <span style="color:#7dcfff">— default: 'md'</span></div>
+      <div><strong>to</strong>?: string <span style="color:#7dcfff">— renders as NuxtLink</span></div>
+      <div><strong>href</strong>?: string <span style="color:#7dcfff">— renders as &lt;a&gt;</span></div>
+      <div><strong>disabled</strong>?: boolean</div>
+      <div><strong>loading</strong>?: boolean</div>
+      <div><strong>type</strong>?: 'button' | 'submit' | 'reset' <span style="color:#7dcfff">— default: 'button'</span></div>
+    </div>
+  </div>
+
+  <div class="mockup" style="margin-top: 12px;">
+    <div class="mockup-header">Usage Examples</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.6; white-space: pre; overflow-x: auto;"><!-- Primary CTA -->
+&lt;BaseButton to="/projects"&gt;View Projects&lt;/BaseButton&gt;
+
+<!-- Submit button -->
+&lt;BaseButton variant="primary" type="submit" :loading="sending"&gt;
+  Send Message
+&lt;/BaseButton&gt;
+
+<!-- Ghost for pagination -->
+&lt;BaseButton variant="ghost" @click="nextPage"&gt;Next&lt;/BaseButton&gt;
+
+<!-- Icon button for social links -->
+&lt;BaseButton variant="icon" href="https://github.com/cativo23"&gt;
+  &lt;LucideGithub /&gt;
+&lt;/BaseButton&gt;
+
+<!-- Secondary/outlined -->
+&lt;BaseButton variant="secondary" to="/about"&gt;Learn More&lt;/BaseButton&gt;</div>
+  </div>
+
+  <div style="margin-top: 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+    <button style="background: #7dcfff; color: #1a1b26; padding: 8px 20px; border-radius: 8px; border: none; font-weight: 600; font-family: monospace; font-size: 14px;">Primary</button>
+    <button style="background: transparent; color: #7dcfff; padding: 8px 20px; border-radius: 8px; border: 1px solid #7dcfff; font-weight: 600; font-family: monospace; font-size: 14px;">Secondary</button>
+    <button style="background: transparent; color: #a9b1d6; padding: 8px 20px; border-radius: 8px; border: none; font-weight: 500; font-family: monospace; font-size: 14px;">Ghost</button>
+    <button style="background: transparent; color: #a9b1d6; padding: 6px; border-radius: 8px; border: 1px solid #414868; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; font-size: 16px;">⚙</button>
+    <span style="color: #565f89; font-size: 12px; margin-left: 8px;">sm</span>
+    <button style="background: #7dcfff; color: #1a1b26; padding: 5px 14px; border-radius: 6px; border: none; font-weight: 600; font-family: monospace; font-size: 12px;">Small</button>
+    <button style="background: #7dcfff; color: #1a1b26; padding: 8px 20px; border-radius: 8px; border: none; font-weight: 600; font-family: monospace; font-size: 14px;">Medium</button>
+    <button style="background: #7dcfff; color: #1a1b26; padding: 11px 28px; border-radius: 10px; border: none; font-weight: 600; font-family: monospace; font-size: 16px;">Large</button>
+  </div>
+</div>
+
+<!-- BaseCard -->
+<div class="section" style="margin-top: 32px;">
+  <h3>2. BaseCard</h3>
+  <p>Content container with Tokyo Night dark styling and optional slots.</p>
+
+  <div class="mockup">
+    <div class="mockup-header">Props & Slots</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.8;">
+      <div><strong>Props:</strong></div>
+      <div>&nbsp;&nbsp;<strong>hoverable</strong>?: boolean <span style="color:#7dcfff">— default: true — adds hover:shadow-lg</span></div>
+      <div>&nbsp;&nbsp;<strong>padded</strong>?: boolean <span style="color:#7dcfff">— default: true — adds p-6</span></div>
+      <div style="margin-top: 8px;"><strong>Slots:</strong></div>
+      <div>&nbsp;&nbsp;<strong>#default</strong> — main content</div>
+      <div>&nbsp;&nbsp;<strong>#header</strong> — optional top area (image, title bar)</div>
+      <div>&nbsp;&nbsp;<strong>#footer</strong> — optional bottom area (actions, links)</div>
+      <div>&nbsp;&nbsp;<strong>#badge</strong> — positioned top-right overlay</div>
+    </div>
+  </div>
+
+  <div class="mockup" style="margin-top: 12px;">
+    <div class="mockup-header">Usage Examples</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.6; white-space: pre; overflow-x: auto;"><!-- Simple card -->
+&lt;BaseCard&gt;
+  &lt;h3&gt;Project Title&lt;/h3&gt;
+  &lt;p&gt;Description here&lt;/p&gt;
+&lt;/BaseCard&gt;
+
+<!-- Card with badge and footer -->
+&lt;BaseCard&gt;
+  &lt;template #badge&gt;
+    &lt;BaseBadge color="cyan"&gt;Featured&lt;/BaseBadge&gt;
+  &lt;/template&gt;
+  &lt;h3&gt;My Project&lt;/h3&gt;
+  &lt;p&gt;Project description&lt;/p&gt;
+  &lt;template #footer&gt;
+    &lt;BaseButton variant="ghost" to="/projects/1"&gt;
+      View Details →
+    &lt;/BaseButton&gt;
+  &lt;/template&gt;
+&lt;/BaseCard&gt;</div>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <div style="background: #1a1b26; border-radius: 12px; padding: 24px; position: relative; max-width: 350px; border: 1px solid #24283b;">
+      <div style="position: absolute; top: 12px; right: 12px; background: #7dcfff22; color: #7dcfff; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-family: monospace;">Featured</div>
+      <h4 style="color: #c0caf5; margin: 0 0 8px;">Project Title</h4>
+      <p style="color: #a9b1d6; margin: 0 0 16px; font-size: 14px;">A cool project description goes here.</p>
+      <div style="border-top: 1px solid #24283b; padding-top: 12px; margin-top: 8px;">
+        <span style="color: #7dcfff; font-size: 13px; font-family: monospace;">View Details →</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BaseBadge -->
+<div class="section" style="margin-top: 32px;">
+  <h3>3. BaseBadge</h3>
+  <p>Inline label for tags, statuses, and categories.</p>
+
+  <div class="mockup">
+    <div class="mockup-header">Props</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.8;">
+      <div><strong>color</strong>?: 'cyan' | 'magenta' | 'green' | 'yellow' | 'muted' <span style="color:#7dcfff">— default: 'cyan'</span></div>
+      <div><strong>size</strong>?: 'sm' | 'md' <span style="color:#7dcfff">— default: 'md'</span></div>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
+    <span style="background: #7dcfff22; color: #7dcfff; padding: 3px 12px; border-radius: 999px; font-size: 13px; font-family: monospace;">Featured</span>
+    <span style="background: #bb9af722; color: #bb9af7; padding: 3px 12px; border-radius: 999px; font-size: 13px; font-family: monospace;">Vue.js</span>
+    <span style="background: #9ece6a22; color: #9ece6a; padding: 3px 12px; border-radius: 999px; font-size: 13px; font-family: monospace;">Active</span>
+    <span style="background: #e0af6822; color: #e0af68; padding: 3px 12px; border-radius: 999px; font-size: 13px; font-family: monospace;">WIP</span>
+    <span style="background: #56607322; color: #565f89; padding: 3px 12px; border-radius: 999px; font-size: 13px; font-family: monospace;">Archived</span>
+  </div>
+</div>
+
+<!-- BaseSectionHeading -->
+<div class="section" style="margin-top: 32px;">
+  <h3>4. BaseSectionHeading</h3>
+  <p>Section title with optional DecryptedText animation and subtitle.</p>
+
+  <div class="mockup">
+    <div class="mockup-header">Props & Slots</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.8;">
+      <div><strong>Props:</strong></div>
+      <div>&nbsp;&nbsp;<strong>title</strong>: string</div>
+      <div>&nbsp;&nbsp;<strong>animated</strong>?: boolean <span style="color:#7dcfff">— default: false — wraps in DecryptedText</span></div>
+      <div>&nbsp;&nbsp;<strong>level</strong>?: 2 | 3 <span style="color:#7dcfff">— default: 2 — renders h2 or h3</span></div>
+      <div style="margin-top: 8px;"><strong>Slots:</strong></div>
+      <div>&nbsp;&nbsp;<strong>#subtitle</strong> — optional text below heading</div>
+    </div>
+  </div>
+
+  <div class="mockup" style="margin-top: 12px;">
+    <div class="mockup-header">Usage</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.6; white-space: pre; overflow-x: auto;">&lt;BaseSectionHeading title="Featured Projects" animated&gt;
+  &lt;template #subtitle&gt;
+    Some of my recent work
+  &lt;/template&gt;
+&lt;/BaseSectionHeading&gt;</div>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <h2 style="color: #7dcfff; font-weight: 700; margin: 0; font-size: 28px;">Featured Projects</h2>
+    <p style="color: #a9b1d6; margin: 4px 0 0; font-size: 15px;">Some of my recent work</p>
+  </div>
+</div>

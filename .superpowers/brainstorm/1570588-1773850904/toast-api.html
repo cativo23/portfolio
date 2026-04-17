@@ -1,0 +1,99 @@
+<h2>Toast API & Visual Design</h2>
+<p class="subtitle">Review the composable API and toast appearance</p>
+
+<!-- useToast API -->
+<div class="section">
+  <h3>1. useToast() Composable</h3>
+
+  <div class="mockup">
+    <div class="mockup-header">API</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.8; white-space: pre; overflow-x: auto;">const toast = useToast()
+
+// Show a toast
+toast.success('Message sent!')
+toast.error('Failed to send message')
+toast.warning('Connection unstable')
+toast.info('New version available')
+
+// Or with full options
+toast.show({
+  message: 'Message sent!',
+  type: 'success',       // 'success' | 'error' | 'warning' | 'info'
+  duration: 5000,        // ms, 0 = no auto-dismiss
+})
+
+// Remove a specific toast
+toast.remove(id)
+
+// Clear all
+toast.clear()</div>
+  </div>
+
+  <div class="mockup" style="margin-top: 12px;">
+    <div class="mockup-header">Default durations</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.8;">
+      <div><strong>success</strong>: 5000ms (auto-dismiss)</div>
+      <div><strong>info</strong>: 5000ms (auto-dismiss)</div>
+      <div><strong>warning</strong>: 0 (stays until closed)</div>
+      <div><strong>error</strong>: 0 (stays until closed)</div>
+    </div>
+  </div>
+
+  <div class="mockup" style="margin-top: 12px;">
+    <div class="mockup-header">Usage in Contact.vue</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.6; white-space: pre; overflow-x: auto;">const toast = useToast()
+
+// Replace inline success div
+toast.success('Message sent successfully!')
+
+// Replace inline error div
+toast.error(msg)</div>
+  </div>
+</div>
+
+<!-- Visual Design -->
+<div class="section" style="margin-top: 32px;">
+  <h3>2. Toast Appearance</h3>
+  <p>Tokyo Night themed, fixed top-right, stacked vertically with close button.</p>
+
+  <div style="display: flex; flex-direction: column; gap: 10px; max-width: 380px; margin-top: 16px;">
+    <!-- Success -->
+    <div style="background: #1a1b26; border: 1px solid #9ece6a; border-left: 4px solid #9ece6a; border-radius: 8px; padding: 12px 16px; display: flex; align-items: flex-start; gap: 10px; font-family: monospace; font-size: 13px;">
+      <span style="color: #9ece6a; font-size: 16px; line-height: 1;">✓</span>
+      <span style="color: #a9b1d6; flex: 1;">Message sent successfully!</span>
+      <span style="color: #565f89; cursor: pointer; font-size: 16px; line-height: 1;">×</span>
+    </div>
+    <!-- Error -->
+    <div style="background: #1a1b26; border: 1px solid #f7768e; border-left: 4px solid #f7768e; border-radius: 8px; padding: 12px 16px; display: flex; align-items: flex-start; gap: 10px; font-family: monospace; font-size: 13px;">
+      <span style="color: #f7768e; font-size: 16px; line-height: 1;">✕</span>
+      <span style="color: #a9b1d6; flex: 1;">Failed to send message. Please try again.</span>
+      <span style="color: #565f89; cursor: pointer; font-size: 16px; line-height: 1;">×</span>
+    </div>
+    <!-- Warning -->
+    <div style="background: #1a1b26; border: 1px solid #e0af68; border-left: 4px solid #e0af68; border-radius: 8px; padding: 12px 16px; display: flex; align-items: flex-start; gap: 10px; font-family: monospace; font-size: 13px;">
+      <span style="color: #e0af68; font-size: 16px; line-height: 1;">⚠</span>
+      <span style="color: #a9b1d6; flex: 1;">Connection unstable</span>
+      <span style="color: #565f89; cursor: pointer; font-size: 16px; line-height: 1;">×</span>
+    </div>
+    <!-- Info -->
+    <div style="background: #1a1b26; border: 1px solid #7dcfff; border-left: 4px solid #7dcfff; border-radius: 8px; padding: 12px 16px; display: flex; align-items: flex-start; gap: 10px; font-family: monospace; font-size: 13px;">
+      <span style="color: #7dcfff; font-size: 16px; line-height: 1;">ℹ</span>
+      <span style="color: #a9b1d6; flex: 1;">New version available</span>
+      <span style="color: #565f89; cursor: pointer; font-size: 16px; line-height: 1;">×</span>
+    </div>
+  </div>
+</div>
+
+<!-- Accessibility -->
+<div class="section" style="margin-top: 32px;">
+  <h3>3. Accessibility</h3>
+  <div class="mockup">
+    <div class="mockup-header">ARIA attributes</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.8;">
+      <div>Container: <strong>role="region"</strong> + <strong>aria-label="Notifications"</strong></div>
+      <div>Each toast: <strong>role="alert"</strong> + <strong>aria-live="assertive"</strong></div>
+      <div>Close button: <strong>aria-label="Close notification"</strong></div>
+      <div>Auto-dismiss: pauses on hover/focus (a11y best practice)</div>
+    </div>
+  </div>
+</div>

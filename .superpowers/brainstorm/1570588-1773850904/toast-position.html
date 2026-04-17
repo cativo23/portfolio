@@ -1,0 +1,46 @@
+<h2>Where should toasts appear?</h2>
+<p class="subtitle">Click the position you prefer</p>
+
+<div class="options">
+  <div class="option" data-choice="top-right" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Top Right</h3>
+      <p>Most common pattern. Doesn't interfere with content or navigation.</p>
+      <div style="margin-top: 12px; position: relative; width: 280px; height: 160px; background: #1a1b26; border-radius: 8px; border: 1px solid #24283b; overflow: hidden;">
+        <div style="background: #24283b; padding: 6px 12px; font-size: 11px; color: #565f89;">Header / Nav</div>
+        <div style="position: absolute; top: 40px; right: 8px; background: #9ece6a22; border: 1px solid #9ece6a; border-radius: 8px; padding: 8px 12px; font-size: 11px; color: #9ece6a; font-family: monospace;">
+          ✓ Message sent!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="bottom-right" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Bottom Right</h3>
+      <p>Less intrusive. Good for non-critical notifications.</p>
+      <div style="margin-top: 12px; position: relative; width: 280px; height: 160px; background: #1a1b26; border-radius: 8px; border: 1px solid #24283b; overflow: hidden;">
+        <div style="background: #24283b; padding: 6px 12px; font-size: 11px; color: #565f89;">Header / Nav</div>
+        <div style="position: absolute; bottom: 8px; right: 8px; background: #9ece6a22; border: 1px solid #9ece6a; border-radius: 8px; padding: 8px 12px; font-size: 11px; color: #9ece6a; font-family: monospace;">
+          ✓ Message sent!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="top-center" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Top Center</h3>
+      <p>Maximum visibility. Can feel intrusive for minor notifications.</p>
+      <div style="margin-top: 12px; position: relative; width: 280px; height: 160px; background: #1a1b26; border-radius: 8px; border: 1px solid #24283b; overflow: hidden;">
+        <div style="background: #24283b; padding: 6px 12px; font-size: 11px; color: #565f89;">Header / Nav</div>
+        <div style="position: absolute; top: 40px; left: 50%; transform: translateX(-50%); background: #9ece6a22; border: 1px solid #9ece6a; border-radius: 8px; padding: 8px 12px; font-size: 11px; color: #9ece6a; font-family: monospace; white-space: nowrap;">
+          ✓ Message sent!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
