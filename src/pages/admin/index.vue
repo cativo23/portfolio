@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-xl font-bold text-tokyo-night-text mb-6">Dashboard</h1>
+    <h1 class="text-xl font-bold text-tokyo-night-text mb-6 font-mono"><span class="text-tokyo-night-purple">❯</span> Dashboard</h1>
 
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

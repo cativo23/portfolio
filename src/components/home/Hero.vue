@@ -22,7 +22,7 @@
         <h2 class="text-2xl lg:text-3xl font-bold mb-4 font-mono">
           <span class="text-tokyo-night-purple">❯</span>
           <DecryptedText
-            text="Tech Lead & Full-Stack Engineer"
+            text="Carlos Cativo"
             animateOn="view"
             class="text-tokyo-night-cyan font-bold break-keep"
             encryptedClassName="text-opacity-60"
@@ -33,7 +33,7 @@
           />
         </h2>
         <p class="text-lg lg:text-xl mb-4 font-mono text-tokyo-night-muted">
-          9 years building healthcare platforms, payment systems, and AI-powered products
+          Tech Lead from El Salvador. Healthcare platforms, payment systems, and AI-powered backends. 9 years in production.
         </p>
         <p class="text-sm mb-8 text-tokyo-night-dark3">
           NestJS &middot; Laravel &middot; Python &middot; Docker &middot; AWS &middot; AI/ML
