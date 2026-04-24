@@ -25,12 +25,6 @@ useHead({
       rel: 'icon',
       type: 'image/ico',
       href: '/favicon.ico'
-    },
-    {
-      rel: 'alternate',
-      type: 'application/rss+xml',
-      title: 'Carlos Cativo - Blog RSS Feed',
-      href: '/feed.xml'
     }
   ],
   script: [
