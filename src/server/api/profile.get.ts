@@ -80,38 +80,6 @@ export default defineEventHandler(async () => {
           { name: 'Specialty', skills: [{ name: 'Multi-agent LLM systems / ISO 8583' }, { name: 'FEL invoicing' }, { name: 'SAP / ElevenLabs ConvAI' }, { name: 'Ory IAM' }]},
           { name: 'AI / Integrations', skills: [{ name: 'Claude API' }, { name: 'OpenAI' }, { name: 'ElevenLabs / n8n' }, { name: 'Stripe' }, { name: 'Odoo ERP / Botmaker' }, { name: 'FreshDesk' }, { name: 'Bland AI' }]},
         ],
-        sideProjects: [
-          {
-            name: 'Clarify — AI Contract Auditor',
-            status: 'alpha',
-            description: 'AI platform that democratizes access to legal advice. Upload a contract, get a plain-language risk assessment: abusive clauses, hidden obligations, red flags. Pay-per-analysis credit system via Stripe.',
-            tags: ['Nuxt', 'OpenAI', 'Supabase', 'Stripe', 'BullMQ']
-          },
-          {
-            name: 'VittBot — AI Trading Bot',
-            status: 'live',
-            description: 'Autonomous BTC/USDT trading bot on Binance. Three independent Claude agents (Analyst → Trader → Validator) + a deterministic Risk Manager with 10 hard-coded rules — the AI never makes the final call. Multi-strategy: Momentum Pullback + Mean Reversion.',
-            tags: ['NestJS', 'Claude API', 'CCXT', 'PostgreSQL', 'Discord']
-          },
-          {
-            name: 'Myths & Legends of El Salvador',
-            status: 'active',
-            description: 'Production-ready API preserving Salvadoran folklore as structured data. Because cultural memory shouldn\'t be oral only. Full CRUD, JWT auth, image uploads, OpenAPI docs, domain-driven structure.',
-            tags: ['FastAPI', 'Python', 'PostgreSQL', 'Docker']
-          },
-          {
-            name: 'nova-id — IAM System',
-            status: 'mvp',
-            description: 'Production-ready Identity & Access Management with Zero Trust architecture built on the Ory Stack (Kratos, Hydra, Keto, Oathkeeper).',
-            tags: ['Ory Stack', 'NestJS', 'Vue']
-          },
-          {
-            name: 'claude-setup — Developer Tooling',
-            status: 'active',
-            description: 'One-command installer for a full Claude Code dev environment. MCP servers, plugins, skills, hooks, project scaffolding, and the GSD methodology framework. Signal handlers, rollback stacks, spinner UX.',
-            tags: ['Bash', 'BATS', 'GitHub Actions']
-          }
-        ],
         outsideCode: [
           {
             title: 'Three rescued dogs',

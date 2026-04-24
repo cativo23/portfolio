@@ -55,6 +55,7 @@ useHead({
 .page-transition-wrapper .page-leave-active {
   position: fixed;
   left: 0;
+  width: 100%;
   transition: all .2s linear;
 }
 

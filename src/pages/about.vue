@@ -1,19 +1,6 @@
 <template>
   <div class="space-y-16 pb-16">
-    <!-- Loading State -->
-    <div v-if="loading" class="flex justify-center items-center min-h-[400px]" role="status" aria-live="polite">
-      <span class="text-tokyo-night-muted font-mono">Loading profile...</span>
-    </div>
-
-    <!-- Error State -->
-    <div v-else-if="error" class="text-center py-12" role="alert">
-      <p class="text-red-400 font-mono mb-4">Failed to load profile data</p>
-      <BaseButton variant="ghost" @click="loadProfile" class="font-mono">
-        ❯ Retry
-      </BaseButton>
-    </div>
-
-    <template v-else-if="profile">
+    <template v-if="profile">
       <!-- Hero -->
       <section class="pt-8">
         <p class="text-tokyo-night-cyan font-mono text-sm mb-6 flex items-center">
@@ -47,11 +34,11 @@
       </section>
 
       <!-- Background -->
-      <section>
+      <section class="max-w-full overflow-hidden">
         <BaseSectionHeading title="Background" />
-        <div class="space-y-6">
-          <p v-for="(paragraph, index) in profile.summary" :key="index"
-             class="pl-4 border-l-2 border-tokyo-night-gray/30 hover:border-tokyo-night-cyan transition-colors duration-300 text-tokyo-night-text/90 leading-relaxed max-w-4xl"
+        <div class="space-y-6 break-words">
+          <p v-for="(paragraph, index) in summaryParagraphs" :key="index"
+             class="pl-4 border-l-2 border-tokyo-night-gray/30 hover:border-tokyo-night-cyan transition-colors duration-300 text-tokyo-night-text/90 leading-relaxed max-w-full break-words"
              v-html="formatSummaryParagraph(paragraph)" />
         </div>
       </section>
@@ -83,30 +70,8 @@
         </div>
       </section>
 
-      <!-- Side Projects -->
-      <section>
-        <BaseSectionHeading title="Side Projects" />
-        <div class="space-y-4">
-          <div v-if="projectsLoading" class="text-center py-4"><span class="text-tokyo-night-muted font-mono">Loading projects...</span></div>
-          <div v-else-if="projectsError" class="text-center py-4"><span class="text-red-400 font-mono">Failed to load projects</span></div>
-          <div v-else v-for="project in projects" :key="project.id || project.title" class="p-5 border border-tokyo-night-gray/30 rounded-lg bg-tokyo-night-dark/40 hover:border-tokyo-night-blue transition-colors">
-            <div class="flex items-center gap-3 mb-2">
-              <h3 class="text-lg font-bold text-tokyo-night-text">
-                <NuxtLink :to="'/projects/' + project.id" class="hover:text-tokyo-night-cyan transition-colors">{{ project.title }}</NuxtLink>
-              </h3>
-              <span class="text-tokyo-night-muted">—</span>
-              <span class="text-tokyo-night-text/80">{{ project.shortDescription || 'A software project' }}</span>
-              <span :class="getStatusClass(project.status || 'live')" class="ml-auto text-xs font-mono px-2 py-0.5 rounded border lowercase">{{ project.status || 'live' }}</span>
-            </div>
-            <p class="text-sm text-tokyo-night-text/70 mb-4">{{ project.description }}</p>
-            <div class="flex flex-wrap gap-2">
-              <span v-for="tech in project.techStack" :key="tech" class="px-2 py-1 text-xs font-mono rounded bg-tokyo-night-bg text-tokyo-night-muted">
-                {{ tech }}
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
+      <!-- Side Projects (Featured Projects) -->
+      <PortfolioSection />
 
       <!-- Outside code -->
       <section>
@@ -121,8 +86,8 @@
       </section>
 
       <!-- Closing -->
-      <section class="py-8 border-t border-tokyo-night-gray/20">
-        <div class="max-w-3xl">
+      <section class="py-8 border-t border-tokyo-night-gray/20 max-w-full overflow-hidden">
+        <div class="max-w-full break-words">
           <p class="text-lg text-tokyo-night-text/90 mb-6 leading-relaxed">
             I'm not here to leverage synergies or bring passion to your tech stack. I'm here to build backends that don't embarrass you in production — clean APIs, real test coverage, systems that fail gracefully and recover faster.
           </p>
@@ -152,36 +117,104 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useProjects } from '~/composables/useProjects';
+import { computed } from 'vue';
 import Timeline from '@/components/about/Timeline.vue';
+import PortfolioSection from '@/components/home/portfolio/PortfolioSection.vue';
 import type { Profile } from '~/types/profile';
 
 usePageTitle('About', {
   description: 'Carlos Cativo - Tech Lead & Full-Stack Software Engineer. 9 years building healthcare platforms, payment systems, and AI-powered products.',
 });
 
-const profile = ref<Profile | null>(null);
-const loading = ref(true);
-const error = ref<string | null>(null);
+const profile: Profile = {
+  name: 'Carlos Cativo',
+  title: 'Tech Lead / Full-Stack Engineer',
+  yearsOfExperience: 9,
+  location: 'El Salvador',
+  summary: [
+    "I've spent the last 9 years building production systems in El Salvador — a market where fintech infrastructure is genuinely hard. No nice SDKs. I've implemented Visa ISO 8583 over SOAP by hand, built Guatemala's FEL electronic invoicing system from scratch, and designed payment microservices that handle real billing across multiple healthcare clinics daily.",
+    "My primary stack is Laravel, NestJS, FastAPI, and Vue/Nuxt, running on Docker, deployed to AWS. I've been building on top of these long enough to know when the framework is the wrong choice — and to have the production incidents to back that up.",
+    "The last two years I've gone deep into AI-powered systems: marIA, a voice agent handling automated patient scheduling in Spanish via ElevenLabs ConvAI; VittBot, a multi-agent crypto trading bot with three independent Claude agents plus a deterministic risk manager; Clarify, an AI legal contract auditor with Stripe billing. I don't just call AI APIs — I design the validation layers, retry logic, and safeguards that make them production-safe.",
+    "I also run my own production infrastructure at cativo.dev — Traefik, Prometheus, Uptime Kuma, self-hosted mail, monitoring stack. Not because it's cheaper, but because it's the only way to actually understand what you're deploying to."
+  ],
+  experience: [
+    {
+      role: 'Tech Lead / Full-Stack Engineer',
+      company: 'Blue Medical Guatemala',
+      period: 'Apr 2022 → Present · 3+ yrs',
+      location: 'Guatemala (Remote)',
+      description: "Leading development across multiple healthcare systems simultaneously. Code reviews, requirement refinement, technical guidance for the team, and hands-on delivery of the hardest parts.",
+      highlights: [
+        "marIA — AI voice agent for automated patient scheduling via ElevenLabs ConvAI + n8n. Resolved bugs affecting 42% of conversations (STT misfires, language leakage, infinite retry loops). Designed the full management platform: FastAPI API + Nuxt dashboard + Typer CLI.",
+        "Payment Service — Built from scratch. Visa ISO 8583, BAC SOAP/XML, card tokenization, reversals, webhook handling. Led 6-agent parallel security audit (OWASP: hardcoded secrets, Sanctum token expiration, CORS, PHP EOL).",
+        "Invoice Service — Built from scratch. Guatemala FEL tax system via Megaprint, Strategy Pattern for provider swaps, SAP integration, async pipeline via Redis/Horizon, QR code generation, multi-establishment support.",
+        "BlueMeds Platform — Core developer on medication subscription platform. 10+ integrations: Odoo ERP, WhatsApp/Botmaker, FreshDesk, Bland AI, VivoLife, payment APIs.",
+        "BlueMeds Admin Panel — Angular/Ionic admin panel for the pharmaceutical platform."
+      ],
+      tags: ['Laravel', 'NestJS', 'Python', 'Angular', 'Vue/Nuxt', 'ISO 8583', 'FEL', 'ElevenLabs', 'n8n', 'PostgreSQL', 'Redis', 'AWS', 'Docker', 'Bitbucket Pipelines']
+    },
+    {
+      role: 'Backend Developer',
+      company: 'OrangeSoftCo (Publimovil Regional)',
+      period: 'Sep 2020 – Apr 2022 · 1.5 yrs',
+      location: 'San Marcos, El Salvador',
+      description: "Rebuilt the Y.O.D.A. platform as a microservices architecture, improving application performance by 30%. Improved CI/CD pipelines in GitLab, cutting build time by 20%. Implemented inter-service communication via Redis Streams.",
+      tags: ['Laravel', 'FastAPI', 'Python', 'MySQL', 'Redis Streams', 'Docker', 'Kubernetes', 'GitLab CI/CD', 'DigitalOcean']
+    },
+    {
+      role: 'Senior Developer',
+      company: 'Mussol (TripXpertz)',
+      period: 'Apr 2017 – Sep 2020 · 3.5 yrs',
+      location: 'El Salvador',
+      description: "Built an internal dashboard managing 100+ travel websites, streamlining administration workflows. Set up CI/CD on AWS to improve deployment time and reliability. Developed mobile games in C#/Unity.",
+      tags: ['Laravel', 'MySQL', 'AWS', 'C# / Unity']
+    },
+    {
+      role: 'B.Sc. Computer Systems Engineering',
+      company: 'Universidad de El Salvador',
+      period: '2014 – 2021',
+      location: 'Education',
+      description: "Specialization in Cloud Infrastructure.",
+      tags: []
+    }
+  ],
+  skills: [
+    { name: 'Backend', skills: [{ name: 'Laravel' }, { name: 'NestJS' }, { name: 'FastAPI / TypeScript' }, { name: 'PHP' }, { name: 'Python / REST' }, { name: 'GraphQL' }, { name: 'SOAP/XML' }]},
+    { name: 'Frontend', skills: [{ name: 'Vue/Nuxt' }, { name: 'Angular' }, { name: 'Ionic / TailwindCSS' }, { name: 'TypeScript / full-stack when needed' }]},
+    { name: 'Data', skills: [{ name: 'PostgreSQL' }, { name: 'MySQL / Redis' }, { name: 'Meilisearch' }, { name: 'Supabase / Prisma' }, { name: 'TypeORM' }, { name: 'SQLAlchemy' }]},
+    { name: 'Infra & DevOps', skills: [{ name: 'Docker' }, { name: 'AWS (S3, ECR, EC2) / Traefik' }, { name: 'Nginx' }, { name: 'Cloudflare / GitHub Actions' }, { name: 'Bitbucket Pipelines' }]},
+    { name: 'Specialty', skills: [{ name: 'Multi-agent LLM systems / ISO 8583' }, { name: 'FEL invoicing' }, { name: 'SAP / ElevenLabs ConvAI' }, { name: 'Ory IAM' }]},
+    { name: 'AI / Integrations', skills: [{ name: 'Claude API' }, { name: 'OpenAI' }, { name: 'ElevenLabs / n8n' }, { name: 'Stripe' }, { name: 'Odoo ERP / Botmaker' }, { name: 'FreshDesk' }, { name: 'Bland AI' }]},
+  ],
+  outsideCode: [
+    {
+      title: 'Three rescued dogs',
+      icon: '🐕',
+      description: 'Nova, Vitto, and Kovu. They name the projects. They have strong opinions about standups.'
+    },
+    {
+      title: 'Civic Type R FK8',
+      icon: '🚗',
+      description: 'Rallye Red. I\'ll track it someday. The rev counter has opinions about my schedule.'
+    },
+    {
+      title: 'Keyboards & IEMs',
+      icon: '⌨️',
+      description: 'Truthear ZERO:RED currently in rotation. The collection is larger than I\'ll admit in writing.'
+    }
+  ],
+  github: 'https://github.com/cativo23',
+  linkedin: 'https://linkedin.com/in/carlos-cativo',
+  website: 'https://cativo.dev',
+};
 
-async function loadProfile() {
-  loading.value = true;
-  error.value = null;
-  try {
-    const response = await $fetch<{ data: Profile }>('/api/profile');
-    profile.value = response.data;
-  } catch {
-    error.value = 'Failed to connect to API.';
-  } finally {
-    loading.value = false;
+const summaryParagraphs = computed(() => {
+  if (!profile.summary) return [];
+  if (typeof profile.summary === 'string') {
+    return [profile.summary];
   }
-}
-
-await useAsyncData('profile-data', () => loadProfile());
-
-const { projects, loading: projectsLoading, error: projectsError, fetchProjects } = useProjects();
-await useAsyncData('projects-data', () => fetchProjects({ limit: 10 }));
+  return profile.summary;
+});
 
 function formatSummaryParagraph(text: string) {
   return text

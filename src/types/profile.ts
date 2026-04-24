@@ -18,13 +18,6 @@ export interface ProfileSkillCategory {
   skills: ProfileSkill[];
 }
 
-export interface SideProject {
-  name: string;
-  status: 'live' | 'active' | 'alpha' | 'mvp';
-  description: string;
-  tags: string[];
-}
-
 export interface OutsideCode {
   title: string;
   icon: string;
@@ -36,11 +29,10 @@ export interface Profile {
   title: string;
   yearsOfExperience: number;
   location: string;
-  summary: string[];
+  summary: string[] | string;
   experience: ProfileExperience[];
   skills: ProfileSkillCategory[];
-  sideProjects: SideProject[];
-  outsideCode: OutsideCode[];
+  outsideCode?: OutsideCode[];
   github: string;
   linkedin: string;
   website: string;
