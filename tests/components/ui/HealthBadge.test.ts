@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import HealthBadge from '~/components/ui/HealthBadge.vue'
 import { nextTick } from 'vue'
@@ -21,29 +21,17 @@ const LucideActivityMock = {
 describe('HealthBadge', () => {
   let originalFetch: any
   let fetchMock: any
-  let originalClient: any
-  
+
   beforeEach(() => {
     // Save original global fetch if exists
-    originalFetch = global.$fetch
-    
+    originalFetch = globalThis.$fetch
+
     // Create mock for $fetch
     fetchMock = vi.fn()
-    global.$fetch = fetchMock
-    
+    globalThis.$fetch = fetchMock
+
     // Default to resolving so the component doesn't get stuck in loading
     fetchMock.mockResolvedValue(null)
-    
-    // Explicitly stub the client to ensure onMounted runs
-    originalClient = Reflect.get(import.meta, 'client')
-    Reflect.set(import.meta, 'client', true)
-  })
-  
-  afterEach(() => {
-    // Restore global fetch
-    global.$fetch = originalFetch
-    Reflect.set(import.meta, 'client', originalClient)
-    vi.unstubAllGlobals()
   })
 
   it('renders initial loading state correctly', async () => {
@@ -95,7 +83,7 @@ describe('HealthBadge', () => {
       }
       return Promise.resolve(null)
     })
-    
+
     const wrapper = mount(HealthBadge, {
       global: {
         components: {
@@ -106,7 +94,8 @@ describe('HealthBadge', () => {
       }
     })
 
-    // Wait for the onMounted fetchHealth to complete
+    // Manually trigger fetchHealth since import.meta.client is false in tests
+    await (wrapper.vm as any).fetchHealth()
     await flushPromises()
 
     const indicator = wrapper.findComponent(StatusIndicatorMock)
@@ -143,7 +132,8 @@ describe('HealthBadge', () => {
       }
     })
 
-    // Wait for the onMounted fetchHealth to complete
+    // Manually trigger fetchHealth since import.meta.client is false in tests
+    await (wrapper.vm as any).fetchHealth()
     await flushPromises()
 
     const indicator = wrapper.findComponent(StatusIndicatorMock)
@@ -164,9 +154,10 @@ describe('HealthBadge', () => {
       }
     })
 
-    // Wait for the onMounted fetchHealth to complete
+    // Manually trigger fetchHealth since import.meta.client is false in tests
+    await (wrapper.vm as any).fetchHealth()
     await flushPromises()
-    
+
     const indicator = wrapper.findComponent(StatusIndicatorMock)
     expect(indicator.props('status')).toBe('error')
     expect(indicator.props('text')).toBe('Unavailable')

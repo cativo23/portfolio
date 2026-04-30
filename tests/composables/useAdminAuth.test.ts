@@ -1,15 +1,15 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { computed, ref } from 'vue'
 
 const cookieStore: Record<string, any> = {}
 
-vi.stubGlobal('computed', computed)
-vi.stubGlobal('ref', ref)
-vi.stubGlobal('useCookie', vi.fn((key: string) => ({
+globalThis.computed = computed
+globalThis.ref = ref
+globalThis.useCookie = vi.fn((key: string) => ({
   get value() { return cookieStore[key] },
   set value(v: any) { cookieStore[key] = v },
-})))
-vi.stubGlobal('navigateTo', vi.fn(() => {}))
+}))
+globalThis.navigateTo = vi.fn(() => {})
 
 const { useAdminAuth } = await import('~/composables/useAdminAuth')
 
@@ -19,16 +19,12 @@ describe('useAdminAuth', () => {
     vi.clearAllMocks()
   })
 
-  afterEach(() => {
-    vi.unstubAllGlobals()
-  })
-
   describe('login', () => {
     it('returns true and stores user on successful login', async () => {
-      vi.stubGlobal('$fetch', vi.fn(() => Promise.resolve({
+      globalThis.$fetch = vi.fn(() => Promise.resolve({
         status: 'success',
         user: { id: 1, email: 'admin@test.com', username: 'admin' },
-      })))
+      }))
 
       const { isAuthenticated, login } = useAdminAuth()
       expect(isAuthenticated.value).toBe(false)
@@ -40,9 +36,9 @@ describe('useAdminAuth', () => {
     })
 
     it('returns false on invalid credentials', async () => {
-      vi.stubGlobal('$fetch', vi.fn(() => Promise.resolve({
+      globalThis.$fetch = vi.fn(() => Promise.resolve({
         status: 'error',
-      })))
+      }))
 
       const { login } = useAdminAuth()
       const result = await login('wrong@test.com', 'wrong')
@@ -51,7 +47,7 @@ describe('useAdminAuth', () => {
     })
 
     it('returns false on network error', async () => {
-      vi.stubGlobal('$fetch', vi.fn(() => Promise.reject(new Error('Network error'))))
+      globalThis.$fetch = vi.fn(() => Promise.reject(new Error('Network error')))
 
       const { login } = useAdminAuth()
       const result = await login('admin@test.com', 'secret')
@@ -62,10 +58,10 @@ describe('useAdminAuth', () => {
 
   describe('logout', () => {
     it('clears user and navigates to login', async () => {
-      vi.stubGlobal('$fetch', vi.fn(() => Promise.resolve({
+      globalThis.$fetch = vi.fn(() => Promise.resolve({
         status: 'success',
         user: { id: 1, email: 'admin@test.com', username: 'admin' },
-      })))
+      }))
 
       const { login, logout, isAuthenticated } = useAdminAuth()
       await login('admin@test.com', 'secret')
@@ -74,7 +70,7 @@ describe('useAdminAuth', () => {
       logout()
 
       expect(isAuthenticated.value).toBe(false)
-      expect(navigateTo).toHaveBeenCalledWith('/admin/login')
+      expect(globalThis.navigateTo).toHaveBeenCalledWith('/admin/login')
     })
   })
 })

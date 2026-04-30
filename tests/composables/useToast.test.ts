@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { ref } from 'vue'
 
-// Mock Nuxt's useState
+// Mock Nuxt's useState before importing
 const mockState = ref<any[]>([])
-vi.stubGlobal('useState', (_key: string, init: () => any[]) => {
+globalThis.useState = vi.fn((_key: string, init?: () => any[]) => {
   if (mockState.value.length === 0 && init) {
     mockState.value = init()
   }
@@ -16,10 +16,6 @@ const { useToast } = await import('~/composables/useToast')
 describe('useToast', () => {
   beforeEach(() => {
     mockState.value = []
-  })
-
-  afterEach(() => {
-    vi.unstubAllGlobals()
   })
 
   it('starts with empty toasts', () => {

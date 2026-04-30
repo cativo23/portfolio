@@ -1,17 +1,17 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 const mockState = {
   toasts: [] as any[],
 }
 
-vi.stubGlobal('useToast', () => ({
+globalThis.useToast = vi.fn(() => ({
   success: vi.fn((msg: string) => mockState.toasts.push({ type: 'success', message: msg })),
   error: vi.fn((msg: string) => mockState.toasts.push({ type: 'error', message: msg })),
   toasts: mockState.toasts,
 }))
 
 let lastFetchCall: { url: string; options: any } | null = null
-vi.stubGlobal('$fetch', vi.fn((url: string, options?: any) => {
+globalThis.$fetch = vi.fn((url: string, options?: any) => {
   lastFetchCall = { url, options }
   if (url === '/api/contacts') {
     if (mockState.contactsResponse) {
@@ -20,7 +20,7 @@ vi.stubGlobal('$fetch', vi.fn((url: string, options?: any) => {
     return Promise.resolve({ status: 'success' })
   }
   return Promise.reject(new Error('Not mocked'))
-}))
+})
 
 const { useContactForm } = await import('~/composables/useContactForm')
 
@@ -29,10 +29,6 @@ describe('useContactForm', () => {
     mockState.toasts = []
     lastFetchCall = null
     mockState.contactsResponse = undefined
-  })
-
-  afterEach(() => {
-    vi.unstubAllGlobals()
   })
 
   describe('validateForm', () => {
