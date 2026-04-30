@@ -25,12 +25,6 @@ useHead({
       rel: 'icon',
       type: 'image/ico',
       href: '/favicon.ico'
-    },
-    {
-      rel: 'alternate',
-      type: 'application/rss+xml',
-      title: 'Carlos Cativo - Blog RSS Feed',
-      href: '/feed.xml'
     }
   ],
   script: [
@@ -61,6 +55,7 @@ useHead({
 .page-transition-wrapper .page-leave-active {
   position: fixed;
   left: 0;
+  width: 100%;
   transition: all .2s linear;
 }
 
