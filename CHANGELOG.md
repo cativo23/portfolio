@@ -11,6 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.8.0] - 2026-05-01
+
+### Changed
+- **About Page Rewrite** — Replaced API-fetched bio with hardcoded static copy. New sections: Hero, Background, Experience timeline, Stack, Featured Projects, Outside Code, and Closing.
+- **Side Projects → Featured Projects** — About page now reuses the `PortfolioSection` component to display live featured projects from the API instead of a static list.
+- **Page Transition Fix** — Fixed horizontal overflow caused by Vue page transitions pushing content off-screen to the right.
+
+### Removed
+- **Blog** — Removed all blog content, pages (`/blog/*`), admin blog management, and related components after migrating to Ghost at `blog.cativo.dev`.
+- **Blog Dependencies** — Uninstalled `@nuxt/content`, `@nuxtjs/mdc`, and `better-sqlite3`.
+- **AdminMarkdownEditor** — Removed unused markdown editor component.
+
+---
+
 ## [1.7.0] - 2026-04-14
 
 ### Added
