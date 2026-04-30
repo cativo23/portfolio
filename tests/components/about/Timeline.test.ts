@@ -6,8 +6,8 @@ const MapPinMock = { template: '<svg />' }
 
 describe('Timeline', () => {
   const items = [
-    { title: 'Tech Lead', company: 'Blue Medical', period: '2022-Present', location: 'Guatemala' },
-    { title: 'Backend Dev', company: 'OrangeSoftCo', period: '2020-2022' },
+    { role: 'Tech Lead', company: 'Blue Medical', period: '2022-Present', location: 'Guatemala', description: 'Leading development' },
+    { role: 'Backend Dev', company: 'OrangeSoftCo', period: '2020-2022', description: 'Backend work' },
   ]
 
   it('renders timeline items', () => {
@@ -30,7 +30,7 @@ describe('Timeline', () => {
 
   it('does not render location when not provided', () => {
     const itemsWithoutLocation = [
-      { title: 'Backend Dev', company: 'OrangeSoftCo', period: '2020-2022' },
+      { role: 'Backend Dev', company: 'OrangeSoftCo', period: '2020-2022', description: 'Backend work' },
     ]
     const wrapper = mount(Timeline, {
       props: { items: itemsWithoutLocation },
