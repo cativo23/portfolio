@@ -4,7 +4,7 @@
       <NuxtLink to="/admin/projects" class="text-tokyo-night-blue hover:text-tokyo-night-cyan">
         <LucideArrowLeft class="w-4 h-4" />
       </NuxtLink>
-      <h1 class="text-xl font-bold text-tokyo-night-text">New Project</h1>
+      <h1 class="text-xl font-bold text-tokyo-night-text font-mono"><span class="text-tokyo-night-purple">❯</span> New Project</h1>
     </div>
 
     <form @submit.prevent="saveProject" class="space-y-6 max-w-3xl">

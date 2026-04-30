@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-xl font-bold text-tokyo-night-text">Users</h1>
+      <h1 class="text-xl font-bold text-tokyo-night-text font-mono"><span class="text-tokyo-night-purple">❯</span> Users</h1>
       <button
         @click="openCreateModal"
         class="flex items-center gap-2 px-4 py-2 font-mono text-sm transition-colors border rounded-lg bg-tokyo-night-green/20 text-tokyo-night-green border-tokyo-night-green/30 hover:bg-tokyo-night-green/30"

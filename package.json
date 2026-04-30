@@ -1,6 +1,6 @@
 {
   "name": "nuxt-app",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -15,12 +15,10 @@
   },
   "dependencies": {
     "@dmncodes/vue-typing": "^1.0.5",
-    "@nuxt/content": "^3.12.0",
     "@nuxt/image": "^2.0.0",
     "@nuxt/scripts": "^0.13.2",
     "@toast-ui/editor": "^3.2.2",
     "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
-    "better-sqlite3": "^11.10.0",
     "motion-v": "^1.2.1",
     "nuxt": "^4.4.2",
     "nuxt-lucide-icons": "^1.0.5",
@@ -31,7 +29,6 @@
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "devDependencies": {
     "@nuxthub/core": "^0.9.x",
-    "@nuxtjs/mdc": "^0.20.2",
     "@nuxtjs/sitemap": "^7.6.0",
     "@nuxtjs/tailwindcss": "^6.x",
     "@playwright/test": "^1.59.1",

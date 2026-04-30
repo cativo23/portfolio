@@ -1,23 +1,15 @@
 <template>
   <div>
-    <h1 class="text-xl font-bold text-tokyo-night-text mb-6">Dashboard</h1>
+    <h1 class="text-xl font-bold text-tokyo-night-text mb-6 font-mono"><span class="text-tokyo-night-purple">❯</span> Dashboard</h1>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
       <div class="bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded-lg p-6">
         <div class="flex items-center gap-3 mb-2">
           <LucideFolderOpen class="w-5 h-5 text-tokyo-night-blue" />
           <h3 class="text-sm text-tokyo-night-muted font-mono">Projects</h3>
         </div>
         <p class="text-3xl font-bold text-tokyo-night-text">{{ projectCount }}</p>
-      </div>
-
-      <div class="bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded-lg p-6">
-        <div class="flex items-center gap-3 mb-2">
-          <LucideFileText class="w-5 h-5 text-tokyo-night-green" />
-          <h3 class="text-sm text-tokyo-night-muted font-mono">Blog Posts</h3>
-        </div>
-        <p class="text-3xl font-bold text-tokyo-night-text">{{ blogCount }}</p>
       </div>
 
       <div class="bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded-lg p-6">
@@ -36,10 +28,6 @@
         <NuxtLink to="/admin/projects" class="flex items-center gap-3 p-3 rounded bg-tokyo-night-bg hover:bg-tokyo-night-highlight/50 transition-colors">
           <LucidePlus class="w-4 h-4 text-tokyo-night-green" />
           <span class="text-sm">Add New Project</span>
-        </NuxtLink>
-        <NuxtLink to="/admin/blog/new" class="flex items-center gap-3 p-3 rounded bg-tokyo-night-bg hover:bg-tokyo-night-highlight/50 transition-colors">
-          <LucidePlus class="w-4 h-4 text-tokyo-night-green" />
-          <span class="text-sm">Write New Post</span>
         </NuxtLink>
         <NuxtLink to="/admin/contacts" class="flex items-center gap-3 p-3 rounded bg-tokyo-night-bg hover:bg-tokyo-night-highlight/50 transition-colors">
           <LucideInbox class="w-4 h-4 text-tokyo-night-blue" />
@@ -61,7 +49,6 @@ definePageMeta({
 })
 
 const projectCount = ref(0)
-const blogCount = ref(0)
 const unreadContacts = ref(0)
 
 // Load stats from API
@@ -74,12 +61,6 @@ onMounted(async () => {
 
     const projectsData = projects as Record<string, unknown>
     const contactsData = contacts as Record<string, unknown>
-
-    // Blog count from content API
-    try {
-      const posts = await queryCollection('blog').all()
-      blogCount.value = posts.length
-    } catch { /* ignore */ }
 
     const projArray = (projectsData.data as unknown[]) || []
     const contactArray = (contactsData.data as Array<Record<string, unknown>>) || []

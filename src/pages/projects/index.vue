@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BaseSectionHeading title=" My Projects" />
+    <BaseSectionHeading title="Projects" />
 
     <!-- Projects Grid -->
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -27,7 +27,7 @@
 
       <!-- Projects -->
       <BaseCard v-else :to="`/projects/${project.id}`" :key="project.id || project.title" :prefetch="false" v-for="project in displayed">
-        <h3 class="mb-4 text-2xl font-bold font-mono text-tokyo-night-blue">{{ project.title }}</h3>
+        <h3 class="mb-4 text-2xl font-bold font-mono text-tokyo-night-blue"><span class="text-tokyo-night-purple">❯</span> {{ project.title }}</h3>
         <p class="mb-4 font-mono text-tokyo-night-muted">{{ project.description }}</p>
         <div class="flex flex-wrap gap-2 mb-4">
           <span
