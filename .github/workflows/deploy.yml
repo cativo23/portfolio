@@ -61,6 +61,21 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.release.tag_name }}
+      - name: Copy compose file to server
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "compose.prod.yml"
+          target: "/home/cativo23/deploy/portfolio-deploy"
+          debug: true
+          timeout: 10m
+          command_timeout: 10m
+          proxy_timeout: 10m
+          tar_exec: tar
+          tar_dereference: true
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -68,44 +83,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          timeout: 2m
-          command_timeout: 15m
           envs: DOCKER_USERNAME,DOCKER_PASSWORD
           script: |
-            # Create deploy directory if it doesn't exist
-            mkdir -p /home/cativo23/deploy/portfolio-deploy
             cd /home/cativo23/deploy/portfolio-deploy
-
-            # Create compose file directly on server
-            cat > compose.prod.yml << 'COMPOSE_EOF'
-            name: portfolio-prod
-
-            services:
-              app:
-                image: ${DOCKER_USERNAME:-cativo23}/portfolio:latest
-                restart: unless-stopped
-                environment:
-                  NODE_ENV: production
-                  PORT: 3000
-                healthcheck:
-                  test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"]
-                  interval: 30s
-                  timeout: 5s
-                  start_period: 10s
-                  retries: 3
-                labels:
-                  - "traefik.enable=true"
-                  - "traefik.http.routers.portfolio.rule=Host(\`cativo.dev\`)"
-                  - "traefik.http.routers.portfolio.entrypoints=websecure"
-                  - "traefik.http.routers.portfolio.tls.certresolver=letsencryptresolver"
-                  - "traefik.http.services.portfolio.loadbalancer.server.port=3000"
-                  - "traefik.docker.network=space-server_web"
-                networks:
-                  - space-server_web
-            networks:
-              space-server_web:
-                external: true
-            COMPOSE_EOF
 
             # Login to Docker Hub on server
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
