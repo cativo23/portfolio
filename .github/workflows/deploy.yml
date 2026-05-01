@@ -68,6 +68,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
+          timeout: 2m
+          command_timeout: 15m
           envs: DOCKER_USERNAME,DOCKER_PASSWORD
           script: |
             # Create deploy directory if it doesn't exist
