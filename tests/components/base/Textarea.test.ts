@@ -44,7 +44,7 @@ describe('Textarea', () => {
   it('shows error message and applies error styling', () => {
     const wrapper = mount(Textarea, { props: { error: 'Too short' } })
     expect(wrapper.text()).toContain('Too short')
-    expect(wrapper.find('textarea').classes()).toContain('border-tokyo-night-red')
+    expect(wrapper.find('textarea').classes()).toContain('border-nw-red')
   })
 
   it('sets aria-invalid when there is an error', () => {

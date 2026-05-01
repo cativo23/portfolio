@@ -21,7 +21,7 @@ describe('MetaInfoPair', () => {
     
     // Check default text color
     const valueSpan = wrapper.findAll('span')[1]
-    expect(valueSpan.classes()).toContain('text-tokyo-night-text')
+    expect(valueSpan.classes()).toContain('text-nw-text')
   })
 
   it('renders horizontally when horizontal prop is true', () => {
@@ -49,19 +49,19 @@ describe('MetaInfoPair', () => {
     })
     
     let valueSpan = wrapper.findAll('span')[1]
-    expect(valueSpan.classes()).toContain('text-tokyo-night-green')
-    
+    expect(valueSpan.classes()).toContain('text-nw-green')
+
     await wrapper.setProps({ color: 'error' })
     valueSpan = wrapper.findAll('span')[1]
-    expect(valueSpan.classes()).toContain('text-tokyo-night-red')
-    
+    expect(valueSpan.classes()).toContain('text-nw-red')
+
     await wrapper.setProps({ color: 'warning' })
     valueSpan = wrapper.findAll('span')[1]
-    expect(valueSpan.classes()).toContain('text-tokyo-night-yellow')
-    
+    expect(valueSpan.classes()).toContain('text-nw-yellow')
+
     await wrapper.setProps({ color: 'info' })
     valueSpan = wrapper.findAll('span')[1]
-    expect(valueSpan.classes()).toContain('text-tokyo-night-cyan')
+    expect(valueSpan.classes()).toContain('text-nw-cyan')
   })
   
   it('renders label slot content', () => {

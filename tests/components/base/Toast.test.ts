@@ -53,7 +53,7 @@ describe('Toast', () => {
     await flushPromises()
 
     const alert = wrapper.find('[role="alert"]')
-    expect(alert.classes()).toContain('border-tokyo-night-green')
+    expect(alert.classes()).toContain('toast-success')
   })
 
   it('renders error toast with correct styling', async () => {
@@ -62,7 +62,7 @@ describe('Toast', () => {
     await flushPromises()
 
     const alert = wrapper.find('[role="alert"]')
-    expect(alert.classes()).toContain('border-tokyo-night-red')
+    expect(alert.classes()).toContain('toast-danger')
   })
 
   it('renders warning toast with correct styling', async () => {
@@ -71,7 +71,7 @@ describe('Toast', () => {
     await flushPromises()
 
     const alert = wrapper.find('[role="alert"]')
-    expect(alert.classes()).toContain('border-tokyo-night-yellow')
+    expect(alert.classes()).toContain('toast-warning')
   })
 
   it('renders multiple toasts', async () => {

@@ -55,7 +55,8 @@ describe('Timeline', () => {
       props: { items },
       global: { components: { LucideMapPin: MapPinMock } }
     })
-    const dots = wrapper.findAll('.rounded-full')
-    expect(dots[0]?.classes()).toContain('bg-tokyo-night-green')
+    const leds = wrapper.findAll('.led')
+    expect(leds[0]?.classes()).toContain('green')
+    expect(leds[0]?.classes()).toContain('blink')
   })
 })
