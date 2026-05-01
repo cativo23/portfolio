@@ -183,7 +183,6 @@ const route = useRoute()
 const { fetchProject } = useProjects()
 
 const ALLOWED_REPO_DOMAINS = ['github.com', 'www.github.com', 'gitlab.com', 'www.gitlab.com', 'bitbucket.org', 'www.bitbucket.org']
-const ALLOWED_LIVE_DOMAINS = ['cativo.dev', 'www.cativo.dev']
 
 function isValidRepoUrl(url: string | undefined): boolean {
   if (!url) return false
@@ -200,9 +199,7 @@ function isValidLiveUrl(url: string | undefined): boolean {
   if (!url) return false
   try {
     const parsed = new URL(url)
-    if (parsed.protocol !== 'https:') return false
-    const isCativoDev = ALLOWED_LIVE_DOMAINS.some(domain => parsed.hostname === domain || parsed.hostname.endsWith(`.${domain}`))
-    return isCativoDev || parsed.hostname.includes('.')
+    return parsed.protocol === 'https:' && parsed.hostname.includes('.')
   } catch {
     return false
   }
@@ -234,10 +231,15 @@ const pageDescription = computed(() =>
   project.value?.shortDescription || project.value?.description || 'Mission report'
 )
 
-usePageTitle(pageTitle.value, { description: pageDescription.value })
-
-watch(pageTitle, (title) => {
-  usePageTitle(title, { description: pageDescription.value })
+const baseTitle = useRuntimeConfig().public.baseTitle
+useSeoMeta({
+  title: () => `${baseTitle} - ${pageTitle.value}`,
+  description: () => pageDescription.value,
+  ogTitle: () => `${baseTitle} - ${pageTitle.value}`,
+  ogDescription: () => pageDescription.value,
+  twitterTitle: () => `${baseTitle} - ${pageTitle.value}`,
+  twitterDescription: () => pageDescription.value,
+  twitterCard: 'summary',
 })
 
 function formatYear(dateString?: string) {

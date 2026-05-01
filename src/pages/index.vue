@@ -34,6 +34,9 @@
     <!-- FEATURED CASE FILES -->
     <PortfolioSection />
 
+    <!-- WRITING -->
+    <LatestPosts />
+
     <!-- OPEN CHANNEL -->
     <Contact />
   </div>

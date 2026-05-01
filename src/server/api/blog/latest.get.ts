@@ -33,7 +33,7 @@ function stripHtml(s: string): string {
 
 function pickFirst(s: string, tag: string): string {
   const match = s.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`, 'i'))
-  return match ? decodeEntities(stripCdata(match[1])).trim() : ''
+  return match?.[1] ? decodeEntities(stripCdata(match[1])).trim() : ''
 }
 
 async function fetchLatest(): Promise<BlogPost[]> {
