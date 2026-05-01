@@ -13,18 +13,18 @@ describe('SkillPill', () => {
     expect(wrapper.text()).toBe('TypeScript')
   })
 
-  it('applies advanced (red) class', () => {
+  it('applies advanced (danger) class', () => {
     const wrapper = mount(SkillPill, { props: { name: 'Vue', level: 'advanced' } })
-    expect(wrapper.classes()).toContain('bg-tokyo-night-red')
+    expect(wrapper.classes()).toContain('tag-danger')
   })
 
-  it('applies intermediate (yellow) class', () => {
+  it('applies intermediate (warning) class', () => {
     const wrapper = mount(SkillPill, { props: { name: 'Python', level: 'intermediate' } })
-    expect(wrapper.classes()).toContain('bg-tokyo-night-yellow')
+    expect(wrapper.classes()).toContain('tag-warning')
   })
 
-  it('applies beginner (green) class', () => {
+  it('applies beginner (success) class', () => {
     const wrapper = mount(SkillPill, { props: { name: 'Rust', level: 'beginner' } })
-    expect(wrapper.classes()).toContain('bg-tokyo-night-green')
+    expect(wrapper.classes()).toContain('tag-success')
   })
 })

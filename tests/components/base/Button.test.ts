@@ -24,34 +24,33 @@ describe('Button', () => {
 
   it('applies primary variant classes by default', () => {
     const wrapper = mount(Button)
-    expect(wrapper.classes()).toContain('bg-tokyo-night-cyan')
+    expect(wrapper.classes()).toContain('btn')
   })
 
   it('applies secondary variant classes', () => {
     const wrapper = mount(Button, { props: { variant: 'secondary' } })
-    expect(wrapper.classes()).toContain('border-tokyo-night-cyan')
+    expect(wrapper.classes()).toContain('btn-ghost')
   })
 
   it('applies ghost variant classes', () => {
     const wrapper = mount(Button, { props: { variant: 'ghost' } })
-    expect(wrapper.classes()).toContain('text-tokyo-night-text')
+    expect(wrapper.classes()).toContain('btn-ghost')
+    expect(wrapper.classes()).toContain('border-transparent')
   })
 
   it('applies md size by default', () => {
     const wrapper = mount(Button)
-    expect(wrapper.classes()).toContain('px-5')
-    expect(wrapper.classes()).toContain('py-2')
+    expect(wrapper.classes()).toContain('btn')
   })
 
   it('applies sm size classes', () => {
     const wrapper = mount(Button, { props: { size: 'sm' } })
-    expect(wrapper.classes()).toContain('px-3')
-    expect(wrapper.classes()).toContain('py-1.5')
+    expect(wrapper.classes()).toContain('btn-sm')
   })
 
   it('applies lg size classes', () => {
     const wrapper = mount(Button, { props: { size: 'lg' } })
-    expect(wrapper.classes()).toContain('px-7')
+    expect(wrapper.classes()).toContain('px-6')
     expect(wrapper.classes()).toContain('py-3')
   })
 

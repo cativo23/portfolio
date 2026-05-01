@@ -10,29 +10,29 @@ describe('Badge', () => {
 
   it('has cyan color by default', () => {
     const wrapper = mount(Badge, { slots: { default: 'Cyan' } })
-    expect(wrapper.classes()).toContain('bg-tokyo-night-cyan/10')
-    expect(wrapper.classes()).toContain('text-tokyo-night-cyan')
+    expect(wrapper.classes()).toContain('bg-nw-cyan/10')
+    expect(wrapper.classes()).toContain('text-nw-cyan')
   })
 
   it('applies magenta color', () => {
     const wrapper = mount(Badge, { props: { color: 'magenta' }, slots: { default: 'Magenta' } })
-    expect(wrapper.classes()).toContain('bg-tokyo-night-magenta/10')
-    expect(wrapper.classes()).toContain('text-tokyo-night-magenta')
+    expect(wrapper.classes()).toContain('bg-nw-purple/10')
+    expect(wrapper.classes()).toContain('text-nw-purple')
   })
 
   it('applies green color', () => {
     const wrapper = mount(Badge, { props: { color: 'green' }, slots: { default: 'Green' } })
-    expect(wrapper.classes()).toContain('bg-tokyo-night-green/10')
+    expect(wrapper.classes()).toContain('bg-nw-green/10')
   })
 
   it('applies yellow color', () => {
     const wrapper = mount(Badge, { props: { color: 'yellow' }, slots: { default: 'Yellow' } })
-    expect(wrapper.classes()).toContain('bg-tokyo-night-yellow/10')
+    expect(wrapper.classes()).toContain('bg-nw-yellow/10')
   })
 
   it('applies muted color', () => {
     const wrapper = mount(Badge, { props: { color: 'muted' }, slots: { default: 'Muted' } })
-    expect(wrapper.classes()).toContain('bg-tokyo-night-gray/10')
+    expect(wrapper.classes()).toContain('bg-nw-text-line/10')
   })
 
   it('has md size by default', () => {

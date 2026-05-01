@@ -25,8 +25,8 @@ const slots = useSlots()
     :to="to"
     :prefetch="prefetch"
     :class="[
-      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block h-full flex flex-col',
-      hoverable && 'hover:border-tokyo-night-blue',
+      'card relative block h-full flex flex-col transition-colors duration-150',
+      hoverable && 'hover:border-nw-primary-dim',
     ]"
   >
     <div v-if="slots.badge" class="absolute top-3 right-3 z-10">
@@ -35,10 +35,10 @@ const slots = useSlots()
     <div v-if="slots.header">
       <slot name="header" />
     </div>
-    <div :class="padded && 'p-6'">
+    <div :class="padded && 'card-body'">
       <slot />
     </div>
-    <div v-if="slots.footer" class="border-t border-tokyo-night-gray/30 pt-4 mt-4 px-6 pb-6">
+    <div v-if="slots.footer" class="card-footer">
       <slot name="footer" />
     </div>
   </NuxtLink>
@@ -49,8 +49,8 @@ const slots = useSlots()
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
     :class="[
-      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 block h-full flex flex-col',
-      hoverable && 'hover:border-tokyo-night-blue',
+      'card relative block h-full flex flex-col transition-colors duration-150',
+      hoverable && 'hover:border-nw-primary-dim',
     ]"
   >
     <div v-if="slots.badge" class="absolute top-3 right-3 z-10">
@@ -59,10 +59,10 @@ const slots = useSlots()
     <div v-if="slots.header">
       <slot name="header" />
     </div>
-    <div :class="padded && 'p-6'">
+    <div :class="padded && 'card-body'">
       <slot />
     </div>
-    <div v-if="slots.footer" class="border-t border-tokyo-night-gray/30 pt-4 mt-4 px-6 pb-6">
+    <div v-if="slots.footer" class="card-footer">
       <slot name="footer" />
     </div>
   </a>
@@ -70,8 +70,8 @@ const slots = useSlots()
   <div
     v-else
     :class="[
-      'relative bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded transition-all duration-200 h-full flex flex-col',
-      hoverable && 'hover:border-tokyo-night-blue',
+      'card relative h-full flex flex-col transition-colors duration-150',
+      hoverable && 'hover:border-nw-primary-dim',
     ]"
   >
     <div v-if="slots.badge" class="absolute top-3 right-3 z-10">
@@ -80,10 +80,10 @@ const slots = useSlots()
     <div v-if="slots.header">
       <slot name="header" />
     </div>
-    <div :class="padded && 'p-6'">
+    <div :class="padded && 'card-body'">
       <slot />
     </div>
-    <div v-if="slots.footer" class="border-t border-tokyo-night-gray/30 pt-4 mt-4 px-6 pb-6">
+    <div v-if="slots.footer" class="card-footer">
       <slot name="footer" />
     </div>
   </div>

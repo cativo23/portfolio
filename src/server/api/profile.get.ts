@@ -28,7 +28,7 @@ export default defineEventHandler(async () => {
         summary: [
           "I've spent the last 9 years building production systems in El Salvador — a market where fintech infrastructure is genuinely hard. No nice SDKs. I've implemented Visa ISO 8583 over SOAP by hand, built Guatemala's FEL electronic invoicing system from scratch, and designed payment microservices that handle real billing across multiple healthcare clinics daily.",
           "My primary stack is Laravel, NestJS, FastAPI, and Vue/Nuxt, running on Docker, deployed to AWS. I've been building on top of these long enough to know when the framework is the wrong choice — and to have the production incidents to back that up.",
-          "The last two years I've gone deep into AI-powered systems: marIA, a voice agent handling automated patient scheduling in Spanish via ElevenLabs ConvAI; VittBot, a multi-agent crypto trading bot with three independent Claude agents plus a deterministic risk manager; Clarify, an AI legal contract auditor with Stripe billing. I don't just call AI APIs — I design the validation layers, retry logic, and safeguards that make them production-safe.",
+          "Most of my career has been backend microservices and full-stack tech leadership — leading BlueMeds end-to-end (API + Angular/Ionic admin), then building Payment Service and Invoice Service from scratch as standalone microservices. The last 6 months I've shifted focus into AI-powered systems: sofIA, a voice agent handling automated patient scheduling in Spanish via ElevenLabs ConvAI; VittBot, a multi-agent crypto trading bot with three independent Claude agents plus a deterministic risk manager; Clarify, an AI legal contract auditor with Stripe billing. I don't just call AI APIs — I design the validation layers, retry logic, and safeguards that make them production-safe.",
           "I also run my own production infrastructure at cativo.dev — Traefik, Prometheus, Uptime Kuma, self-hosted mail, monitoring stack. Not because it's cheaper, but because it's the only way to actually understand what you're deploying to."
         ],
         experience: [
@@ -39,8 +39,8 @@ export default defineEventHandler(async () => {
             location: 'Guatemala (Remote)',
             description: "Leading development across multiple healthcare systems simultaneously. Code reviews, requirement refinement, technical guidance for the team, and hands-on delivery of the hardest parts.",
             highlights: [
-              "marIA — AI voice agent for automated patient scheduling via ElevenLabs ConvAI + n8n. Resolved bugs affecting 42% of conversations (STT misfires, language leakage, infinite retry loops). Designed the full management platform: FastAPI API + Nuxt dashboard + Typer CLI.",
-              "Payment Service — Built from scratch. Visa ISO 8583, BAC SOAP/XML, card tokenization, reversals, webhook handling. Led 6-agent parallel security audit (OWASP: hardcoded secrets, Sanctum token expiration, CORS, PHP EOL).",
+              "sofIA — AI voice agent for automated patient scheduling via ElevenLabs ConvAI + n8n. Resolved bugs affecting 42% of conversations (STT misfires, language leakage, infinite retry loops). Designed the full management platform: FastAPI API + Nuxt dashboard + Typer CLI.",
+              "Payment Service — Built from scratch. Visa ISO 8583, BAC SOAP/XML, card tokenization, reversals, webhook handling. Led an OWASP security audit (hardcoded secrets in CI/CD, Sanctum token expiration, CORS, PHP EOL).",
               "Invoice Service — Built from scratch. Guatemala FEL tax system via Megaprint, Strategy Pattern for provider swaps, SAP integration, async pipeline via Redis/Horizon, QR code generation, multi-establishment support.",
               "BlueMeds Platform — Core developer on medication subscription platform. 10+ integrations: Odoo ERP, WhatsApp/Botmaker, FreshDesk, Bland AI, VivoLife, payment APIs.",
               "BlueMeds Admin Panel — Angular/Ionic admin panel for the pharmaceutical platform."
@@ -77,8 +77,8 @@ export default defineEventHandler(async () => {
           { name: 'Frontend', skills: [{ name: 'Vue/Nuxt' }, { name: 'Angular' }, { name: 'Ionic / TailwindCSS' }, { name: 'TypeScript / full-stack when needed' }]},
           { name: 'Data', skills: [{ name: 'PostgreSQL' }, { name: 'MySQL / Redis' }, { name: 'Meilisearch' }, { name: 'Supabase / Prisma' }, { name: 'TypeORM' }, { name: 'SQLAlchemy' }]},
           { name: 'Infra & DevOps', skills: [{ name: 'Docker' }, { name: 'AWS (S3, ECR, EC2) / Traefik' }, { name: 'Nginx' }, { name: 'Cloudflare / GitHub Actions' }, { name: 'Bitbucket Pipelines' }]},
-          { name: 'Specialty', skills: [{ name: 'Multi-agent LLM systems / ISO 8583' }, { name: 'FEL invoicing' }, { name: 'SAP / ElevenLabs ConvAI' }, { name: 'Ory IAM' }]},
-          { name: 'AI / Integrations', skills: [{ name: 'Claude API' }, { name: 'OpenAI' }, { name: 'ElevenLabs / n8n' }, { name: 'Stripe' }, { name: 'Odoo ERP / Botmaker' }, { name: 'FreshDesk' }, { name: 'Bland AI' }]},
+          { name: 'Specialty', skills: [{ name: 'ISO 8583 over SOAP' }, { name: 'Multi-provider FEL integration' }, { name: 'SAP integration' }, { name: 'Multi-gateway payment processing' }, { name: 'Ory IAM (Kratos / Hydra / Keto)' }, { name: 'Multi-agent LLM systems' }]},
+          { name: 'Integrations', skills: [{ name: 'Stripe' }, { name: 'Odoo ERP' }, { name: 'WhatsApp / Botmaker' }, { name: 'FreshDesk' }, { name: 'SAP' }, { name: 'Bland AI' }, { name: 'ElevenLabs ConvAI' }, { name: 'n8n' }, { name: 'Claude / OpenAI APIs' }]},
         ],
         outsideCode: [
           {

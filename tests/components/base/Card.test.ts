@@ -33,30 +33,28 @@ describe('Card', () => {
 
   it('applies default styling classes', () => {
     const wrapper = makeWrapper()
-    expect(wrapper.classes()).toContain('bg-tokyo-night-dark')
-    expect(wrapper.classes()).toContain('border-tokyo-night-gray/30')
+    expect(wrapper.classes()).toContain('card')
   })
 
   it('applies hover effect by default', () => {
     const wrapper = makeWrapper()
-    expect(wrapper.classes()).toContain('hover:border-tokyo-night-blue')
+    expect(wrapper.classes()).toContain('hover:border-nw-primary-dim')
   })
 
   it('removes hover effect when hoverable is false', () => {
     const wrapper = makeWrapper({ props: { hoverable: false } })
-    expect(wrapper.classes()).not.toContain('hover:border-tokyo-night-blue')
+    expect(wrapper.classes()).not.toContain('hover:border-nw-primary-dim')
   })
 
   it('applies padding by default', () => {
     const wrapper = makeWrapper({ slots: { default: 'Padded' } })
     expect(wrapper.text()).toContain('Padded')
-    // The wrapper around the slot should have p-6
-    expect(wrapper.html()).toContain('p-6')
+    expect(wrapper.html()).toContain('card-body')
   })
 
   it('removes padding when padded is false', () => {
     const wrapper = makeWrapper({ props: { padded: false }, slots: { default: 'No Pad' } })
-    expect(wrapper.html()).not.toContain('p-6')
+    expect(wrapper.html()).not.toContain('card-body')
   })
 
   it('renders as NuxtLink when to is provided', () => {

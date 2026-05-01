@@ -1,13 +1,13 @@
 <template>
-  <div class="flex items-center gap-3 text-xs font-mono">
-    <span class="text-tokyo-night-muted">API Status:</span>
+  <div class="flex items-center gap-3 text-xs font-sys">
+    <span class="text-nw-text-dim">API Status:</span>
     <span class="flex items-center" :class="statusColor">
       <StatusIndicator :status="indicatorStatus" :text="statusText" pulse size="sm" />
     </span>
-    <span v-if="apiInfo?.version" class="text-tokyo-night-muted">v{{ apiInfo.version }}</span>
+    <span v-if="apiInfo?.version" class="text-nw-text-dim">v{{ apiInfo.version }}</span>
     <NuxtLink
       to="/health"
-      class="text-tokyo-night-blue hover:text-tokyo-night-text hover:underline transition-colors"
+      class="text-nw-primary hover:text-nw-text hover:underline transition-colors"
       title="View detailed health status"
     >
       <LucideActivity class="w-3.5 h-3.5" />
@@ -51,7 +51,7 @@ const statusText = computed(() => {
 })
 
 const statusColor = computed(() => {
-  if (loading.value) return 'text-tokyo-night-muted'
+  if (loading.value) return 'text-nw-text-dim'
   if (!health.value) return 'text-red-400'
 
   const allUp = Object.values(health.value.components).every(c => c.status === 'up')

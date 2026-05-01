@@ -1,0 +1,3 @@
+[submodule ".nightwire"]
+	path = .nightwire
+	url = https://github.com/cativo23/nightwire

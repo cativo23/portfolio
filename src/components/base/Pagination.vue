@@ -14,7 +14,7 @@
     <template v-for="page in visiblePages" :key="page">
       <button
         v-if="page !== '...' && page === pagination.page"
-        class="px-4 py-2 rounded-lg bg-tokyo-night-highlight text-black font-bold min-w-[2.5rem]"
+        class="px-4 py-2 rounded-lg bg-void-raised text-black font-bold min-w-[2.5rem]"
         :aria-label="`Go to page ${page}`"
         aria-current="page"
       >
@@ -28,7 +28,7 @@
       >
         {{ page }}
       </BaseButton>
-      <span v-else class="px-2 text-tokyo-night-text">...</span>
+      <span v-else class="px-2 text-nw-text">...</span>
     </template>
 
     <!-- Next Button -->
@@ -42,7 +42,7 @@
     </BaseButton>
 
     <!-- Page Info -->
-    <div class="ml-4 text-sm text-tokyo-night-text">
+    <div class="ml-4 text-meta">
       <span class="sr-only">Showing</span>
       {{ ((pagination.page - 1) * pagination.limit) + 1 }}-{{ Math.min(pagination.page * pagination.limit, pagination.total_items) }} of {{ pagination.total_items }}
     </div>

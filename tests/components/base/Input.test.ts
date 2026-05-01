@@ -45,7 +45,7 @@ describe('Input', () => {
   it('shows error message and applies error styling', () => {
     const wrapper = mount(Input, { props: { error: 'This field is required' } })
     expect(wrapper.text()).toContain('This field is required')
-    expect(wrapper.find('input').classes()).toContain('border-tokyo-night-red')
+    expect(wrapper.find('input').classes()).toContain('border-nw-red')
   })
 
   it('sets aria-invalid when there is an error', () => {

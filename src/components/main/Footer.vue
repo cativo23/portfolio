@@ -1,34 +1,50 @@
 <template>
-  <footer class="bg-tokyo-night-dark border-t border-tokyo-night-gray/30">
-    <div class="container mx-auto px-4 py-3">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-3 font-mono text-xs">
-        <!-- Left: Copyright -->
-        <div class="text-tokyo-night-muted">
-          <span class="text-tokyo-night-purple">© {{ currentYear }}</span> Carlos Cativo
+  <footer class="bg-void border-t border-nw-text-faint">
+    <div class="container mx-auto px-4 py-2">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-2 font-stamp uppercase tracking-[0.1em] text-[10px]">
+        <!-- Left: System status + version -->
+        <div class="flex items-center gap-2 text-nw-text-dim">
+          <span class="led" :class="ledClass" />
+          <span class="text-nw-text">cativo.dev API</span>
+          <span class="text-nw-text-faint">·</span>
+          <span :class="getApiStatusColor(apiStatus)">{{ loading ? 'checking…' : apiStatus.toLowerCase() }}</span>
+          <span v-if="apiVersion" class="text-nw-text-faint">·</span>
+          <span v-if="apiVersion" class="font-mono normal-case text-nw-text-dim tracking-normal">v{{ apiVersion }}</span>
+          <span class="text-nw-text-faint">·</span>
+          <span class="font-mincho text-nw-primary-dim normal-case tracking-normal text-[12px]">自家管理</span>
         </div>
 
-        <!-- Center: API Status -->
-        <div class="flex items-center gap-2 text-tokyo-night-muted">
-          <span :class="getApiStatusColor(apiStatus)">●</span>
-          <span>API Status: <span :class="getApiStatusColor(apiStatus)">{{ loading ? 'Checking...' : apiStatus }}</span></span>
-          <span class="text-tokyo-night-gray/30">|</span>
-          <span class="text-tokyo-night-blue">v{{ apiVersion }}</span>
+        <!-- Center: live clock SV -->
+        <div class="flex items-center gap-2 text-nw-text-dim">
+          <span class="font-mono normal-case tracking-normal">{{ clock }}</span>
+          <span class="text-nw-text-faint">·</span>
+          <span>UTC-6 SV</span>
         </div>
 
-        <!-- Right: Social Links -->
-        <div class="flex items-center gap-4">
-          <a href="https://github.com/cativo23" target="_blank" rel="noopener noreferrer"
-             class="text-tokyo-night-blue hover:text-tokyo-night-cyan transition-colors">
-            GitHub
-          </a>
-          <a href="https://linkedin.com/in/carlos-cativo" target="_blank" rel="noopener noreferrer"
-             class="text-tokyo-night-blue hover:text-tokyo-night-cyan transition-colors">
-            LinkedIn
-          </a>
-          <a href="https://x.com/cativo23" target="_blank" rel="noopener noreferrer"
-             class="text-tokyo-night-blue hover:text-tokyo-night-cyan transition-colors">
-            X
-          </a>
+        <!-- Right: socials + © -->
+        <div class="flex items-center gap-3 text-nw-text-dim">
+          <a
+            href="https://github.com/cativo23"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-nw-primary hover:text-nw-primary-hot transition-colors"
+          >GitHub</a>
+          <span class="text-nw-text-faint">·</span>
+          <a
+            href="https://linkedin.com/in/carlos-cativo"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-nw-primary hover:text-nw-primary-hot transition-colors"
+          >LinkedIn</a>
+          <span class="text-nw-text-faint">·</span>
+          <a
+            href="https://x.com/cativo23"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-nw-primary hover:text-nw-primary-hot transition-colors"
+          >X</a>
+          <span class="text-nw-text-faint">·</span>
+          <span>© {{ currentYear }}</span>
         </div>
       </div>
     </div>
@@ -36,23 +52,23 @@
 </template>
 
 <script lang="ts" setup>
-import { createLucideIcon } from 'lucide-vue-next';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
-// Create the XIcon component
-const XIcon = createLucideIcon("X", [
-  [
-    "path",
-    {
-      d: "M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z",
-      stroke: "none",
-      fill: "currentColor",
-    },
-  ],
-]);
-
-// Add a reactive property for the current year
 const currentYear = new Date().getFullYear();
+
+// Live clock for UTC-6 (El Salvador)
+const clock = ref('--:--:--');
+let clockInterval: ReturnType<typeof setInterval> | null = null;
+
+function updateClock() {
+  const now = new Date();
+  // UTC-6 offset (El Salvador, no DST)
+  const sv = new Date(now.getTime() + (now.getTimezoneOffset() - 360) * 60 * 1000);
+  const hh = String(sv.getHours()).padStart(2, '0');
+  const mm = String(sv.getMinutes()).padStart(2, '0');
+  const ss = String(sv.getSeconds()).padStart(2, '0');
+  clock.value = `${hh}:${mm}:${ss}`;
+}
 
 // API Status
 const apiStatus = ref<'Operational' | 'Degraded' | 'Down'>('Operational');
@@ -60,10 +76,17 @@ const apiVersion = ref<string>('');
 const loading = ref(true);
 
 const getApiStatusColor = (status: string) => {
-  if (status === 'Operational') return 'text-tokyo-night-green';
-  if (status === 'Degraded') return 'text-tokyo-night-yellow';
-  return 'text-tokyo-night-red';
+  if (status === 'Operational') return 'text-nw-green';
+  if (status === 'Degraded') return 'text-nw-yellow';
+  return 'text-nw-red';
 };
+
+const ledClass = computed(() => {
+  if (loading.value) return '';
+  if (apiStatus.value === 'Operational') return 'green blink';
+  if (apiStatus.value === 'Degraded') return 'yellow blink';
+  return 'red';
+});
 
 async function fetchApiStatus() {
   try {
@@ -90,8 +113,11 @@ async function fetchApiStatus() {
 if (import.meta.client) {
   onMounted(() => {
     fetchApiStatus();
+    updateClock();
+    clockInterval = setInterval(updateClock, 1000);
+  });
+  onUnmounted(() => {
+    if (clockInterval) clearInterval(clockInterval);
   });
 }
 </script>
-
-<style></style>

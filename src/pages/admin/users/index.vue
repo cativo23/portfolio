@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-xl font-bold text-tokyo-night-text font-mono"><span class="text-tokyo-night-purple">❯</span> Users</h1>
+      <h1 class="text-xl font-bold text-nw-text font-sys">Users</h1>
       <button
         @click="openCreateModal"
-        class="flex items-center gap-2 px-4 py-2 font-mono text-sm transition-colors border rounded-lg bg-tokyo-night-green/20 text-tokyo-night-green border-tokyo-night-green/30 hover:bg-tokyo-night-green/30"
+        class="flex items-center gap-2 px-4 py-2 font-sys text-sm transition-colors border rounded-lg bg-nw-green/20 text-nw-green border-nw-green/30 hover:bg-nw-green/30"
       >
         <LucidePlus class="w-4 h-4" />
         New User
@@ -12,49 +12,49 @@
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="py-12 font-mono text-center text-tokyo-night-muted">
+    <div v-if="loading" class="py-12 font-sys text-center text-nw-text-dim">
       Loading users...
     </div>
 
     <!-- Error -->
-    <div v-else-if="error" class="py-12 font-mono text-center text-tokyo-night-red">
+    <div v-else-if="error" class="py-12 font-sys text-center text-nw-red">
       {{ error }}
     </div>
 
     <!-- Table -->
-    <div v-else-if="users.length" class="overflow-hidden border rounded-lg bg-tokyo-night-dark border-tokyo-night-gray/30">
+    <div v-else-if="users.length" class="overflow-hidden border rounded-lg bg-void-warm border-nw-text-line/30">
       <table class="w-full text-sm">
-        <thead class="bg-tokyo-night-bg">
+        <thead class="bg-void-warm">
           <tr>
-            <th class="px-4 py-3 font-mono text-xs text-left text-tokyo-night-muted">Username</th>
-            <th class="px-4 py-3 font-mono text-xs text-left text-tokyo-night-muted hidden md:table-cell">Email</th>
-            <th class="px-4 py-3 font-mono text-xs text-left text-tokyo-night-muted hidden lg:table-cell">Role</th>
-            <th class="px-4 py-3 font-mono text-xs text-left text-tokyo-night-muted hidden md:table-cell">Created</th>
-            <th class="px-4 py-3 font-mono text-xs text-right text-tokyo-night-muted">Actions</th>
+            <th class="px-4 py-3 font-sys text-xs text-left text-nw-text-dim">Username</th>
+            <th class="px-4 py-3 font-sys text-xs text-left text-nw-text-dim hidden md:table-cell">Email</th>
+            <th class="px-4 py-3 font-sys text-xs text-left text-nw-text-dim hidden lg:table-cell">Role</th>
+            <th class="px-4 py-3 font-sys text-xs text-left text-nw-text-dim hidden md:table-cell">Created</th>
+            <th class="px-4 py-3 font-sys text-xs text-right text-nw-text-dim">Actions</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-tokyo-night-gray/20">
-          <tr v-for="user in users" :key="user.id" class="transition-colors hover:bg-tokyo-night-highlight/20">
+        <tbody class="divide-y divide-nw-text-line/20">
+          <tr v-for="user in users" :key="user.id" class="transition-colors hover:bg-void-raised/20">
             <td class="px-4 py-3">
-              <p class="font-medium text-tokyo-night-text">{{ user.username }}</p>
+              <p class="font-medium text-nw-text">{{ user.username }}</p>
             </td>
             <td class="px-4 py-3 hidden md:table-cell">
-              <span class="text-xs text-tokyo-night-muted">{{ user.email }}</span>
+              <span class="text-xs text-nw-text-dim">{{ user.email }}</span>
             </td>
             <td class="px-4 py-3 hidden lg:table-cell">
-              <span class="px-2 py-1 font-mono text-xs rounded bg-tokyo-night-cyan/20 text-tokyo-night-cyan">
+              <span class="px-2 py-1 font-sys text-xs rounded bg-nw-cyan/20 text-nw-cyan">
                 {{ user.role || 'admin' }}
               </span>
             </td>
             <td class="px-4 py-3 hidden md:table-cell">
-              <span class="text-xs text-tokyo-night-muted">{{ formatDate(user.createdAt || user.created_at) }}</span>
+              <span class="text-xs text-nw-text-dim">{{ formatDate(user.createdAt || user.created_at) }}</span>
             </td>
             <td class="px-4 py-3 text-right">
               <div class="flex justify-end gap-2">
-                <button @click="openEditModal(user)" class="font-mono text-xs text-tokyo-night-blue hover:text-tokyo-night-cyan">
+                <button @click="openEditModal(user)" class="font-sys text-xs text-nw-primary hover:text-nw-cyan">
                   Edit
                 </button>
-                <button @click="openDeleteModal(user)" class="font-mono text-xs text-tokyo-night-red/70 hover:text-tokyo-night-red">
+                <button @click="openDeleteModal(user)" class="font-sys text-xs text-nw-red/70 hover:text-nw-red">
                   Delete
                 </button>
               </div>
@@ -65,57 +65,57 @@
     </div>
 
     <!-- Empty -->
-    <div v-else class="py-12 font-mono text-center text-tokyo-night-muted">
+    <div v-else class="py-12 font-sys text-center text-nw-text-dim">
       No users found.
     </div>
 
     <!-- Create/Edit Modal -->
     <div v-if="modalUser !== undefined" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60" @click.self="closeModal">
-      <div class="bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded-lg p-6 max-w-sm w-full mx-4">
-        <h3 class="text-lg font-bold text-tokyo-night-text mb-4">
+      <div class="bg-void-warm border border-nw-text-line/30 rounded-lg p-6 max-w-sm w-full mx-4">
+        <h3 class="text-lg font-bold text-nw-text mb-4">
           {{ modalUser === null ? 'New User' : 'Edit User' }}
         </h3>
         <form @submit.prevent="saveUser" class="space-y-4">
           <div>
-            <label class="block text-sm text-tokyo-night-cyan font-mono mb-1">Username</label>
+            <label class="block text-sm text-nw-cyan font-sys mb-1">Username</label>
             <input
               v-model="form.username"
               type="text"
               required
               :disabled="modalUser !== null"
-              class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono text-sm disabled:opacity-50"
+              class="w-full px-3 py-2 bg-void-warm text-nw-text border border-nw-text-line rounded focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys text-sm disabled:opacity-50"
               :placeholder="modalUser === null ? 'username' : ''"
             />
           </div>
           <div>
-            <label class="block text-sm text-tokyo-night-cyan font-mono mb-1">Email</label>
+            <label class="block text-sm text-nw-cyan font-sys mb-1">Email</label>
             <input
               v-model="form.email"
               type="email"
               required
-              class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono text-sm"
+              class="w-full px-3 py-2 bg-void-warm text-nw-text border border-nw-text-line rounded focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys text-sm"
               placeholder="user@example.com"
             />
           </div>
           <div>
-            <label class="block text-sm text-tokyo-night-cyan font-mono mb-1">
+            <label class="block text-sm text-nw-cyan font-sys mb-1">
               {{ modalUser === null ? 'Password' : 'New Password (leave blank to keep)' }}
             </label>
             <input
               v-model="form.password"
               type="password"
               :required="modalUser === null"
-              class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border border-tokyo-night-gray rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono text-sm"
+              class="w-full px-3 py-2 bg-void-warm text-nw-text border border-nw-text-line rounded focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys text-sm"
               :placeholder="modalUser === null ? 'min 6 chars' : ''"
             />
           </div>
-          <p v-if="formError" class="text-red-400 text-sm font-mono" role="alert">{{ formError }}</p>
-          <p v-if="formSuccess" class="text-tokyo-night-green text-sm font-mono">{{ formSuccess }}</p>
+          <p v-if="formError" class="text-red-400 text-sm font-sys" role="alert">{{ formError }}</p>
+          <p v-if="formSuccess" class="text-nw-green text-sm font-sys">{{ formSuccess }}</p>
           <div class="flex justify-end gap-3">
-            <button type="button" @click="closeModal" class="px-4 py-2 text-sm text-tokyo-night-muted hover:text-tokyo-night-text transition font-mono">
+            <button type="button" @click="closeModal" class="px-4 py-2 text-sm text-nw-text-dim hover:text-nw-text transition font-sys">
               Cancel
             </button>
-            <button type="submit" :disabled="saving" class="px-4 py-2 text-sm bg-tokyo-night-highlight text-tokyo-night-dark font-mono font-bold rounded shadow hover:bg-tokyo-night-cyan transition disabled:opacity-50">
+            <button type="submit" :disabled="saving" class="px-4 py-2 text-sm bg-void-raised text-void-warm font-sys font-bold rounded shadow hover:bg-nw-cyan transition disabled:opacity-50">
               {{ saving ? 'Saving...' : 'Save' }}
             </button>
           </div>
@@ -125,16 +125,16 @@
 
     <!-- Delete confirmation -->
     <div v-if="deletingUser" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div class="bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded-lg p-6 max-w-sm w-full mx-4">
-        <h3 class="text-lg font-bold text-tokyo-night-text mb-2">Delete User</h3>
-        <p class="text-sm text-tokyo-night-muted mb-6">
-          Are you sure you want to delete "<strong class="text-tokyo-night-text">{{ deletingUser.username }}</strong>"? This cannot be undone.
+      <div class="bg-void-warm border border-nw-text-line/30 rounded-lg p-6 max-w-sm w-full mx-4">
+        <h3 class="text-lg font-bold text-nw-text mb-2">Delete User</h3>
+        <p class="text-sm text-nw-text-dim mb-6">
+          Are you sure you want to delete "<strong class="text-nw-text">{{ deletingUser.username }}</strong>"? This cannot be undone.
         </p>
         <div class="flex justify-end gap-3">
-          <button @click="deletingUser = null" class="px-4 py-2 text-sm text-tokyo-night-muted hover:text-tokyo-night-text transition font-mono">
+          <button @click="deletingUser = null" class="px-4 py-2 text-sm text-nw-text-dim hover:text-nw-text transition font-sys">
             Cancel
           </button>
-          <button @click="confirmDelete" class="px-4 py-2 text-sm bg-tokyo-night-red/20 text-tokyo-night-red border border-tokyo-night-red/30 rounded hover:bg-tokyo-night-red/30 transition font-mono">
+          <button @click="confirmDelete" class="px-4 py-2 text-sm bg-nw-red/20 text-nw-red border border-nw-red/30 rounded hover:bg-nw-red/30 transition font-sys">
             Delete
           </button>
         </div>

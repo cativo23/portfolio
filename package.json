@@ -1,6 +1,6 @@
 {
   "name": "nuxt-app",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,11 +14,9 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@dmncodes/vue-typing": "^1.0.5",
     "@nuxt/image": "^2.0.0",
     "@nuxt/scripts": "^0.13.2",
-    "@toast-ui/editor": "^3.2.2",
-    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
+    "@nuxtjs/mdc": "^0.21.1",
     "motion-v": "^1.2.1",
     "nuxt": "^4.4.2",
     "nuxt-lucide-icons": "^1.0.5",
