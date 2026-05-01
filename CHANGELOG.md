@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.8.2] - 2026-05-01
+
+### Changed
+- **CI** — Bumped `actions/checkout` from v4 to v5 across all workflows to stay ahead of the Node.js 20 → 24 deprecation on GitHub Actions runners.
+
+### Fixed
+- **Deploy** — Restored automatic production deploys after migrating the server from homelab to Hetzner. Updated `SSH_HOST`, `SSH_PORT`, and `SSH_PRIVATE_KEY` secrets in the `prod` environment.
+
+---
+
 ## [1.8.1] - 2026-05-01
 
 ### Fixed
