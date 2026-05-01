@@ -1,5 +1,5 @@
 <template>
-  <NuxtLoadingIndicator :height="1" :throttle="100" color="#f471B5" />
+  <NuxtLoadingIndicator :height="1" :throttle="100" color="#6699ff" />
   <NuxtRouteAnnouncer>
     <template #default="{ message }">
       <p>{{ message }} was loaded.</p>
@@ -48,22 +48,3 @@ useHead({
   ]
 });
 </script>
-
-<style src="assets/css/main.css"></style>
-<style>
-.page-transition-wrapper .page-enter-active,
-.page-transition-wrapper .page-leave-active {
-  position: fixed;
-  left: 0;
-  width: 100%;
-  transition: all .2s linear;
-}
-
-.page-transition-wrapper .page-enter-from {
-  transform: translateX(100%);
-}
-
-.page-transition-wrapper .page-leave-to {
-  transform: translateX(-100%);
-}
-</style>

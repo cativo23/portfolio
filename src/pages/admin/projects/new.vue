@@ -1,121 +1,121 @@
 <template>
   <div>
     <div class="flex items-center gap-3 mb-6">
-      <NuxtLink to="/admin/projects" class="text-tokyo-night-blue hover:text-tokyo-night-cyan">
+      <NuxtLink to="/admin/projects" class="text-nw-primary hover:text-nw-cyan">
         <LucideArrowLeft class="w-4 h-4" />
       </NuxtLink>
-      <h1 class="text-xl font-bold text-tokyo-night-text font-mono"><span class="text-tokyo-night-purple">❯</span> New Project</h1>
+      <h1 class="text-xl font-bold text-nw-text font-sys">New Project</h1>
     </div>
 
     <form @submit.prevent="saveProject" class="space-y-6 max-w-3xl">
       <!-- Title -->
       <div>
-        <label for="title" class="block text-sm text-tokyo-night-cyan font-mono mb-1">Title *</label>
+        <label for="title" class="block text-sm text-nw-cyan font-sys mb-1">Title *</label>
         <input
           id="title"
           v-model="form.title"
           type="text"
           required
           :class="[
-            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
-            fieldErrors.title ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+            'w-full px-3 py-2 bg-void-warm text-nw-text border rounded font-sys focus:outline-none focus:ring-2',
+            fieldErrors.title ? 'border-red-500 focus:ring-red-500' : 'border-nw-text-line focus:ring-nw-cyan'
           ]"
           placeholder="My Awesome Project"
         >
-        <p v-if="fieldErrors.title" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.title }}</p>
+        <p v-if="fieldErrors.title" class="text-red-400 text-xs font-sys mt-1">{{ fieldErrors.title }}</p>
       </div>
 
       <!-- Short Description -->
       <div>
-        <label for="shortDescription" class="block text-sm text-tokyo-night-cyan font-mono mb-1">Short Description *</label>
+        <label for="shortDescription" class="block text-sm text-nw-cyan font-sys mb-1">Short Description *</label>
         <input
           id="shortDescription"
           v-model="form.shortDescription"
           type="text"
           required
           :class="[
-            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
-            fieldErrors.shortDescription ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+            'w-full px-3 py-2 bg-void-warm text-nw-text border rounded font-sys focus:outline-none focus:ring-2',
+            fieldErrors.shortDescription ? 'border-red-500 focus:ring-red-500' : 'border-nw-text-line focus:ring-nw-cyan'
           ]"
           placeholder="One-line description"
         >
-        <p v-if="fieldErrors.shortDescription" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.shortDescription }}</p>
+        <p v-if="fieldErrors.shortDescription" class="text-red-400 text-xs font-sys mt-1">{{ fieldErrors.shortDescription }}</p>
       </div>
 
       <!-- Full Description -->
       <div>
-        <label for="description" class="block text-sm text-tokyo-night-cyan font-mono mb-1">Description (Markdown)</label>
+        <label for="description" class="block text-sm text-nw-cyan font-sys mb-1">Description (Markdown)</label>
         <textarea
           id="description"
           v-model="form.description"
           rows="6"
           :class="[
-            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2 resize-y',
-            fieldErrors.description ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+            'w-full px-3 py-2 bg-void-warm text-nw-text border rounded font-sys focus:outline-none focus:ring-2 resize-y',
+            fieldErrors.description ? 'border-red-500 focus:ring-red-500' : 'border-nw-text-line focus:ring-nw-cyan'
           ]"
           placeholder="Full project description in Markdown..."
         ></textarea>
-        <p v-if="fieldErrors.description" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.description }}</p>
+        <p v-if="fieldErrors.description" class="text-red-400 text-xs font-sys mt-1">{{ fieldErrors.description }}</p>
       </div>
 
       <!-- Tech Stack -->
       <div>
-        <label for="techStack" class="block text-sm text-tokyo-night-cyan font-mono mb-1">Tech Stack (comma-separated)</label>
+        <label for="techStack" class="block text-sm text-nw-cyan font-sys mb-1">Tech Stack (comma-separated)</label>
         <input
           id="techStack"
           v-model="form.techStack"
           type="text"
           :class="[
-            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
-            fieldErrors.techStack ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+            'w-full px-3 py-2 bg-void-warm text-nw-text border rounded font-sys focus:outline-none focus:ring-2',
+            fieldErrors.techStack ? 'border-red-500 focus:ring-red-500' : 'border-nw-text-line focus:ring-nw-cyan'
           ]"
           placeholder="NestJS, TypeScript, Docker"
         >
-        <p v-if="fieldErrors.techStack" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.techStack }}</p>
+        <p v-if="fieldErrors.techStack" class="text-red-400 text-xs font-sys mt-1">{{ fieldErrors.techStack }}</p>
       </div>
 
       <!-- URLs -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label for="repoUrl" class="block text-sm text-tokyo-night-cyan font-mono mb-1">Repository URL</label>
+          <label for="repoUrl" class="block text-sm text-nw-cyan font-sys mb-1">Repository URL</label>
           <input
             id="repoUrl"
             v-model="form.repoUrl"
             type="url"
             :class="[
-              'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
-              fieldErrors.repoUrl ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+              'w-full px-3 py-2 bg-void-warm text-nw-text border rounded font-sys focus:outline-none focus:ring-2',
+              fieldErrors.repoUrl ? 'border-red-500 focus:ring-red-500' : 'border-nw-text-line focus:ring-nw-cyan'
             ]"
             placeholder="https://github.com/..."
           >
-          <p v-if="fieldErrors.repoUrl" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.repoUrl }}</p>
+          <p v-if="fieldErrors.repoUrl" class="text-red-400 text-xs font-sys mt-1">{{ fieldErrors.repoUrl }}</p>
         </div>
         <div>
-          <label for="liveUrl" class="block text-sm text-tokyo-night-cyan font-mono mb-1">Live Demo URL</label>
+          <label for="liveUrl" class="block text-sm text-nw-cyan font-sys mb-1">Live Demo URL</label>
           <input
             id="liveUrl"
             v-model="form.liveUrl"
             type="url"
             :class="[
-              'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
-              fieldErrors.liveUrl ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+              'w-full px-3 py-2 bg-void-warm text-nw-text border rounded font-sys focus:outline-none focus:ring-2',
+              fieldErrors.liveUrl ? 'border-red-500 focus:ring-red-500' : 'border-nw-text-line focus:ring-nw-cyan'
             ]"
             placeholder="https://..."
           >
-          <p v-if="fieldErrors.liveUrl" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.liveUrl }}</p>
+          <p v-if="fieldErrors.liveUrl" class="text-red-400 text-xs font-sys mt-1">{{ fieldErrors.liveUrl }}</p>
         </div>
       </div>
 
       <!-- Status & Featured -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label for="status" class="block text-sm text-tokyo-night-cyan font-mono mb-1">Status</label>
+          <label for="status" class="block text-sm text-nw-cyan font-sys mb-1">Status</label>
           <select
             id="status"
             v-model="form.status"
             :class="[
-              'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
-              fieldErrors.status ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+              'w-full px-3 py-2 bg-void-warm text-nw-text border rounded font-sys focus:outline-none focus:ring-2',
+              fieldErrors.status ? 'border-red-500 focus:ring-red-500' : 'border-nw-text-line focus:ring-nw-cyan'
             ]"
           >
             <option value="active">Active</option>
@@ -123,62 +123,62 @@
             <option value="archived">Archived</option>
             <option value="draft">Draft</option>
           </select>
-          <p v-if="fieldErrors.status" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.status }}</p>
+          <p v-if="fieldErrors.status" class="text-red-400 text-xs font-sys mt-1">{{ fieldErrors.status }}</p>
         </div>
         <div class="flex items-end">
           <label class="flex items-center gap-2 cursor-pointer py-2">
-            <input type="checkbox" v-model="form.isFeatured" class="accent-tokyo-night-magenta w-4 h-4">
-            <span class="text-sm text-tokyo-night-muted">Featured Project</span>
+            <input type="checkbox" v-model="form.isFeatured" class="accent-nw-purple w-4 h-4">
+            <span class="text-sm text-nw-text-dim">Featured Project</span>
           </label>
         </div>
       </div>
 
       <!-- Hero Image -->
       <div>
-        <label for="heroImage" class="block text-sm text-tokyo-night-cyan font-mono mb-1">Hero Image URL</label>
+        <label for="heroImage" class="block text-sm text-nw-cyan font-sys mb-1">Hero Image URL</label>
         <input
           id="heroImage"
           v-model="form.heroImage"
           type="text"
           :class="[
-            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2',
-            fieldErrors.heroImage ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+            'w-full px-3 py-2 bg-void-warm text-nw-text border rounded font-sys focus:outline-none focus:ring-2',
+            fieldErrors.heroImage ? 'border-red-500 focus:ring-red-500' : 'border-nw-text-line focus:ring-nw-cyan'
           ]"
           placeholder="/img/projects/my-project.png"
         >
-        <p v-if="fieldErrors.heroImage" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.heroImage }}</p>
+        <p v-if="fieldErrors.heroImage" class="text-red-400 text-xs font-sys mt-1">{{ fieldErrors.heroImage }}</p>
       </div>
 
       <!-- Features -->
       <div>
-        <label for="features" class="block text-sm text-tokyo-night-cyan font-mono mb-1">Key Features (one per line)</label>
+        <label for="features" class="block text-sm text-nw-cyan font-sys mb-1">Key Features (one per line)</label>
         <textarea
           id="features"
           v-model="form.features"
           rows="4"
           :class="[
-            'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded font-mono focus:outline-none focus:ring-2 resize-y',
-            fieldErrors.features ? 'border-red-500 focus:ring-red-500' : 'border-tokyo-night-gray focus:ring-tokyo-night-cyan'
+            'w-full px-3 py-2 bg-void-warm text-nw-text border rounded font-sys focus:outline-none focus:ring-2 resize-y',
+            fieldErrors.features ? 'border-red-500 focus:ring-red-500' : 'border-nw-text-line focus:ring-nw-cyan'
           ]"
           placeholder="Feature 1&#10;Feature 2&#10;Feature 3"
         ></textarea>
-        <p v-if="fieldErrors.features" class="text-red-400 text-xs font-mono mt-1">{{ fieldErrors.features }}</p>
+        <p v-if="fieldErrors.features" class="text-red-400 text-xs font-sys mt-1">{{ fieldErrors.features }}</p>
       </div>
 
-      <p v-if="generalError" class="text-red-400 text-sm font-mono" role="alert">{{ generalError }}</p>
-      <p v-if="success" class="text-tokyo-night-green text-sm font-mono">{{ success }}</p>
+      <p v-if="generalError" class="text-red-400 text-sm font-sys" role="alert">{{ generalError }}</p>
+      <p v-if="success" class="text-nw-green text-sm font-sys">{{ success }}</p>
 
       <!-- Actions -->
       <div class="flex gap-3 pt-2">
         <button
           type="submit"
           :disabled="saving"
-          class="px-6 py-2 bg-tokyo-night-highlight text-tokyo-night-dark font-mono font-bold rounded shadow hover:bg-tokyo-night-cyan transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          class="px-6 py-2 bg-void-raised text-void-warm font-sys font-bold rounded shadow hover:bg-nw-cyan transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           <LucideLoader v-if="saving" class="w-4 h-4 animate-spin" />
           {{ saving ? 'Saving...' : 'Create Project' }}
         </button>
-        <NuxtLink to="/admin/projects" class="px-6 py-2 text-tokyo-night-muted font-mono hover:text-tokyo-night-text transition">
+        <NuxtLink to="/admin/projects" class="px-6 py-2 text-nw-text-dim font-sys hover:text-nw-text transition">
           Cancel
         </NuxtLink>
       </div>

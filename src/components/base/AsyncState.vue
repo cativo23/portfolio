@@ -35,11 +35,11 @@ const sanitizedError = computed(() => {
   <div>
     <div v-if="loading" class="text-center py-8" aria-live="polite">
       <slot name="loading">
-        <p class="text-tokyo-night-fg-muted">{{ loadingText }}</p>
+        <p class="text-nw-text-dim">{{ loadingText }}</p>
       </slot>
     </div>
 
-    <div v-else-if="error" class="text-center py-8 text-tokyo-night-red" role="alert">
+    <div v-else-if="error" class="text-center py-8 text-nw-red" role="alert">
       <slot name="error" :error="error">
         <p>{{ sanitizedError ?? errorText }}</p>
       </slot>
@@ -47,7 +47,7 @@ const sanitizedError = computed(() => {
 
     <div v-else-if="empty" class="text-center py-8">
       <slot name="empty">
-        <p class="text-tokyo-night-fg-muted">{{ emptyText }}</p>
+        <p class="text-nw-text-dim">{{ emptyText }}</p>
       </slot>
     </div>
 

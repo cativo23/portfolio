@@ -1,51 +1,51 @@
 <template>
   <div>
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-xl font-bold text-tokyo-night-text">Projects</h1>
-      <NuxtLink to="/admin/projects/new" class="px-4 py-2 bg-tokyo-night-green/20 text-tokyo-night-green border border-tokyo-night-green/30 rounded-lg text-sm font-mono hover:bg-tokyo-night-green/30 transition-colors flex items-center gap-2">
+      <h1 class="text-xl font-bold text-nw-text">Projects</h1>
+      <NuxtLink to="/admin/projects/new" class="px-4 py-2 bg-nw-green/20 text-nw-green border border-nw-green/30 rounded-lg text-sm font-sys hover:bg-nw-green/30 transition-colors flex items-center gap-2">
         <LucidePlus class="w-4 h-4" />
         New Project
       </NuxtLink>
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="text-center py-12 text-tokyo-night-muted font-mono">
+    <div v-if="loading" class="text-center py-12 text-nw-text-dim font-sys">
       Loading projects...
     </div>
 
     <!-- Table -->
-    <div v-else-if="projects.length" class="bg-tokyo-night-dark border border-tokyo-night-gray/30 rounded-lg overflow-hidden">
+    <div v-else-if="projects.length" class="bg-void-warm border border-nw-text-line/30 rounded-lg overflow-hidden">
       <table class="w-full text-sm">
-        <thead class="bg-tokyo-night-bg">
+        <thead class="bg-void-warm">
           <tr>
-            <th class="text-left px-4 py-3 text-tokyo-night-muted font-mono text-xs">Title</th>
-            <th class="text-left px-4 py-3 text-tokyo-night-muted font-mono text-xs hidden md:table-cell">Status</th>
-            <th class="text-left px-4 py-3 text-tokyo-night-muted font-mono text-xs hidden lg:table-cell">Tech</th>
-            <th class="text-right px-4 py-3 text-tokyo-night-muted font-mono text-xs">Actions</th>
+            <th class="text-left px-4 py-3 text-nw-text-dim font-sys text-xs">Title</th>
+            <th class="text-left px-4 py-3 text-nw-text-dim font-sys text-xs hidden md:table-cell">Status</th>
+            <th class="text-left px-4 py-3 text-nw-text-dim font-sys text-xs hidden lg:table-cell">Tech</th>
+            <th class="text-right px-4 py-3 text-nw-text-dim font-sys text-xs">Actions</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-tokyo-night-gray/20">
-          <tr v-for="project in projects" :key="project.id" class="hover:bg-tokyo-night-highlight/20 transition-colors">
+        <tbody class="divide-y divide-nw-text-line/20">
+          <tr v-for="project in projects" :key="project.id" class="hover:bg-void-raised/20 transition-colors">
             <td class="px-4 py-3">
-              <p class="text-tokyo-night-text font-medium">{{ project.title }}</p>
-              <p class="text-tokyo-night-muted text-xs truncate max-w-xs">{{ project.shortDescription || project.description }}</p>
+              <p class="text-nw-text font-medium">{{ project.title }}</p>
+              <p class="text-nw-text-dim text-xs truncate max-w-xs">{{ project.shortDescription || project.description }}</p>
             </td>
             <td class="px-4 py-3 hidden md:table-cell">
-              <span class="px-2 py-1 rounded text-xs font-mono" :class="project.isFeatured ? 'bg-tokyo-night-magenta/20 text-tokyo-night-magenta' : 'bg-tokyo-night-gray/20 text-tokyo-night-muted'">
+              <span class="px-2 py-1 rounded text-xs font-sys" :class="project.isFeatured ? 'bg-nw-purple/20 text-nw-purple' : 'bg-nw-text-line/20 text-nw-text-dim'">
                 {{ project.isFeatured ? 'Featured' : 'Standard' }}
               </span>
             </td>
             <td class="px-4 py-3 hidden lg:table-cell">
               <div class="flex flex-wrap gap-1">
-                <span v-for="tech in (project.techStack || []).slice(0, 3)" :key="tech" class="text-xs text-tokyo-night-green font-mono">
+                <span v-for="tech in (project.techStack || []).slice(0, 3)" :key="tech" class="text-xs text-nw-green font-sys">
                   {{ tech }}
                 </span>
-                <span v-if="(project.techStack || []).length > 3" class="text-xs text-tokyo-night-muted">+{{ (project.techStack || []).length - 3 }}</span>
+                <span v-if="(project.techStack || []).length > 3" class="text-xs text-nw-text-dim">+{{ (project.techStack || []).length - 3 }}</span>
               </div>
             </td>
             <td class="px-4 py-3 text-right">
               <div class="flex justify-end gap-2">
-                <NuxtLink :to="`/admin/projects/${project.id}`" class="text-tokyo-night-blue hover:text-tokyo-night-cyan text-xs font-mono">
+                <NuxtLink :to="`/admin/projects/${project.id}`" class="text-nw-primary hover:text-nw-cyan text-xs font-sys">
                   Edit
                 </NuxtLink>
               </div>
@@ -56,7 +56,7 @@
     </div>
 
     <!-- Empty -->
-    <div v-else class="text-center py-12 text-tokyo-night-muted font-mono">
+    <div v-else class="text-center py-12 text-nw-text-dim font-sys">
       No projects found.
     </div>
   </div>

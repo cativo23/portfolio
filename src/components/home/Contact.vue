@@ -2,7 +2,7 @@
   <section class="mb-16" id="contact">
     <BaseSectionHeading title="Contact me :)" animated :level="3" />
     <div>
-      <form @submit.prevent="submitForm" class="bg-tokyo-night-dark p-6 rounded-lg shadow-lg w-full flex flex-col gap-4">
+      <form @submit.prevent="submitForm" class="bg-void-warm p-6 rounded-lg shadow-lg w-full flex flex-col gap-4">
         <BaseInput
           v-model="form.name"
           label="Name"
@@ -27,7 +27,7 @@
           :minlength="10"
           :maxlength="1000"
         />
-        <div v-if="error" class="text-tokyo-night-red font-mono">{{ error }}</div>
+        <div v-if="error" class="text-nw-red font-sys">{{ error }}</div>
 
         <BaseButton type="submit" :loading="loading" :disabled="loading">
           Send message

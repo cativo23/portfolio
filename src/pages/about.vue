@@ -1,116 +1,192 @@
 <template>
-  <div class="space-y-16 pb-16">
+  <div class="space-y-2 pb-16">
     <template v-if="profile">
-      <!-- Hero -->
-      <section class="pt-8">
-        <p class="text-tokyo-night-cyan font-mono text-sm mb-6 flex items-center">
-          <span class="text-tokyo-night-purple mr-2">❯</span> about.md
-        </p>
-        
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold font-mono leading-tight mb-8">
-          Tech Lead. <br class="hidden sm:block" />
-          <span class="text-tokyo-night-purple">El Salvador.</span> <br class="hidden sm:block" />
-          9 years in production.
-        </h1>
-        
-        <p class="text-lg text-tokyo-night-muted max-w-3xl mb-8 leading-relaxed">
-          I lead development of healthcare platforms, payment microservices, and AI-powered systems — real money, real patients, real conversations. Currently at <span class="text-tokyo-night-purple">Blue Medical</span>, Guatemala, remote.
-        </p>
-        
-        <div class="flex items-center gap-2 mb-4">
-          <span class="relative flex h-3 w-3">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tokyo-night-green opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-3 w-3 bg-tokyo-night-green"></span>
-          </span>
-          <span class="text-sm font-mono text-tokyo-night-green">available for new engagements — sv timezone (UTC-6)</span>
+      <!-- BRIEFING -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>OPERATIVE BRIEFING</span>
         </div>
-        
-        <div class="flex flex-wrap gap-3">
-          <span class="px-3 py-1 text-xs font-mono rounded-full border border-tokyo-night-cyan text-tokyo-night-cyan">✓ remote contracts</span>
-          <span class="px-3 py-1 text-xs font-mono rounded-full border border-tokyo-night-cyan text-tokyo-night-cyan">✓ freelance projects</span>
-          <span class="px-3 py-1 text-xs font-mono rounded-full border border-tokyo-night-cyan text-tokyo-night-cyan">✓ consulting</span>
-          <span class="px-3 py-1 text-xs font-mono rounded-full border border-tokyo-night-gray/50 text-tokyo-night-muted">◦ open to relocation</span>
-        </div>
-      </section>
+        <div class="panel-body p-6 lg:p-8">
+          <div class="font-stamp text-nw-cyan text-[10px] tracking-[0.2em] uppercase mb-2">
+            FILE: about.md · CLASSIFICATION: PUBLIC
+          </div>
 
-      <!-- Background -->
-      <section class="max-w-full overflow-hidden">
-        <BaseSectionHeading title="Background" />
-        <div class="space-y-6 break-words">
-          <p v-for="(paragraph, index) in summaryParagraphs" :key="index"
-             class="pl-4 border-l-2 border-tokyo-night-gray/30 hover:border-tokyo-night-cyan transition-colors duration-300 text-tokyo-night-text/90 leading-relaxed max-w-full break-words"
-             v-html="formatSummaryParagraph(paragraph)" />
-        </div>
-      </section>
+          <h1
+            class="compressed-title text-nw-text leading-[1.05] mb-3"
+            style="font-size: clamp(36px, 7vw, 64px);"
+          >
+            Tech Lead. <br class="hidden sm:block" />
+            El Salvador. <br class="hidden sm:block" />
+            <span class="text-nw-primary">9 years</span> in production.
+          </h1>
 
-      <!-- Experience -->
-      <section>
-        <BaseSectionHeading title="Experience" />
-        <Timeline :items="profile.experience" class="mb-12" />
-        
-        <!-- CV Strip -->
-        <div class="border-l-2 border-tokyo-night-cyan bg-tokyo-night-dark/30 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p class="text-tokyo-night-text">Want the full picture? Full CV available on request — roles, projects, references.</p>
-          <BaseButton to="/contact" variant="primary" class="shrink-0 font-mono text-sm">
-            ❯ request CV →
-          </BaseButton>
-        </div>
-      </section>
+          <div class="font-mincho text-nw-primary-dim mb-6" style="font-size: 16px;">
+            技術主任 · 九年間の実戦経験
+          </div>
 
-      <!-- Stack -->
-      <section>
-        <BaseSectionHeading title="Stack" />
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div v-for="category in profile.skills" :key="category.name" class="p-4 border border-tokyo-night-gray/30 rounded-lg bg-tokyo-night-dark/20">
-            <h4 class="text-sm font-mono text-tokyo-night-purple mb-2">{{ category.name }}</h4>
-            <div class="text-sm text-tokyo-night-text/80 leading-relaxed">
-              {{ category.skills.map(s => s.name).join(' · ') }}
+          <p class="lede mb-3">
+            Senior backend engineer and Tech Lead. Currently leading development at <span class="text-nw-text">Blue Medical Guatemala</span> — payment processing, e-invoicing, and healthcare platform work.
+          </p>
+          <p class="text-meta mb-6">
+            Based in El Salvador (UTC-6) · Full overlap with US business hours · EN/ES bilingual.
+          </p>
+
+          <div class="flex items-center gap-3 mb-2">
+            <span class="led green blink"></span>
+            <span class="text-meta text-nw-green font-stamp uppercase tracking-wider">
+              OPEN TO OPPORTUNITIES · SENIOR BACKEND / TECH LEAD / STAFF
+            </span>
+          </div>
+          <p class="text-meta">
+            Remote-first (any timezone). Open to relocation for the right role with sponsorship.
+          </p>
+        </div>
+      </div>
+
+      <!-- BACKGROUND -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>BACKGROUND</span>
+        </div>
+        <div class="panel-body p-6 lg:p-8 space-y-5">
+          <p
+            v-for="(paragraph, index) in summaryParagraphs"
+            :key="index"
+            class="text-nw-text-dim leading-relaxed"
+            v-html="formatSummaryParagraph(paragraph)"
+          />
+        </div>
+      </div>
+
+      <!-- DEPLOYMENT HISTORY -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>DEPLOYMENT HISTORY</span>
+          <NuxtLink to="/cv" class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary hover:text-nw-primary-hot">
+            FULL CV →
+          </NuxtLink>
+        </div>
+        <div class="panel-body p-0">
+          <div
+            v-for="entry in profile.experience"
+            :key="entry.company"
+            class="px-5 py-4 border-b border-nw-text-faint last:border-b-0"
+          >
+            <div class="flex items-baseline justify-between gap-3 flex-wrap mb-1">
+              <div class="flex items-baseline gap-3 flex-wrap">
+                <span class="compressed-title title-card text-nw-text">{{ entry.company }}</span>
+                <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-cyan">{{ entry.role }}</span>
+              </div>
+              <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim">
+                {{ entry.period }}
+              </span>
             </div>
+            <p class="text-meta">{{ entry.description }}</p>
           </div>
         </div>
-      </section>
+      </div>
 
-      <!-- Side Projects (Featured Projects) -->
-      <PortfolioSection />
-
-      <!-- Outside code -->
-      <section>
-        <BaseSectionHeading title="Outside code" />
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div v-for="item in profile?.outsideCode" :key="item.title" class="p-5 border border-tokyo-night-gray/20 rounded-lg">
-            <div class="text-2xl mb-3">{{ item.icon }}</div>
-            <h4 class="font-bold text-tokyo-night-text mb-2">{{ item.title }}</h4>
-            <p class="text-sm text-tokyo-night-text/70">{{ item.description }}</p>
-          </div>
+      <!-- CERTIFIED LOADOUT (Stack) -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>CERTIFIED LOADOUT</span>
         </div>
-      </section>
+        <table class="nw-table">
+          <thead>
+            <tr>
+              <th class="w-[140px] md:w-[180px]">CATEGORY</th>
+              <th>STACK</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="category in profile.skills" :key="category.name">
+              <td class="text-nw-primary uppercase tracking-wide">{{ category.name }}</td>
+              <td>{{ category.skills.map(s => s.name).join(' · ') }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-      <!-- Closing -->
-      <section class="py-8 border-t border-tokyo-night-gray/20 max-w-full overflow-hidden">
-        <div class="max-w-full break-words">
-          <p class="text-lg text-tokyo-night-text/90 mb-6 leading-relaxed">
-            I'm not here to leverage synergies or bring passion to your tech stack. I'm here to build backends that don't embarrass you in production — clean APIs, real test coverage, systems that fail gracefully and recover faster.
+      <!-- WRITING -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>WRITING</span>
+          <a
+            href="https://blog.cativo.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-nw-primary hover:text-nw-primary-hot text-[10px] font-stamp uppercase tracking-wider"
+          >
+            BLOG.CATIVO.DEV →
+          </a>
+        </div>
+        <div class="panel-body p-6 lg:p-8">
+          <p class="text-nw-text-dim leading-relaxed">
+            Failure-first writeups — migrations that broke, audits, the day my server caught fire. Mostly written when I'm angry about something I shipped.
           </p>
-          <p class="text-lg text-tokyo-night-text/90 mb-10 leading-relaxed">
-            If you're building something remotely and need someone who's shipped payment systems under pressure, designed multi-agent AI pipelines, or untangled a healthcare integration at midnight — I want to hear about it. No long intake forms. Just a conversation.
-          </p>
-          
-          <div class="flex flex-wrap gap-4">
-            <BaseButton to="/contact" variant="primary" class="font-mono">
-              ❯ get in touch
-            </BaseButton>
-            <BaseButton href="https://calendly.com/cativo23" external variant="secondary" class="font-mono">
-              ❯ book a call
-            </BaseButton>
-            <BaseButton to="/projects" variant="ghost" class="font-mono">
-              ❯ see my work
-            </BaseButton>
-            <BaseButton :href="profile?.github" external variant="ghost" class="font-mono">
-              ❯ github
-            </BaseButton>
+        </div>
+      </div>
+
+      <!-- LATEST POSTS (standalone) -->
+      <LatestPosts />
+
+      <!-- OFF-DUTY -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>OFF-DUTY</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-px bg-nw-text-faint">
+          <div
+            v-for="item in profile?.outsideCode"
+            :key="item.title"
+            class="bg-void-warm p-5 flex flex-col gap-2"
+          >
+            <div class="flex items-center gap-2">
+              <span class="text-nw-text" style="font-size: 22px; line-height: 1;">{{ item.icon }}</span>
+              <div class="font-stamp uppercase tracking-[0.14em] text-[11px] text-nw-primary">
+                {{ item.title }}
+              </div>
+            </div>
+            <p class="text-meta">{{ item.description }}</p>
           </div>
         </div>
-      </section>
+      </div>
+
+      <!-- CLOSING / CONTACT REQUEST -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>GET IN TOUCH</span>
+        </div>
+        <div class="panel-body p-6 lg:p-8">
+          <p class="text-nw-text leading-relaxed mb-6">
+            Building something remote that needs payment systems shipped under pressure, multi-agent AI with real safeguards, or a healthcare integration untangled at midnight? Let's talk.
+          </p>
+
+          <div class="flex flex-wrap gap-3 items-center">
+            <BaseButton href="/resume.pdf" variant="primary">
+              ↓ Download CV (PDF)
+            </BaseButton>
+            <BaseButton to="/cv" variant="secondary">
+              View CV →
+            </BaseButton>
+            <BaseButton href="mailto:cativo@cativo.dev" variant="secondary">
+              cativo@cativo.dev
+            </BaseButton>
+            <BaseButton href="https://linkedin.com/in/carlos-cativo" external variant="ghost">
+              LinkedIn →
+            </BaseButton>
+            <BaseButton :href="profile?.github" external variant="ghost">
+              GitHub →
+            </BaseButton>
+            <BaseButton to="/projects" variant="ghost">
+              Case files →
+            </BaseButton>
+          </div>
+          <p class="mt-4 text-meta font-stamp uppercase tracking-wider">
+            Or <a href="https://calendly.com/cativo23" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">book 30 min directly →</a>
+          </p>
+        </div>
+      </div>
 
     </template>
   </div>
@@ -118,8 +194,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import Timeline from '@/components/about/Timeline.vue';
-import PortfolioSection from '@/components/home/portfolio/PortfolioSection.vue';
+import LatestPosts from '@/components/home/LatestPosts.vue';
 import type { Profile } from '~/types/profile';
 
 usePageTitle('About', {
@@ -132,10 +207,9 @@ const profile: Profile = {
   yearsOfExperience: 9,
   location: 'El Salvador',
   summary: [
-    "I've spent the last 9 years building production systems in El Salvador — a market where fintech infrastructure is genuinely hard. No nice SDKs. I've implemented Visa ISO 8583 over SOAP by hand, built Guatemala's FEL electronic invoicing system from scratch, and designed payment microservices that handle real billing across multiple healthcare clinics daily.",
-    "My primary stack is Laravel, NestJS, FastAPI, and Vue/Nuxt, running on Docker, deployed to AWS. I've been building on top of these long enough to know when the framework is the wrong choice — and to have the production incidents to back that up.",
-    "The last two years I've gone deep into AI-powered systems: marIA, a voice agent handling automated patient scheduling in Spanish via ElevenLabs ConvAI; VittBot, a multi-agent crypto trading bot with three independent Claude agents plus a deterministic risk manager; Clarify, an AI legal contract auditor with Stripe billing. I don't just call AI APIs — I design the validation layers, retry logic, and safeguards that make them production-safe.",
-    "I also run my own production infrastructure at cativo.dev — Traefik, Prometheus, Uptime Kuma, self-hosted mail, monitoring stack. Not because it's cheaper, but because it's the only way to actually understand what you're deploying to."
+    "9 years writing backends in El Salvador. Most of that has been microservices and full-stack tech leadership at Blue Medical Guatemala — leading BlueMeds end-to-end (Laravel API + Angular/Ionic admin), then breaking out Payment Service and Invoice Service as standalone Laravel microservices that real clinics bill against every day. The fintech and tax stack down here is hard in a specific way: no nice SDKs, sparse docs, legacy SOAP/XML on top of legacy SOAP/XML. I've implemented Visa ISO 8583 over SOAP by hand. I've integrated Guatemala's FEL e-invoicing through an authorized provider, with a Strategy Pattern designed so the next provider is a config swap, not a rewrite. Long enough in this stack to know when the framework is the wrong choice — and I have the incident reports to prove it.",
+    "The last ~6 months I've been extending into AI work on top of the backend foundation. I'm the primary author of sofIA, a multi-agent voice system at Blue Medical for healthcare scheduling on ElevenLabs ConvAI, currently in production. Most of the engineering work has been on the parts AI demos skip: state-machine workflow design, validation layers around tool calls, retry and recovery logic, and the operations dashboard the team uses to see what the agent actually did. On the side: VittBot, a multi-agent crypto trading bot with three Claude agents plus a deterministic Risk Manager that never delegates the actual go/no-go to AI; Clarify, a legal contract auditor with Stripe credit billing. The pattern I care about isn't \"call an LLM\" — it's the deterministic safeguards around the LLM that keep it from blowing up in production.",
+    "I also run my own infra at cativo.dev — 16 containers, 6 stacks. Running it yourself is the only way to actually understand what you ship into prod."
   ],
   experience: [
     {
@@ -145,11 +219,11 @@ const profile: Profile = {
       location: 'Guatemala (Remote)',
       description: "Leading development across multiple healthcare systems simultaneously. Code reviews, requirement refinement, technical guidance for the team, and hands-on delivery of the hardest parts.",
       highlights: [
-        "marIA — AI voice agent for automated patient scheduling via ElevenLabs ConvAI + n8n. Resolved bugs affecting 42% of conversations (STT misfires, language leakage, infinite retry loops). Designed the full management platform: FastAPI API + Nuxt dashboard + Typer CLI.",
-        "Payment Service — Built from scratch. Visa ISO 8583, BAC SOAP/XML, card tokenization, reversals, webhook handling. Led 6-agent parallel security audit (OWASP: hardcoded secrets, Sanctum token expiration, CORS, PHP EOL).",
-        "Invoice Service — Built from scratch. Guatemala FEL tax system via Megaprint, Strategy Pattern for provider swaps, SAP integration, async pipeline via Redis/Horizon, QR code generation, multi-establishment support.",
-        "BlueMeds Platform — Core developer on medication subscription platform. 10+ integrations: Odoo ERP, WhatsApp/Botmaker, FreshDesk, Bland AI, VivoLife, payment APIs.",
-        "BlueMeds Admin Panel — Angular/Ionic admin panel for the pharmaceutical platform."
+        "sofIA — Multi-agent voice system for healthcare scheduling, currently in production. Primary author of a state-machine workflow on ElevenLabs ConvAI + n8n with deterministic validation, retry, and recovery layers around tool calls. Designed the management platform: FastAPI API + Nuxt dashboard + Typer CLI.",
+        "Payment Service — Built from scratch in Laravel. Multi-gateway abstraction (Strategy Pattern) over multiple processors (ISO 8583 over SOAP, SOAP/XML, REST). VGS card vault for PCI-friendly tokenization — raw PAN never touches the service DB. Per-commerce / per-card-token gateway routing. Async via Horizon with dedicated queues per gateway. Livewire ops dashboard with KPIs and per-commerce breakdowns. Led an OWASP-grade security audit, plus ongoing hardening waves (defense-in-depth on internal routes, retry / idempotency on payment jobs, network tokenization on top of the vault).",
+        "Invoice Service — Built from scratch in Laravel. Integrates Guatemala's FEL e-invoicing through an authorized provider, with a Strategy Pattern designed for future provider swaps. SAP integration, async pipeline via Redis/Horizon, QR code generation, multi-establishment support, Livewire analytics dashboard.",
+        "BlueMeds API — Core developer on medication subscription platform. 10+ third-party integrations across ERP, support tools, messaging, AI calling, and healthcare middleware. PostgreSQL with Meilisearch full-text and JSONB expression indexes.",
+        "BlueMeds Admin Panel — Angular/Ionic admin for the pharmaceutical platform with i18n EN/ES, Capacitor mobile build, Tailwind."
       ],
       tags: ['Laravel', 'NestJS', 'Python', 'Angular', 'Vue/Nuxt', 'ISO 8583', 'FEL', 'ElevenLabs', 'n8n', 'PostgreSQL', 'Redis', 'AWS', 'Docker', 'Bitbucket Pipelines']
     },
@@ -183,8 +257,8 @@ const profile: Profile = {
     { name: 'Frontend', skills: [{ name: 'Vue/Nuxt' }, { name: 'Angular' }, { name: 'Ionic / TailwindCSS' }, { name: 'TypeScript / full-stack when needed' }]},
     { name: 'Data', skills: [{ name: 'PostgreSQL' }, { name: 'MySQL / Redis' }, { name: 'Meilisearch' }, { name: 'Supabase / Prisma' }, { name: 'TypeORM' }, { name: 'SQLAlchemy' }]},
     { name: 'Infra & DevOps', skills: [{ name: 'Docker' }, { name: 'AWS (S3, ECR, EC2) / Traefik' }, { name: 'Nginx' }, { name: 'Cloudflare / GitHub Actions' }, { name: 'Bitbucket Pipelines' }]},
-    { name: 'Specialty', skills: [{ name: 'Multi-agent LLM systems / ISO 8583' }, { name: 'FEL invoicing' }, { name: 'SAP / ElevenLabs ConvAI' }, { name: 'Ory IAM' }]},
-    { name: 'AI / Integrations', skills: [{ name: 'Claude API' }, { name: 'OpenAI' }, { name: 'ElevenLabs / n8n' }, { name: 'Stripe' }, { name: 'Odoo ERP / Botmaker' }, { name: 'FreshDesk' }, { name: 'Bland AI' }]},
+    { name: 'Specialty', skills: [{ name: 'ISO 8583 over SOAP' }, { name: 'Multi-gateway payment processing' }, { name: 'VGS card vault tokenization' }, { name: 'Network tokenization' }, { name: 'Multi-provider FEL integration' }, { name: 'SAP integration' }, { name: 'Ory IAM (Kratos / Hydra / Keto)' }, { name: 'Multi-agent LLM systems' }]},
+    { name: 'Integrations', skills: [{ name: 'Stripe' }, { name: 'Odoo ERP' }, { name: 'WhatsApp / Botmaker' }, { name: 'FreshDesk' }, { name: 'SAP' }, { name: 'Bland AI' }, { name: 'ElevenLabs ConvAI' }, { name: 'n8n' }, { name: 'Claude / OpenAI APIs' }]},
   ],
   outsideCode: [
     {
@@ -201,6 +275,21 @@ const profile: Profile = {
       title: 'Keyboards & IEMs',
       icon: '⌨️',
       description: 'Truthear ZERO:RED currently in rotation. The collection is larger than I\'ll admit in writing.'
+    },
+    {
+      title: 'Linux ricing',
+      icon: '🖥️',
+      description: 'Hyprland on Arch with a Tokyo Night cyberdeck Waybar. The dotfiles are on GitHub if you\'re into that kind of suffering.'
+    },
+    {
+      title: 'Cyberpunk & sci-fi',
+      icon: '🎌',
+      description: 'Akira, Evangelion, Ghost in the Shell. The visual language of this site is not an accident.'
+    },
+    {
+      title: 'Self-hosting tinkering',
+      icon: '📡',
+      description: 'cativo.dev runs apps, blog, mail, and monitoring — 16 containers across 6 stacks. Nothing teaches infra like running your own.'
     }
   ],
   github: 'https://github.com/cativo23',
@@ -218,21 +307,8 @@ const summaryParagraphs = computed(() => {
 
 function formatSummaryParagraph(text: string) {
   return text
-    .replace(/(9 years)/g, '<span class="text-tokyo-night-cyan font-semibold">$1</span>')
-    .replace(/(marIA|VittBot|Clarify)/g, '<span class="text-tokyo-night-purple font-medium">$1</span>')
-    .replace(/(Visa ISO 8583|FEL|AI-powered systems)/g, '<span class="text-tokyo-night-blue font-medium">$1</span>');
-}
-
-function getStatusClass(status: string) {
-  switch(status) {
-    case 'live':
-    case 'completed': return 'text-tokyo-night-green border-tokyo-night-green/30 bg-tokyo-night-green/10';
-    case 'active':
-    case 'in-progress': return 'text-tokyo-night-cyan border-tokyo-night-cyan/30 bg-tokyo-night-cyan/10';
-    case 'alpha': return 'text-tokyo-night-yellow border-tokyo-night-yellow/30 bg-tokyo-night-yellow/10';
-    case 'mvp':
-    case 'planning': return 'text-tokyo-night-purple border-tokyo-night-purple/30 bg-tokyo-night-purple/10';
-    default: return 'text-tokyo-night-muted border-tokyo-night-gray/30 bg-tokyo-night-dark';
-  }
+    .replace(/(9 years)/g, '<span class="text-nw-cyan font-semibold">$1</span>')
+    .replace(/(sofIA|VittBot|Clarify)/g, '<span class="text-nw-purple font-medium">$1</span>')
+    .replace(/(Visa ISO 8583|Invoice Service|FEL|cativo\.dev)/g, '<span class="text-nw-primary font-medium">$1</span>');
 }
 </script>

@@ -1,13 +1,13 @@
 <template>
-  <div class="flex min-h-screen bg-tokyo-night-bg text-tokyo-night-text font-mono">
+  <div class="flex min-h-screen bg-void-warm text-nw-text font-sys">
     <!-- Sidebar -->
-    <aside class="w-60 bg-tokyo-night-dark border-r border-tokyo-night-gray/20 flex flex-col shrink-0 transition-all duration-300">
+    <aside class="w-60 bg-void-warm border-r border-nw-text-line/20 flex flex-col shrink-0 transition-all duration-300">
       <!-- Logo -->
-      <div class="h-12 flex items-center px-4 border-b border-tokyo-night-gray/20">
-        <NuxtLink to="/admin" class="text-base font-bold font-mono">
-          <span class="text-tokyo-night-purple">{</span>
-          <span class="text-tokyo-night-red">Admin</span>
-          <span class="text-tokyo-night-purple">}</span>
+      <div class="h-12 flex items-center px-4 border-b border-nw-text-line/20">
+        <NuxtLink to="/admin" class="text-base font-bold font-sys">
+          <span class="text-nw-purple">{</span>
+          <span class="text-nw-red">Admin</span>
+          <span class="text-nw-purple">}</span>
         </NuxtLink>
       </div>
 
@@ -41,18 +41,18 @@
       </nav>
 
       <!-- User section -->
-      <div class="p-3 border-t border-tokyo-night-gray/20">
+      <div class="p-3 border-t border-nw-text-line/20">
         <div class="flex items-center gap-2 mb-2 px-2">
-          <div class="w-7 h-7 rounded-full bg-tokyo-night-highlight flex items-center justify-center text-xs font-bold text-tokyo-night-cyan">
+          <div class="w-7 h-7 rounded-full bg-void-raised flex items-center justify-center text-xs font-bold text-nw-cyan">
             {{ userInitial }}
           </div>
           <div class="flex-1 min-w-0">
-            <p class="text-xs text-tokyo-night-text truncate">{{ authUser?.email || 'Admin' }}</p>
+            <p class="text-xs text-nw-text truncate">{{ authUser?.email || 'Admin' }}</p>
           </div>
         </div>
         <button
           @click="logout"
-          class="flex items-center gap-2 w-full px-3 py-1.5 rounded-md text-xs text-tokyo-night-red/80 hover:bg-tokyo-night-red/10 hover:text-tokyo-night-red transition-colors"
+          class="flex items-center gap-2 w-full px-3 py-1.5 rounded-md text-xs text-nw-red/80 hover:bg-nw-red/10 hover:text-nw-red transition-colors"
         >
           <LucideLogOut class="w-3.5 h-3.5" />
           Logout
@@ -63,12 +63,12 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0">
       <!-- Top Bar -->
-      <header class="h-12 border-b border-tokyo-night-gray/20 bg-tokyo-night-dark/50 px-5 flex items-center justify-between shrink-0">
+      <header class="h-12 border-b border-nw-text-line/20 bg-void-warm/50 px-5 flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2">
-          <LucideChevronRight class="w-3.5 h-3.5 text-tokyo-night-gray" />
-          <span class="text-sm text-tokyo-night-muted font-mono">{{ currentPageTitle }}</span>
+          <LucideChevronRight class="w-3.5 h-3.5 text-nw-text-line" />
+          <span class="text-sm text-nw-text-dim font-sys">{{ currentPageTitle }}</span>
         </div>
-        <NuxtLink to="/" target="_blank" class="text-xs text-tokyo-night-muted hover:text-tokyo-night-cyan transition-colors flex items-center gap-1">
+        <NuxtLink to="/" target="_blank" class="text-xs text-nw-text-dim hover:text-nw-cyan transition-colors flex items-center gap-1">
           <LucideExternalLink class="w-3 h-3" />
           View site
         </NuxtLink>
@@ -137,20 +137,20 @@ function isExactRoute(path: string): boolean {
 function getNavClass(path: string): string {
   if (path === '/admin') {
     return isExactRoute(path)
-      ? 'bg-tokyo-night-cyan/10 text-tokyo-night-cyan font-medium'
-      : 'text-tokyo-night-muted hover:text-tokyo-night-text hover:bg-tokyo-night-highlight/30'
+      ? 'bg-nw-cyan/10 text-nw-cyan font-medium'
+      : 'text-nw-text-dim hover:text-nw-text hover:bg-void-raised/30'
   }
   // Parent items: active if route starts with path
   return isActiveRoute(path)
-    ? 'bg-tokyo-night-cyan/10 text-tokyo-night-cyan font-medium'
-    : 'text-tokyo-night-muted hover:text-tokyo-night-text hover:bg-tokyo-night-highlight/30'
+    ? 'bg-nw-cyan/10 text-nw-cyan font-medium'
+    : 'text-nw-text-dim hover:text-nw-text hover:bg-void-raised/30'
 }
 
 function getNavChildClass(path: string): string {
   // Child items: active only on exact match
   return isExactRoute(path)
-    ? 'bg-tokyo-night-cyan/10 text-tokyo-night-cyan font-medium'
-    : 'text-tokyo-night-muted hover:text-tokyo-night-text hover:bg-tokyo-night-highlight/30'
+    ? 'bg-nw-cyan/10 text-nw-cyan font-medium'
+    : 'text-nw-text-dim hover:text-nw-text hover:bg-void-raised/30'
 }
 
 const currentPageTitle = computed(() => {

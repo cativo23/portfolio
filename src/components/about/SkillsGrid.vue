@@ -3,9 +3,9 @@
     <div
       v-for="(category, index) in categories"
       :key="index"
-      class="bg-tokyo-night-dark/50 rounded-lg p-4 border border-tokyo-night-gray/20"
+      class="bg-void-warm/50 rounded-lg p-4 border border-nw-text-line/20"
     >
-      <h4 class="text-sm font-bold text-tokyo-night-purple mb-3 font-mono">
+      <h4 class="font-stamp uppercase tracking-wide text-sm font-bold text-nw-purple mb-3">
         <LucideTerminal class="w-4 h-4 inline mr-2 -mt-0.5" />
         {{ category.name }}
       </h4>
@@ -13,7 +13,7 @@
         <span
           v-for="skill in category.skills"
           :key="skill.name"
-          class="inline-flex items-center gap-1.5 text-sm px-3 py-1 rounded-full font-mono transition-colors duration-200 hover:brightness-110 cursor-default"
+          class="inline-flex items-center gap-1.5 text-sm px-3 py-1 rounded-full font-sys transition-colors duration-200 hover:brightness-110 cursor-default"
           :class="levelColor(skill.level)"
         >
           {{ skill.name }}
@@ -42,26 +42,26 @@ defineProps<{
 function levelColor(level: string): string {
   switch (level) {
     case 'advanced':
-      return 'bg-tokyo-night-red/20 text-tokyo-night-red border border-tokyo-night-red/30';
+      return 'bg-nw-red/20 text-nw-red border border-nw-red/30';
     case 'intermediate':
-      return 'bg-tokyo-night-yellow/20 text-tokyo-night-yellow border border-tokyo-night-yellow/30';
+      return 'bg-nw-yellow/20 text-nw-yellow border border-nw-yellow/30';
     case 'basic':
-      return 'bg-tokyo-night-green/20 text-tokyo-night-green border border-tokyo-night-green/30';
+      return 'bg-nw-green/20 text-nw-green border border-nw-green/30';
     default:
-      return 'bg-tokyo-night-muted/20 text-tokyo-night-muted border border-tokyo-night-muted/30';
+      return 'bg-nw-text-dim/20 text-nw-text-dim border border-nw-text-dim/30';
   }
 }
 
 function levelDotColor(level: string): string {
   switch (level) {
     case 'advanced':
-      return 'bg-tokyo-night-red';
+      return 'bg-nw-red';
     case 'intermediate':
-      return 'bg-tokyo-night-yellow';
+      return 'bg-nw-yellow';
     case 'basic':
-      return 'bg-tokyo-night-green';
+      return 'bg-nw-green';
     default:
-      return 'bg-tokyo-night-muted';
+      return 'bg-nw-text-dim';
   }
 }
 </script>

@@ -1,8 +1,5 @@
 <template>
-  <span
-    class="inline-block text-tokyo-night-dark px-3 py-1 rounded-full text-sm mr-2 mb-2 font-medium"
-    :class="pillClass"
-  >
+  <span class="tag mr-2 mb-2" :class="pillClass">
     {{ name }}
   </span>
 </template>
@@ -18,11 +15,11 @@ const props = defineProps<{
 const pillClass = computed(() => {
   switch (props.level) {
     case 'advanced':
-      return 'bg-tokyo-night-red';
+      return 'tag-danger';
     case 'intermediate':
-      return 'bg-tokyo-night-yellow';
+      return 'tag-warning';
     case 'beginner':
-      return 'bg-tokyo-night-green';
+      return 'tag-success';
   }
 });
 </script>

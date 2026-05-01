@@ -28,21 +28,23 @@ const tag = computed(() => {
 })
 
 const variantClasses: Record<string, string> = {
-  primary: 'bg-tokyo-night-cyan text-tokyo-night-bg font-semibold hover:opacity-90 transition-opacity',
-  secondary: 'border border-tokyo-night-cyan text-tokyo-night-cyan hover:bg-tokyo-night-cyan/10 transition-colors',
-  ghost: 'text-tokyo-night-text hover:text-tokyo-night-cyan transition-colors',
-  icon: 'border border-tokyo-night-gray text-tokyo-night-muted hover:text-tokyo-night-cyan transition-colors inline-flex items-center justify-center',
+  primary: 'btn',
+  secondary: 'btn-ghost',
+  ghost: 'btn-ghost border-transparent hover:bg-nw-primary-fill',
+  icon: 'btn-ghost inline-flex items-center justify-center',
 }
 
 const sizeClasses = computed(() => {
   if (props.variant === 'icon') {
-    return { sm: 'w-8 h-8', md: 'w-10 h-10', lg: 'w-12 h-12' }[props.size]
+    return { sm: 'w-8 h-8 p-0', md: 'w-10 h-10 p-0', lg: 'w-12 h-12 p-0' }[props.size]
   }
-  return { sm: 'px-3 py-1.5 text-sm', md: 'px-5 py-2 text-base', lg: 'px-7 py-3 text-lg' }[props.size]
+  if (props.size === 'sm') return 'btn-sm'
+  if (props.size === 'lg') return 'text-base px-6 py-3'
+  return ''
 })
 
 const classes = computed(() => [
-  'relative inline-flex items-center justify-center rounded-lg cursor-pointer focus:ring-2 focus:ring-tokyo-night-cyan focus:outline-none',
+  'relative cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-nw-primary',
   variantClasses[props.variant],
   sizeClasses.value,
   (props.disabled || props.loading) && 'opacity-50 pointer-events-none',

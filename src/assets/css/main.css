@@ -1,166 +1,122 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+@import '../../../.nightwire/nightwire.css';
 
-/* Apply a fallback font-family */
+/* ============================================================
+   Typography tokens — portfolio layer over Nightwire
+   We override only what body needs; Nightwire's --text-xs/sm/base
+   tokens still rule panels (metric-cell, kv-row, panel-header).
+   ============================================================ */
+:root {
+  /* Body prose: fluid 19→20px. Slightly bigger than the readability
+     target — user preference for a more comfortable read. */
+  --text-body:       clamp(19px, 1.05rem + 0.25vw, 20px);
+  --text-lede:       clamp(17px, 0.95rem + 0.3vw, 19px);
+  --leading-body:    1.65;
+  --leading-lede:    1.6;
+
+  /* Hero scale — more headroom for 4K / ultrawide */
+  --text-hero-xl:    clamp(40px, 4vw + 1.5rem, 88px);
+  --text-hero-sm:    clamp(36px, 3.5vw + 1.25rem, 72px);
+  --text-h2:         clamp(28px, 2.5vw + 1rem, 52px);
+
+  /* JetBrains Mono ships with deliberately wide advance.
+     -0.005em compacts just enough without killing the mono feel. */
+  --tracking-body:   -0.005em;
+}
+
+/* Pure Nightwire, mono everywhere, OLED-friendly via dim body */
+html,
 body {
-  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: var(--void);
+  color: var(--nw-text);
+  font-family: var(--font-sys);
 }
 
-/* TUI Editor — Tokyo Night theme */
-.toast-editor-container .toastui-editor-defaultUI {
-  font-family: 'Source Code Pro', ui-monospace, monospace;
-  border: none;
-  border-radius: 0;
+body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  font-weight: 400;
+  letter-spacing: var(--tracking-body);
+  color: var(--nw-text-dim);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  /* JBM in prose: keep contextual alternates, kill code ligatures */
+  font-feature-settings: "calt" 1, "liga" 0;
 }
 
-.toast-editor-container .toastui-editor-defaultUI-toolbar {
-  background-color: #16161e !important;
-  border-bottom: 1px solid #292e42 !important;
+/* Stamp labels: Saira condensed wants positive tracking, not the
+   negative inherited from body mono. */
+.font-stamp {
+  letter-spacing: 0.08em;
+  line-height: 1.2;
 }
 
-.toast-editor-container .toastui-editor-toolbar-group button {
-  color: #565f89 !important;
+/* Lede: subordinate to body, signals intro-paragraph hierarchy */
+.lede {
+  font-size: var(--text-lede);
+  line-height: var(--leading-lede);
+  color: var(--nw-text-dim);
 }
 
-.toast-editor-container .toastui-editor-toolbar-group button:hover {
-  background-color: #292e42 !important;
-  color: #a9b1d6 !important;
+/* Prose-scale supplements
+   Nightwire's text-xs/sm/base (11/12/14px) are CHROME tokens.
+   Using them for prose against a 19-20px body creates "chiquito"
+   feeling. These give prose-friendly steps. */
+
+/* Card descriptions, location lines, secondary captions in prose
+   context. One canonical step below body, above stamp.
+   Replaces text-sm / text-xs that were applied to prose, not chrome. */
+.text-meta {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--nw-text-dim);
 }
 
-.toast-editor-container .toastui-editor-toolbar-group button.active {
-  background-color: #1a1b26 !important;
-  color: #7dcfff !important;
+/* Sub-heading / card title — single canonical size for compressed
+   titles inside cards. Replaces text-xl / text-lg / text-base drift. */
+.title-card {
+  font-size: 1.375rem;
+  line-height: 1.2;
 }
 
-.toast-editor-container .toastui-editor-ww-container,
-.toast-editor-container .toastui-editor-md-container {
-  background-color: #1a1b26;
+/* Mobile: clamp already lands at 17px, but we open up line-height
+   slightly because reading-on-thumb tolerates more air. */
+@media (max-width: 480px) {
+  body { line-height: 1.7; }
 }
 
-.toast-editor-container .toastui-editor-ww-container .ProseMirror,
-.toast-editor-container .toastui-editor-md-editor {
-  background-color: #1a1b26 !important;
-  color: #a9b1d6 !important;
+/* Note: prose max-width is applied per-block in templates.
+   Setting it globally on p/li leaves dead void inside dense panels. */
+
+/* LED blink — SKILL spec mentions it but the shipped CSS doesn't define it */
+.led.blink {
+  animation: nw-led-blink 1.4s ease-in-out infinite;
 }
 
-.toast-editor-container .toastui-editor-contents,
-.toast-editor-container .ProseMirror,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror div,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror p,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror span,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror h1,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror h2,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror h3,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror h4,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror h5,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror h6,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror li,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror td,
-.toast-editor-container .toastui-editor-ww-container .ProseMirror th {
-  font-family: 'Source Code Pro', ui-monospace, monospace !important;
-  color: #a9b1d6 !important;
+@keyframes nw-led-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
 }
 
-.toast-editor-container .toastui-editor-ww-container .ProseMirror p.is-editor-empty:first-child::before {
-  color: #565f89 !important;
+/* Caret blink for header logo */
+.caret {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--nw-primary);
+  animation: nw-caret-blink 1s steps(2) infinite;
 }
 
-.toast-editor-container .toastui-editor-md-editor textarea {
-  background-color: #1a1b26 !important;
-  color: #a9b1d6 !important;
-  font-family: 'Source Code Pro', ui-monospace, monospace;
+@keyframes nw-caret-blink {
+  50% { opacity: 0; }
 }
 
-.toast-editor-container .toastui-editor-popup {
-  background-color: #1a1b26 !important;
-  border: 1px solid #292e42 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+/* Page transition — clean fade */
+.page-transition-wrapper .page-enter-active,
+.page-transition-wrapper .page-leave-active {
+  transition: opacity 150ms ease;
 }
 
-.toast-editor-container .toastui-editor-popup-body label {
-  color: #a9b1d6 !important;
-}
-
-.toast-editor-container .toastui-editor-popup-body input {
-  background-color: #16161e !important;
-  border: 1px solid #292e42 !important;
-  color: #a9b1d6 !important;
-  border-radius: 4px;
-}
-
-.toast-editor-container .toastui-editor-popup-body button {
-  background-color: #7dcfff !important;
-  color: #1a1b26 !important;
-  border-radius: 4px;
-}
-
-.toast-editor-container .toastui-editor-popup-table {
-  background-color: #1a1b26 !important;
-  border: 1px solid #292e42 !important;
-}
-
-.toast-editor-container .toastui-editor-popup-table button {
-  background-color: #292e42 !important;
-  border-color: #1a1b26 !important;
-}
-
-.toast-editor-container .toastui-editor-contents h1,
-.toast-editor-container .ProseMirror h1,
-.toast-editor-container .toastui-editor-contents h2,
-.toast-editor-container .ProseMirror h2,
-.toast-editor-container .toastui-editor-contents h3,
-.toast-editor-container .ProseMirror h3 {
-  color: #7aa2f7 !important;
-}
-
-.toast-editor-container .toastui-editor-contents a,
-.toast-editor-container .ProseMirror a {
-  color: #7dcfff !important;
-}
-
-.toast-editor-container .toastui-editor-contents pre,
-.toast-editor-container .ProseMirror pre {
-  background-color: #16161e !important;
-  border: 1px solid #292e42 !important;
-  border-radius: 6px;
-}
-
-.toast-editor-container .toastui-editor-contents code,
-.toast-editor-container .ProseMirror code {
-  background-color: #16161e !important;
-  color: #9ece6a !important;
-}
-
-.toast-editor-container .toastui-editor-contents blockquote,
-.toast-editor-container .ProseMirror blockquote {
-  border-left: 3px solid #f7768e !important;
-  color: #a9b1d6 !important;
-}
-
-.toast-editor-container .toastui-editor-contents table th,
-.toast-editor-container .ProseMirror table th {
-  background-color: #16161e !important;
-  color: #7aa2f7 !important;
-  border-color: #292e42 !important;
-}
-
-.toast-editor-container .toastui-editor-contents table td,
-.toast-editor-container .ProseMirror table td {
-  border-color: #292e42 !important;
-  color: #a9b1d6 !important;
-}
-
-.toast-editor-container .ProseMirror::-webkit-scrollbar,
-.toast-editor-container .toastui-editor-md-editor textarea::-webkit-scrollbar {
-  width: 6px;
-}
-
-.toast-editor-container .ProseMirror::-webkit-scrollbar-track,
-.toast-editor-container .toastui-editor-md-editor textarea::-webkit-scrollbar-track {
-  background: #1a1b26;
-}
-
-.toast-editor-container .ProseMirror::-webkit-scrollbar-thumb,
-.toast-editor-container .toastui-editor-md-editor textarea::-webkit-scrollbar-thumb {
-  background: #292e42;
-  border-radius: 3px;
+.page-transition-wrapper .page-enter-from,
+.page-transition-wrapper .page-leave-to {
+  opacity: 0;
 }

@@ -1,31 +1,65 @@
 <template>
-  <BaseCard :to="`/projects/${project.id}`" hoverable class="h-full">
-    <template v-if="project.isFeatured" #badge>
-      <BaseBadge>Featured</BaseBadge>
-    </template>
-    <h4 class="mb-2 text-xl font-bold text-tokyo-night-blue">{{ project.title }}</h4>
-    <p class="mb-4">{{ project.description }}</p>
-    <div class="flex flex-wrap gap-2 mb-4" v-if="project.techStack?.length">
+  <NuxtLink
+    :to="`/projects/${project.id}`"
+    class="bg-void-raised hover:bg-void-panel border border-nw-text-line hover:border-nw-primary-dim transition-colors duration-150 p-5 flex flex-col gap-3"
+  >
+    <header class="flex items-start justify-between gap-3">
+      <div>
+        <div class="font-stamp uppercase tracking-[0.14em] text-[9px] text-nw-text-dim">
+          CASE-{{ String(project.id).padStart(4, '0') }}
+        </div>
+        <h4 class="compressed-title title-card text-nw-text mt-1">
+          {{ project.title }}
+        </h4>
+      </div>
+      <span v-if="project.status" class="badge" :class="badgeClass">
+        {{ project.status }}
+      </span>
+    </header>
+
+    <p class="text-meta">
+      {{ project.shortDescription || project.description }}
+    </p>
+
+    <div class="flex flex-wrap gap-1.5 mt-auto" v-if="project.techStack?.length">
       <span
         v-for="tech in project.techStack"
         :key="tech"
-        class="text-tokyo-night-green font-mono text-xs"
+        class="tag tag-info"
       >
-        [{{ tech }}]
+        {{ tech }}
       </span>
     </div>
-  </BaseCard>
+
+    <div class="flex justify-between items-center pt-3 border-t border-nw-text-faint font-stamp uppercase tracking-wider text-[9px] text-nw-text-dim">
+      <span>{{ year }}</span>
+      <span class="text-nw-primary">OPEN FILE →</span>
+    </div>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { Project } from '~/types/project'
 
 interface Props {
-  project: Project
+  project: Project & { createdAt?: string; status?: string }
 }
 
-defineProps<Props>()
-defineOptions({
-  name: 'FeatureProjectCard'
+const props = defineProps<Props>()
+
+defineOptions({ name: 'FeatureProjectCard' })
+
+const year = computed(() => {
+  if (!props.project.createdAt) return ''
+  return String(new Date(props.project.createdAt).getFullYear())
+})
+
+const badgeClass = computed(() => {
+  const s = (props.project.status || '').toLowerCase()
+  if (['live', 'completed', 'production'].includes(s)) return 'badge-success'
+  if (['active', 'in-progress', 'wip'].includes(s)) return ''
+  if (['alpha', 'mvp'].includes(s)) return 'badge-warning'
+  return ''
 })
 </script>
