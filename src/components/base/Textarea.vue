@@ -32,15 +32,15 @@ const textareaId = computed(() => {
 const errorId = computed(() => props.error && textareaId.value ? `${textareaId.value}-error` : undefined)
 
 const textareaClasses = computed(() => [
-  'w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text rounded font-mono placeholder-tokyo-night-muted transition',
-  'focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan border',
-  props.error ? 'border-tokyo-night-red' : 'border-tokyo-night-gray',
+  'w-full px-3 py-2 bg-void-warm text-nw-text rounded font-sys placeholder-nw-text-dim transition',
+  'focus:outline-none focus:ring-2 focus:ring-nw-cyan border',
+  props.error ? 'border-nw-red' : 'border-nw-text-line',
 ])
 </script>
 
 <template>
   <div class="flex flex-col gap-1">
-    <label v-if="label" :for="textareaId" class="text-tokyo-night-cyan font-mono font-bold">
+    <label v-if="label" :for="textareaId" class="text-nw-cyan font-stamp uppercase tracking-wide font-bold">
       {{ label }}
     </label>
     <textarea
@@ -58,6 +58,6 @@ const textareaClasses = computed(() => [
       :aria-invalid="error ? true : undefined"
       :aria-describedby="errorId"
     />
-    <p v-if="error" :id="errorId" class="text-tokyo-night-red font-mono text-sm mt-1">{{ error }}</p>
+    <p v-if="error" :id="errorId" class="text-nw-red font-sys text-sm mt-1">{{ error }}</p>
   </div>
 </template>

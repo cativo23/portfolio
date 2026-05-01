@@ -30,16 +30,16 @@ const wrapperClasses = computed(() => [
 ]);
 
 const labelClasses = computed(() => [
-  'text-tokyo-night-muted',
+  'text-nw-text-dim',
   'text-sm'
 ]);
 
 const valueColorMap: Record<NonNullable<Props['color']>, string> = {
-  success: 'text-tokyo-night-green',
-  error: 'text-tokyo-night-red',
-  warning: 'text-tokyo-night-yellow',
-  info: 'text-tokyo-night-cyan',
-  default: 'text-tokyo-night-text'
+  success: 'text-nw-green',
+  error: 'text-nw-red',
+  warning: 'text-nw-yellow',
+  info: 'text-nw-cyan',
+  default: 'text-nw-text'
 };
 
 const valueClasses = computed(() => [

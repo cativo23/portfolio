@@ -1,18 +1,11 @@
 <template>
   <span
-    class="inline-flex items-center gap-1.5"
+    class="inline-flex items-center gap-2"
     role="status"
     :aria-label="ariaLabel || (text ? undefined : status)"
   >
-    <span
-      :class="[
-        'rounded-full',
-        sizeClasses,
-        colorClasses,
-        { 'animate-pulse': pulse }
-      ]"
-    />
-    <span v-if="text || $slots.default" class="text-tokyo-night-foreground text-sm">
+    <span class="led" :class="[ledColor, { blink: pulse }, sizeClasses]" />
+    <span v-if="text || $slots.default" class="text-nw-text text-sm">
       <slot>{{ text }}</slot>
     </span>
   </span>
@@ -35,20 +28,20 @@ const props = withDefaults(defineProps<Props>(), {
   ariaLabel: ''
 });
 
-const colorMap: Record<Props['status'], string> = {
-  success: 'bg-tokyo-night-green',
-  error: 'bg-tokyo-night-red',
-  warning: 'bg-tokyo-night-yellow',
-  info: 'bg-tokyo-night-cyan',
-  unknown: 'bg-tokyo-night-muted'
+const ledMap: Record<Props['status'], string> = {
+  success: 'green',
+  error: 'red',
+  warning: 'yellow',
+  info: 'blue',
+  unknown: ''
 };
 
 const sizeMap: Record<NonNullable<Props['size']>, string> = {
-  sm: 'w-1.5 h-1.5',
-  md: 'w-2 h-2',
-  lg: 'w-3 h-3'
+  sm: '!w-1.5 !h-1.5',
+  md: '',
+  lg: '!w-3 !h-3'
 };
 
-const colorClasses = computed(() => colorMap[props.status]);
+const ledColor = computed(() => ledMap[props.status]);
 const sizeClasses = computed(() => sizeMap[props.size]);
 </script>

@@ -1,23 +1,52 @@
 <template>
   <div>
-    <h2 class="text-3xl font-bold mb-8 text-tokyo-night-cyan font-mono">
-      <span class="text-tokyo-night-purple">❯</span> Get In Touch
+    <h2 class="compressed-title text-nw-3xl text-nw-cyan mb-2">
+      Get in touch.
     </h2>
+    <p class="text-nw-text-dim mb-2 max-w-2xl">
+      Best for hiring managers, recruiters, and engineers who want to talk shop. I read every message — fastest reply via email or LinkedIn.
+    </p>
+    <p class="text-meta mb-8 max-w-2xl">
+      Open to senior backend / tech lead / staff roles. Remote-first, open to relocation for the right role with sponsorship.
+    </p>
+
+    <!-- Direct channels -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+      <a href="mailto:cativo@cativo.dev"
+         class="bg-void-panel border border-nw-text-faint hover:border-nw-primary-dim p-4 transition-colors">
+        <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">EMAIL</div>
+        <div class="text-meta text-nw-primary font-mono">cativo@cativo.dev</div>
+      </a>
+      <a href="https://linkedin.com/in/carlos-cativo" target="_blank" rel="noopener noreferrer"
+         class="bg-void-panel border border-nw-text-faint hover:border-nw-primary-dim p-4 transition-colors">
+        <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">LINKEDIN</div>
+        <div class="text-meta text-nw-primary font-mono">/in/carlos-cativo →</div>
+      </a>
+      <a href="/resume.pdf" download="cativo-cv.pdf"
+         class="bg-void-panel border border-nw-text-faint hover:border-nw-primary-dim p-4 transition-colors">
+        <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">CV / RESUME</div>
+        <div class="text-meta text-nw-primary font-mono">↓ Download PDF</div>
+      </a>
+    </div>
+
+    <p class="text-meta text-nw-text-dim font-stamp uppercase tracking-wider mb-4">
+      Or send a message below · Calendly: <a href="https://calendly.com/cativo23" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot normal-case tracking-normal">book 30 min →</a>
+    </p>
 
     <!-- Success State -->
-    <div v-if="successMessage" class="bg-tokyo-night-green/10 border border-tokyo-night-green/30 rounded p-6 text-center" role="status">
-      <LucideCheckCircle class="w-12 h-12 text-tokyo-night-green mx-auto mb-3" />
-      <p class="text-tokyo-night-green font-mono font-bold mb-2">Message Sent!</p>
-      <p class="text-tokyo-night-muted">{{ successMessage }}</p>
-      <button @click="successMessage = null" class="mt-4 text-tokyo-night-cyan font-mono text-sm underline hover:text-tokyo-night-blue transition">
+    <div v-if="successMessage" class="bg-nw-green/10 border border-nw-green/30 rounded p-6 text-center" role="status">
+      <LucideCheckCircle class="w-12 h-12 text-nw-green mx-auto mb-3" />
+      <p class="text-nw-green font-stamp uppercase tracking-wide font-bold mb-2">Message Sent!</p>
+      <p class="text-nw-text-dim">{{ successMessage }}</p>
+      <button @click="successMessage = null" class="mt-4 text-meta text-nw-cyan font-sys underline hover:text-nw-primary transition">
         Send another message
       </button>
     </div>
 
     <!-- Form -->
-    <form v-else @submit.prevent="submitForm" class="bg-tokyo-night-dark border border-tokyo-night-gray/30 p-6 rounded flex flex-col gap-4 w-full" novalidate>
+    <form v-else @submit.prevent="submitForm" class="bg-void-warm border border-nw-text-line/30 p-6 rounded flex flex-col gap-4 w-full" novalidate>
       <div class="flex flex-col gap-1">
-        <label for="name" class="text-tokyo-night-cyan font-mono font-bold">Name</label>
+        <label for="name" class="text-nw-cyan font-stamp uppercase tracking-wide font-bold">Name</label>
         <input
           type="text"
           id="name"
@@ -27,17 +56,17 @@
           :aria-describedby="fieldErrors.name ? 'name-error' : undefined"
           required
           autocomplete="name"
-          class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono placeholder-tokyo-night-muted transition"
-          :class="fieldErrors.name ? 'border-red-400' : 'border-tokyo-night-gray'"
+          class="w-full px-3 py-2 bg-void-warm text-nw-text border rounded focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
+          :class="fieldErrors.name ? 'border-red-400' : 'border-nw-text-line'"
           placeholder="Your name"
         >
-        <p v-if="fieldErrors.name" id="name-error" class="text-red-400 text-xs font-mono mt-1" role="alert">
+        <p v-if="fieldErrors.name" id="name-error" class="text-meta text-red-400 font-sys mt-1" role="alert">
           {{ fieldErrors.name }}
         </p>
       </div>
 
       <div class="flex flex-col gap-1">
-        <label for="email" class="text-tokyo-night-cyan font-mono font-bold">Email</label>
+        <label for="email" class="text-nw-cyan font-stamp uppercase tracking-wide font-bold">Email</label>
         <input
           type="email"
           id="email"
@@ -47,17 +76,17 @@
           :aria-describedby="fieldErrors.email ? 'email-error' : undefined"
           required
           autocomplete="email"
-          class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono placeholder-tokyo-night-muted transition"
-          :class="fieldErrors.email ? 'border-red-400' : 'border-tokyo-night-gray'"
+          class="w-full px-3 py-2 bg-void-warm text-nw-text border rounded focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
+          :class="fieldErrors.email ? 'border-red-400' : 'border-nw-text-line'"
           placeholder="you@email.com"
         >
-        <p v-if="fieldErrors.email" id="email-error" class="text-red-400 text-xs font-mono mt-1" role="alert">
+        <p v-if="fieldErrors.email" id="email-error" class="text-meta text-red-400 font-sys mt-1" role="alert">
           {{ fieldErrors.email }}
         </p>
       </div>
 
       <div class="flex flex-col gap-1">
-        <label for="message" class="text-tokyo-night-cyan font-mono font-bold">Message</label>
+        <label for="message" class="text-nw-cyan font-stamp uppercase tracking-wide font-bold">Message</label>
         <textarea
           id="message"
           v-model="form.message"
@@ -66,11 +95,11 @@
           :aria-describedby="fieldErrors.message ? 'message-error' : undefined"
           required
           rows="4"
-          class="w-full px-3 py-2 bg-tokyo-night-bg text-tokyo-night-text border rounded focus:outline-none focus:ring-2 focus:ring-tokyo-night-cyan font-mono placeholder-tokyo-night-muted transition"
-          :class="fieldErrors.message ? 'border-red-400' : 'border-tokyo-night-gray'"
+          class="w-full px-3 py-2 bg-void-warm text-nw-text border rounded focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
+          :class="fieldErrors.message ? 'border-red-400' : 'border-nw-text-line'"
           placeholder="Type your message..."
         ></textarea>
-        <p v-if="fieldErrors.message" id="message-error" class="text-red-400 text-xs font-mono mt-1" role="alert">
+        <p v-if="fieldErrors.message" id="message-error" class="text-meta text-red-400 font-sys mt-1" role="alert">
           {{ fieldErrors.message }}
         </p>
       </div>
@@ -86,12 +115,12 @@
         aria-hidden="true"
       >
 
-      <div v-if="error" class="text-red-400 font-mono text-sm" role="alert">{{ error }}</div>
+      <div v-if="error" class="text-meta text-red-400 font-sys" role="alert">{{ error }}</div>
 
       <button
         :disabled="loading"
         type="submit"
-        class="mt-2 px-6 py-2 bg-tokyo-night-highlight text-tokyo-night-dark font-mono font-bold rounded shadow hover:bg-tokyo-night-cyan transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        class="mt-2 px-6 py-2 bg-void-raised text-void-warm font-sys font-bold rounded shadow hover:bg-nw-cyan transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
         <LucideLoader v-if="loading" class="w-4 h-4 animate-spin" />
         {{ loading ? 'Sending...' : 'Send Message' }}

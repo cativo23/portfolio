@@ -10,11 +10,11 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const colorClasses: Record<string, string> = {
-  cyan: 'bg-tokyo-night-cyan/10 text-tokyo-night-cyan',
-  magenta: 'bg-tokyo-night-magenta/10 text-tokyo-night-magenta',
-  green: 'bg-tokyo-night-green/10 text-tokyo-night-green',
-  yellow: 'bg-tokyo-night-yellow/10 text-tokyo-night-yellow',
-  muted: 'bg-tokyo-night-gray/10 text-tokyo-night-muted',
+  cyan: 'bg-nw-cyan/10 text-nw-cyan',
+  magenta: 'bg-nw-purple/10 text-nw-purple',
+  green: 'bg-nw-green/10 text-nw-green',
+  yellow: 'bg-nw-yellow/10 text-nw-yellow',
+  muted: 'bg-nw-text-line/10 text-nw-text-dim',
 }
 
 const sizeClasses: Record<string, string> = {
@@ -24,7 +24,7 @@ const sizeClasses: Record<string, string> = {
 </script>
 
 <template>
-  <span :class="['inline-block rounded-full font-mono', colorClasses[props.color], sizeClasses[props.size]]">
+  <span :class="['inline-block rounded-full font-sys', colorClasses[props.color], sizeClasses[props.size]]">
     <slot />
   </span>
 </template>

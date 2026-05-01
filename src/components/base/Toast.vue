@@ -51,11 +51,11 @@ onUnmounted(() => {
   timers.clear()
 })
 
-const typeConfig: Record<'success' | 'error' | 'warning' | 'info', { border: string; icon: string; iconColor: string }> = {
-  success: { border: 'border-tokyo-night-green', icon: '✓', iconColor: 'text-tokyo-night-green' },
-  error: { border: 'border-tokyo-night-red', icon: '✕', iconColor: 'text-tokyo-night-red' },
-  warning: { border: 'border-tokyo-night-yellow', icon: '⚠', iconColor: 'text-tokyo-night-yellow' },
-  info: { border: 'border-tokyo-night-cyan', icon: 'ℹ', iconColor: 'text-tokyo-night-cyan' },
+const typeConfig: Record<'success' | 'error' | 'warning' | 'info', { variant: string; icon: string; iconColor: string }> = {
+  success: { variant: 'toast-success', icon: '✓', iconColor: 'text-nw-green' },
+  error: { variant: 'toast-danger', icon: '✕', iconColor: 'text-nw-red' },
+  warning: { variant: 'toast-warning', icon: '⚠', iconColor: 'text-nw-yellow' },
+  info: { variant: 'toast-info', icon: 'ℹ', iconColor: 'text-nw-cyan' },
 }
 </script>
 
@@ -70,9 +70,8 @@ const typeConfig: Record<'success' | 'error' | 'warning' | 'info', { border: str
         v-for="toast in toasts"
         :key="toast.id"
         :class="[
-          'bg-tokyo-night-dark rounded-lg border border-l-4 p-3 font-mono text-sm shadow-lg',
-          'flex items-start gap-3',
-          typeConfig[toast.type].border,
+          'toast flex items-start gap-3',
+          typeConfig[toast.type].variant,
         ]"
         role="alert"
         aria-live="assertive"
@@ -84,10 +83,10 @@ const typeConfig: Record<'success' | 'error' | 'warning' | 'info', { border: str
         <span :class="[typeConfig[toast.type].iconColor, 'text-base leading-none shrink-0']">
           {{ typeConfig[toast.type].icon }}
         </span>
-        <span class="text-tokyo-night-text flex-1 break-words">{{ toast.message }}</span>
+        <span class="text-nw-text flex-1 break-words">{{ toast.message }}</span>
         <button
           @click="onClose(toast.id)"
-          class="text-tokyo-night-muted hover:text-tokyo-night-text text-base leading-none shrink-0 cursor-pointer"
+          class="text-nw-text-dim hover:text-nw-text text-base leading-none shrink-0 cursor-pointer"
           aria-label="Close notification"
           @focus="pauseTimer(toast.id)"
           @blur="resumeTimer(toast.id)"

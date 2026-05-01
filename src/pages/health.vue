@@ -21,16 +21,16 @@
     <BaseCard>
       <AsyncState :loading="loading" :error="error || (health === null ? 'No data' : undefined)" loading-text="Loading health status..." error-text="Unable to load health status">
         <template #error="{ error }">
-          <p class="text-tokyo-night-red mb-4 font-mono">Unable to load health status</p>
-          <p class="text-tokyo-night-muted text-sm font-mono">{{ error }}</p>
+          <p class="text-nw-red mb-4 font-sys">Unable to load health status</p>
+          <p class="text-nw-text-dim text-sm font-sys">{{ error }}</p>
         </template>
         <div v-if="health" class="space-y-6" aria-live="polite">
         <!-- Summary -->
         <div class="text-center">
-          <span class="flex items-center px-3 py-1 rounded-full border bg-tokyo-night-surface shadow-sm font-mono text-sm" :class="Object.values(health.components).every(c => c.status === 'up') ? 'text-tokyo-night-green' : 'text-tokyo-night-red'">
+          <span class="flex items-center px-3 py-1 rounded-full border bg-void-panel shadow-sm font-sys text-sm" :class="Object.values(health.components).every(c => c.status === 'up') ? 'text-nw-green' : 'text-nw-red'">
             <StatusIndicator :status="summaryStatusIndicator" :text="overallStatus" pulse size="lg" />
           </span>
-          <p v-if="health.status" class="text-tokyo-night-muted mt-2 capitalize">
+          <p v-if="health.status" class="text-nw-text-dim mt-2 capitalize">
             Status: {{ health.status }}
           </p>
         </div>
@@ -40,30 +40,30 @@
           <div
             v-for="(component, name) in health.components"
             :key="name"
-            class="p-4 rounded bg-tokyo-night-bg"
+            class="p-4 rounded bg-void-warm"
           >
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-3">
-                <span class="text-tokyo-night-text font-mono capitalize">{{ formatServiceName(name) }}</span>
+                <span class="text-nw-text font-sys capitalize">{{ formatServiceName(name) }}</span>
               </div>
               <div class="flex items-center gap-4">
                 <StatusIndicator :status="component.status === 'up' ? 'success' : 'error'" :text="component.status === 'up' ? 'Operational' : 'Down'" size="md" />
-                <span v-if="component.latency !== undefined" class="text-tokyo-night-muted text-xs font-mono">
+                <span v-if="component.latency !== undefined" class="text-nw-text-dim text-xs font-sys">
                   {{ component.latency }}ms
                 </span>
-                <span v-if="component.usagePercent !== undefined" class="text-tokyo-night-muted text-xs font-mono">
+                <span v-if="component.usagePercent !== undefined" class="text-nw-text-dim text-xs font-sys">
                   {{ component.usagePercent.toFixed(1) }}%
                 </span>
               </div>
             </div>
-            <p v-if="component.message" class="text-tokyo-night-muted text-xs mt-1">
+            <p v-if="component.message" class="text-nw-text-dim text-xs mt-1">
               {{ component.message }}
             </p>
           </div>
         </div>
 
         <!-- Meta Info -->
-        <div class="pt-4 border-t border-tokyo-night-gray grid grid-cols-2 gap-4 text-sm">
+        <div class="pt-4 border-t border-nw-text-line grid grid-cols-2 gap-4 text-sm">
           <MetaInfoPair v-if="health.version" label="Version" :value="health.version" horizontal />
           <MetaInfoPair v-if="health.environment" label="Environment" :value="health.environment" horizontal />
           <MetaInfoPair v-if="health.uptime" label="Uptime" :value="`${health.uptime}s`" horizontal />
@@ -72,7 +72,7 @@
 
         <!-- Refresh Button -->
         <div class="flex justify-center mt-4">
-          <BaseButton variant="ghost" @click="loadHealth(true)" :disabled="refreshing || loading" class="font-mono">
+          <BaseButton variant="ghost" @click="loadHealth(true)" :disabled="refreshing || loading" class="font-sys">
             <span class="flex items-center gap-2">
               <span :class="{ 'animate-spin': refreshing }">
                 <LucideRefreshCw class="w-4 h-4" />

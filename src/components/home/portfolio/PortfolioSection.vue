@@ -1,35 +1,41 @@
 <template>
-  <section class="mb-16">
-    <BaseSectionHeading title="Featured Projects" animated :level="3" />
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+  <div class="panel">
+    <div class="panel-header">
+      <span>SELECTED WORK · FEATURED</span>
+    </div>
+    <div class="panel-body p-5 grid grid-cols-1 md:grid-cols-2 gap-5">
       <!-- Loading State -->
       <template v-if="pending">
-        <div class="col-span-1 md:col-span-2 text-center py-8" role="status" aria-live="polite">
-          <span class="text-tokyo-night-muted">Loading projects...</span>
+        <div class="col-span-1 md:col-span-2 text-center py-10 bg-void-warm" role="status" aria-live="polite">
+          <span class="text-nw-text-dim font-stamp uppercase tracking-wider text-xs">Loading dossier…</span>
         </div>
       </template>
 
       <!-- Error State -->
       <template v-else-if="fetchError">
-        <div class="col-span-1 md:col-span-2 text-center py-8 text-red-400" role="alert">
-          Failed to load projects
+        <div class="col-span-1 md:col-span-2 text-center py-10 bg-void-warm text-nw-red font-stamp uppercase tracking-wider text-xs" role="alert">
+          [ERR] Failed to load case files
         </div>
       </template>
 
       <!-- Empty State -->
       <template v-else-if="!data || (data as any).data?.length === 0">
-        <div class="col-span-1 md:col-span-2 text-center py-8 text-tokyo-night-text">
-          No projects found.
+        <div class="col-span-1 md:col-span-2 text-center py-10 bg-void-warm text-nw-text-dim font-stamp uppercase tracking-wider text-xs">
+          No active case files.
         </div>
       </template>
 
       <!-- Projects -->
-      <div v-else v-for="project in (data as any).data" :key="project.id || project.title">
-        <FeatureProjectCard :project="project" />
-      </div>
+      <FeatureProjectCard
+        v-else
+        v-for="project in (data as any).data"
+        :key="project.id || project.title"
+        :project="project"
+      />
     </div>
-  </section>
+  </div>
 </template>
+
 <script lang="ts" setup>
 import FeatureProjectCard from '~/components/home/portfolio/FeatureProjectCard.vue'
 
@@ -41,5 +47,3 @@ const { data, pending, error: fetchError } = await useFetch('/api/projects', {
   getCachedData: () => undefined,
 })
 </script>
-
-<style></style>

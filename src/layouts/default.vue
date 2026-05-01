@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen bg-tokyo-night-bg text-tokyo-night-text font-mono">
+  <div class="flex flex-col min-h-screen bg-void-warm text-nw-text font-sys">
     <Header />
     <main class="container mx-auto p-4 flex-grow">
       <slot />

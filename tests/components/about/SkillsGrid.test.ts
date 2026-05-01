@@ -56,7 +56,7 @@ describe('SkillsGrid', () => {
       props: { categories },
       global: { components: { LucideTerminal: TerminalMock } }
     })
-    expect(wrapper.html()).toContain('bg-tokyo-night-red/20')
+    expect(wrapper.html()).toContain('bg-nw-red/20')
   })
 
   it('applies basic level styling', () => {
@@ -64,6 +64,6 @@ describe('SkillsGrid', () => {
       props: { categories },
       global: { components: { LucideTerminal: TerminalMock } }
     })
-    expect(wrapper.html()).toContain('bg-tokyo-night-green/20')
+    expect(wrapper.html()).toContain('bg-nw-green/20')
   })
 })
