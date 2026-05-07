@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.1] - 2026-05-07
+
+### Fixed
+- **POW signal token wiring** — Renamed runtime env from `GITHUB_TOKEN` to `POW_GH_TOKEN` to avoid clashing with the Actions auto-injected token. Threaded the secret through the SSH deploy step and the prod compose file (with `:?` fail-fast) so the GitHub GraphQL call in `/api/signal` actually authenticates in production.
+- **Dev compose parity** — `compose.yml` now passes `POW_GH_TOKEN` instead of the orphaned `GITHUB_TOKEN`, so local Docker dev gets real GitHub data.
+
+### Added
+- **`.env.example`** — Documents the required `NUXT_API_TOKEN` and `POW_GH_TOKEN` env vars for new contributors.
+
+---
+
 ## [1.10.0] - 2026-05-07
 
 ### Added
