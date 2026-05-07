@@ -66,7 +66,7 @@ export default defineEventHandler(async () => {
           {
             role: 'B.Sc. Computer Systems Engineering',
             company: 'Universidad de El Salvador',
-            period: '2014 – 2021',
+            period: '2023',
             location: 'Education',
             description: "Specialization in Cloud Infrastructure.",
             tags: []

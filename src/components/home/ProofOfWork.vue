@@ -1,5 +1,5 @@
 <template>
-  <div class="panel reveal">
+  <div class="panel">
     <div class="panel-header">
       <span>SIGNAL · PROOF OF WORK</span>
       <span class="text-nw-green font-stamp uppercase tracking-wider text-[10px]">LIVE</span>
@@ -26,35 +26,52 @@
     </div>
 
     <!-- Metrics strip -->
-    <div class="metrics-grid grid grid-cols-2 md:grid-cols-5">
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-px bg-nw-text-faint">
+      <div class="metric-cell">
+        <div class="m-label">YEARS</div>
+        <div class="m-value">9</div>
+        <div class="m-sub">backend since 2016</div>
+      </div>
+      <div class="metric-cell">
+        <div class="m-label">CURRENT ROLE</div>
+        <div class="m-value" style="font-size: 16px;">TECH LEAD</div>
+        <div class="m-sub">Blue Medical Guatemala</div>
+      </div>
+      <div class="metric-cell highlight">
+        <div class="m-label">SPECIALTY</div>
+        <div class="m-value" style="font-size: 12px;">PAYMENTS · FEL</div>
+        <div class="m-sub">ISO 8583 · multi-gateway</div>
+      </div>
       <div class="metric-cell">
         <div class="m-label">CONTAINERS</div>
         <div class="m-value">16</div>
+        <div class="m-sub">self-hosted · 6 stacks</div>
       </div>
       <div class="metric-cell">
         <div class="m-label">NPM DL / MO</div>
-        <div class="m-value" style="color: var(--nw-purple); text-shadow: 0 0 6px rgba(187,154,247,0.3);">
+        <div class="m-value" style="color: var(--nw-purple); text-shadow: 0 0 6px rgba(178,102,224,0.3);">
           {{ formatNumber(signal?.npm.total) }}
         </div>
       </div>
       <div class="metric-cell">
         <div class="m-label">LUMIRA</div>
-        <div class="m-value" style="color: var(--nw-cyan); text-shadow: 0 0 6px rgba(125,207,255,0.3);">
+        <div class="m-value" style="color: var(--nw-cyan); text-shadow: 0 0 6px rgba(102,221,255,0.3);">
           {{ formatNumber(signal?.npm.lumira) }}
         </div>
         <div class="m-sub">downloads / mo</div>
       </div>
       <div class="metric-cell">
-        <div class="m-label">API VERSION</div>
+        <div class="m-label">API</div>
         <div class="m-value" style="font-size: 16px;">
           {{ signal ? `v${signal.api.version}` : '...' }}
         </div>
       </div>
       <div class="metric-cell">
-        <div class="m-label">API STATUS</div>
+        <div class="m-label">STATUS</div>
         <div class="m-value" style="font-size: 14px;">
           <span class="led blink" :class="signal?.api.status === 'operational' ? 'green' : 'red'" style="display: inline-block;" />
         </div>
+        <div class="m-sub">api.cativo.dev</div>
       </div>
     </div>
 
