@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.2] - 2026-05-07
+
+### Fixed
+- **Prod healthcheck timeout** — Bumped `compose.prod.yml` healthcheck `timeout` 5s → 15s and `start_period` 10s → 30s. The home-page SSR now takes ~6s due to the POW signal data, which was causing every healthcheck to fail and Traefik to stop routing traffic (404s on cativo.dev).
+
+---
+
 ## [1.10.1] - 2026-05-07
 
 ### Fixed
