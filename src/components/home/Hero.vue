@@ -1,7 +1,6 @@
 <template>
-  <section class="py-8 lg:py-12">
-    <!-- PERSONNEL DOSSIER -->
-    <div class="panel">
+  <!-- PERSONNEL DOSSIER -->
+  <div class="panel">
       <div class="panel-header">
         <span>PERSONNEL DOSSIER · ID-SV-001</span>
         <span class="tag">人事ファイル</span>
@@ -89,7 +88,6 @@
         </aside>
       </div>
     </div>
-  </section>
 </template>
 
 <script lang="ts" setup>

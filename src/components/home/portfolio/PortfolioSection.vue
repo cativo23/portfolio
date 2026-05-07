@@ -28,9 +28,12 @@
       <!-- Projects -->
       <FeatureProjectCard
         v-else
-        v-for="project in (data as any).data"
+        v-for="(project, index) in (data as any).data"
         :key="project.id || project.title"
         :project="project"
+        :class="[index === 0 ? 'md:col-span-2' : '', 'reveal']"
+        :style="{ '--delay': `${index * 0.08}s` }"
+        :featured="index === 0"
       />
     </div>
   </div>

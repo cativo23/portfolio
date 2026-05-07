@@ -305,10 +305,12 @@ const summaryParagraphs = computed(() => {
   return profile.summary;
 });
 
+// Safe: input is hardcoded profile.summary above, never from external/user sources
 function formatSummaryParagraph(text: string) {
-  return text
+  const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  return escaped
     .replace(/(9 years)/g, '<span class="text-nw-cyan font-semibold">$1</span>')
     .replace(/(sofIA|VittBot|Clarify)/g, '<span class="text-nw-purple font-medium">$1</span>')
-    .replace(/(Visa ISO 8583|Invoice Service|FEL|cativo\.dev)/g, '<span class="text-nw-primary font-medium">$1</span>');
+    .replace(/(Visa ISO 8583|Invoice Service|FEL|cativo\.dev)/g, '<span class="text-nw-primary font-medium">$1</span>')
 }
 </script>

@@ -6,8 +6,6 @@
    tokens still rule panels (metric-cell, kv-row, panel-header).
    ============================================================ */
 :root {
-  /* Body prose: fluid 19→20px. Slightly bigger than the readability
-     target — user preference for a more comfortable read. */
   --text-body:       clamp(19px, 1.05rem + 0.25vw, 20px);
   --text-lede:       clamp(17px, 0.95rem + 0.3vw, 19px);
   --leading-body:    1.65;
@@ -23,7 +21,14 @@
   --tracking-body:   -0.005em;
 }
 
-/* Pure Nightwire, mono everywhere, OLED-friendly via dim body */
+/* GPU-accelerate compressed titles to prevent clipping artefacts
+   from the scaleX(0.82) transform on low-DPI displays. */
+.compressed-title {
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 html,
 body {
   background: var(--void);
@@ -79,6 +84,11 @@ body {
   line-height: 1.2;
 }
 
+.title-card-lg {
+  font-size: 1.75rem;
+  line-height: 1.15;
+}
+
 /* Mobile: clamp already lands at 17px, but we open up line-height
    slightly because reading-on-thumb tolerates more air. */
 @media (max-width: 480px) {
@@ -108,6 +118,19 @@ body {
 
 @keyframes nw-caret-blink {
   50% { opacity: 0; }
+}
+
+/* Scroll-triggered reveal — elements start invisible, fade+slide in
+   when IntersectionObserver adds .is-visible. Stagger via --delay. */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  transition-delay: var(--delay, 0s);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Page transition — clean fade */

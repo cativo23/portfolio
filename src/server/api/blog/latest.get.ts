@@ -50,7 +50,9 @@ async function fetchLatest(): Promise<BlogPost[]> {
     const url = pickFirst(raw, 'link')
     const pubDate = pickFirst(raw, 'pubDate')
     const rawDesc = pickFirst(raw, 'description')
-    const description = stripHtml(rawDesc).slice(0, 200)
+    const clean = stripHtml(rawDesc)
+    const cut = clean.slice(0, 140)
+    const description = cut.includes(' ') ? cut.slice(0, cut.lastIndexOf(' ')) + '...' : cut
     return { title, url, pubDate, description }
   })
 }

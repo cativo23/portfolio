@@ -28,10 +28,10 @@
             <div class="flex-1">
               <p class="text-nw-primary text-xs uppercase tracking-wider mb-3 font-stamp">{{ item.company }}</p>
 
-              <p class="text-nw-text-dim mb-4 leading-relaxed">{{ item.description }}</p>
+              <p class="text-meta mb-4 leading-relaxed">{{ item.description }}</p>
 
               <ul v-if="item.highlights && item.highlights.length > 0" class="space-y-2 mb-4">
-                <li v-for="(highlight, i) in item.highlights" :key="i" class="text-nw-text-dim flex gap-2">
+                <li v-for="(highlight, i) in item.highlights" :key="i" class="text-meta flex gap-2">
                   <span class="text-nw-primary shrink-0 mt-0.5">→</span>
                   <span>{{ highlight }}</span>
                 </li>

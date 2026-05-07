@@ -29,6 +29,7 @@ export default defineNuxtConfig({
     apiBaseUrl: process.env.NUXT_API_BASE_URL || 'http://api:3000',
     apiBasePath: process.env.NUXT_API_BASE_PATH || '/api/v1',
     apiToken: process.env.NUXT_API_TOKEN || '',
+    githubToken: process.env.GITHUB_TOKEN || '',
     public: {
       baseTitle: 'Carlos Cativo',
       defaultOgImage: '/img/akira.jpeg',
