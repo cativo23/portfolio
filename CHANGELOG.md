@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.3] - 2026-05-07
+
+### Fixed
+- **POW signal token actually reaching Nuxt runtime** — Map the `POW_GH_TOKEN` repo secret onto `NUXT_GITHUB_TOKEN` (not `POW_GH_TOKEN`) inside the container. Nuxt runtime config only overrides `runtimeConfig.githubToken` from env vars matching the `NUXT_*` + key pattern; the previous mapping left the runtime token empty and the GitHub GraphQL call returning an early-fallback zero. POW heatmap now shows real contribution data.
+
+---
+
 ## [1.10.2] - 2026-05-07
 
 ### Fixed
