@@ -185,7 +185,7 @@ const monthLabels = computed(() => {
     const approxDate = new Date(now.getTime() - (weeks.length - 1 - wi) * 7 * 24 * 60 * 60 * 1000)
     const month = approxDate.getMonth()
     if (month !== lastMonth) {
-      labels.push({ name: MONTH_NAMES[month], index: wi })
+      labels.push({ name: MONTH_NAMES[month] ?? '', index: wi })
       lastMonth = month
     }
   })
