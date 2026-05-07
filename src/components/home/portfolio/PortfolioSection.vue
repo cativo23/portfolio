@@ -47,6 +47,5 @@ const { data, pending, error: fetchError } = await useFetch('/api/projects', {
   query: { is_featured: 'true' },
   lazy: false,
   server: true,
-  getCachedData: () => undefined,
 })
 </script>
