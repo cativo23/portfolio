@@ -325,11 +325,6 @@
   resolved "https://registry.npmjs.org/@csstools/selector-specificity/-/selector-specificity-5.0.0.tgz"
   integrity sha512-PCqQV3c4CoVm3kdPhyeZ07VmBRdH2EpMFA/pd9OASpOEC3aXNGoqPDAZ80D0cLpMBxnmk0+yNhGsEx31hq7Gtw==
 
-"@dmncodes/vue-typing@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.npmjs.org/@dmncodes/vue-typing/-/vue-typing-1.0.5.tgz"
-  integrity sha512-lleo7KPu2MxfMVNGjcNZb7a3sIZrwLpy1nbQ+hOPcL08GmWqW19SRNlXY2tA9HoScyorRrssXpNb0mX4rFvi0Q==
-
 "@dxup/nuxt@^0.4.0":
   version "0.4.1"
   resolved "https://registry.npmjs.org/@dxup/nuxt/-/nuxt-0.4.1.tgz"

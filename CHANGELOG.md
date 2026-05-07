@@ -11,6 +11,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.0] - 2026-05-07
+
+### Added
+- **Proof of Work panel** — Live signal dashboard with GitHub contribution heatmap, NPM download sparklines, and API health status. Data fetched from `/api/signal` (cached 1hr).
+- **NPM weekly sparklines** — Per-package download trend bars (Lumira, Nightwire, Claude-Setup) with real weekly data from the NPM registry.
+- **Month axis on heatmap** — Temporal labels (OCT, NOV, ...) below the contribution grid for context.
+- **Scroll-triggered reveals** — `reveal.client.ts` plugin using IntersectionObserver for below-fold fade-in animations.
+
+### Changed
+- **Heatmap layout (Combo C)** — Responsive cells (`flex:1` + `aspect-ratio:1`) fill available width. Stats grid expanded to 2x3 with API/Status moved from metrics strip.
+- **Metrics strip** — Reduced from 8 to 4 focused cells (Years, Tech Lead, Specialty, Containers).
+- **Featured project cards** — First card spans full width with accent border and larger title.
+- **Contact page** — Rewritten with Nightwire panels (Direct Channels grid + Send a Message form).
+- **Blog truncation** — Word-boundary cut at 140 chars instead of hard slice at 200.
+- **Typography** — GPU-accelerated compressed titles, `.title-card-lg` token, `.text-meta` prose utility.
+
+### Fixed
+- **Hero layout** — Removed extra wrapper causing spacing inconsistency.
+- **About page XSS** — `formatSummaryParagraph()` now HTML-escapes input before regex highlights.
+- **Heatmap color contrast** — 5-level blue ramp with distinct steps for low-activity cells.
+
+---
+
 ## [1.9.0] - 2026-05-01
 
 ### Added

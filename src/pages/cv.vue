@@ -181,7 +181,7 @@ const print = () => {
       <section>
         <h2>Education</h2>
         <p>
-          <strong>Universidad de El Salvador</strong> — Engineer's degree, Computer Engineering (2014 — 2021).
+          <strong>Universidad de El Salvador</strong> — B.Sc. Computer Systems Engineering, 2023. Specialization in Cloud Infrastructure.
         </p>
       </section>
     </main>
