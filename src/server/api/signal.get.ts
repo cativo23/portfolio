@@ -1,3 +1,8 @@
+interface NpmPackageData {
+  monthly: number
+  weekly: number[]
+}
+
 interface SignalData {
   github: {
     contributions: number
@@ -5,9 +10,9 @@ interface SignalData {
     publicRepos: number
   }
   npm: {
-    lumira: number
-    claudeSetup: number
-    nightwire: number
+    lumira: NpmPackageData
+    claudeSetup: NpmPackageData
+    nightwire: NpmPackageData
     total: number
   }
   api: {
@@ -58,7 +63,7 @@ async function fetchGitHubContributions(token: string): Promise<{ contributions:
     FOURTH_QUARTILE: 4,
   }
 
-  const weeks = calendar.weeks.slice(-16).map((w: any) =>
+  const weeks = calendar.weeks.slice(-30).map((w: any) =>
     w.contributionDays.map((d: any) => levelMap[d.contributionLevel] ?? 0)
   )
 
@@ -76,12 +81,29 @@ async function fetchGitHubRepos(token: string): Promise<number> {
   return res?.public_repos ?? 0
 }
 
-async function fetchNpmDownloads(pkg: string): Promise<number> {
-  const res = await $fetch<any>(
-    `https://api.npmjs.org/downloads/point/last-month/${pkg}`,
-    { timeout: 5000 }
-  )
-  return res?.downloads ?? 0
+async function fetchNpmDownloads(pkg: string): Promise<NpmPackageData> {
+  const end = new Date()
+  const start = new Date(end.getTime() - 7 * 7 * 24 * 60 * 60 * 1000) // 7 weeks ago
+  const fmt = (d: Date) => d.toISOString().slice(0, 10)
+
+  const [point, range] = await Promise.allSettled([
+    $fetch<any>(`https://api.npmjs.org/downloads/point/last-month/${pkg}`, { timeout: 5000 }),
+    $fetch<any>(`https://api.npmjs.org/downloads/range/${fmt(start)}:${fmt(end)}/${pkg}`, { timeout: 5000 }),
+  ])
+
+  const monthly = point.status === 'fulfilled' ? (point.value?.downloads ?? 0) : 0
+
+  let weekly: number[] = []
+  if (range.status === 'fulfilled' && range.value?.downloads) {
+    const days: { downloads: number }[] = range.value.downloads
+    for (let i = 0; i < days.length; i += 7) {
+      const chunk = days.slice(i, i + 7)
+      weekly.push(chunk.reduce((sum, d) => sum + d.downloads, 0))
+    }
+  }
+  if (weekly.length === 0) weekly = [0, 0, 0, 0, 0, 0, 0]
+
+  return { monthly, weekly }
 }
 
 async function fetchApiHealth(): Promise<{ version: string; status: string }> {
@@ -110,9 +132,10 @@ export default defineCachedEventHandler(
 
     const ghData = gh.status === 'fulfilled' ? gh.value : { contributions: 0, weeks: [] }
     const repoCount = repos.status === 'fulfilled' ? repos.value : 0
-    const lumiraDl = lumira.status === 'fulfilled' ? lumira.value : 0
-    const claudeSetupDl = claudeSetup.status === 'fulfilled' ? claudeSetup.value : 0
-    const nightwireDl = nightwire.status === 'fulfilled' ? nightwire.value : 0
+    const fallbackPkg: NpmPackageData = { monthly: 0, weekly: [0, 0, 0, 0, 0, 0, 0] }
+    const lumiraDl = lumira.status === 'fulfilled' ? lumira.value : fallbackPkg
+    const claudeSetupDl = claudeSetup.status === 'fulfilled' ? claudeSetup.value : fallbackPkg
+    const nightwireDl = nightwire.status === 'fulfilled' ? nightwire.value : fallbackPkg
     const apiData = api.status === 'fulfilled' ? api.value : { version: '...', status: 'unknown' }
 
     const data: SignalData = {
@@ -125,7 +148,7 @@ export default defineCachedEventHandler(
         lumira: lumiraDl,
         claudeSetup: claudeSetupDl,
         nightwire: nightwireDl,
-        total: lumiraDl + claudeSetupDl + nightwireDl,
+        total: lumiraDl.monthly + claudeSetupDl.monthly + nightwireDl.monthly,
       },
       api: apiData,
     }
