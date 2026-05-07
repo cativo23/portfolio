@@ -88,7 +88,7 @@ const { data: raw } = useFetch<{ status: string; data: SignalData }>('/api/signa
 
 const signal = computed(() => raw.value?.data)
 
-const heatColors = ['var(--void-panel)', '#0e4429', '#006d32', '#26a641', 'var(--nw-green)']
+const heatColors = ['var(--void-panel)', 'var(--nw-primary-fill)', 'rgba(68,119,204,0.45)', 'var(--nw-primary-dim)', 'var(--nw-primary)']
 
 function formatNumber(n: number | undefined): string {
   if (n == null) return '...'
