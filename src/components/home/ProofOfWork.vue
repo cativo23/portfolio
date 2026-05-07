@@ -149,10 +149,8 @@ interface SignalData {
   api: { version: string; status: string }
 }
 
-const signalVersion = 3
 const { data: raw } = useFetch<{ status: string; data: SignalData }>('/api/signal', {
   server: false,
-  query: { v: signalVersion },
 })
 
 const signal = computed(() => raw.value?.data)
