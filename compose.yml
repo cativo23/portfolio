@@ -9,12 +9,13 @@ services:
       - .:/home/node/app
       - /home/node/app/node_modules  # Preserve container's node_modules
     ports:
-      - '3001:3000'
+      - '3002:3000'
     environment:
       NODE_ENV: development
       NUXT_API_BASE_URL: http://host.docker.internal:3003
       NUXT_API_BASE_PATH: /api/v1
       NUXT_API_TOKEN: ${NUXT_API_TOKEN:-}
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
     user: 'node'
     extra_hosts:
       - 'host.docker.internal:host-gateway'

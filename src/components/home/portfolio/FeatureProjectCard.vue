@@ -1,16 +1,20 @@
 <template>
   <NuxtLink
     :to="`/projects/${project.id}`"
-    class="bg-void-raised hover:bg-void-panel border border-nw-text-line hover:border-nw-primary-dim transition-colors duration-150 p-5 flex flex-col gap-3"
+    :class="[
+      'bg-void-raised hover:bg-void-panel border hover:border-nw-primary-dim transition-all duration-200 p-5 flex flex-col gap-3',
+      featured ? 'border-nw-primary-dim/50' : 'border-nw-text-line',
+      'hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(102,153,255,0.08)]',
+    ]"
   >
     <header class="flex items-start justify-between gap-3">
       <div>
         <div class="font-stamp uppercase tracking-[0.14em] text-[9px] text-nw-text-dim">
           CASE-{{ String(project.id).padStart(4, '0') }}
         </div>
-        <h4 class="compressed-title title-card text-nw-text mt-1">
+        <component :is="featured ? 'h3' : 'h4'" class="compressed-title text-nw-text mt-1" :class="featured ? 'title-card-lg' : 'title-card'">
           {{ project.title }}
-        </h4>
+        </component>
       </div>
       <span v-if="project.status" class="badge" :class="badgeClass">
         {{ project.status }}
@@ -44,9 +48,12 @@ import type { Project } from '~/types/project'
 
 interface Props {
   project: Project & { createdAt?: string; status?: string }
+  featured?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  featured: false,
+})
 
 defineOptions({ name: 'FeatureProjectCard' })
 

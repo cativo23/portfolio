@@ -1,8 +1,13 @@
 <template>
-  <section class="mb-16" id="contact">
-    <BaseSectionHeading title="Contact me :)" animated :level="3" />
-    <div>
-      <form @submit.prevent="submitForm" class="bg-void-warm p-6 rounded-lg shadow-lg w-full flex flex-col gap-4">
+  <div class="panel" id="contact">
+    <div class="panel-header">
+      <span>OPEN CHANNEL · DIRECT LINE</span>
+    </div>
+    <div class="panel-body p-6 lg:p-8">
+      <p class="text-nw-text-dim leading-relaxed mb-6">
+        No intake forms. No synergy decks. Just a conversation about what you're building.
+      </p>
+      <form @submit.prevent="submitForm" class="max-w-xl flex flex-col gap-4">
         <BaseInput
           v-model="form.name"
           label="Name"
@@ -29,12 +34,12 @@
         />
         <div v-if="error" class="text-nw-red font-sys">{{ error }}</div>
 
-        <BaseButton type="submit" :loading="loading" :disabled="loading">
+        <BaseButton type="submit" :loading="loading" :disabled="loading" variant="primary">
           Send message
         </BaseButton>
       </form>
     </div>
-  </section>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -42,5 +47,3 @@ import { useContactForm } from '~/composables/useContactForm';
 
 const { form, loading, error, submitForm } = useContactForm();
 </script>
-
-<style></style>

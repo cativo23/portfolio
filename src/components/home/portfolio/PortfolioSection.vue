@@ -28,9 +28,11 @@
       <!-- Projects -->
       <FeatureProjectCard
         v-else
-        v-for="project in (data as any).data"
+        v-for="(project, index) in (data as any).data"
         :key="project.id || project.title"
         :project="project"
+        :class="[index === 0 ? 'md:col-span-2' : '']"
+        :featured="index === 0"
       />
     </div>
   </div>
@@ -44,6 +46,5 @@ const { data, pending, error: fetchError } = await useFetch('/api/projects', {
   query: { is_featured: 'true' },
   lazy: false,
   server: true,
-  getCachedData: () => undefined,
 })
 </script>

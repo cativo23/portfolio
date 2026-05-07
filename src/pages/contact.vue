@@ -1,131 +1,131 @@
 <template>
-  <div>
-    <h2 class="compressed-title text-nw-3xl text-nw-cyan mb-2">
-      Get in touch.
-    </h2>
-    <p class="text-nw-text-dim mb-2 max-w-2xl">
-      Best for hiring managers, recruiters, and engineers who want to talk shop. I read every message — fastest reply via email or LinkedIn.
-    </p>
-    <p class="text-meta mb-8 max-w-2xl">
-      Open to senior backend / tech lead / staff roles. Remote-first, open to relocation for the right role with sponsorship.
-    </p>
-
-    <!-- Direct channels -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-      <a href="mailto:cativo@cativo.dev"
-         class="bg-void-panel border border-nw-text-faint hover:border-nw-primary-dim p-4 transition-colors">
-        <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">EMAIL</div>
-        <div class="text-meta text-nw-primary font-mono">cativo@cativo.dev</div>
-      </a>
-      <a href="https://linkedin.com/in/carlos-cativo" target="_blank" rel="noopener noreferrer"
-         class="bg-void-panel border border-nw-text-faint hover:border-nw-primary-dim p-4 transition-colors">
-        <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">LINKEDIN</div>
-        <div class="text-meta text-nw-primary font-mono">/in/carlos-cativo →</div>
-      </a>
-      <a href="/resume.pdf" download="cativo-cv.pdf"
-         class="bg-void-panel border border-nw-text-faint hover:border-nw-primary-dim p-4 transition-colors">
-        <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">CV / RESUME</div>
-        <div class="text-meta text-nw-primary font-mono">↓ Download PDF</div>
-      </a>
+  <div class="space-y-2 pb-16">
+    <!-- HEADER -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>OPEN CHANNEL</span>
+      </div>
+      <div class="panel-body p-6 lg:p-8">
+        <h1 class="compressed-title text-nw-text leading-[1.05] mb-3" style="font-size: clamp(32px, 6vw, 52px);">
+          Get in <span class="text-nw-primary">touch.</span>
+        </h1>
+        <p class="text-nw-text-dim leading-relaxed mb-2 max-w-2xl">
+          Best for hiring managers, recruiters, and engineers who want to talk shop. I read every message — fastest reply via email or LinkedIn.
+        </p>
+        <p class="text-meta max-w-2xl">
+          Open to senior backend / tech lead / staff roles. Remote-first, open to relocation for the right role with sponsorship.
+        </p>
+      </div>
     </div>
 
-    <p class="text-meta text-nw-text-dim font-stamp uppercase tracking-wider mb-4">
-      Or send a message below · Calendly: <a href="https://calendly.com/cativo23" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot normal-case tracking-normal">book 30 min →</a>
-    </p>
-
-    <!-- Success State -->
-    <div v-if="successMessage" class="bg-nw-green/10 border border-nw-green/30 rounded p-6 text-center" role="status">
-      <LucideCheckCircle class="w-12 h-12 text-nw-green mx-auto mb-3" />
-      <p class="text-nw-green font-stamp uppercase tracking-wide font-bold mb-2">Message Sent!</p>
-      <p class="text-nw-text-dim">{{ successMessage }}</p>
-      <button @click="successMessage = null" class="mt-4 text-meta text-nw-cyan font-sys underline hover:text-nw-primary transition">
-        Send another message
-      </button>
+    <!-- DIRECT CHANNELS -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>DIRECT CHANNELS</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-nw-text-faint">
+        <a href="mailto:cativo@cativo.dev"
+           class="bg-void-warm hover:bg-void-panel p-5 transition-colors">
+          <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">EMAIL</div>
+          <div class="text-meta text-nw-primary font-sys">cativo@cativo.dev</div>
+        </a>
+        <a href="https://linkedin.com/in/carlos-cativo" target="_blank" rel="noopener noreferrer"
+           class="bg-void-warm hover:bg-void-panel p-5 transition-colors">
+          <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">LINKEDIN</div>
+          <div class="text-meta text-nw-primary font-sys">/in/carlos-cativo →</div>
+        </a>
+        <a href="/resume.pdf" download="cativo-cv.pdf"
+           class="bg-void-warm hover:bg-void-panel p-5 transition-colors">
+          <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">CV / RESUME</div>
+          <div class="text-meta text-nw-primary font-sys">↓ Download PDF</div>
+        </a>
+      </div>
     </div>
 
-    <!-- Form -->
-    <form v-else @submit.prevent="submitForm" class="bg-void-warm border border-nw-text-line/30 p-6 rounded flex flex-col gap-4 w-full" novalidate>
-      <div class="flex flex-col gap-1">
-        <label for="name" class="text-nw-cyan font-stamp uppercase tracking-wide font-bold">Name</label>
-        <input
-          type="text"
-          id="name"
-          v-model="form.name"
-          @blur="validateField('name')"
-          :aria-invalid="fieldErrors.name ? 'true' : 'false'"
-          :aria-describedby="fieldErrors.name ? 'name-error' : undefined"
-          required
-          autocomplete="name"
-          class="w-full px-3 py-2 bg-void-warm text-nw-text border rounded focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
-          :class="fieldErrors.name ? 'border-red-400' : 'border-nw-text-line'"
-          placeholder="Your name"
-        >
-        <p v-if="fieldErrors.name" id="name-error" class="text-meta text-red-400 font-sys mt-1" role="alert">
-          {{ fieldErrors.name }}
-        </p>
+    <!-- MESSAGE FORM -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>SEND A MESSAGE</span>
+        <a href="https://calendly.com/cativo23" target="_blank" rel="noopener noreferrer"
+           class="text-nw-primary hover:text-nw-primary-hot text-[10px] font-stamp uppercase tracking-wider">
+          OR BOOK 30 MIN →
+        </a>
       </div>
+      <div class="panel-body p-6 lg:p-8">
+        <!-- Success State -->
+        <div v-if="successMessage" class="bg-nw-green/10 border border-nw-green/30 p-6 text-center" role="status">
+          <p class="text-nw-green font-stamp uppercase tracking-wide font-bold mb-2">Message Sent!</p>
+          <p class="text-meta">{{ successMessage }}</p>
+          <BaseButton variant="ghost" class="mt-4" @click="successMessage = null">
+            Send another message
+          </BaseButton>
+        </div>
 
-      <div class="flex flex-col gap-1">
-        <label for="email" class="text-nw-cyan font-stamp uppercase tracking-wide font-bold">Email</label>
-        <input
-          type="email"
-          id="email"
-          v-model="form.email"
-          @blur="validateField('email')"
-          :aria-invalid="fieldErrors.email ? 'true' : 'false'"
-          :aria-describedby="fieldErrors.email ? 'email-error' : undefined"
-          required
-          autocomplete="email"
-          class="w-full px-3 py-2 bg-void-warm text-nw-text border rounded focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
-          :class="fieldErrors.email ? 'border-red-400' : 'border-nw-text-line'"
-          placeholder="you@email.com"
-        >
-        <p v-if="fieldErrors.email" id="email-error" class="text-meta text-red-400 font-sys mt-1" role="alert">
-          {{ fieldErrors.email }}
-        </p>
+        <!-- Form -->
+        <form v-else @submit.prevent="submitForm" class="max-w-xl flex flex-col gap-4" novalidate>
+          <div class="flex flex-col gap-1">
+            <label for="name" class="text-nw-cyan font-stamp uppercase tracking-wide text-[11px]">NAME</label>
+            <input
+              type="text" id="name" v-model="form.name"
+              @blur="validateField('name')"
+              :aria-invalid="fieldErrors.name ? 'true' : 'false'"
+              :aria-describedby="fieldErrors.name ? 'name-error' : undefined"
+              required autocomplete="name"
+              class="w-full px-3 py-2 bg-void text-nw-text border focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
+              :class="fieldErrors.name ? 'border-nw-red' : 'border-nw-text-line'"
+              placeholder="Your name"
+            >
+            <p v-if="fieldErrors.name" id="name-error" class="text-meta text-nw-red mt-1" role="alert">
+              {{ fieldErrors.name }}
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="email" class="text-nw-cyan font-stamp uppercase tracking-wide text-[11px]">EMAIL</label>
+            <input
+              type="email" id="email" v-model="form.email"
+              @blur="validateField('email')"
+              :aria-invalid="fieldErrors.email ? 'true' : 'false'"
+              :aria-describedby="fieldErrors.email ? 'email-error' : undefined"
+              required autocomplete="email"
+              class="w-full px-3 py-2 bg-void text-nw-text border focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
+              :class="fieldErrors.email ? 'border-nw-red' : 'border-nw-text-line'"
+              placeholder="you@email.com"
+            >
+            <p v-if="fieldErrors.email" id="email-error" class="text-meta text-nw-red mt-1" role="alert">
+              {{ fieldErrors.email }}
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="message" class="text-nw-cyan font-stamp uppercase tracking-wide text-[11px]">MESSAGE</label>
+            <textarea
+              id="message" v-model="form.message"
+              @blur="validateField('message')"
+              :aria-invalid="fieldErrors.message ? 'true' : 'false'"
+              :aria-describedby="fieldErrors.message ? 'message-error' : undefined"
+              required rows="4"
+              class="w-full px-3 py-2 bg-void text-nw-text border focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition resize-y"
+              :class="fieldErrors.message ? 'border-nw-red' : 'border-nw-text-line'"
+              placeholder="Type your message..."
+            ></textarea>
+            <p v-if="fieldErrors.message" id="message-error" class="text-meta text-nw-red mt-1" role="alert">
+              {{ fieldErrors.message }}
+            </p>
+          </div>
+
+          <!-- Honeypot -->
+          <input type="text" v-model="form.website" tabindex="-1" autocomplete="off"
+            class="absolute -left-[9999px] -top-[9999px] opacity-0 h-0 w-0 overflow-hidden" aria-hidden="true">
+
+          <div v-if="error" class="text-meta text-nw-red" role="alert">{{ error }}</div>
+
+          <BaseButton type="submit" :loading="loading" :disabled="loading" variant="primary">
+            {{ loading ? 'Sending...' : 'Send message' }}
+          </BaseButton>
+        </form>
       </div>
-
-      <div class="flex flex-col gap-1">
-        <label for="message" class="text-nw-cyan font-stamp uppercase tracking-wide font-bold">Message</label>
-        <textarea
-          id="message"
-          v-model="form.message"
-          @blur="validateField('message')"
-          :aria-invalid="fieldErrors.message ? 'true' : 'false'"
-          :aria-describedby="fieldErrors.message ? 'message-error' : undefined"
-          required
-          rows="4"
-          class="w-full px-3 py-2 bg-void-warm text-nw-text border rounded focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
-          :class="fieldErrors.message ? 'border-red-400' : 'border-nw-text-line'"
-          placeholder="Type your message..."
-        ></textarea>
-        <p v-if="fieldErrors.message" id="message-error" class="text-meta text-red-400 font-sys mt-1" role="alert">
-          {{ fieldErrors.message }}
-        </p>
-      </div>
-
-      <!-- Honeypot field - hidden from real users, catches bots -->
-      <input
-        type="text"
-        id="website"
-        v-model="form.website"
-        tabindex="-1"
-        autocomplete="off"
-        class="absolute -left-[9999px] -top-[9999px] opacity-0 h-0 w-0 overflow-hidden"
-        aria-hidden="true"
-      >
-
-      <div v-if="error" class="text-meta text-red-400 font-sys" role="alert">{{ error }}</div>
-
-      <button
-        :disabled="loading"
-        type="submit"
-        class="mt-2 px-6 py-2 bg-void-raised text-void-warm font-sys font-bold rounded shadow hover:bg-nw-cyan transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-      >
-        <LucideLoader v-if="loading" class="w-4 h-4 animate-spin" />
-        {{ loading ? 'Sending...' : 'Send Message' }}
-      </button>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -133,7 +133,7 @@
 import { ref, reactive } from 'vue';
 
 usePageTitle('Contact', {
-  description: 'Get in touch with me! I am always open to discussing new projects, creative ideas, or opportunities to be part of your vision.'
+  description: 'Get in touch with Carlos Cativo — senior backend engineer and tech lead. Open to remote roles.',
 });
 
 interface ContactForm {
@@ -200,10 +200,7 @@ function validateForm(): boolean {
 }
 
 async function submitForm() {
-  // Honeypot check — bots often fill hidden "website" fields
-  if (form.website) {
-    return;
-  }
+  if (form.website) return;
 
   if (!validateForm()) {
     error.value = 'Please fix the errors above.';
