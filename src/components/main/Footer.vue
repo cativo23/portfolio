@@ -1,6 +1,22 @@
 <template>
-  <footer class="bg-void border-t border-nw-text-faint">
+  <footer class="sticky bottom-0 z-40 bg-void border-t border-nw-text-faint">
     <div class="container mx-auto px-4 py-2">
+      <!-- Now Playing -->
+      <div v-if="nowPlaying?.isPlaying" class="flex items-center justify-center gap-2 pb-1.5 mb-1.5 border-b border-nw-text-faint/30">
+        <span class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-text-faint shrink-0">NOW PLAYING</span>
+        <div class="now-playing-bars">
+          <span /><span /><span />
+        </div>
+        <a
+          :href="nowPlaying.spotifyUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-mono text-[10px] normal-case tracking-normal text-nw-green hover:text-nw-primary-hot transition-colors truncate max-w-[280px] md:max-w-[400px]"
+        >
+          {{ nowPlaying.track }} <span class="text-nw-text-dim">— {{ nowPlaying.artist }}</span>
+        </a>
+      </div>
+
       <div class="flex flex-col md:flex-row justify-between items-center gap-2 font-stamp uppercase tracking-[0.1em] text-[10px]">
         <!-- Left: System status + version -->
         <div class="flex items-center gap-2 text-nw-text-dim">
@@ -54,6 +70,8 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 
+const { nowPlaying } = useNowPlaying();
+
 const currentYear = new Date().getFullYear();
 
 // Live clock for UTC-6 (El Salvador)
@@ -62,7 +80,6 @@ let clockInterval: ReturnType<typeof setInterval> | null = null;
 
 function updateClock() {
   const now = new Date();
-  // UTC-6 offset (El Salvador, no DST)
   const sv = new Date(now.getTime() + (now.getTimezoneOffset() - 360) * 60 * 1000);
   const hh = String(sv.getHours()).padStart(2, '0');
   const mm = String(sv.getMinutes()).padStart(2, '0');
@@ -121,3 +138,27 @@ if (import.meta.client) {
   });
 }
 </script>
+
+<style scoped>
+.now-playing-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 1px;
+  height: 10px;
+}
+.now-playing-bars span {
+  display: block;
+  width: 2px;
+  background: currentColor;
+  animation: eq-bar 0.8s ease-in-out infinite alternate;
+}
+.now-playing-bars span:nth-child(1) { height: 4px; animation-delay: 0s; }
+.now-playing-bars span:nth-child(2) { height: 7px; animation-delay: 0.2s; }
+.now-playing-bars span:nth-child(3) { height: 5px; animation-delay: 0.4s; }
+.now-playing-bars { @apply text-nw-green; }
+
+@keyframes eq-bar {
+  0% { height: 3px; }
+  100% { height: 10px; }
+}
+</style>
