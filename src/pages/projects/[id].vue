@@ -61,6 +61,7 @@
           :alt="`${project.title} screenshot`"
           class="w-full h-full object-cover"
           sizes="sm:100vw md:1200px lg:1200px"
+          loading="lazy"
           placeholder
           @error="() => (imageError = true)"
         />
