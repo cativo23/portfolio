@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.7] - 2026-05-14
+
+### Fixed
+- **Memory Limit** — Increased Node.js heap memory limit to 4096MB in `compose.prod.yml` to resolve OOM crashes on startup.
+
+---
+
 ## [1.10.6] - 2026-05-14
 
 ### Fixed
