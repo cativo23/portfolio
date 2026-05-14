@@ -46,6 +46,13 @@ let cachedToken: { token: string; expiresAt: number } | null = null
 let cachedState: { data: SpotifyNowPlaying; fetchedAt: number } | null = null
 let rateLimitedUntil = 0
 
+// For testing purposes
+export function _clearSpotifyCache() {
+  cachedToken = null
+  cachedState = null
+  rateLimitedUntil = 0
+}
+
 const POLL_INTERVAL = 5_000
 
 async function getAccessToken(clientId: string, clientSecret: string, refreshToken: string): Promise<string> {
