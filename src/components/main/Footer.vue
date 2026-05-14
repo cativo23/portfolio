@@ -4,9 +4,7 @@
       <!-- Now Playing -->
       <div v-if="nowPlaying?.isPlaying" class="flex items-center justify-center gap-2 pb-1.5 mb-1.5 border-b border-nw-text-faint/30">
         <span class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-text-faint shrink-0">NOW PLAYING</span>
-        <div class="now-playing-bars">
-          <span /><span /><span />
-        </div>
+        <NowPlayingBars />
         <a
           :href="nowPlaying.spotifyUrl"
           target="_blank"
@@ -138,27 +136,3 @@ if (import.meta.client) {
   });
 }
 </script>
-
-<style scoped>
-.now-playing-bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 1px;
-  height: 10px;
-}
-.now-playing-bars span {
-  display: block;
-  width: 2px;
-  background: currentColor;
-  animation: eq-bar 0.8s ease-in-out infinite alternate;
-}
-.now-playing-bars span:nth-child(1) { height: 4px; animation-delay: 0s; }
-.now-playing-bars span:nth-child(2) { height: 7px; animation-delay: 0.2s; }
-.now-playing-bars span:nth-child(3) { height: 5px; animation-delay: 0.4s; }
-.now-playing-bars { @apply text-nw-green; }
-
-@keyframes eq-bar {
-  0% { height: 3px; }
-  100% { height: 10px; }
-}
-</style>

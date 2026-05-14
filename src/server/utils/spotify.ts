@@ -15,6 +15,33 @@ interface SpotifyTokenResponse {
   expires_in: number
 }
 
+interface SpotifyArtist {
+  name: string
+}
+
+interface SpotifyImage {
+  url: string
+  height: number
+  width: number
+}
+
+interface SpotifyCurrentlyPlayingResponse {
+  is_playing: boolean
+  progress_ms: number
+  item: {
+    name: string
+    duration_ms: number
+    artists: SpotifyArtist[]
+    album: {
+      name: string
+      images: SpotifyImage[]
+    }
+    external_urls: {
+      spotify: string
+    }
+  } | null
+}
+
 let cachedToken: { token: string; expiresAt: number } | null = null
 let cachedState: { data: SpotifyNowPlaying; fetchedAt: number } | null = null
 let rateLimitedUntil = 0
@@ -62,10 +89,15 @@ export async function fetchNowPlaying(clientId: string, clientSecret: string, re
   try {
     const token = await getAccessToken(clientId, clientSecret, refreshToken)
 
-    const res = await $fetch<any>('https://api.spotify.com/v1/me/player/currently-playing', {
+    const res = await $fetch<SpotifyCurrentlyPlayingResponse>('https://api.spotify.com/v1/me/player/currently-playing', {
       headers: { Authorization: `Bearer ${token}` },
       timeout: 5000,
-    }).catch(() => null)
+    }).catch((err) => {
+      if (err?.response?.status !== 429) {
+        console.warn('[Spotify API] Error fetching now playing:', err.message || err);
+      }
+      throw err;
+    })
 
     const data: SpotifyNowPlaying = (!res || !res.item)
       ? { isPlaying: false }
