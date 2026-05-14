@@ -37,6 +37,7 @@ export function useProjects(): UseProjectsReturn {
         } catch (err) {
             const errorObj = err instanceof Error ? err : new Error(String(err))
             error.value = errorObj
+            // Re-throw so useAsyncData callers see the error state.
             throw err
         } finally {
             loading.value = false
@@ -55,6 +56,7 @@ export function useProjects(): UseProjectsReturn {
         } catch (err) {
             const errorObj = err instanceof Error ? err : new Error(String(err))
             error.value = errorObj
+            // Re-throw so useAsyncData callers see the error state.
             throw err
         } finally {
             loading.value = false
