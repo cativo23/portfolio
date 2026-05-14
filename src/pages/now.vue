@@ -18,6 +18,53 @@
       </div>
     </div>
 
+    <!-- NOW PLAYING -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>NOW PLAYING · SPOTIFY</span>
+        <NowPlayingBars v-if="nowPlaying?.isPlaying" />
+      </div>
+      <div class="panel-body p-4">
+        <div v-if="nowPlaying?.isPlaying" class="flex items-center gap-4">
+          <img
+            v-if="nowPlaying.albumArt"
+            :src="nowPlaying.albumArt"
+            :alt="nowPlaying.album"
+            class="w-14 h-14 rounded-sm border border-nw-text-faint/20 shrink-0"
+          />
+          <div class="flex-1 min-w-0 space-y-1">
+            <a
+              :href="nowPlaying.spotifyUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block text-nw-text font-mono text-sm hover:text-nw-primary-hot transition-colors truncate"
+            >
+              {{ nowPlaying.track }}
+            </a>
+            <div class="text-nw-text-dim text-xs font-mono truncate">{{ nowPlaying.artist }} · {{ nowPlaying.album }}</div>
+            <div class="flex items-center gap-2">
+              <span class="text-nw-text-faint text-[10px] font-mono w-8 text-right shrink-0">{{ formatMs(nowPlaying.progressMs) }}</span>
+              <div class="flex-1 h-[3px] bg-nw-text-faint/20 rounded-full overflow-hidden">
+                <div class="h-full bg-nw-green rounded-full transition-all duration-1000" :style="{ width: progressPercent + '%' }" />
+              </div>
+              <span class="text-nw-text-faint text-[10px] font-mono w-8 shrink-0">{{ formatMs(nowPlaying.durationMs) }}</span>
+            </div>
+          </div>
+          <a
+            :href="nowPlaying.spotifyUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-green hover:text-nw-primary-hot transition-colors shrink-0 hidden sm:block"
+          >
+            OPEN IN SPOTIFY →
+          </a>
+        </div>
+        <div v-else class="text-nw-text-dim text-xs font-mono py-1">
+          Nothing playing right now.
+        </div>
+      </div>
+    </div>
+
     <!-- AT WORK -->
     <div class="panel">
       <div class="panel-header">
@@ -155,6 +202,21 @@
 
 <script lang="ts" setup>
 const lastUpdated = '2026-05-01';
+
+const { nowPlaying } = useNowPlaying();
+
+function formatMs(ms?: number): string {
+  if (!ms) return '0:00';
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${String(seconds).padStart(2, '0')}`;
+}
+
+const progressPercent = computed(() => {
+  if (!nowPlaying.value?.progressMs || !nowPlaying.value?.durationMs) return 0;
+  return Math.min(100, (nowPlaying.value.progressMs / nowPlaying.value.durationMs) * 100);
+});
 
 usePageTitle('Now', {
   description: 'What Carlos Cativo is working on right now — at Blue Medical Guatemala, on side projects, on his self-hosted infra, and what kind of next role he\'s looking for.',

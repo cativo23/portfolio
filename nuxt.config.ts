@@ -30,6 +30,9 @@ export default defineNuxtConfig({
     apiBasePath: process.env.NUXT_API_BASE_PATH || '/api/v1',
     apiToken: process.env.NUXT_API_TOKEN || '',
     githubToken: process.env.POW_GH_TOKEN || '',
+    spotifyClientId: process.env.SPOTIFY_CLIENT_ID || '',
+    spotifyClientSecret: process.env.SPOTIFY_CLIENT_SECRET || '',
+    spotifyRefreshToken: process.env.SPOTIFY_REFRESH_TOKEN || '',
     public: {
       baseTitle: 'Carlos Cativo',
       defaultOgImage: '/img/akira.jpeg',
