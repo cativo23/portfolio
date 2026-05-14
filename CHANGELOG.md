@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.9] - 2026-05-14
+
+### Added
+- **Global error page** — New `src/error.vue` (Nuxt 3 picks it up automatically). Renders uncaught errors and 404s in the Nightwire idiom (panel + compressed `[ERR-xxx]` title) inside `NuxtLayout`. Return-to-base button calls `clearError({ redirect: '/' })`. (#104, #30)
+- **`BaseAsyncState` panel variant** — Non-breaking addition: `variant: 'plain' | 'panel'`, `panelHeader`, and `errorCode` props. Panel variant renders the full Nightwire shell so future adopters get the idiom for free. Loading branch now sets `role="status"`. JSDoc documents it as the canonical async wrapper, satisfying the `LoadingSpinner` / `ErrorMessage` intent of #30 under one component. (#104, #30)
+- **Traefik security headers** — `traefik.http.routers.portfolio.middlewares=security-headers@file` label wired to the existing space-server middleware. HSTS (1y + includeSubdomains), X-Frame-Options DENY, X-Content-Type-Options nosniff, X-XSS-Protection now enforced on `cativo.dev`. (#103, #55)
+
+### Changed
+- **Healthcheck** — `compose.prod.yml` switches from a Node.js process (`node -e fetch(...)`) to busybox `wget -q --spider`. Same coverage (any non-2xx exits non-zero), near-zero CPU/memory cost, faster timeout (15s → 10s). (#103, #55)
+- **Compose hygiene** — Dropped the redundant `traefik.docker.network=space-server_web` label. The service is on a single network; Traefik auto-detects. (#103, #55)
+
+---
+
 ## [1.10.8] - 2026-05-14
 
 ### Fixed
