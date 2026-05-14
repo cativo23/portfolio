@@ -70,6 +70,13 @@ async function getAccessToken(clientId: string, clientSecret: string, refreshTok
       grant_type: 'refresh_token',
       refresh_token: refreshToken,
     }).toString(),
+  }).catch((err) => {
+    console.error('[Spotify API] Auth failed:', {
+      message: err.message,
+      status: err.response?.status,
+      data: err.response?._data,
+    });
+    throw err;
   })
 
   cachedToken = {
@@ -100,6 +107,11 @@ export async function fetchNowPlaying(clientId: string, clientSecret: string, re
       headers: { Authorization: `Bearer ${token}` },
       timeout: 5000,
     }).catch((err) => {
+      console.error('[Spotify API] Request failed:', {
+        message: err.message,
+        status: err.response?.status,
+        data: err.response?._data,
+      });
       if (err?.response?.status !== 429) {
         console.warn('[Spotify API] Error fetching now playing:', err.message || err);
       }
