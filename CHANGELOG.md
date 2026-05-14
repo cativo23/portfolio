@@ -360,3 +360,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project card links and navigation
 - Sitemap compatibility with `@nuxt/content` v3
 - Type annotations in API endpoints
+
+## [1.10.5] - 2026-05-14
+
+### Fixed
+- **Spotify Config** — Updated production environment variables to use NUXT_ prefix and injected via deployment pipeline.
