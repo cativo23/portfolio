@@ -65,7 +65,7 @@
   </footer>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 const { nowPlaying } = useNowPlaying();

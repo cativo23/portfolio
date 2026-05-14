@@ -99,7 +99,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useProjects } from '~/composables/useProjects'
 
 usePageTitle('Case Files', {

@@ -61,6 +61,7 @@
           :alt="`${project.title} screenshot`"
           class="w-full h-full object-cover"
           sizes="sm:100vw md:1200px lg:1200px"
+          loading="lazy"
           placeholder
           @error="() => (imageError = true)"
         />
@@ -176,7 +177,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue'
 
 const route = useRoute()

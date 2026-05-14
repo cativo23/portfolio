@@ -6,7 +6,9 @@ export default defineEventHandler(async (event) => {
 
   // Validate type against allowlist to prevent SSRF path traversal
   const allowedTypes = ['basic', 'detailed', 'live', 'ready'] as const
-  const type = allowedTypes.includes(rawType as any) ? rawType : 'basic'
+  type HealthType = typeof allowedTypes[number]
+  const isHealthType = (v: string): v is HealthType => (allowedTypes as readonly string[]).includes(v)
+  const type: HealthType = isHealthType(rawType) ? rawType : 'basic'
 
   const headers: Record<string, string> = {}
   if (config.apiToken) {

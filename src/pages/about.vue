@@ -192,7 +192,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 import LatestPosts from '@/components/home/LatestPosts.vue';
 import type { Profile } from '~/types/profile';

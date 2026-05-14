@@ -26,6 +26,10 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, onBeforeUnmount, computed, nextTick, type Ref } from 'vue'
 
+const DEFAULT_SCRAMBLE_SPEED_MS = 50
+const DEFAULT_MAX_ITERATIONS = 10
+const OBSERVER_THRESHOLD = 0.1
+
 interface Props {
     text: string
     speed?: number
@@ -41,8 +45,8 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    speed: 50,
-    maxIterations: 10,
+    speed: DEFAULT_SCRAMBLE_SPEED_MS,
+    maxIterations: DEFAULT_MAX_ITERATIONS,
     sequential: false,
     revealDirection: 'start',
     useOriginalCharsOnly: false,
@@ -206,7 +210,7 @@ onMounted(async () => {
         const observerOptions = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.1,
+            threshold: OBSERVER_THRESHOLD,
         }
 
         observer = new window.IntersectionObserver(observerCallback, observerOptions)

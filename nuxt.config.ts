@@ -80,6 +80,6 @@ export default defineNuxtConfig({
   modules,
   builder: "vite",
   image: {
-    provider: 'none',
+    provider: 'ipx',
   },
 })
