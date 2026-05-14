@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [1.10.4] - 2026-05-13
+
+### Added
+- **Spotify Now Playing Widget** — Integrated live Spotify tracking via server-side polling. Features a sticky footer indicator and a detailed panel on the `/now` page.
+
+### Changed
+- **Deployment** — Injected `SPOTIFY_*` environment variables into the production deployment pipeline via GitHub Secrets.
+
+### Fixed
+- **CI/CD** — Addressed code review feedback: extracted shared UI components for equalizer bars, added progress bar interpolation, and improved API error handling/logging.
+
 
 ---
 
