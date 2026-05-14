@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.8] - 2026-05-14
+
+### Fixed
+- **Prod runtime env wiring** — Wired `NUXT_API_BASE_URL` / `NUXT_API_BASE_PATH` / `NUXT_API_TOKEN` into `compose.prod.yml` with `:?` guards. v1.10.7 dropped the hardcoded fallbacks in `runtimeConfig` but the compose was never updated to pass them, so server-side `$fetch` in `projects.get.ts` / `profile.get.ts` resolved to relative paths and looped back into Nitro, allocating ~30 MB/s until the V8 heap cap killed the container ~130 s after start. (#99)
+- **Spotify env naming** — Renamed `SPOTIFY_*` → `NUXT_SPOTIFY_*` so Nuxt 3's `NUXT_`-prefix runtime override actually populates `runtimeConfig.spotify*`. Spotify credentials now reach the container. (#99)
+- **Container memory guard** — Added `mem_limit: 1g` and lowered `--max-old-space-size` from 4096 to 768 so a future regression dies cleanly via cgroup OOM instead of dragging the host. (#99)
+- **Type safety** — Replaced `as any` in `health.get.ts` with an `isHealthType` predicate; dropped `: any` in `projects.get.ts` via local narrowing. (#100, #68)
+
+### Added
+- **Mobile menu focus trap** — New `useFocusTrap` composable; the mobile nav drawer now traps Tab/Shift+Tab, closes on Escape, and restores focus to the trigger on close. Covered by 7 unit tests. (#101, #67)
+- **Image optimization** — Enabled the bundled `ipx` provider for `@nuxt/image`; below-fold images get explicit `loading="lazy"`. `Hero.vue` avatar stays `eager` as above-the-fold. (#101, #67)
+
+### Changed
+- **Code quality** — Extracted `DEFAULT_SCRAMBLE_SPEED_MS`, `DEFAULT_MAX_ITERATIONS`, `OBSERVER_THRESHOLD` constants in `DecryptedText.vue` (no more inline magic numbers); normalized `<script setup lang="ts">` attribute order across 12 .vue files. (#100, #68)
+
+---
+
 ## [1.10.7] - 2026-05-14
 
 ### Fixed
