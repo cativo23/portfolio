@@ -373,3 +373,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project card links and navigation
 - Sitemap compatibility with `@nuxt/content` v3
 - Type annotations in API endpoints
+
+## [1.10.7] - 2026-05-14
+
+### Fixed
+- **Memory Limit** — Increased Node.js heap memory limit to 4096MB in  to resolve OOM crashes on startup.
