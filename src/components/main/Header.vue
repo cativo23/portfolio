@@ -54,6 +54,7 @@
     >
       <div
         v-if="isMenuOpen"
+        ref="drawerRef"
         class="fixed inset-0 bg-void/95 z-20 flex flex-col items-center justify-center md:hidden"
         role="dialog"
         aria-modal="true"
@@ -90,8 +91,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useFocusTrap } from '~/composables/useFocusTrap';
 
 const isMenuOpen = ref(false);
+const drawerRef = ref<HTMLElement | null>(null);
+useFocusTrap(drawerRef, isMenuOpen, () => (isMenuOpen.value = false));
 
 const navItems = ref([
   { label: 'Home', path: '/' },
