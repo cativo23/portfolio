@@ -16,6 +16,9 @@ services:
       NUXT_API_BASE_PATH: /api/v1
       NUXT_API_TOKEN: ${NUXT_API_TOKEN:-}
       NUXT_GITHUB_TOKEN: ${POW_GH_TOKEN:-}
+      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID:-}
+      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET:-}
+      SPOTIFY_REFRESH_TOKEN: ${SPOTIFY_REFRESH_TOKEN:-}
     user: 'node'
     extra_hosts:
       - 'host.docker.internal:host-gateway'
