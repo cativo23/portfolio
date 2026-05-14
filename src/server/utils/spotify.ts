@@ -82,7 +82,6 @@ async function getAccessToken(clientId: string, clientSecret: string, refreshTok
   console.log('[Spotify API] Auth response:', {
     expires_in: res.expires_in,
     token_type: res.token_type,
-    // Do not log the actual token
   });
 
   cachedToken = {
