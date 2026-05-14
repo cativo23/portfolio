@@ -164,4 +164,27 @@ describe('useFocusTrap', () => {
 
     wrapper.unmount()
   })
+
+  it('detaches the keydown listener when unmounted while active', async () => {
+    const containerRef = ref<HTMLElement | null>(null)
+    const isActive = ref(false)
+    const onEscape = vi.fn()
+    const wrapper = mount(makeHost(containerRef, isActive, onEscape), {
+      attachTo: document.body,
+    })
+
+    isActive.value = true
+    await nextTick()
+    await nextTick()
+
+    // Sanity check: listener is wired up.
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+    expect(onEscape).toHaveBeenCalledTimes(1)
+
+    wrapper.unmount()
+
+    // After unmount, no further keydown should reach the trap.
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+    expect(onEscape).toHaveBeenCalledTimes(1)
+  })
 })
