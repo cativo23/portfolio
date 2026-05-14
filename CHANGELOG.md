@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.7] - 2026-05-14
+
+### Fixed
+- **Memory Limit** — Increased Node.js heap memory limit to 4096MB in `compose.prod.yml` to resolve OOM crashes on startup.
+
+---
+
+## [1.10.6] - 2026-05-14
+
+### Fixed
+- **Spotify Config** — Updated configuration to use NUXT_ prefix for production env var injection.
+
+---
+
+## [1.10.5] - 2026-05-14
+
+### Fixed
+- **Spotify Config** — Updated production environment variables to use NUXT_ prefix and injected via deployment pipeline.
+
+---
+
 ## [1.10.4] - 2026-05-13
 
 ### Added
@@ -17,7 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - **CI/CD** — Addressed code review feedback: extracted shared UI components for equalizer bars, added progress bar interpolation, and improved API error handling/logging.
-
 
 ---
 
