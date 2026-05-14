@@ -38,7 +38,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import FeatureProjectCard from '~/components/home/portfolio/FeatureProjectCard.vue'
 
 // Fetch featured projects on server-side

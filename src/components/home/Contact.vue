@@ -42,7 +42,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useContactForm } from '~/composables/useContactForm';
 
 const { form, loading, error, submitForm } = useContactForm();

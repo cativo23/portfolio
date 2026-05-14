@@ -200,7 +200,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 const lastUpdated = '2026-05-01';
 
 const { nowPlaying } = useNowPlaying();

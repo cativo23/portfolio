@@ -47,7 +47,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 interface BlogPost {
   title: string
   url: string

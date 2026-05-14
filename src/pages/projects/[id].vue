@@ -176,7 +176,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue'
 
 const route = useRoute()
