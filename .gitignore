@@ -32,3 +32,6 @@ tests/e2e/.auth/
 # Coverage
 coverage/
 coverage-*.json
+
+# Claude Code — ephemeral worktrees (keep agents/commands/skills tracked)
+.claude/worktrees/
