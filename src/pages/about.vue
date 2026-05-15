@@ -86,6 +86,39 @@
         </div>
       </div>
 
+      <!-- OPEN SOURCE / NPM -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>OPEN SOURCE · NPM</span>
+          <a
+            href="https://www.npmjs.com/~cativo23"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-nw-primary hover:text-nw-primary-hot text-[10px] font-stamp uppercase tracking-wider"
+          >
+            NPMJS.COM/~CATIVO23 →
+          </a>
+        </div>
+        <div class="panel-body p-0">
+          <div
+            v-for="pkg in ossPackages"
+            :key="pkg.name"
+            class="px-5 py-4 border-b border-nw-text-faint last:border-b-0"
+          >
+            <div class="flex items-baseline justify-between gap-3 flex-wrap mb-1">
+              <div class="flex items-baseline gap-3 flex-wrap">
+                <span class="compressed-title title-card text-nw-text">{{ pkg.name }}</span>
+                <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-cyan">{{ pkg.downloads }}</span>
+              </div>
+              <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim">
+                {{ pkg.stack }}
+              </span>
+            </div>
+            <p class="text-meta">{{ pkg.description }}</p>
+          </div>
+        </div>
+      </div>
+
       <!-- CERTIFIED LOADOUT (Stack) -->
       <div class="panel">
         <div class="panel-header">
@@ -207,8 +240,8 @@ const profile: Profile = {
   yearsOfExperience: 9,
   location: 'El Salvador',
   summary: [
-    "9 years writing backends in El Salvador. Most of that has been microservices and full-stack tech leadership at Blue Medical Guatemala — leading BlueMeds end-to-end (Laravel API + Angular/Ionic admin), then breaking out Payment Service and Invoice Service as standalone Laravel microservices that real clinics bill against every day. The fintech and tax stack down here is hard in a specific way: no nice SDKs, sparse docs, legacy SOAP/XML on top of legacy SOAP/XML. I've implemented Visa ISO 8583 over SOAP by hand. I've integrated Guatemala's FEL e-invoicing through an authorized provider, with a Strategy Pattern designed so the next provider is a config swap, not a rewrite. Long enough in this stack to know when the framework is the wrong choice — and I have the incident reports to prove it.",
-    "The last ~6 months I've been extending into AI work on top of the backend foundation. I'm the primary author of sofIA, a multi-agent voice system at Blue Medical for healthcare scheduling on ElevenLabs ConvAI, currently in production. Most of the engineering work has been on the parts AI demos skip: state-machine workflow design, validation layers around tool calls, retry and recovery logic, and the operations dashboard the team uses to see what the agent actually did. On the side: VittBot, a multi-agent crypto trading bot with three Claude agents plus a deterministic Risk Manager that never delegates the actual go/no-go to AI; Clarify, a legal contract auditor with Stripe credit billing. The pattern I care about isn't \"call an LLM\" — it's the deterministic safeguards around the LLM that keep it from blowing up in production.",
+    "9 years writing backends in El Salvador. Most of that has been microservices and full-stack tech leadership at Blue Medical Guatemala — leading BlueMeds end-to-end (Laravel API + Angular/Ionic admin), then breaking out Payment Service and Invoice Service as standalone Laravel microservices that real clinics bill against every day. The fintech and tax stack down here is hard in a specific way: no nice SDKs, sparse docs, heterogeneous protocols across processors. I've implemented multi-gateway payment integration by hand — ISO 8583, SOAP/XML, REST — behind a Strategy Pattern so the next processor is a config swap, not a rewrite. Same approach on Invoice Service for Guatemala's FEL e-invoicing through an authorized provider. Long enough in this stack to know when the framework is the wrong choice — and I have the incident reports to prove it.",
+    "The last ~6 months I've been extending into AI work on top of the backend foundation. I'm the primary author of sofIA, a multi-agent voice system at Blue Medical for healthcare scheduling on ElevenLabs ConvAI, currently in production. Most of the engineering work has been on the parts AI demos skip: state-machine workflow design, validation layers around tool calls, retry and recovery logic, and the operations dashboard the team uses to see what the agent actually did. On the side (in development): VittBot, a multi-agent crypto trading bot with three Claude agents plus a deterministic Risk Manager that never delegates the actual go/no-go to AI; Clarify, a legal contract auditor with Stripe credit billing. The pattern I care about isn't \"call an LLM\" — it's the deterministic safeguards around the LLM that keep it from blowing up in production.",
     "I also run my own infra at cativo.dev — 16 containers, 6 stacks. Running it yourself is the only way to actually understand what you ship into prod."
   ],
   experience: [
@@ -220,7 +253,7 @@ const profile: Profile = {
       description: "Leading development across multiple healthcare systems simultaneously. Code reviews, requirement refinement, technical guidance for the team, and hands-on delivery of the hardest parts.",
       highlights: [
         "sofIA — Multi-agent voice system for healthcare scheduling, currently in production. Primary author of a state-machine workflow on ElevenLabs ConvAI + n8n with deterministic validation, retry, and recovery layers around tool calls. Designed the management platform: FastAPI API + Nuxt dashboard + Typer CLI.",
-        "Payment Service — Built from scratch in Laravel. Multi-gateway abstraction (Strategy Pattern) over multiple processors (ISO 8583 over SOAP, SOAP/XML, REST). VGS card vault for PCI-friendly tokenization — raw PAN never touches the service DB. Per-commerce / per-card-token gateway routing. Async via Horizon with dedicated queues per gateway. Livewire ops dashboard with KPIs and per-commerce breakdowns. Led an OWASP-grade security audit, plus ongoing hardening waves (defense-in-depth on internal routes, retry / idempotency on payment jobs, network tokenization on top of the vault).",
+        "Payment Service — Built from scratch in Laravel. Multi-gateway abstraction (Strategy Pattern) over heterogeneous protocols (ISO 8583, SOAP/XML, REST). VGS card vault for PCI-friendly tokenization — raw PAN never touches the service DB. Per-commerce / per-card-token gateway routing. Async via Horizon with dedicated queues per gateway. Livewire ops dashboard with KPIs and per-commerce breakdowns. Led an OWASP-grade security audit, plus ongoing hardening waves (defense-in-depth on internal routes, retry / idempotency on payment jobs, network tokenization on top of the vault).",
         "Invoice Service — Built from scratch in Laravel. Integrates Guatemala's FEL e-invoicing through an authorized provider, with a Strategy Pattern designed for future provider swaps. SAP integration, async pipeline via Redis/Horizon, QR code generation, multi-establishment support, Livewire analytics dashboard.",
         "BlueMeds API — Core developer on medication subscription platform. 10+ third-party integrations across ERP, support tools, messaging, AI calling, and healthcare middleware. PostgreSQL with Meilisearch full-text and JSONB expression indexes.",
         "BlueMeds Admin Panel — Angular/Ionic admin for the pharmaceutical platform with i18n EN/ES, Capacitor mobile build, Tailwind."
@@ -257,7 +290,7 @@ const profile: Profile = {
     { name: 'Frontend', skills: [{ name: 'Vue/Nuxt' }, { name: 'Angular' }, { name: 'Ionic / TailwindCSS' }, { name: 'TypeScript / full-stack when needed' }]},
     { name: 'Data', skills: [{ name: 'PostgreSQL' }, { name: 'MySQL / Redis' }, { name: 'Meilisearch' }, { name: 'Supabase / Prisma' }, { name: 'TypeORM' }, { name: 'SQLAlchemy' }]},
     { name: 'Infra & DevOps', skills: [{ name: 'Docker' }, { name: 'AWS (S3, ECR, EC2) / Traefik' }, { name: 'Nginx' }, { name: 'Cloudflare / GitHub Actions' }, { name: 'Bitbucket Pipelines' }]},
-    { name: 'Specialty', skills: [{ name: 'ISO 8583 over SOAP' }, { name: 'Multi-gateway payment processing' }, { name: 'VGS card vault tokenization' }, { name: 'Network tokenization' }, { name: 'Multi-provider FEL integration' }, { name: 'SAP integration' }, { name: 'Ory IAM (Kratos / Hydra / Keto)' }, { name: 'Multi-agent LLM systems' }]},
+    { name: 'Specialty', skills: [{ name: 'Multi-gateway payments over heterogeneous protocols (ISO 8583, SOAP/XML, REST)' }, { name: 'VGS card vault tokenization' }, { name: 'Network tokenization' }, { name: 'Multi-provider FEL integration' }, { name: 'SAP integration' }, { name: 'Ory IAM (Kratos / Hydra / Keto)' }, { name: 'Multi-agent LLM systems' }]},
     { name: 'Integrations', skills: [{ name: 'Stripe' }, { name: 'Odoo ERP' }, { name: 'WhatsApp / Botmaker' }, { name: 'FreshDesk' }, { name: 'SAP' }, { name: 'Bland AI' }, { name: 'ElevenLabs ConvAI' }, { name: 'n8n' }, { name: 'Claude / OpenAI APIs' }]},
   ],
   outsideCode: [
@@ -297,6 +330,27 @@ const profile: Profile = {
   website: 'https://cativo.dev',
 };
 
+const ossPackages = [
+  {
+    name: 'lumira',
+    downloads: '~1.9K dl/mo',
+    stack: 'TypeScript · npm',
+    description: 'Claude Code workflow tooling — status line, hooks, helpers for daily AI-assisted development.'
+  },
+  {
+    name: 'claude-style',
+    downloads: '~850 dl/mo',
+    stack: 'TypeScript · npm',
+    description: 'Style and formatting primitives for Claude Code agents and CLI output.'
+  },
+  {
+    name: 'nightwire',
+    downloads: '~200 dl/mo',
+    stack: 'TypeScript · npm',
+    description: 'Agent orchestration utilities for multi-step Claude workflows.'
+  }
+]
+
 const summaryParagraphs = computed(() => {
   if (!profile.summary) return [];
   if (typeof profile.summary === 'string') {
@@ -311,6 +365,6 @@ function formatSummaryParagraph(text: string) {
   return escaped
     .replace(/(9 years)/g, '<span class="text-nw-cyan font-semibold">$1</span>')
     .replace(/(sofIA|VittBot|Clarify)/g, '<span class="text-nw-purple font-medium">$1</span>')
-    .replace(/(Visa ISO 8583|Invoice Service|FEL|cativo\.dev)/g, '<span class="text-nw-primary font-medium">$1</span>')
+    .replace(/(Payment Service|Invoice Service|FEL|cativo\.dev)/g, '<span class="text-nw-primary font-medium">$1</span>')
 }
 </script>
