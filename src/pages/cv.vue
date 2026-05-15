@@ -73,8 +73,8 @@ const print = () => {
               delivery, and on-call from greenfield to production.
             </li>
             <li>
-              Built a Laravel payment microservice with a Strategy-pattern gateway abstraction over multiple
-              processors (ISO 8583 over SOAP, SOAP/XML, REST). VGS card vault for PCI-friendly tokenization;
+              Built a Laravel payment microservice with a Strategy-pattern gateway abstraction over
+              heterogeneous protocols (ISO 8583, SOAP/XML, REST). VGS card vault for PCI-friendly tokenization;
               network tokenization on top of the vault. Per-commerce / per-card-token routing, Horizon queues
               per gateway, Livewire ops dashboard. Led an OWASP-grade audit and ongoing security hardening.
             </li>
@@ -133,25 +133,44 @@ const print = () => {
         <h2>Selected Projects</h2>
         <ul class="projects">
           <li>
-            <strong>VittBot</strong> — Multi-agent autonomous BTC/USDT trading bot on Binance: indicator pipeline
-            feeds three Claude agents (Analyst, Trader, Validator) backed by a deterministic risk manager (10
-            hard-coded rules, never delegated to AI).
+            <strong>VittBot</strong> <span class="proj-tag">personal · in development</span> — Multi-agent BTC/USDT
+            trading bot on Binance: indicator pipeline feeds three Claude agents (Analyst, Trader, Validator)
+            backed by a deterministic risk manager (10 hard-coded rules, never delegated to AI).
             <em>NestJS, TypeScript, Anthropic SDK, CCXT, Prisma + PostgreSQL.</em>
           </li>
           <li>
-            <strong>nova-id</strong> — Production-ready Zero Trust IAM stack using the Ory suite (Kratos, Hydra,
-            Keto, Oathkeeper) with a NestJS admin API and Vue console.
+            <strong>nova-id</strong> <span class="proj-tag">personal · in development</span> — Zero Trust IAM
+            stack using the Ory suite (Kratos, Hydra, Keto, Oathkeeper) with a NestJS admin API and Vue console.
             <em>Ory Stack, NestJS, Vue, Docker.</em>
           </li>
           <li>
-            <strong>Clarify</strong> — AI legal-contract auditor (Micro-SaaS, v1.0.0-alpha). PDF analysis,
-            pay-per-analysis credits via Stripe webhooks, async processing on BullMQ.
+            <strong>Clarify</strong> <span class="proj-tag">personal · in development</span> — AI legal-contract
+            auditor (v1.0.0-alpha). PDF analysis, pay-per-analysis credits via Stripe webhooks, async processing
+            on BullMQ.
             <em>Nuxt, Supabase (Postgres + RLS), OpenAI, Stripe, BullMQ + Redis.</em>
           </li>
           <li>
             <strong>cativo.dev infrastructure</strong> — Self-hosted production stack: 16 containers across
             6 stacks (apps, blog, mail, monitoring, proxy, databases) on my own infrastructure.
             <em>Docker Compose, Linux, UFW, TLS, DNS.</em>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Open Source · npm</h2>
+        <ul class="projects">
+          <li>
+            <strong>lumira</strong> <span class="proj-tag">~1.9K dl/mo</span> — Claude Code workflow tooling
+            (status line, hooks, helpers). <em>TypeScript, npm.</em>
+          </li>
+          <li>
+            <strong>claude-style</strong> <span class="proj-tag">~850 dl/mo</span> — Style and formatting
+            primitives for Claude Code agents. <em>TypeScript, npm.</em>
+          </li>
+          <li>
+            <strong>nightwire</strong> <span class="proj-tag">~200 dl/mo</span> — Agent orchestration utilities
+            for multi-step Claude workflows. <em>TypeScript, npm.</em>
           </li>
         </ul>
       </section>
@@ -170,7 +189,7 @@ const print = () => {
           <dt>AI / Integrations</dt>
           <dd>Anthropic Claude API, OpenAI, ElevenLabs ConvAI, multi-agent design, n8n, Stripe, Odoo, SAP, WhatsApp/Botmaker, Bland AI</dd>
           <dt>Payments / Tax</dt>
-          <dd>ISO 8583 over SOAP, multi-gateway integration, VGS card vault, network tokenization, FEL e-invoicing (Guatemala), SAP</dd>
+          <dd>Multi-gateway integration over heterogeneous protocols (ISO 8583, SOAP/XML, REST), VGS card vault, network tokenization, FEL e-invoicing (Guatemala), SAP</dd>
           <dt>Infra / DevOps</dt>
           <dd>Docker, Traefik, Nginx, AWS (S3/ECR/EC2), Cloudflare, GitHub Actions, Bitbucket Pipelines, Prometheus, Sentry</dd>
           <dt>Testing</dt>
@@ -337,6 +356,18 @@ li {
   font-size: 12px;
   display: inline;
 }
+.proj-tag {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #666;
+  background: #eee;
+  border-radius: 3px;
+  padding: 1px 6px;
+  margin: 0 4px;
+  letter-spacing: 0.02em;
+  vertical-align: 1px;
+}
 
 .skills {
   display: grid;
@@ -413,6 +444,7 @@ a { color: #111; }
 
   .projects li { margin-bottom: 3pt; font-size: 9.5pt; }
   .projects em { font-size: 8.5pt; }
+  .proj-tag { font-size: 8pt; padding: 0 4pt; background: #eee !important; }
 
   .skills {
     grid-template-columns: 110px 1fr;
