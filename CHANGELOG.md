@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.10] - 2026-05-15
+
+### Changed
+- **CV copy refresh on `/cv` and `/about`** — Generalized payments
+  wording (processors described by protocol — ISO 8583, SOAP/XML, REST —
+  not by vendor name) behind the existing Strategy-pattern abstraction.
+  Softened FEL framing to "shipped through an authorized provider".
+  Side projects (VittBot, nova-id, Clarify) now visibly tagged
+  `personal · in development` to avoid implying they're shipped
+  products; sofIA stays as "in production at Blue Medical". (#107)
+
+### Added
+- **Open Source · npm section on `/cv` and `/about`** — Surfaces
+  published Claude Code tooling: `lumira` (~1.9K dl/mo), `claude-style`
+  (~850 dl/mo), `nightwire` (~200 dl/mo). Strengthens AI-tooling
+  positioning. (#107)
+
+### Internal
+- **`/release` skill + `release-runner` subagent** — Mechanical release
+  flow per `AGENTS.md` (version bump, CHANGELOG validation, release
+  branch + PR to main). No runtime impact. (#106)
+
+---
+
 ## [1.10.9] - 2026-05-14
 
 ### Added
