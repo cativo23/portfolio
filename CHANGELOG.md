@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.13] - 2026-05-21
+
+### Changed
+- **`/now` content refresh** — AT WORK: gateway expansion + security hardening shipped, replaced with CCCV CRM; Payment Service moved to OWNING IN PRODUCTION. SIDE PROJECTS: LUMIRA ~1.9k dl/mo, added NIGHTWIRE and KOVIA. LEARNING: swapped self-hosted infra + writing for LLM evals/prompt engineering and payment network internals. LOOKING FOR: AI/payments focus, remote-only (dropped relocation), softer tone. (#112)
+
+---
+
 ## [1.10.12] - 2026-05-21
 
 ### Fixed
