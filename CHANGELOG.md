@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.12] - 2026-05-21
+
+### Fixed
+- **`useNowPlaying` duplicate intervals** — Composable was instantiated in both `Footer.vue` and `now.vue`, creating two independent `setInterval` callbacks that each added 1000ms to the same shared `useState`. Result: 2s/tick progress jumps and periodic rewinds on every Spotify API poll. Intervals are now module-level singletons guarded by an `_activeConsumers` counter. (#110)
+
+---
+
 ## [1.10.11] - 2026-05-21
 
 ### Changed
