@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.11] - 2026-05-21
+
+### Changed
+- Bump nightwire submodule to v2-alpha (530c4a8) — adds v2 semantic tokens,
+  intensity system, and new components while keeping all v1 classes intact.
+
+---
+
 ## [1.10.10] - 2026-05-15
 
 ### Changed
