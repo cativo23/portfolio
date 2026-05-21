@@ -80,15 +80,11 @@
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-green shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">Payment Service · gateway expansion</span> — extending the multi-gateway abstraction with another payment processor on top of the existing strategies. Strategy Pattern keeps each integration scoped to a DTO, a strategy class, and a dedicated job queue.</span>
+              <span><span class="text-nw-text">CCCV CRM</span> — building the internal CRM for Blue Medical's commercial and medical operations. Laravel backend wired to the existing service mesh, centralizing doctor affiliations, commercial workflows, and scheduling data.</span>
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-green shrink-0 mt-1">▸</span>
               <span><span class="text-nw-text">Payment Service · network tokenization</span> — moving from raw PAN-on-file to network tokens issued by the card scheme on top of the existing VGS card vault. Lower fraud surface, better authorization rates, fewer PCI obligations.</span>
-            </li>
-            <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-              <span class="text-nw-green shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">Payment Service · security hardening</span> — coverage tests, defense-in-depth on internal routes, retry / idempotency on payment jobs, third-party data sources reviewed and consolidated.</span>
             </li>
           </ul>
         </div>
@@ -99,6 +95,10 @@
             Systems I built that are now on stable cadence — on-call, bug fixes, occasional hardening, no new feature work right now.
           </p>
           <ul class="space-y-2">
+            <li class="flex gap-3 text-nw-text-dim leading-relaxed">
+              <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
+              <span><span class="text-nw-text">Payment Service</span> — multi-gateway abstraction now stable in production with an expanded processor set. Strategy Pattern keeps each integration scoped to its own DTO, strategy class, and job queue.</span>
+            </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
               <span><span class="text-nw-text">Invoice Service</span> — Guatemala FEL e-invoicing through an authorized provider, with a Strategy Pattern for future provider swaps. SAP integration, multi-establishment support.</span>
@@ -133,7 +133,15 @@
       <div class="panel-body p-0">
         <div class="kv-row">
           <span class="kv-label">LUMIRA</span>
-          <span class="kv-value">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~1.4k downloads/month</span>
+          <span class="kv-value">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~1.9k downloads/month</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-label">NIGHTWIRE</span>
+          <span class="kv-value">Compressed dark design system for developer tools · semantic tokens, intensity scale, Tailwind plugin · published on <a href="https://www.npmjs.com/package/nightwire" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · v2 in active development</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-label">KOVIA</span>
+          <span class="kv-value">Smart pet adoption platform · connects rescue organizations with adopters via an automated scoring engine · NestJS + Nuxt 4 + Prisma + BullMQ</span>
         </div>
         <div class="kv-row">
           <span class="kv-label">VITTBOT</span>
@@ -155,15 +163,15 @@
         <ul class="space-y-2">
           <li class="flex gap-3 text-nw-text-dim leading-relaxed">
             <span class="text-nw-cyan shrink-0 mt-1">▸</span>
-            <span>Multi-agent LLM orchestration — production-safe pipelines, deterministic safeguards over model choice.</span>
+            <span>Multi-agent LLM orchestration — production-safe pipelines, deterministic safeguards over model choice, failure modes that don't require a rollback.</span>
           </li>
           <li class="flex gap-3 text-nw-text-dim leading-relaxed">
             <span class="text-nw-cyan shrink-0 mt-1">▸</span>
-            <span>Self-hosted infra observability. The mail server keeps me humble.</span>
+            <span>LLM evals and prompt engineering — output scoring, rubric-based benchmarks, systematic regression testing for AI pipelines. Making "does this actually work" answerable.</span>
           </li>
           <li class="flex gap-3 text-nw-text-dim leading-relaxed">
             <span class="text-nw-cyan shrink-0 mt-1">▸</span>
-            <span>Writing more — <a href="https://blog.cativo.dev" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">blog.cativo.dev</a>. Failure-first.</span>
+            <span>Payment network internals — network tokenization, card scheme authorization flows, PCI scope reduction. Goes deeper than most backend engineers need, but I'm already here.</span>
           </li>
         </ul>
       </div>
@@ -178,15 +186,15 @@
         <ul class="space-y-2 mb-6">
           <li class="flex gap-3 text-nw-text-dim leading-relaxed">
             <span class="text-nw-primary shrink-0 mt-1">▸</span>
-            <span><span class="text-nw-text">Senior backend / Tech Lead / Staff</span> at a company doing real systems work — payments, infra, platform, messy integrations, AI where the validation layer matters.</span>
+            <span><span class="text-nw-text">Senior backend or tech lead</span> at a company building real systems — payments, AI in production where the validation layer is the hard part, distributed services, the kind of work where the messy parts are the interesting parts.</span>
           </li>
           <li class="flex gap-3 text-nw-text-dim leading-relaxed">
             <span class="text-nw-primary shrink-0 mt-1">▸</span>
-            <span><span class="text-nw-text">Remote-first</span> (any TZ, UTC-6 base, US-hours overlap).</span>
+            <span><span class="text-nw-text">Remote</span> (UTC-6, works well with US hours).</span>
           </li>
           <li class="flex gap-3 text-nw-text-dim leading-relaxed">
             <span class="text-nw-primary shrink-0 mt-1">▸</span>
-            <span><span class="text-nw-text">Open to relocation</span> for the right role w/ sponsorship.</span>
+            <span>Not actively applying, but open to the right conversation. If what you're building sounds like it belongs on this page, reach out.</span>
           </li>
         </ul>
 
@@ -201,7 +209,7 @@
 </template>
 
 <script setup lang="ts">
-const lastUpdated = '2026-05-01';
+const lastUpdated = '2026-05-21';
 
 const { nowPlaying } = useNowPlaying();
 
