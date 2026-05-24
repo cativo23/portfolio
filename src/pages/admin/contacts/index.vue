@@ -1,53 +1,63 @@
 <template>
-  <div>
-    <h1 class="text-xl font-bold text-nw-text mb-6">Contacts</h1>
+  <div class="flex flex-col gap-4">
+    <span class="font-stamp text-[13px] tracking-[0.14em] uppercase text-nw-text">Contacts</span>
 
     <!-- Loading -->
-    <div v-if="loading" class="text-center py-12 text-nw-text-dim font-sys">
-      Loading contacts...
+    <div v-if="loading" class="py-12 text-center font-stamp text-[10px] tracking-wider uppercase text-nw-text-dim">
+      Loading…
     </div>
 
     <!-- Table -->
-    <div v-else-if="contacts.length" class="bg-void-warm border border-nw-text-line/30 rounded-lg overflow-hidden">
-      <table class="w-full text-sm">
-        <thead class="bg-void-warm">
+    <div v-else-if="contacts.length" class="bg-void-warm border border-nw-text-faint">
+      <div class="flex justify-between items-center px-3 py-[7px] border-b border-nw-primary-dim">
+        <span class="font-stamp text-[9px] tracking-[0.14em] uppercase text-nw-primary">All Contacts</span>
+        <span class="font-stamp text-[8px] text-nw-text-dim">{{ contacts.length }} RECORDS</span>
+      </div>
+      <table class="w-full">
+        <thead>
           <tr>
-            <th class="text-left px-4 py-3 text-nw-text-dim font-sys text-xs">Name</th>
-            <th class="text-left px-4 py-3 text-nw-text-dim font-sys text-xs hidden md:table-cell">Email</th>
-            <th class="text-left px-4 py-3 text-nw-text-dim font-sys text-xs hidden lg:table-cell">Message</th>
-            <th class="text-left px-4 py-3 text-nw-text-dim font-sys text-xs hidden md:table-cell">Date</th>
-            <th class="text-center px-4 py-3 text-nw-text-dim font-sys text-xs">Status</th>
-            <th class="text-right px-4 py-3 text-nw-text-dim font-sys text-xs">Actions</th>
+            <th class="font-stamp text-[8px] tracking-[0.14em] uppercase text-nw-primary text-left px-3 py-[6px] border-b border-nw-primary-dim">Name</th>
+            <th class="font-stamp text-[8px] tracking-[0.14em] uppercase text-nw-primary text-left px-3 py-[6px] border-b border-nw-primary-dim hidden md:table-cell">Email</th>
+            <th class="font-stamp text-[8px] tracking-[0.14em] uppercase text-nw-primary text-left px-3 py-[6px] border-b border-nw-primary-dim hidden lg:table-cell">Message</th>
+            <th class="font-stamp text-[8px] tracking-[0.14em] uppercase text-nw-primary text-left px-3 py-[6px] border-b border-nw-primary-dim hidden md:table-cell">Date</th>
+            <th class="font-stamp text-[8px] tracking-[0.14em] uppercase text-nw-primary text-center px-3 py-[6px] border-b border-nw-primary-dim">Status</th>
+            <th class="font-stamp text-[8px] tracking-[0.14em] uppercase text-nw-primary text-right px-3 py-[6px] border-b border-nw-primary-dim">Actions</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-nw-text-line/20">
-          <tr v-for="contact in contacts" :key="contact.id" class="hover:bg-void-raised/20 transition-colors" :class="!contact.isRead ? 'bg-nw-primary/5' : ''">
-            <td class="px-4 py-3">
-              <span class="text-nw-text font-medium">{{ contact.name }}</span>
+        <tbody>
+          <tr
+            v-for="contact in contacts"
+            :key="contact.id"
+            class="border-b border-nw-text-faint last:border-b-0 hover:bg-nw-cyan/[0.04] transition-colors"
+            :class="!contact.isRead ? 'bg-nw-primary/[0.03]' : ''"
+          >
+            <td class="px-3 py-[7px]">
+              <span class="text-[11px] text-nw-text">{{ contact.name }}</span>
             </td>
-            <td class="px-4 py-3 hidden md:table-cell">
-              <a :href="`mailto:${contact.email}`" class="text-nw-primary hover:underline text-xs">{{ contact.email }}</a>
+            <td class="px-3 py-[7px] hidden md:table-cell">
+              <a :href="`mailto:${contact.email}`" class="text-[10px] text-nw-primary hover:text-nw-primary-hot transition-colors">{{ contact.email }}</a>
             </td>
-            <td class="px-4 py-3 hidden lg:table-cell">
-              <span class="text-nw-text-dim text-xs line-clamp-1">{{ contact.message }}</span>
+            <td class="px-3 py-[7px] hidden lg:table-cell">
+              <span class="text-[10px] text-nw-text-dim line-clamp-1">{{ contact.message }}</span>
             </td>
-            <td class="px-4 py-3 hidden md:table-cell">
-              <span class="text-nw-text-dim text-xs">{{ formatDate(contact.createdAt) }}</span>
+            <td class="px-3 py-[7px] hidden md:table-cell">
+              <span class="text-[10px] text-nw-text-dim">{{ formatDate(contact.createdAt) }}</span>
             </td>
-            <td class="px-4 py-3 text-center">
-              <span class="px-2 py-1 rounded text-xs font-sys" :class="contact.isRead ? 'bg-nw-text-line/20 text-nw-text-dim' : 'bg-nw-yellow/20 text-nw-yellow'">
-                {{ contact.isRead ? 'Read' : 'Unread' }}
+            <td class="px-3 py-[7px] text-center">
+              <span
+                class="font-stamp text-[8px] tracking-[0.1em] uppercase border px-1.5 py-px"
+                :class="contact.isRead ? 'text-[#555] border-[#333]' : 'text-nw-yellow border-nw-yellow/40 bg-nw-yellow/[0.06]'"
+              >
+                {{ contact.isRead ? 'READ' : 'UNREAD' }}
               </span>
             </td>
-            <td class="px-4 py-3 text-right">
-              <div class="flex justify-end gap-2">
-                <button @click="viewContact(contact)" class="text-nw-primary hover:text-nw-cyan text-xs font-sys">
-                  View
-                </button>
-                <button @click="deleteContact(contact.id)" class="text-nw-red hover:text-nw-red/80 text-xs font-sys">
-                  Delete
-                </button>
-              </div>
+            <td class="px-3 py-[7px] text-right">
+              <button @click="viewContact(contact)" class="font-stamp text-[9px] tracking-[0.1em] uppercase text-nw-primary-dim hover:text-nw-primary transition-colors mr-3">
+                VIEW
+              </button>
+              <button @click="deleteContact(contact.id)" class="font-stamp text-[9px] tracking-[0.1em] uppercase text-nw-red/50 hover:text-nw-red transition-colors">
+                DEL
+              </button>
             </td>
           </tr>
         </tbody>
@@ -55,7 +65,7 @@
     </div>
 
     <!-- Empty -->
-    <div v-else class="text-center py-12 text-nw-text-dim font-sys">
+    <div v-else class="py-12 text-center font-stamp text-[10px] tracking-wider uppercase text-nw-text-dim">
       No contacts found.
     </div>
 

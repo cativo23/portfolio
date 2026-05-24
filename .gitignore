@@ -35,3 +35,6 @@ coverage-*.json
 
 # Claude Code — ephemeral worktrees (keep agents/commands/skills tracked)
 .claude/worktrees/
+
+# Superpowers brainstorm sessions
+.superpowers/
