@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.14] - 2026-05-24
+
+### Changed
+- **Admin Nightwire redesign** — Removes the Blog Posts section from the admin sidebar (blog lives externally at blog.cativo.dev). Restyled sidebar with left-border active indicators, nav dots, and NAVIGATION stamp label. Dashboard replaced with a 4-cell metrics strip (Projects / Unread / Users / System LED) plus Recent Projects and Contacts panels. Projects, Contacts, and Users lists now use the nw-table pattern with blue stamp headers and semantic status badges. Login page redesigned with Nightwire panel frame and password show/hide eye toggle. (#114)
+- **Homepage Nightwire polish** — New SVG favicon (void background, nw-primary C initial). Hero avatar gets a subtle nw-primary glow; OPERATOR/CLEARANCE/UNIT labels upgraded to nw-primary. Featured project card gains a 3px left accent and inner glow. LatestPosts panel header adds a blinking FEED · LIVE green LED. Contact form fields (BaseInput/Textarea) updated to Variant A: nw-primary-dim borders, sharp corners, 1px nw-primary focus ring. (#115)
+
 ---
 
 ## [1.10.13] - 2026-05-21
