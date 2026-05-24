@@ -77,7 +77,7 @@
     <!-- Row 2: NPM Sparkline Strip -->
     <div v-if="npmPackages.length" class="flex flex-wrap items-center px-5 py-2.5 gap-4 md:gap-8 border-b border-nw-text-faint">
       <span class="font-stamp uppercase tracking-wider text-[8px] text-nw-text-dim shrink-0">NPM Downloads</span>
-      <div class="flex flex-wrap items-center gap-4 md:gap-8 flex-grow justify-start md:justify-around">
+      <div class="flex flex-wrap items-center gap-4 md:gap-8 md:flex-grow justify-start md:justify-around">
         <div v-for="pkg in npmPackages" :key="pkg.name" class="flex items-center gap-3">
           <span class="font-stamp uppercase tracking-wider text-[9px] text-nw-text-dim">{{ pkg.name }}</span>
           <div class="sparkline">
