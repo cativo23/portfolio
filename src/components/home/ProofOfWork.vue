@@ -6,7 +6,7 @@
     </div>
 
     <!-- Row 1: Heatmap with month axis + Stats Grid 2x3 -->
-    <div class="flex items-stretch border-b border-nw-text-faint">
+    <div class="flex flex-col md:flex-row items-stretch border-b border-nw-text-faint">
       <!-- Heatmap zone (flex-grow, responsive cells) -->
       <div class="flex-grow px-5 py-4 flex flex-col justify-center gap-1 overflow-hidden">
         <div v-if="signal?.github.weeks.length" class="heatmap-grid w-full">
@@ -33,7 +33,7 @@
       </div>
 
       <!-- Stats grid 2x3 -->
-      <div class="grid grid-cols-2 gap-px bg-nw-text-faint shrink-0 w-[340px]">
+      <div class="grid grid-cols-3 md:grid-cols-2 gap-px bg-nw-text-faint border-t border-nw-text-faint md:border-t-0 md:shrink-0 md:w-[340px]">
         <div class="metric-cell">
           <div class="m-value" style="color: var(--nw-green); text-shadow: 0 0 6px rgba(122,237,122,0.3);">
             {{ signal?.github.contributions ?? '...' }}
@@ -75,9 +75,9 @@
     </div>
 
     <!-- Row 2: NPM Sparkline Strip -->
-    <div v-if="npmPackages.length" class="flex items-center px-5 py-2.5 gap-8 border-b border-nw-text-faint">
+    <div v-if="npmPackages.length" class="flex flex-wrap items-center px-5 py-2.5 gap-4 md:gap-8 border-b border-nw-text-faint">
       <span class="font-stamp uppercase tracking-wider text-[8px] text-nw-text-dim shrink-0">NPM Downloads</span>
-      <div class="flex items-center gap-8 flex-grow justify-around">
+      <div class="flex flex-wrap items-center gap-4 md:gap-8 md:flex-grow justify-start md:justify-around">
         <div v-for="pkg in npmPackages" :key="pkg.name" class="flex items-center gap-3">
           <span class="font-stamp uppercase tracking-wider text-[9px] text-nw-text-dim">{{ pkg.name }}</span>
           <div class="sparkline">
