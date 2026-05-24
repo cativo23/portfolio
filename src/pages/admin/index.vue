@@ -45,7 +45,7 @@
           >
             <span class="text-[11px] text-nw-text-dim">{{ project.title }}</span>
             <span class="font-stamp text-[8px] border px-1.5 py-px" :class="projectBadgeClass(project)">
-              {{ project.status || (project.isFeatured ? 'FEATURED' : 'STD') }}
+              {{ (project.status || (project.isFeatured ? 'FEATURED' : 'STD')).toUpperCase() }}
             </span>
           </NuxtLink>
           <div v-if="!recentProjects.length" class="px-3 py-4 text-[10px] text-nw-text-dim font-stamp">
