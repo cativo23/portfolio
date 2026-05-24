@@ -1,54 +1,72 @@
 <template>
-  <div>
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-xl font-bold text-nw-text">Projects</h1>
-      <NuxtLink to="/admin/projects/new" class="px-4 py-2 bg-nw-green/20 text-nw-green border border-nw-green/30 rounded-lg text-sm font-sys hover:bg-nw-green/30 transition-colors flex items-center gap-2">
-        <LucidePlus class="w-4 h-4" />
+  <div class="flex flex-col gap-4">
+    <!-- Header row -->
+    <div class="flex justify-between items-center">
+      <span class="font-stamp text-[13px] tracking-[0.14em] uppercase text-nw-text">Projects</span>
+      <NuxtLink
+        to="/admin/projects/new"
+        class="btn flex items-center gap-1.5 text-[11px]"
+      >
+        <LucidePlus class="w-3.5 h-3.5" />
         New Project
       </NuxtLink>
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="text-center py-12 text-nw-text-dim font-sys">
-      Loading projects...
+    <div v-if="loading" class="py-12 text-center font-stamp text-[10px] tracking-wider uppercase text-nw-text-dim">
+      Loading…
     </div>
 
     <!-- Table -->
-    <div v-else-if="projects.length" class="bg-void-warm border border-nw-text-line/30 rounded-lg overflow-hidden">
-      <table class="w-full text-sm">
-        <thead class="bg-void-warm">
+    <div v-else-if="projects.length" class="bg-void-warm border border-nw-text-faint">
+      <div class="flex justify-between items-center px-3 py-[7px] border-b border-nw-primary-dim">
+        <span class="font-stamp text-[9px] tracking-[0.14em] uppercase text-nw-primary">All Projects</span>
+        <span class="font-stamp text-[8px] text-nw-text-dim">{{ projects.length }} RECORDS</span>
+      </div>
+      <table class="w-full">
+        <thead>
           <tr>
-            <th class="text-left px-4 py-3 text-nw-text-dim font-sys text-xs">Title</th>
-            <th class="text-left px-4 py-3 text-nw-text-dim font-sys text-xs hidden md:table-cell">Status</th>
-            <th class="text-left px-4 py-3 text-nw-text-dim font-sys text-xs hidden lg:table-cell">Tech</th>
-            <th class="text-right px-4 py-3 text-nw-text-dim font-sys text-xs">Actions</th>
+            <th class="font-stamp text-[8px] tracking-[0.14em] uppercase text-nw-primary text-left px-3 py-[6px] border-b border-nw-primary-dim">Title</th>
+            <th class="font-stamp text-[8px] tracking-[0.14em] uppercase text-nw-primary text-left px-3 py-[6px] border-b border-nw-primary-dim hidden md:table-cell">Status</th>
+            <th class="font-stamp text-[8px] tracking-[0.14em] uppercase text-nw-primary text-left px-3 py-[6px] border-b border-nw-primary-dim hidden lg:table-cell">Stack</th>
+            <th class="font-stamp text-[8px] tracking-[0.14em] uppercase text-nw-primary text-right px-3 py-[6px] border-b border-nw-primary-dim">Actions</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-nw-text-line/20">
-          <tr v-for="project in projects" :key="project.id" class="hover:bg-void-raised/20 transition-colors">
-            <td class="px-4 py-3">
-              <p class="text-nw-text font-medium">{{ project.title }}</p>
-              <p class="text-nw-text-dim text-xs truncate max-w-xs">{{ project.shortDescription || project.description }}</p>
+        <tbody>
+          <tr
+            v-for="project in projects"
+            :key="project.id"
+            class="border-b border-nw-text-faint last:border-b-0 hover:bg-nw-cyan/[0.04] transition-colors"
+          >
+            <td class="px-3 py-[7px]">
+              <p class="text-[11px] text-nw-text">{{ project.title }}</p>
+              <p class="text-[10px] text-nw-text-dim truncate max-w-xs">{{ project.shortDescription || project.description }}</p>
             </td>
-            <td class="px-4 py-3 hidden md:table-cell">
-              <span class="px-2 py-1 rounded text-xs font-sys" :class="project.isFeatured ? 'bg-nw-purple/20 text-nw-purple' : 'bg-nw-text-line/20 text-nw-text-dim'">
-                {{ project.isFeatured ? 'Featured' : 'Standard' }}
+            <td class="px-3 py-[7px] hidden md:table-cell">
+              <span
+                class="font-stamp text-[8px] tracking-[0.1em] uppercase border px-1.5 py-px"
+                :class="project.isFeatured ? 'text-nw-purple border-nw-purple/40 bg-nw-purple/[0.06]' : 'text-nw-text-dim border-nw-text-line'"
+              >
+                {{ project.isFeatured ? 'FEATURED' : 'STD' }}
               </span>
             </td>
-            <td class="px-4 py-3 hidden lg:table-cell">
+            <td class="px-3 py-[7px] hidden lg:table-cell">
               <div class="flex flex-wrap gap-1">
-                <span v-for="tech in (project.techStack || []).slice(0, 3)" :key="tech" class="text-xs text-nw-green font-sys">
+                <span v-for="tech in (project.techStack || []).slice(0, 3)" :key="tech" class="font-stamp text-[8px] text-nw-cyan">
                   {{ tech }}
                 </span>
-                <span v-if="(project.techStack || []).length > 3" class="text-xs text-nw-text-dim">+{{ (project.techStack || []).length - 3 }}</span>
+                <span v-if="(project.techStack || []).length > 3" class="font-stamp text-[8px] text-nw-text-dim">
+                  +{{ (project.techStack || []).length - 3 }}
+                </span>
               </div>
             </td>
-            <td class="px-4 py-3 text-right">
-              <div class="flex justify-end gap-2">
-                <NuxtLink :to="`/admin/projects/${project.id}`" class="text-nw-primary hover:text-nw-cyan text-xs font-sys">
-                  Edit
-                </NuxtLink>
-              </div>
+            <td class="px-3 py-[7px] text-right">
+              <NuxtLink
+                :to="`/admin/projects/${project.id}`"
+                class="font-stamp text-[9px] tracking-[0.1em] uppercase text-nw-primary-dim hover:text-nw-primary transition-colors"
+              >
+                EDIT
+              </NuxtLink>
             </td>
           </tr>
         </tbody>
@@ -56,7 +74,7 @@
     </div>
 
     <!-- Empty -->
-    <div v-else class="text-center py-12 text-nw-text-dim font-sys">
+    <div v-else class="py-12 text-center font-stamp text-[10px] tracking-wider uppercase text-nw-text-dim">
       No projects found.
     </div>
   </div>

@@ -75,15 +75,15 @@
               width="180"
               height="180"
               loading="eager"
-              class="relative w-[180px] h-[180px] object-cover border border-nw-primary-dim"
+              class="relative w-[180px] h-[180px] object-cover border border-nw-primary-dim shadow-[0_0_28px_rgba(102,153,255,0.18),0_0_56px_rgba(102,153,255,0.07)]"
               style="border-radius: 0;"
               quality="80"
             />
           </div>
           <dl class="mt-3 font-stamp uppercase tracking-wider text-[9px] text-nw-text-dim space-y-0.5">
-            <div class="flex justify-between gap-2"><dt>OPERATOR</dt><dd class="text-nw-text">CATIVO-01</dd></div>
-            <div class="flex justify-between gap-2"><dt>CLEARANCE</dt><dd class="text-nw-text">TECH-LEAD</dd></div>
-            <div class="flex justify-between gap-2"><dt>UNIT</dt><dd class="text-nw-text">BLUE-MEDICAL-GT</dd></div>
+            <div class="flex justify-between gap-2"><dt class="text-nw-primary">OPERATOR</dt><dd class="text-nw-text">CATIVO-01</dd></div>
+            <div class="flex justify-between gap-2"><dt class="text-nw-primary">CLEARANCE</dt><dd class="text-nw-text">TECH-LEAD</dd></div>
+            <div class="flex justify-between gap-2"><dt class="text-nw-primary">UNIT</dt><dd class="text-nw-text">BLUE-MEDICAL-GT</dd></div>
           </dl>
         </aside>
       </div>

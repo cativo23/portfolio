@@ -1,39 +1,41 @@
 <template>
   <div class="flex min-h-screen bg-void-warm text-nw-text font-sys">
     <!-- Sidebar -->
-    <aside class="w-60 bg-void-warm border-r border-nw-text-line/20 flex flex-col shrink-0 transition-all duration-300">
+    <aside class="w-60 bg-void-warm border-r border-nw-text-line flex flex-col shrink-0">
       <!-- Logo -->
-      <div class="h-12 flex items-center px-4 border-b border-nw-text-line/20">
-        <NuxtLink to="/admin" class="text-base font-bold font-sys">
-          <span class="text-nw-purple">{</span>
+      <div class="h-10 flex items-center px-4 border-b border-nw-primary-dim shrink-0">
+        <NuxtLink to="/admin" class="font-stamp text-[15px] tracking-[0.12em]">
+          <span class="text-nw-primary">{</span>
           <span class="text-nw-red">Admin</span>
-          <span class="text-nw-purple">}</span>
+          <span class="text-nw-primary">}</span>
         </NuxtLink>
       </div>
 
       <!-- Nav -->
       <nav class="flex-1 py-2 overflow-y-auto">
-        <!-- Main nav items -->
+        <div class="font-stamp text-[8px] tracking-[0.18em] uppercase text-nw-primary-dim px-4 pt-3 pb-1">
+          Navigation
+        </div>
+
         <template v-for="item in navItems" :key="item.path">
           <NuxtLink
             :to="item.path"
-            class="flex items-center gap-3 mx-2 px-3 py-2 rounded-md text-sm transition-colors cursor-pointer"
+            class="flex items-center gap-2.5 pl-4 pr-3 py-[6px] text-[11px] border-l-2 transition-colors cursor-pointer"
             :class="getNavClass(item.path)"
           >
-            <component :is="item.icon" class="w-4 h-4 shrink-0" />
+            <span class="w-[5px] h-[5px] rounded-full shrink-0 transition-all" :class="isActiveRoute(item.path) ? 'bg-nw-cyan shadow-[0_0_5px_theme(colors.nw.cyan.DEFAULT)]' : 'bg-nw-text-dim'" />
             <span>{{ item.label }}</span>
           </NuxtLink>
 
-          <!-- Sub-items for projects -->
-          <div v-if="item.children" class="ml-6 mt-0.5 space-y-0.5">
+          <div v-if="item.children" class="ml-4 mt-0.5">
             <NuxtLink
               v-for="child in item.children"
               :key="child.path"
               :to="child.path"
-              class="flex items-center gap-2 mx-2 px-3 py-1.5 rounded-md text-xs transition-colors cursor-pointer"
+              class="flex items-center gap-2 pl-7 pr-3 py-[5px] text-[10px] border-l-2 transition-colors cursor-pointer"
               :class="getNavChildClass(child.path)"
             >
-              <component :is="child.icon" class="w-3.5 h-3.5 shrink-0" />
+              <span class="w-[3px] h-[3px] rounded-full shrink-0" :class="isExactRoute(child.path) ? 'bg-nw-cyan' : 'bg-nw-text-dim/50'" />
               {{ child.label }}
             </NuxtLink>
           </div>
@@ -41,20 +43,18 @@
       </nav>
 
       <!-- User section -->
-      <div class="p-3 border-t border-nw-text-line/20">
-        <div class="flex items-center gap-2 mb-2 px-2">
-          <div class="w-7 h-7 rounded-full bg-void-raised flex items-center justify-center text-xs font-bold text-nw-cyan">
+      <div class="p-3 border-t border-nw-text-line shrink-0">
+        <div class="flex items-center gap-2 mb-2 px-1">
+          <div class="w-6 h-6 rounded-full bg-void-raised border border-nw-primary-dim flex items-center justify-center text-[10px] font-bold text-nw-cyan shrink-0">
             {{ userInitial }}
           </div>
-          <div class="flex-1 min-w-0">
-            <p class="text-xs text-nw-text truncate">{{ authUser?.email || 'Admin' }}</p>
-          </div>
+          <p class="text-[9px] text-nw-text-dim truncate">{{ authUser?.email || 'Admin' }}</p>
         </div>
         <button
           @click="logout"
-          class="flex items-center gap-2 w-full px-3 py-1.5 rounded-md text-xs text-nw-red/80 hover:bg-nw-red/10 hover:text-nw-red transition-colors"
+          class="flex items-center gap-2 w-full px-2 py-1 text-[10px] font-stamp tracking-[0.1em] uppercase text-nw-red/70 hover:text-nw-red hover:bg-nw-red/[0.06] transition-colors"
         >
-          <LucideLogOut class="w-3.5 h-3.5" />
+          <LucideLogOut class="w-3 h-3" />
           Logout
         </button>
       </div>
@@ -63,12 +63,12 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0">
       <!-- Top Bar -->
-      <header class="h-12 border-b border-nw-text-line/20 bg-void-warm/50 px-5 flex items-center justify-between shrink-0">
+      <header class="h-10 border-b border-nw-text-line bg-void-warm px-5 flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2">
-          <LucideChevronRight class="w-3.5 h-3.5 text-nw-text-line" />
-          <span class="text-sm text-nw-text-dim font-sys">{{ currentPageTitle }}</span>
+          <span class="text-nw-text-line text-[10px]">›</span>
+          <span class="font-stamp text-[11px] tracking-[0.1em] uppercase text-nw-text-dim">{{ currentPageTitle }}</span>
         </div>
-        <NuxtLink to="/" target="_blank" class="text-xs text-nw-text-dim hover:text-nw-cyan transition-colors flex items-center gap-1">
+        <NuxtLink to="/" target="_blank" class="font-stamp text-[9px] tracking-[0.12em] uppercase text-nw-primary-dim hover:text-nw-primary transition-colors flex items-center gap-1">
           <LucideExternalLink class="w-3 h-3" />
           View site
         </NuxtLink>
@@ -94,15 +94,6 @@ const navItems = ref([
     children: [
       { path: '/admin/projects', label: 'All Projects', icon: 'LucideList' },
       { path: '/admin/projects/new', label: 'New Project', icon: 'LucidePlus' },
-    ],
-  },
-  {
-    path: '/admin/blog',
-    label: 'Blog Posts',
-    icon: 'LucideFileText',
-    children: [
-      { path: '/admin/blog', label: 'All Posts', icon: 'LucideList' },
-      { path: '/admin/blog/new', label: 'New Post', icon: 'LucidePlus' },
     ],
   },
   {
@@ -137,20 +128,18 @@ function isExactRoute(path: string): boolean {
 function getNavClass(path: string): string {
   if (path === '/admin') {
     return isExactRoute(path)
-      ? 'bg-nw-cyan/10 text-nw-cyan font-medium'
-      : 'text-nw-text-dim hover:text-nw-text hover:bg-void-raised/30'
+      ? 'border-l-nw-cyan bg-nw-cyan/[0.06] text-nw-cyan'
+      : 'border-l-transparent text-nw-text-dim hover:text-nw-text hover:bg-void-raised/20'
   }
-  // Parent items: active if route starts with path
   return isActiveRoute(path)
-    ? 'bg-nw-cyan/10 text-nw-cyan font-medium'
-    : 'text-nw-text-dim hover:text-nw-text hover:bg-void-raised/30'
+    ? 'border-l-nw-cyan bg-nw-cyan/[0.06] text-nw-cyan'
+    : 'border-l-transparent text-nw-text-dim hover:text-nw-text hover:bg-void-raised/20'
 }
 
 function getNavChildClass(path: string): string {
-  // Child items: active only on exact match
   return isExactRoute(path)
-    ? 'bg-nw-cyan/10 text-nw-cyan font-medium'
-    : 'text-nw-text-dim hover:text-nw-text hover:bg-void-raised/30'
+    ? 'border-l-nw-cyan bg-nw-cyan/[0.04] text-nw-cyan'
+    : 'border-l-transparent text-nw-text-dim hover:text-nw-text hover:bg-void-raised/10'
 }
 
 const currentPageTitle = computed(() => {
@@ -159,9 +148,6 @@ const currentPageTitle = computed(() => {
   if (path.startsWith('/admin/projects/new')) return 'Projects / New Project'
   if (path.startsWith('/admin/projects/')) return 'Projects / Edit Project'
   if (path === '/admin/projects') return 'Projects'
-  if (path.startsWith('/admin/blog/new')) return 'Blog / New Post'
-  if (path.startsWith('/admin/blog/')) return 'Blog / Edit Post'
-  if (path === '/admin/blog') return 'Blog Posts'
   if (path === '/admin/users') return 'Users'
   if (path === '/admin/contacts') return 'Contacts'
   return 'Admin'
