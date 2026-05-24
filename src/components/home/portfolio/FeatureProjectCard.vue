@@ -2,9 +2,11 @@
   <NuxtLink
     :to="`/projects/${project.id}`"
     :class="[
-      'bg-void-raised hover:bg-void-panel border hover:border-nw-primary-dim transition-all duration-200 p-5 flex flex-col gap-3',
-      featured ? 'border-nw-primary-dim/50' : 'border-nw-text-line',
-      'hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(102,153,255,0.08)]',
+      'bg-void-raised hover:bg-void-panel border transition-all duration-200 p-5 flex flex-col gap-3',
+      featured
+        ? 'border-nw-primary/40 border-l-[3px] border-l-nw-primary shadow-[inset_3px_0_16px_rgba(102,153,255,0.06),0_4px_24px_rgba(102,153,255,0.07)] hover:border-nw-primary-hot/50'
+        : 'border-nw-text-line hover:border-nw-primary-dim',
+      'hover:-translate-y-0.5',
     ]"
   >
     <header class="flex items-start justify-between gap-3">

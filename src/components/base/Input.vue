@@ -32,15 +32,15 @@ const inputId = computed(() => {
 const errorId = computed(() => props.error && inputId.value ? `${inputId.value}-error` : undefined)
 
 const inputClasses = computed(() => [
-  'w-full px-3 py-2 bg-void-warm text-nw-text rounded font-sys placeholder-nw-text-dim transition',
-  'focus:outline-none focus:ring-2 focus:ring-nw-cyan border',
-  props.error ? 'border-nw-red' : 'border-nw-text-line',
+  'w-full px-3 py-2 bg-void-warm text-nw-text rounded-none font-sys placeholder-nw-text-dim transition',
+  'focus:outline-none focus:ring-1 focus:ring-nw-primary focus:border-nw-primary border',
+  props.error ? 'border-nw-red' : 'border-nw-primary-dim',
 ])
 </script>
 
 <template>
   <div class="flex flex-col gap-1">
-    <label v-if="label" :for="inputId" class="text-nw-cyan font-stamp uppercase tracking-wide font-bold">
+    <label v-if="label" :for="inputId" class="text-nw-primary font-stamp uppercase tracking-[0.16em] text-[9px]">
       {{ label }}
     </label>
     <input

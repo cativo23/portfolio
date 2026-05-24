@@ -60,6 +60,7 @@ export default defineNuxtConfig({
         class: "antialiased bg-void text-nw-text font-sys min-h-screen",
       },
       link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
