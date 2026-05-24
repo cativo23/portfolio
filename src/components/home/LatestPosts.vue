@@ -4,7 +4,7 @@
       <div class="flex items-center gap-3">
         <span>WRITING · LATEST</span>
         <span class="flex items-center gap-1.5 text-nw-green font-stamp text-[8px] tracking-[0.12em] uppercase">
-          <span class="led green blink" />
+          <span class="led green blink" aria-hidden="true" />
           FEED · LIVE
         </span>
       </div>
