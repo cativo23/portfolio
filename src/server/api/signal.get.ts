@@ -11,7 +11,7 @@ interface SignalData {
   }
   npm: {
     lumira: NpmPackageData
-    claudeSetup: NpmPackageData
+    claudeStyle: NpmPackageData
     nightwire: NpmPackageData
     total: number
   }
@@ -121,11 +121,11 @@ async function fetchApiHealth(): Promise<{ version: string; status: string }> {
 export default defineCachedEventHandler(
   async (event) => {
     const { githubToken } = useRuntimeConfig(event)
-    const [gh, repos, lumira, claudeSetup, nightwire, api] = await Promise.allSettled([
+    const [gh, repos, lumira, claudeStyle, nightwire, api] = await Promise.allSettled([
       fetchGitHubContributions(githubToken),
       fetchGitHubRepos(githubToken),
       fetchNpmDownloads('lumira'),
-      fetchNpmDownloads('claude-setup'),
+      fetchNpmDownloads('claude-style'),
       fetchNpmDownloads('@cativo23/nightwire'),
       fetchApiHealth(),
     ])
@@ -134,7 +134,7 @@ export default defineCachedEventHandler(
     const repoCount = repos.status === 'fulfilled' ? repos.value : 0
     const fallbackPkg: NpmPackageData = { monthly: 0, weekly: [0, 0, 0, 0, 0, 0, 0] }
     const lumiraDl = lumira.status === 'fulfilled' ? lumira.value : fallbackPkg
-    const claudeSetupDl = claudeSetup.status === 'fulfilled' ? claudeSetup.value : fallbackPkg
+    const claudeStyleDl = claudeStyle.status === 'fulfilled' ? claudeStyle.value : fallbackPkg
     const nightwireDl = nightwire.status === 'fulfilled' ? nightwire.value : fallbackPkg
     const apiData = api.status === 'fulfilled' ? api.value : { version: '...', status: 'unknown' }
 
@@ -146,9 +146,9 @@ export default defineCachedEventHandler(
       },
       npm: {
         lumira: lumiraDl,
-        claudeSetup: claudeSetupDl,
+        claudeStyle: claudeStyleDl,
         nightwire: nightwireDl,
-        total: lumiraDl.monthly + claudeSetupDl.monthly + nightwireDl.monthly,
+        total: lumiraDl.monthly + claudeStyleDl.monthly + nightwireDl.monthly,
       },
       api: apiData,
     }
