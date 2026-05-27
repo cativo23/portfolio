@@ -33,7 +33,7 @@ const print = () => {
     <main class="cv">
       <header class="head">
         <h1>Carlos Cativo</h1>
-        <p class="role">Senior Backend Engineer · Tech Lead</p>
+        <p class="role">Senior Tech Lead — Payments, Healthcare Platforms &amp; Backend Architecture</p>
         <p class="contact">
           <a href="mailto:cativo@cativo.dev">cativo@cativo.dev</a>
           <span class="sep">·</span>
@@ -45,17 +45,14 @@ const print = () => {
           <span class="sep">·</span>
           <a href="https://github.com/cativo23" target="_blank" rel="noopener">github.com/cativo23</a>
           <span class="sep">·</span>
-          <a href="https://www.linkedin.com/in/cativo23" target="_blank" rel="noopener">linkedin.com/in/cativo23</a>
+          <a href="https://www.linkedin.com/in/carlos-cativo" target="_blank" rel="noopener">linkedin.com/in/carlos-cativo</a>
         </p>
       </header>
 
       <section>
         <h2>Summary</h2>
         <p class="summary">
-          Tech Lead with 9 years building production backend systems — payment processing, e-invoicing,
-          subscription platforms, and conversational AI. Strongest in Laravel/PHP and TypeScript/NestJS,
-          comfortable across the stack and the infrastructure underneath. Open to senior backend, tech lead,
-          and staff roles, remote-first, with sponsorship for relocation.
+          Tech Lead with 9 years building production backend systems, currently leading a team of 5 engineers at Blue Medical Guatemala. Scaled a payment platform from ~$30K to ~$450K USD/mo while shipping 3 services from scratch: a multi-gateway payment processor (VGS tokenization, PCI-DSS scope reduction), an electronic invoicing system with SAP integration, and a multi-agent AI voice product. Stack-fluid across Laravel/PHP, TypeScript/NestJS, and Python/FastAPI. Open to Senior Backend, Tech Lead, and Engineering Manager roles — remote-first or with relocation sponsorship.
         </p>
       </section>
 
@@ -161,16 +158,13 @@ const print = () => {
         <h2>Open Source · npm</h2>
         <ul class="projects">
           <li>
-            <strong>lumira</strong> <span class="proj-tag">~1.9K dl/mo</span> — Claude Code workflow tooling
-            (status line, hooks, helpers). <em>TypeScript, npm.</em>
+            <strong>lumira</strong> <span class="proj-tag">~3.4K dl/mo</span> — Real-time statusline HUD
+            for Claude Code and Qwen Code. Session analytics, latency overhead widget, quota projection.
+            Zero deps. <em>TypeScript, npm.</em>
           </li>
           <li>
-            <strong>claude-style</strong> <span class="proj-tag">~850 dl/mo</span> — Style and formatting
-            primitives for Claude Code agents. <em>TypeScript, npm.</em>
-          </li>
-          <li>
-            <strong>nightwire</strong> <span class="proj-tag">~200 dl/mo</span> — Agent orchestration utilities
-            for multi-step Claude workflows. <em>TypeScript, npm.</em>
+            <strong>nightwire</strong> <span class="proj-tag">~475 dl/mo</span> — Dark cyberpunk UI design
+            system. Semantic color roles, neon palette, CLI installer. <em>CSS, npm.</em>
           </li>
         </ul>
       </section>

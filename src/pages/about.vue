@@ -333,21 +333,15 @@ const profile: Profile = {
 const ossPackages = [
   {
     name: 'lumira',
-    downloads: '~1.9K dl/mo',
+    downloads: '~3.4K dl/mo',
     stack: 'TypeScript · npm',
-    description: 'Claude Code workflow tooling — status line, hooks, helpers for daily AI-assisted development.'
-  },
-  {
-    name: 'claude-style',
-    downloads: '~850 dl/mo',
-    stack: 'TypeScript · npm',
-    description: 'Style and formatting primitives for Claude Code agents and CLI output.'
+    description: 'Real-time statusline HUD for Claude Code and Qwen Code. Session analytics, latency overhead widget, quota projection. Zero deps.'
   },
   {
     name: 'nightwire',
-    downloads: '~200 dl/mo',
-    stack: 'TypeScript · npm',
-    description: 'Agent orchestration utilities for multi-step Claude workflows.'
+    downloads: '~475 dl/mo',
+    stack: 'CSS · npm',
+    description: 'Dark cyberpunk UI design system. Semantic color roles, neon palette, CLI installer.'
   }
 ]
 
