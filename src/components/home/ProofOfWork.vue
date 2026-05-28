@@ -54,7 +54,7 @@
         </div>
         <div class="metric-cell">
           <div class="m-value" style="color: var(--nw-primary); text-shadow: 0 0 6px rgba(102,153,255,0.3);">
-            3
+            4
           </div>
           <div class="m-label">NPM Packages</div>
         </div>
@@ -85,6 +85,7 @@
               v-for="(val, i) in pkg.weekly"
               :key="i"
               class="spark-bar"
+              :data-tip="formatNumber(val)"
               :style="{
                 height: sparkBarHeight(val, pkg.weekly) + 'px',
                 background: val === sparkMax(pkg.weekly) ? 'var(--nw-primary)' : 'var(--nw-primary-dim)',
@@ -145,7 +146,7 @@ interface NpmPackageData {
 
 interface SignalData {
   github: { contributions: number; weeks: number[][]; publicRepos: number }
-  npm: { lumira: NpmPackageData | number; claudeSetup: NpmPackageData | number; nightwire: NpmPackageData | number; total: number }
+  npm: { lumira: NpmPackageData | number; claudeStyle: NpmPackageData | number; nightwire: NpmPackageData | number; total: number }
   api: { version: string; status: string }
 }
 
@@ -165,11 +166,9 @@ const npmPackages = computed(() => {
   if (!signal.value) return []
   const lumira = getNpmPkg(signal.value.npm.lumira)
   const nightwire = getNpmPkg(signal.value.npm.nightwire)
-  const claudeSetup = getNpmPkg(signal.value.npm.claudeSetup)
   return [
     { name: 'Lumira', ...lumira },
     { name: 'Nightwire', ...nightwire },
-    { name: 'Claude-Setup', ...claudeSetup },
   ].filter(p => p.monthly > 0 || p.weekly.length > 0)
 })
 
@@ -247,10 +246,35 @@ function formatNumber(n: number | undefined): string {
   align-items: flex-end;
   gap: 2px;
   height: 24px;
+  overflow: visible;
 }
 .spark-bar {
+  position: relative;
   width: 6px;
   border-radius: 1px;
   min-height: 3px;
+  cursor: default;
+}
+.spark-bar::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0a0a12;
+  border: 1px solid rgba(102, 153, 255, 0.35);
+  color: var(--nw-primary);
+  font-family: var(--font-stamp, monospace);
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  padding: 2px 5px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s;
+  z-index: 20;
+}
+.spark-bar:hover::after {
+  opacity: 1;
 }
 </style>
