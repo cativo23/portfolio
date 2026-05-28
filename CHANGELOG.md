@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.16] - 2026-05-28
+
+### Fixed
+- **ProofOfWork npm data** — Signal API was fetching downloads for `claude-setup`, a package not owned by this account, inflating the total DL count. Replaced with `claude-style` (own package). NPM Packages metric corrected from hardcoded `2` → `4` (actual published count: lumira, nightwire, claude-style, claudesm).
+
+### Added
+- **Sparkline tooltips** — Hovering any bar in the NPM Downloads sparkline strip now shows a small tooltip with the weekly download count for that week.
+
+### Changed
+- **About & CV content refresh** — Updated lumira (~3.4K dl/mo) and nightwire (~475 dl/mo) download counts and descriptions to reflect current reality. Removed `claude-style` as a separate OSS entry (low traction). CV role title, summary, and LinkedIn URL updated.
+
+---
+
 ## [1.10.15] - 2026-05-24
 
 ### Fixed
