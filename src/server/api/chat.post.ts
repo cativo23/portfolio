@@ -2,6 +2,10 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const body = await readBody(event)
 
+  if (!body || typeof body !== 'object') {
+    throw createError({ statusCode: 400, statusMessage: 'Bad Request' })
+  }
+
   // Honeypot — reject if hidden 'website' field is filled
   if (body.website && String(body.website).trim().length > 0) {
     throw createError({ statusCode: 400, statusMessage: 'Bad Request' })

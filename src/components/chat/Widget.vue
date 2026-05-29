@@ -32,6 +32,7 @@ watch(isOpen, (open) => open && scrollToBottom())
       type="button"
       :aria-label="isOpen ? 'Close assistant' : 'Ask the AI assistant about Carlos'"
       :aria-expanded="isOpen"
+      aria-controls="chat-panel"
       class="fixed bottom-4 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full border transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-nw-primary"
       :class="
         isOpen
@@ -53,6 +54,7 @@ watch(isOpen, (open) => open && scrollToBottom())
     >
       <div
         v-if="isOpen"
+        id="chat-panel"
         ref="panelRef"
         role="dialog"
         aria-modal="true"
