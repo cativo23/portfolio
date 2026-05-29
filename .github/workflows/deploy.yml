@@ -84,9 +84,21 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          envs: DOCKER_USERNAME,DOCKER_PASSWORD,POW_GH_TOKEN
+          envs: DOCKER_USERNAME,DOCKER_PASSWORD,POW_GH_TOKEN,SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET,SPOTIFY_REFRESH_TOKEN
           script: |
             cd /home/cativo23/deploy/portfolio-deploy
+
+            # Sync Spotify credentials from CI secrets into .env (idempotent upsert)
+            touch .env
+            for kv in \
+              "NUXT_SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}" \
+              "NUXT_SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}" \
+              "NUXT_SPOTIFY_REFRESH_TOKEN=${SPOTIFY_REFRESH_TOKEN}"; do
+              key="${kv%%=*}"
+              grep -v "^${key}=" .env > .env.tmp || true
+              echo "$kv" >> .env.tmp
+              mv .env.tmp .env
+            done
 
             # Login to Docker Hub on server
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
