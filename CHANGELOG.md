@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.0] - 2026-05-29
+
+### Added
+- **AI chat assistant widget** — a floating, nightwire-styled chat (site-wide, public) that answers visitor questions about Carlos: experience, projects, stack, and how to get in touch. It calls the backend `/chat` endpoint through a Nuxt server proxy (the request stays server-side), and handles loading, error, and rate-limit (429, with a cooldown) states. Reuses `BaseButton` and `useFocusTrap`; goes full-screen on mobile. (#120)
+
+---
+
 ## [1.10.16] - 2026-05-28
 
 ### Fixed
