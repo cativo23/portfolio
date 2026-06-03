@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const isDocker = process.env.NITRO_PRESET === 'node-server'
 
-const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxtjs/sitemap', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image', '@nuxtjs/mdc']
+const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxtjs/sitemap', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image', '@nuxtjs/mdc', 'nuxt-security']
 const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
 
 export default defineNuxtConfig({
@@ -82,5 +82,41 @@ export default defineNuxtConfig({
   builder: "vite",
   image: {
     provider: 'ipx',
+  },
+  security: {
+    // Phase 1: report-only. The browser reports violations to /api/csp-report
+    // but nothing is blocked. Flip to `false` to enforce once reports are clean.
+    contentSecurityPolicyReportOnly: true,
+    headers: {
+      contentSecurityPolicy: {
+        // Strict scripts: nonce + strict-dynamic only (no 'unsafe-inline'/'https:').
+        // nuxt-security nonces Nuxt's hydration script and the JSON-LD block.
+        // 'self' is a CSP2 fallback (ignored by CSP3 browsers under strict-dynamic);
+        // 'report-sample' includes a snippet of the offender in report-only reports.
+        'script-src': ["'self'", "'strict-dynamic'", "'nonce-{{nonce}}'", "'report-sample'"],
+        // Inline style="" attributes (clamp(), CSS vars) can't be nonced, so
+        // 'unsafe-inline' is required for styles; plus the Google Fonts CSS host.
+        'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        'font-src': ["'self'", 'https://fonts.gstatic.com'],
+        // Client only ever calls its own /api/* BFF routes.
+        'connect-src': ["'self'"],
+        'img-src': ["'self'", 'data:'],
+        'report-uri': ['/api/csp-report'],
+      },
+      // COEP would block the cross-origin Google Fonts; not needed for this site.
+      crossOriginEmbedderPolicy: false,
+    },
+    // The backend (api.cativo.dev) owns rate limiting; don't double-limit the BFF.
+    rateLimiter: false,
+    // xssValidator stays ON globally (free defense for admin/structured routes);
+    // it's disabled per-route below only where free text legitimately flows.
+  },
+  routeRules: {
+    // These endpoints receive arbitrary free text / report payloads that can
+    // contain '<', 'script', etc. The XSS validator would reject legitimate
+    // input; the backend sanitizes the forwarded chat/contact content.
+    '/api/chat': { security: { xssValidator: false } },
+    '/api/contacts': { security: { xssValidator: false } },
+    '/api/csp-report': { security: { xssValidator: false } },
   },
 })

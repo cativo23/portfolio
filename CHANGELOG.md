@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.0] - 2026-06-03
+
+### Added
+- **Content Security Policy + security headers** via `nuxt-security`, running in **report-only** mode first. Nonce-based `script-src` with `strict-dynamic` (no `unsafe-inline` for scripts), hardened `style-src`/`font-src`/`connect-src`/`img-src`, and a `/api/csp-report` violation sink that logs path-only reports. Report-only lets us surface real-traffic violations before flipping the policy to enforced. (#123)
+
+### Changed
+- **Node 22 → 24** across CI and the dev/prod Docker images, required by `nuxt-security` 2.6.0 (its first-class report-only CSP support needs Node ≥ 24). (#123)
+
+---
+
 ## [1.11.0] - 2026-05-29
 
 ### Added

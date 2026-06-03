@@ -38,3 +38,6 @@ coverage-*.json
 
 # Superpowers brainstorm sessions
 .superpowers/
+
+# Security assessment — NEVER commit (contains live creds, infra map, PoCs)
+SECURITY-ASSESSMENT.md
