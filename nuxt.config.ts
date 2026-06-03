@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const isDocker = process.env.NITRO_PRESET === 'node-server'
 
-const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxtjs/sitemap', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image', '@nuxtjs/mdc']
+const baseModules: string[] = ['@nuxtjs/tailwindcss', '@nuxtjs/sitemap', 'nuxt-lucide-icons', 'motion-v/nuxt', '@nuxt/image', '@nuxtjs/mdc', 'nuxt-security']
 const modules = isDocker ? baseModules : [...baseModules, '@nuxthub/core']
 
 export default defineNuxtConfig({
@@ -82,5 +82,32 @@ export default defineNuxtConfig({
   builder: "vite",
   image: {
     provider: 'ipx',
+  },
+  security: {
+    // Phase 1: report-only. The browser reports violations to /api/csp-report
+    // but nothing is blocked. Flip to `false` to enforce once reports are clean.
+    contentSecurityPolicyReportOnly: true,
+    headers: {
+      contentSecurityPolicy: {
+        // Strict scripts: nonce + strict-dynamic only (no 'unsafe-inline'/'https:').
+        // nuxt-security nonces Nuxt's hydration script and the JSON-LD block.
+        'script-src': ["'self'", "'strict-dynamic'", "'nonce-{{nonce}}'"],
+        // Inline style="" attributes (clamp(), CSS vars) can't be nonced, so
+        // 'unsafe-inline' is required for styles; plus the Google Fonts CSS host.
+        'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        'font-src': ["'self'", 'https://fonts.gstatic.com'],
+        // Client only ever calls its own /api/* BFF routes.
+        'connect-src': ["'self'"],
+        'img-src': ["'self'", 'data:'],
+        'report-uri': ['/api/csp-report'],
+      },
+      // COEP would block the cross-origin Google Fonts; not needed for this site.
+      crossOriginEmbedderPolicy: false,
+    },
+    // The backend (api.cativo.dev) owns rate limiting; don't double-limit the BFF.
+    rateLimiter: false,
+    // The /api/chat and /api/contact BFF routes forward arbitrary free text that
+    // can look like XSS payloads; the backend sanitizes. Don't block legit input.
+    xssValidator: false,
   },
 })
