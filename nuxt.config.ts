@@ -91,7 +91,9 @@ export default defineNuxtConfig({
       contentSecurityPolicy: {
         // Strict scripts: nonce + strict-dynamic only (no 'unsafe-inline'/'https:').
         // nuxt-security nonces Nuxt's hydration script and the JSON-LD block.
-        'script-src': ["'self'", "'strict-dynamic'", "'nonce-{{nonce}}'"],
+        // 'self' is a CSP2 fallback (ignored by CSP3 browsers under strict-dynamic);
+        // 'report-sample' includes a snippet of the offender in report-only reports.
+        'script-src': ["'self'", "'strict-dynamic'", "'nonce-{{nonce}}'", "'report-sample'"],
         // Inline style="" attributes (clamp(), CSS vars) can't be nonced, so
         // 'unsafe-inline' is required for styles; plus the Google Fonts CSS host.
         'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
@@ -106,8 +108,15 @@ export default defineNuxtConfig({
     },
     // The backend (api.cativo.dev) owns rate limiting; don't double-limit the BFF.
     rateLimiter: false,
-    // The /api/chat and /api/contact BFF routes forward arbitrary free text that
-    // can look like XSS payloads; the backend sanitizes. Don't block legit input.
-    xssValidator: false,
+    // xssValidator stays ON globally (free defense for admin/structured routes);
+    // it's disabled per-route below only where free text legitimately flows.
+  },
+  routeRules: {
+    // These endpoints receive arbitrary free text / report payloads that can
+    // contain '<', 'script', etc. The XSS validator would reject legitimate
+    // input; the backend sanitizes the forwarded chat/contact content.
+    '/api/chat': { security: { xssValidator: false } },
+    '/api/contacts': { security: { xssValidator: false } },
+    '/api/csp-report': { security: { xssValidator: false } },
   },
 })
