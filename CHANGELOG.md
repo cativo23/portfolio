@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.3] - 2026-06-04
+
+### Changed
+- **`/now` status page refresh** — sofIA and Payment Service moved from *actively building* to *owning in production* (both shipped; sofIA now iterating on improvements, Payment Service extended with a new payment provider). Added a *this site* side-project entry for the portfolio's own AI chat, a new *running / self-hosted* panel (Hetzner VPS + Docker Compose + Traefik + self-hosted observability + GitFlow CI/CD, high-level — no IPs/ports/hostnames), and an application-security item under *learning*. Lumira downloads updated to ~4k/month. (#128)
+
+### Fixed
+- **Nightwire npm link** — pointed to the non-existent unscoped `nightwire` package; corrected to `@cativo23/nightwire`, and the status updated from "v2 in active development" to "v2 shipped". (#128)
+
+---
+
 ## [1.12.2] - 2026-06-04
 
 ### Fixed
