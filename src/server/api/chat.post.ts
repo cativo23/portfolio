@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
         typeof (m as { content?: unknown }).content === 'string',
     )
     .slice(-6)
-    .map((m) => ({ role: m.role, content: m.content.slice(0, 2000) }))
+    .map((m: { role: string; content: string }) => ({ role: m.role, content: m.content.slice(0, 2000) }))
 
   try {
     // /chat is a public endpoint — no API key is attached.
