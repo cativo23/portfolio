@@ -67,6 +67,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import NowPlayingBars from '~/components/ui/NowPlayingBars.vue';
 
 const { nowPlaying } = useNowPlaying();
 

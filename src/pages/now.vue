@@ -209,6 +209,8 @@
 </template>
 
 <script setup lang="ts">
+import NowPlayingBars from '~/components/ui/NowPlayingBars.vue';
+
 const lastUpdated = '2026-05-21';
 
 const { nowPlaying } = useNowPlaying();
