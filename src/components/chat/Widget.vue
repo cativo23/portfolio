@@ -37,7 +37,7 @@ watch(isOpen, (open) => open && scrollToBottom())
       :class="
         isOpen
           ? 'border-nw-ai-mute bg-void-panel text-nw-text-dim'
-          : 'border-nw-ai bg-nw-ai/10 text-nw-ai hover:shadow-[0_0_12px_rgba(178,102,224,0.35)]'
+          : 'border-nw-ai bg-nw-ai text-void hover:bg-nw-ai/90 hover:shadow-[0_0_16px_rgba(178,102,224,0.5)]'
       "
       @click="toggle"
     >

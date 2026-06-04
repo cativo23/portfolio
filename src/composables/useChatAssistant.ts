@@ -40,13 +40,20 @@ export function useChatAssistant() {
     const question = text.trim()
     if (question.length < 1 || isLoading.value || cooldown.value > 0) return
 
+    // Replay recent turns for context — the server is stateless. Exclude error
+    // bubbles (not real turns) and cap to the last 6 (matches the API limit).
+    const history = messages.value
+      .filter((m) => m.role === 'user' || m.role === 'assistant')
+      .slice(-6)
+      .map((m) => ({ role: m.role, content: m.content }))
+
     messages.value.push({ role: 'user', content: question })
     isLoading.value = true
 
     try {
       const res = await $fetch<ChatApiResponse>('/api/chat', {
         method: 'POST',
-        body: { question },
+        body: { question, history },
       })
       messages.value.push({ role: 'assistant', content: res.data.answer })
     } catch (err) {
