@@ -84,9 +84,12 @@ export default defineNuxtConfig({
     provider: 'ipx',
   },
   security: {
-    // Phase 1: report-only. The browser reports violations to /api/csp-report
-    // but nothing is blocked. Flip to `false` to enforce once reports are clean.
-    contentSecurityPolicyReportOnly: true,
+    // Enforced. A full-site browser audit (every page + all project detail pages +
+    // the chat widget), cross-checked against /api/csp-report logs, found zero
+    // script/style/connect violations — only images from external hosts (Spotify
+    // album art, README badges in project markdown). img-src is permissive (https:)
+    // below to cover those; report-uri stays wired so enforced violations are logged.
+    contentSecurityPolicyReportOnly: false,
     headers: {
       contentSecurityPolicy: {
         // Strict scripts: nonce + strict-dynamic only (no 'unsafe-inline'/'https:').
@@ -100,7 +103,11 @@ export default defineNuxtConfig({
         'font-src': ["'self'", 'https://fonts.gstatic.com'],
         // Client only ever calls its own /api/* BFF routes.
         'connect-src': ["'self'"],
-        'img-src': ["'self'", 'data:'],
+        // Permissive for images only: project markdown (README-style) embeds
+        // badges/screenshots from arbitrary hosts (img.shields.io, Spotify's
+        // i.scdn.co, future CDNs). Images can't execute code, so `https:` here
+        // is low-risk while script-src/style-src stay strict (nonce+strict-dynamic).
+        'img-src': ["'self'", 'data:', 'https:'],
         'report-uri': ['/api/csp-report'],
       },
       // COEP would block the cross-origin Google Fonts; not needed for this site.
