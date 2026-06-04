@@ -16,12 +16,31 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Question is required' })
   }
 
+  // Multi-turn context: keep only well-formed user/assistant turns, cap content
+  // length and turn count to the API's limits. The backend re-validates and
+  // sanitizes, so this is just to avoid forwarding obvious junk.
+  // Bound the array length BEFORE iterating, so a client can't force a large
+  // filter pass with a giant array (the backend's ArrayMaxSize is a separate
+  // validation layer, not an upstream size guard). Keep the most recent.
+  const rawHistory = (Array.isArray(body.history) ? body.history : []).slice(-20)
+  const history = rawHistory
+    .filter(
+      (m: unknown): m is { role: string; content: string } =>
+        !!m &&
+        typeof m === 'object' &&
+        ((m as { role?: unknown }).role === 'user' ||
+          (m as { role?: unknown }).role === 'assistant') &&
+        typeof (m as { content?: unknown }).content === 'string',
+    )
+    .slice(-6)
+    .map((m) => ({ role: m.role, content: m.content.slice(0, 2000) }))
+
   try {
     // /chat is a public endpoint — no API key is attached.
     return await $fetch(`${config.apiBaseUrl}${config.apiBasePath}/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: { question: question.slice(0, 500) },
+      body: { question: question.slice(0, 500), history },
     })
   } catch (err) {
     const status =
