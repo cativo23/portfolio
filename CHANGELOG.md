@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.1] - 2026-06-03
+
+### Security
+- **Content Security Policy is now enforced** (flipped out of report-only). A full-site browser audit — every page, all project detail pages, and the chat widget — cross-checked against the `/api/csp-report` logs found zero script/style/connect violations; `script-src`/`style-src` remain strict (nonce + `strict-dynamic`). `img-src` is set to `'self' data: https:` so project markdown (README-style badges and screenshots from arbitrary hosts) and Spotify album art render without breaking, while keeping the directives that actually matter for XSS strict. The `report-uri` sink stays wired so enforced violations are still logged. (#123 follow-up)
+
+---
+
 ## [1.12.0] - 2026-06-03
 
 ### Added
