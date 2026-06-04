@@ -76,15 +76,7 @@
           <ul class="space-y-3">
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-green shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">sofIA</span> — primary author of a multi-agent voice system for healthcare scheduling, currently in production. Built on ElevenLabs ConvAI + n8n with a FastAPI + Nuxt management platform. Working on extending the agent toolset and tightening the validation layer around the LLM.</span>
-            </li>
-            <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-              <span class="text-nw-green shrink-0 mt-1">▸</span>
               <span><span class="text-nw-text">CCCV CRM</span> — building the internal CRM for Blue Medical's commercial and medical operations. Laravel backend wired to the existing service mesh, centralizing doctor affiliations, commercial workflows, and scheduling data.</span>
-            </li>
-            <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-              <span class="text-nw-green shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">Payment Service · network tokenization</span> — moving from raw PAN-on-file to network tokens issued by the card scheme on top of the existing VGS card vault. Lower fraud surface, better authorization rates, fewer PCI obligations.</span>
             </li>
           </ul>
         </div>
@@ -92,12 +84,16 @@
         <div>
           <div class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-primary mb-2">● OWNING IN PRODUCTION</div>
           <p class="text-meta mb-2">
-            Systems I built that are now on stable cadence — on-call, bug fixes, occasional hardening, no new feature work right now.
+            Systems I built that are now on stable cadence — maintenance, hardening, and incremental improvements rather than ground-up new builds.
           </p>
           <ul class="space-y-2">
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">Payment Service</span> — multi-gateway abstraction now stable in production with an expanded processor set. Strategy Pattern keeps each integration scoped to its own DTO, strategy class, and job queue.</span>
+              <span><span class="text-nw-text">sofIA</span> — primary author of a multi-agent voice system for healthcare scheduling, live in production. Built on ElevenLabs ConvAI + n8n with a FastAPI + Nuxt management platform. Now iterating: extending the agent toolset and tightening the validation layer around the LLM.</span>
+            </li>
+            <li class="flex gap-3 text-nw-text-dim leading-relaxed">
+              <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
+              <span><span class="text-nw-text">Payment Service</span> — multi-gateway abstraction stable in production, recently extended with a new payment provider. Strategy Pattern keeps each integration scoped to its own DTO, strategy class, and job queue.</span>
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
@@ -133,11 +129,11 @@
       <div class="panel-body p-0">
         <div class="kv-row">
           <span class="kv-label">LUMIRA</span>
-          <span class="kv-value">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~1.9k downloads/month</span>
+          <span class="kv-value">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~4k downloads/month</span>
         </div>
         <div class="kv-row">
           <span class="kv-label">NIGHTWIRE</span>
-          <span class="kv-value">Compressed dark design system for developer tools · semantic tokens, intensity scale, Tailwind plugin · published on <a href="https://www.npmjs.com/package/nightwire" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · v2 in active development</span>
+          <span class="kv-value">Compressed dark design system for developer tools · semantic tokens, intensity scale, Tailwind plugin · published on <a href="https://www.npmjs.com/package/@cativo23/nightwire" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · v2 shipped</span>
         </div>
         <div class="kv-row">
           <span class="kv-label">KOVIA</span>
@@ -151,6 +147,36 @@
           <span class="kv-label">CLARIFY</span>
           <span class="kv-value">AI legal contract auditor (micro-SaaS, alpha) · Nuxt + Supabase RLS + OpenAI + Stripe credits + BullMQ</span>
         </div>
+        <div class="kv-row">
+          <span class="kv-label">THIS SITE</span>
+          <span class="kv-value">The AI chat on this site is mine end-to-end · public chatbot grounded on my CV · NestJS + Groq + Redis answer-cache · hardened against prompt-injection with a deterministic output sanitizer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELF-HOSTED -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>RUNNING / SELF-HOSTED</span>
+      </div>
+      <div class="panel-body p-6 lg:p-8">
+        <p class="text-meta mb-4">
+          This site, its API, and my side projects all run on infrastructure I operate myself — no managed PaaS.
+        </p>
+        <ul class="space-y-2">
+          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
+            <span class="text-nw-cyan shrink-0 mt-1">▸</span>
+            <span>A Hetzner VPS running everything in Docker Compose, behind Traefik as the reverse proxy and TLS terminator.</span>
+          </li>
+          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
+            <span class="text-nw-cyan shrink-0 mt-1">▸</span>
+            <span>Self-hosted observability — metrics, uptime monitoring, and container log aggregation — so I see problems before visitors do.</span>
+          </li>
+          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
+            <span class="text-nw-cyan shrink-0 mt-1">▸</span>
+            <span>GitFlow CI/CD: a release branch triggers an automated GitHub Release, image build, and zero-touch deploy over SSH. Merge to main, walk away.</span>
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -172,6 +198,10 @@
           <li class="flex gap-3 text-nw-text-dim leading-relaxed">
             <span class="text-nw-cyan shrink-0 mt-1">▸</span>
             <span>Payment network internals — network tokenization, card scheme authorization flows, PCI scope reduction. Goes deeper than most backend engineers need, but I'm already here.</span>
+          </li>
+          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
+            <span class="text-nw-cyan shrink-0 mt-1">▸</span>
+            <span>Application security in practice — I ran an owner-authorized pentest against my own stack, then shipped the fixes: enforced CSP, real rate-limiting, prompt-injection defenses, and key-only SSH. Security as something you do, not just read about.</span>
           </li>
         </ul>
       </div>
@@ -211,7 +241,7 @@
 <script setup lang="ts">
 import NowPlayingBars from '~/components/ui/NowPlayingBars.vue';
 
-const lastUpdated = '2026-05-21';
+const lastUpdated = '2026-06-04';
 
 const { nowPlaying } = useNowPlaying();
 
