@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.0] - 2026-06-04
+
+### Added
+- **Multi-turn chat** — the assistant widget now replays the last 6 conversation turns with each question, so follow-ups that rely on earlier context resolve correctly. The conversation lives for the page session (a refresh starts fresh).
+
+### Changed
+- **Solid chat launcher button** — the floating assistant button now uses a solid accent fill instead of a 10%-opacity tint, making it clearly visible on the dark background.
+
+---
+
 ## [1.12.3] - 2026-06-04
 
 ### Changed
