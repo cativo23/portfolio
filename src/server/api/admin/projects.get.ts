@@ -1,5 +1,6 @@
+import { apiFetch } from '~/server/utils/api'
+
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig()
   const query = getQuery(event)
   const cookie = getCookie(event, 'admin_token')
 
@@ -8,7 +9,7 @@ export default defineEventHandler(async (event) => {
     headers.Authorization = `Bearer ${cookie}`
   }
 
-  return $fetch(`${config.apiBaseUrl}${config.apiBasePath}/projects`, {
+  return apiFetch(event, `/projects`, {
     method: 'GET',
     headers,
     query,

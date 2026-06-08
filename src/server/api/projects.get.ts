@@ -1,3 +1,5 @@
+import { apiFetch } from '~/server/utils/api'
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const query = getQuery(event)
@@ -7,7 +9,7 @@ export default defineEventHandler(async (event) => {
     headers['x-api-key'] = config.apiToken
   }
 
-  const data = await $fetch<{ data?: Array<Record<string, unknown>>; [key: string]: unknown }>(`${config.apiBaseUrl}${config.apiBasePath}/projects`, {
+  const data = await apiFetch<{ data?: Array<Record<string, unknown>>; [key: string]: unknown }>(event, `/projects`, {
     method: 'GET',
     headers,
     query,

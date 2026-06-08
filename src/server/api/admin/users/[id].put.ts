@@ -1,5 +1,6 @@
+import { apiFetch } from '~/server/utils/api'
+
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig()
   const cookie = getCookie(event, 'admin_token')
   const id = getRouterParam(event, 'id')
   const body = await readBody(event)
@@ -9,7 +10,7 @@ export default defineEventHandler(async (event) => {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' }
   if (cookie) headers.Authorization = `Bearer ${cookie}`
 
-  return $fetch(`${config.apiBaseUrl}${config.apiBasePath}/admin/users/${id}`, {
+  return apiFetch(event, `/admin/users/${id}`, {
     method: 'PUT',
     headers,
     body,
