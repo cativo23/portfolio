@@ -15,6 +15,7 @@ vi.stubGlobal('setResponseStatus', mockSetResponseStatus)
 
 const mockFetch = vi.fn()
 vi.stubGlobal('$fetch', mockFetch)
+vi.stubGlobal('getRequestIP', () => undefined) // client-IP forwarding is covered in tests/server/utils/api.test.ts
 
 // Mock event handler definition
 vi.stubGlobal('defineEventHandler', (handler: any) => handler)

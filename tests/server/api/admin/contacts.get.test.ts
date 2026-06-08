@@ -15,6 +15,7 @@ vi.stubGlobal('createError', vi.fn((opts: any) => {
   return err
 }))
 vi.stubGlobal('defineEventHandler', vi.fn((handler: Function) => handler))
+vi.stubGlobal('getRequestIP', () => undefined) // client-IP forwarding is covered in tests/server/utils/api.test.ts
 vi.stubGlobal('$fetch', vi.fn(() => Promise.resolve({ data: [] })))
 
 // ---------- Import handler after stubs are set up ----------
