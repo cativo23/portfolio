@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.0] - 2026-06-08
+
+### Changed
+- **The BFF now forwards the real client IP to the backend** — all server API routes go through a central `apiFetch` helper that sends a single clean `X-Forwarded-For` (the visitor's IP). Because the BFF reaches the backend over the internal network, the API previously saw every visitor as one IP and its per-IP rate limit shared a single bucket; now each visitor is rate-limited independently. (#132)
+
+---
+
 ## [1.13.0] - 2026-06-04
 
 ### Added
