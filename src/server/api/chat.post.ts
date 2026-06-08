@@ -1,5 +1,6 @@
+import { apiFetch } from '~/server/utils/api'
+
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig()
   const body = await readBody(event)
 
   if (!body || typeof body !== 'object') {
@@ -37,7 +38,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // /chat is a public endpoint — no API key is attached.
-    return await $fetch(`${config.apiBaseUrl}${config.apiBasePath}/chat`, {
+    return await apiFetch(event, `/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: { question: question.slice(0, 500), history },

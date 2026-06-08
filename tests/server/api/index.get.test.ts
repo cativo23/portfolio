@@ -7,6 +7,7 @@ vi.stubGlobal('useRuntimeConfig', () => mockConfig)
 
 const mockFetch = vi.fn()
 vi.stubGlobal('$fetch', mockFetch)
+vi.stubGlobal('getRequestIP', () => undefined) // client-IP forwarding is covered in tests/server/utils/api.test.ts
 vi.stubGlobal('defineEventHandler', (handler: any) => handler)
 
 describe('Index API', () => {
@@ -28,7 +29,9 @@ describe('Index API', () => {
     const result = await handler({} as any)
 
     expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/', {
-      method: 'GET'
+      method: 'GET',
+      // apiFetch always passes a headers object (empty here: no auth, IP unresolved in test)
+      headers: {}
     })
 
     expect(result).toEqual({

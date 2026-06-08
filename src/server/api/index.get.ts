@@ -1,9 +1,10 @@
-export default defineEventHandler(async () => {
-  const config = useRuntimeConfig()
+import { apiFetch } from '~/server/utils/api'
 
+export default defineEventHandler(async (event) => {
   try {
-    const info = await $fetch<{ status: string; data: { name: string; version: string; description: string; environment: string; documentation: string; health: string; status: string; timestamp: string } }>(`${config.apiBaseUrl}/`, {
+    const info = await apiFetch<{ status: string; data: { name: string; version: string; description: string; environment: string; documentation: string; health: string; status: string; timestamp: string } }>(event, `/`, {
       method: 'GET',
+      basePath: false,
     })
 
     return {

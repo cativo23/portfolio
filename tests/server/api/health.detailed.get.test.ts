@@ -8,6 +8,7 @@ vi.stubGlobal('useRuntimeConfig', () => mockConfig)
 
 const mockFetch = vi.fn()
 vi.stubGlobal('$fetch', mockFetch)
+vi.stubGlobal('getRequestIP', () => undefined) // client-IP forwarding is covered in tests/server/utils/api.test.ts
 vi.stubGlobal('defineEventHandler', (handler: any) => handler)
 
 describe('Health API - Detailed', () => {

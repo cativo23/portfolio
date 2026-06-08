@@ -1,3 +1,5 @@
+import { apiFetch } from '~/server/utils/api'
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const body = await readBody(event)
@@ -25,7 +27,7 @@ export default defineEventHandler(async (event) => {
     headers.Authorization = `ApiKey ${config.apiToken}`
   }
 
-  const data = await $fetch(`${config.apiBaseUrl}${config.apiBasePath}/contacts`, {
+  const data = await apiFetch(event, `/contacts`, {
     method: 'POST',
     headers,
     body: {
