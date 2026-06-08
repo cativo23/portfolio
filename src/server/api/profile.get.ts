@@ -1,4 +1,6 @@
-export default defineEventHandler(async () => {
+import { apiFetch } from '~/server/utils/api'
+
+export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
 
   const headers: Record<string, string> = {
@@ -9,7 +11,7 @@ export default defineEventHandler(async () => {
   }
 
   try {
-    const data = await $fetch(`${config.apiBaseUrl}${config.apiBasePath}/profile`, {
+    const data = await apiFetch(event, `/profile`, {
       method: 'GET',
       headers,
     });

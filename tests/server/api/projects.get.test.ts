@@ -10,6 +10,7 @@ vi.stubGlobal('getQuery', () => ({}))
 
 const mockFetch = vi.fn()
 vi.stubGlobal('$fetch', mockFetch)
+vi.stubGlobal('getRequestIP', () => undefined) // client-IP forwarding is covered in tests/server/utils/api.test.ts
 vi.stubGlobal('defineEventHandler', (handler: any) => handler)
 
 describe('Projects API (GET)', () => {

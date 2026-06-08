@@ -1,3 +1,4 @@
+import { apiFetch } from '~/server/utils/api'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
@@ -15,10 +16,10 @@ export default defineEventHandler(async (event) => {
     headers['x-api-key'] = config.apiToken
   }
 
-  const endpoint = `${config.apiBaseUrl}/health${type !== 'basic' ? `/${type}` : ''}`
+  const endpoint = `/health${type !== 'basic' ? `/${type}` : ''}`
 
   try {
-    const health = await $fetch<{
+    const health = await apiFetch<{
       status: string
       data: {
         status: string
@@ -36,9 +37,10 @@ export default defineEventHandler(async (event) => {
         }
       }
       request_id?: string
-    }>(endpoint, {
+    }>(event, endpoint, {
       method: 'GET',
       headers,
+      basePath: false,
     })
 
     return {

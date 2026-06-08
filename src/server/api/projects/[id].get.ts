@@ -1,3 +1,5 @@
+import { apiFetch } from '~/server/utils/api'
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const { id } = getRouterParams(event)
@@ -7,7 +9,7 @@ export default defineEventHandler(async (event) => {
     headers['x-api-key'] = config.apiToken
   }
 
-  const data = await $fetch<{ status?: string; data?: Record<string, unknown> }>(`${config.apiBaseUrl}${config.apiBasePath}/projects/${id}`, {
+  const data = await apiFetch<{ status?: string; data?: Record<string, unknown> }>(event, `/projects/${id}`, {
     method: 'GET',
     headers,
   })

@@ -1,5 +1,6 @@
+import { apiFetch } from '~/server/utils/api'
+
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig()
   const cookie = getCookie(event, 'admin_token')
 
   if (!cookie) {
@@ -11,7 +12,7 @@ export default defineEventHandler(async (event) => {
     Authorization: `Bearer ${cookie}`,
   }
 
-  return $fetch(`${config.apiBaseUrl}${config.apiBasePath}/auth/profile`, {
+  return apiFetch(event, `/auth/profile`, {
     method: 'GET',
     headers,
   })

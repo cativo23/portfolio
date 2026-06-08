@@ -1,4 +1,6 @@
-export default defineEventHandler(async () => {
+import { apiFetch } from '~/server/utils/api'
+
+export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
 
   const headers: Record<string, string> = {}
@@ -7,7 +9,7 @@ export default defineEventHandler(async () => {
   }
 
   try {
-    const health = await $fetch<{
+    const health = await apiFetch<{
       status: string
       data: {
         status: string
@@ -16,9 +18,10 @@ export default defineEventHandler(async () => {
         details: Record<string, { status: string }>
       }
       request_id?: string
-    }>(`${config.apiBaseUrl}/health/live`, {
+    }>(event, `/health/live`, {
       method: 'GET',
       headers,
+      basePath: false,
     })
 
     return {

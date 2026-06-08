@@ -1,5 +1,6 @@
+import { apiFetch } from '~/server/utils/api'
+
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig()
   const body = await readBody<{ email: string; password: string }>(event)
 
   if (!body.email || !body.password) {
@@ -24,7 +25,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const data: Record<string, any> = await $fetch(`${config.apiBaseUrl}${config.apiBasePath}/auth/login`, {
+  const data: Record<string, any> = await apiFetch(event, `/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: { email: trimmedEmail, password: body.password },

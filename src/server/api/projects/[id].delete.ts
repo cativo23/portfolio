@@ -1,5 +1,6 @@
+import { apiFetch } from '~/server/utils/api'
+
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig()
   const id = getRouterParam(event, 'id')
   const cookie = getCookie(event, 'admin_token')
 
@@ -7,7 +8,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Missing project ID' })
   }
 
-  return $fetch(`${config.apiBaseUrl}${config.apiBasePath}/projects/${id}`, {
+  return apiFetch(event, `/projects/${id}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${cookie ?? ''}` },
   })
