@@ -37,9 +37,9 @@ function onSend() {
     <BaseButton
       type="button"
       variant="primary"
-      size="sm"
       :loading="loading"
       :disabled="!canSend"
+      class="min-h-[44px] shrink-0"
       @click="onSend"
     >
       {{ sendLabel }}
