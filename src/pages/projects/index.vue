@@ -83,7 +83,8 @@
           </div>
 
           <div class="flex justify-between items-center pt-3 border-t border-nw-text-faint font-stamp uppercase tracking-wider text-[9px] text-nw-text-dim">
-            <span>{{ formatYear(project.createdAt) }}</span>
+            <span v-if="formatYear(project.createdAt)">{{ formatYear(project.createdAt) }}</span>
+            <span v-else></span>
             <span class="text-nw-primary">OPEN FILE →</span>
           </div>
         </NuxtLink>
@@ -136,14 +137,15 @@ async function loadProjects(page: number = currentPage.value) {
 function handlePageChange(page: number) {
   loadProjects(page)
   if (import.meta.client) {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })
   }
 }
 
 await useAsyncData('projects-page', () => loadProjects())
 
 function formatYear(dateString?: string) {
-  if (!dateString) return '----'
+  if (!dateString) return ''
   return String(new Date(dateString).getFullYear())
 }
 

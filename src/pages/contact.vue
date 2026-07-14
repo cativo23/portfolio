@@ -68,6 +68,7 @@
             <input
               type="text" id="name" v-model="form.name"
               @blur="validateField('name')"
+              @input="fieldErrors.name && validateField('name')"
               :aria-invalid="fieldErrors.name ? 'true' : 'false'"
               :aria-describedby="fieldErrors.name ? 'name-error' : undefined"
               required autocomplete="name"
@@ -85,6 +86,7 @@
             <input
               type="email" id="email" v-model="form.email"
               @blur="validateField('email')"
+              @input="fieldErrors.email && validateField('email')"
               :aria-invalid="fieldErrors.email ? 'true' : 'false'"
               :aria-describedby="fieldErrors.email ? 'email-error' : undefined"
               required autocomplete="email"
@@ -102,6 +104,7 @@
             <textarea
               id="message" v-model="form.message"
               @blur="validateField('message')"
+              @input="fieldErrors.message && validateField('message')"
               :aria-invalid="fieldErrors.message ? 'true' : 'false'"
               :aria-describedby="fieldErrors.message ? 'message-error' : undefined"
               required rows="4"
