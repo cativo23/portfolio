@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.2] - 2026-07-14
+
+### Changed
+- **`/now` status page refresh** — chat widget now described with multi-turn memory and honest fit-boundary framing for comp/role questions; sofIA entry updated to reflect the completed LLM validation hardening and the in-progress WhatsApp confirmation channel; Invoice Service entry now mentions the Costa Rica tax-model expansion; self-hosted section now notes Discord-alerting on uptime monitoring and WireGuard-gated admin dashboards; added a NOVA-ID entry under side projects; lumira entry bumped to note the v1.14 release (subagent-aware rendering, git-worktree fallback). (#136)
+
+---
+
 ## [1.14.1] - 2026-06-08
 
 ### Removed
