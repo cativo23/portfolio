@@ -24,9 +24,8 @@
           <span
             v-for="label in monthLabels"
             :key="label.index"
-            class="font-stamp text-nw-text-dim"
+            class="font-stamp uppercase text-[8px] text-nw-text-dim"
             :style="{ position: 'absolute', left: `${(label.index / (signal.github.weeks.length - 1)) * 100}%` }"
-            style="font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase;"
           >{{ label.name }}</span>
         </div>
         <div v-else class="w-[200px] h-[84px] bg-void-panel" />
@@ -59,13 +58,13 @@
           <div class="m-label">NPM Packages</div>
         </div>
         <div class="metric-cell">
-          <div class="m-value" style="font-size: 16px;">
+          <div class="m-value m-value--md">
             {{ signal ? `v${signal.api.version}` : '...' }}
           </div>
           <div class="m-label">API</div>
         </div>
         <div class="metric-cell">
-          <div class="m-value" style="font-size: 14px;">
+          <div class="m-value m-value--sm">
             <span class="led blink" :class="signal?.api.status === 'operational' ? 'green' : 'red'" style="display: inline-block;" />
           </div>
           <div class="m-label">Status</div>
@@ -106,12 +105,12 @@
       </div>
       <div class="metric-cell">
         <div class="m-label">CURRENT ROLE</div>
-        <div class="m-value" style="font-size: 16px;">TECH LEAD</div>
+        <div class="m-value m-value--md">TECH LEAD</div>
         <div class="m-sub">Blue Medical Guatemala</div>
       </div>
       <div class="metric-cell highlight">
         <div class="m-label">SPECIALTY</div>
-        <div class="m-value" style="font-size: 12px;">PAYMENTS · FEL</div>
+        <div class="m-value m-value--xs">PAYMENTS · FEL</div>
         <div class="m-sub">ISO 8583 · multi-gateway</div>
       </div>
       <div class="metric-cell">

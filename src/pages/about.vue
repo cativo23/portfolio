@@ -11,16 +11,13 @@
             FILE: about.md · CLASSIFICATION: PUBLIC
           </div>
 
-          <h1
-            class="compressed-title text-nw-text leading-[1.05] mb-3"
-            style="font-size: clamp(36px, 7vw, 64px);"
-          >
+          <h1 class="compressed-title title-xl text-nw-text leading-[1.05] mb-3">
             Tech Lead. <br class="hidden sm:block" />
             El Salvador. <br class="hidden sm:block" />
             <span class="text-nw-primary">9 years</span> in production.
           </h1>
 
-          <div class="font-mincho text-nw-primary-dim mb-6" style="font-size: 16px;">
+          <div class="font-mincho mincho-accent text-nw-primary-dim mb-6">
             技術主任 · 九年間の実戦経験
           </div>
 
@@ -175,7 +172,7 @@
             class="bg-void-warm p-5 flex flex-col gap-2"
           >
             <div class="flex items-center gap-2">
-              <span class="text-nw-text" style="font-size: 22px; line-height: 1;">{{ item.icon }}</span>
+              <span class="text-nw-text text-[22px] leading-none">{{ item.icon }}</span>
               <div class="font-stamp uppercase tracking-[0.14em] text-[11px] text-nw-primary">
                 {{ item.title }}
               </div>

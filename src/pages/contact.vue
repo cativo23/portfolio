@@ -6,7 +6,7 @@
         <span>OPEN CHANNEL</span>
       </div>
       <div class="panel-body p-6 lg:p-8">
-        <h1 class="compressed-title text-nw-text leading-[1.05] mb-3" style="font-size: clamp(32px, 6vw, 52px);">
+        <h1 class="compressed-title title-lg text-nw-text leading-[1.05] mb-3">
           Get in <span class="text-nw-primary">touch.</span>
         </h1>
         <p class="text-nw-text-dim leading-relaxed mb-2 max-w-2xl">

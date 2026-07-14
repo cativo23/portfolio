@@ -9,7 +9,7 @@
         <div class="font-stamp text-nw-cyan text-[10px] tracking-[0.2em] uppercase mb-2">
           FILE: now.md · LAST UPDATED {{ lastUpdated }}
         </div>
-        <h1 class="compressed-title text-nw-text leading-[1.05] mb-3" style="font-size: clamp(32px, 6vw, 52px);">
+        <h1 class="compressed-title title-lg text-nw-text leading-[1.05] mb-3">
           What I'm working on <span class="text-nw-primary">right now.</span>
         </h1>
         <p class="text-meta">
@@ -30,7 +30,7 @@
             v-if="nowPlaying.albumArt"
             :src="nowPlaying.albumArt"
             :alt="nowPlaying.album"
-            class="w-14 h-14 rounded-sm border border-nw-text-faint/20 shrink-0"
+            class="w-14 h-14 rounded-sm border border-nw-text-line shrink-0"
           />
           <div class="flex-1 min-w-0 space-y-1">
             <a
@@ -43,11 +43,11 @@
             </a>
             <div class="text-nw-text-dim text-xs font-mono truncate">{{ nowPlaying.artist }} · {{ nowPlaying.album }}</div>
             <div class="flex items-center gap-2">
-              <span class="text-nw-text-faint text-[10px] font-mono w-8 text-right shrink-0">{{ formatMs(nowPlaying.progressMs) }}</span>
-              <div class="flex-1 h-[3px] bg-nw-text-faint/20 rounded-full overflow-hidden">
+              <span class="text-nw-text-mute text-[10px] font-mono w-8 text-right shrink-0">{{ formatMs(nowPlaying.progressMs) }}</span>
+              <div class="flex-1 h-[3px] bg-nw-text-line rounded-full overflow-hidden">
                 <div class="h-full bg-nw-green rounded-full transition-all duration-1000" :style="{ width: progressPercent + '%' }" />
               </div>
-              <span class="text-nw-text-faint text-[10px] font-mono w-8 shrink-0">{{ formatMs(nowPlaying.durationMs) }}</span>
+              <span class="text-nw-text-mute text-[10px] font-mono w-8 shrink-0">{{ formatMs(nowPlaying.durationMs) }}</span>
             </div>
           </div>
           <a

@@ -6,10 +6,10 @@
         <span>SELECTED WORK · {{ pagination?.total_items ?? displayed.length }} ENTRIES</span>
       </div>
       <div class="panel-body p-6 lg:p-8">
-        <h1 class="compressed-title text-nw-text leading-none mb-2" style="font-size: clamp(28px, 5vw, 44px);">
+        <h1 class="compressed-title title-md text-nw-text leading-none mb-2">
           Operations <span class="text-nw-primary">executed.</span>
         </h1>
-        <div class="font-mincho text-nw-primary-dim mb-3" style="font-size: 14px;">
+        <div class="font-mincho mincho-accent text-nw-primary-dim mb-3">
           実行済みの作戦
         </div>
         <p class="lede">

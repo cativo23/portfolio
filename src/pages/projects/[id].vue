@@ -40,8 +40,7 @@
             </span>
           </div>
           <h1
-            class="compressed-title text-nw-text leading-[1.05] mb-2"
-            style="font-size: clamp(32px, 5.5vw, 52px);"
+            class="compressed-title title-lg text-nw-text leading-[1.05] mb-2"
           >
             {{ project.title }}
           </h1>
