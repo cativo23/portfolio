@@ -49,7 +49,7 @@
           <p
             v-for="(paragraph, index) in summaryParagraphs"
             :key="index"
-            class="text-nw-text-dim leading-relaxed"
+            class="text-nw-text-default leading-relaxed"
             v-html="formatSummaryParagraph(paragraph)"
           />
         </div>

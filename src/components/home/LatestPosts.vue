@@ -42,7 +42,7 @@
         >
           <div class="flex items-baseline justify-between gap-3 mb-1">
             <h3 class="text-nw-text font-medium title-card leading-snug">{{ post.title }}</h3>
-            <span class="font-stamp uppercase tracking-wider text-[9px] text-nw-text-dim shrink-0">
+            <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim shrink-0">
               {{ formatDate(post.pubDate) }}
             </span>
           </div>

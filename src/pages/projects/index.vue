@@ -56,7 +56,7 @@
         >
           <header class="flex items-start justify-between gap-3">
             <div>
-              <div class="font-stamp uppercase tracking-[0.14em] text-[9px] text-nw-text-dim">
+              <div class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-text-dim">
                 CASE-{{ String(project.id).padStart(4, '0') }}
               </div>
               <h3 class="compressed-title title-card text-nw-text mt-1">
@@ -82,7 +82,7 @@
             </span>
           </div>
 
-          <div class="flex justify-between items-center pt-3 border-t border-nw-text-faint font-stamp uppercase tracking-wider text-[9px] text-nw-text-dim">
+          <div class="flex justify-between items-center pt-3 border-t border-nw-text-faint font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim">
             <span v-if="formatYear(project.createdAt)">{{ formatYear(project.createdAt) }}</span>
             <span v-else></span>
             <span class="text-nw-primary">OPEN FILE →</span>

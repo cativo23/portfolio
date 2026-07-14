@@ -112,11 +112,13 @@ body {
   line-height: 1.2;
 }
 
-/* Lede: subordinate to body, signals intro-paragraph hierarchy */
+/* Lede: primary intro reading text — sits on the brighter default tier
+   (#e6e6e6), not the dim caption tier. Reserve --nw-text-dim for
+   genuinely secondary copy (.text-meta, captions). */
 .lede {
   font-size: var(--text-lede);
   line-height: var(--leading-lede);
-  color: var(--nw-text-dim);
+  color: var(--nw-text-default);
 }
 
 /* Prose-scale supplements
