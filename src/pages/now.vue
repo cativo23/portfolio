@@ -235,7 +235,7 @@
         <div class="flex flex-wrap gap-3">
           <BaseButton href="/resume.pdf" variant="primary">↓ Download CV (PDF)</BaseButton>
           <BaseButton href="mailto:cativo@cativo.dev" variant="secondary">cativo@cativo.dev</BaseButton>
-          <BaseButton href="https://linkedin.com/in/cativo23" external variant="ghost">LinkedIn →</BaseButton>
+          <BaseButton href="https://linkedin.com/in/carlos-cativo" external variant="ghost">LinkedIn →</BaseButton>
         </div>
       </div>
     </div>
