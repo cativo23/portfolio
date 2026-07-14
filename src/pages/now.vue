@@ -89,7 +89,7 @@
           <ul class="space-y-2">
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">sofIA</span> — primary author of a multi-agent voice system for healthcare scheduling, live in production. Built on ElevenLabs ConvAI + n8n with a FastAPI + Nuxt management platform. Now iterating: extending the agent toolset and tightening the validation layer around the LLM.</span>
+              <span><span class="text-nw-text">sofIA</span> — primary author of a multi-agent voice system for healthcare scheduling, live in production. Built on ElevenLabs ConvAI + n8n with a FastAPI + Nuxt management platform. Recently tightened the validation layer around the LLM; now extending it to a WhatsApp confirmation channel alongside voice.</span>
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
@@ -97,7 +97,7 @@
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">Invoice Service</span> — Guatemala FEL e-invoicing through an authorized provider, with a Strategy Pattern for future provider swaps. SAP integration, multi-establishment support.</span>
+              <span><span class="text-nw-text">Invoice Service</span> — Guatemala FEL e-invoicing through an authorized provider, with a Strategy Pattern for future provider swaps. SAP integration, multi-establishment support. Now expanding the tax-model seam to support Costa Rica.</span>
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
@@ -129,7 +129,11 @@
       <div class="panel-body p-0">
         <div class="kv-row">
           <span class="kv-label">LUMIRA</span>
-          <span class="kv-value">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~4k downloads/month</span>
+          <span class="kv-value">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · v1.14 shipped with subagent-aware rendering and git-worktree fallback · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~4k downloads/month</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-label">NOVA-ID</span>
+          <span class="kv-value">Self-hosted identity &amp; SSO platform (OIDC via Ory Hydra) with a role/permissions demo API · actively hardening auth flows and audit logging</span>
         </div>
         <div class="kv-row">
           <span class="kv-label">NIGHTWIRE</span>
@@ -149,7 +153,7 @@
         </div>
         <div class="kv-row">
           <span class="kv-label">THIS SITE</span>
-          <span class="kv-value">The AI chat on this site is mine end-to-end · public chatbot grounded on my CV · NestJS + Groq + Redis answer-cache · hardened against prompt-injection with a deterministic output sanitizer</span>
+          <span class="kv-value">The AI chat on this site is mine end-to-end · public chatbot grounded on my CV, now with multi-turn conversation memory and honest fit-boundary framing for comp/role questions · NestJS + Groq + Redis answer-cache · hardened against prompt-injection with a deterministic output sanitizer</span>
         </div>
       </div>
     </div>
@@ -170,7 +174,7 @@
           </li>
           <li class="flex gap-3 text-nw-text-dim leading-relaxed">
             <span class="text-nw-cyan shrink-0 mt-1">▸</span>
-            <span>Self-hosted observability — metrics, uptime monitoring, and container log aggregation — so I see problems before visitors do.</span>
+            <span>Self-hosted observability — metrics, uptime monitoring (alerting to Discord), and container log aggregation — so I see problems before visitors do. Admin dashboards sit behind a WireGuard VPN, not exposed to the internet.</span>
           </li>
           <li class="flex gap-3 text-nw-text-dim leading-relaxed">
             <span class="text-nw-cyan shrink-0 mt-1">▸</span>
@@ -241,7 +245,7 @@
 <script setup lang="ts">
 import NowPlayingBars from '~/components/ui/NowPlayingBars.vue';
 
-const lastUpdated = '2026-06-04';
+const lastUpdated = '2026-07-14';
 
 const { nowPlaying } = useNowPlaying();
 
