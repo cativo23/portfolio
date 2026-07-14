@@ -56,6 +56,35 @@
 .m-value.m-value--sm { font-size: 14px; }
 .m-value.m-value--xs { font-size: 12px; }
 
+/* Tech chip — mixed-case mono stack tags. Unlike .tag (Saira condensed
+   UPPERCASE, for status/labels), this preserves the recognizable casing
+   of a stack (PostgreSQL, FastAPI, ISO 8583) that recruiters skim for. */
+.tech-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sys);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: normal;
+  padding: 1px 8px;
+  border-radius: var(--radius-sm);
+  color: var(--nw-text-default);
+  background: var(--void-panel);
+  border: 1px solid var(--nw-text-line);
+}
+
+/* README shields.io badges imported into project prose render as an
+   ungrouped, ragged strip on the dark theme. Normalize height + spacing
+   so they read as one tidy row instead of stray images. */
+.prose-nightwire img[src*="shields.io"] {
+  display: inline-block;
+  height: 20px;
+  width: auto;
+  margin: 0 4px 6px 0;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
 html,
 body {
   background: var(--void);

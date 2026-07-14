@@ -76,7 +76,7 @@
             <span
               v-for="tech in project.techStack"
               :key="tech"
-              class="tag tag-info"
+              class="tech-chip"
             >
               {{ tech }}
             </span>

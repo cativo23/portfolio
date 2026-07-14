@@ -89,7 +89,7 @@
               <span>OVERVIEW</span>
             </div>
             <div class="panel-body p-6 lg:p-8">
-              <div class="prose prose-nightwire max-w-none text-nw-text-dim leading-relaxed">
+              <div class="prose prose-nightwire max-w-[72ch] text-nw-text-dim leading-relaxed">
                 <MDC v-if="project?.content || project?.description" :value="project.content || project.description" />
                 <p v-else class="text-nw-text-dim italic">No overview available.</p>
               </div>
@@ -143,7 +143,7 @@
               <span
                 v-for="tech in project.techStack"
                 :key="tech"
-                class="tag tag-info"
+                class="tech-chip"
               >
                 {{ tech }}
               </span>
