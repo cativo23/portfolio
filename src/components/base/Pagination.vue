@@ -14,7 +14,7 @@
     <template v-for="page in visiblePages" :key="page">
       <button
         v-if="page !== '...' && page === pagination.page"
-        class="px-4 py-2 rounded-lg bg-void-raised text-black font-bold min-w-[2.5rem]"
+        class="px-4 py-2 rounded-md bg-nw-primary text-void font-bold min-w-[2.5rem]"
         :aria-label="`Go to page ${page}`"
         aria-current="page"
       >
