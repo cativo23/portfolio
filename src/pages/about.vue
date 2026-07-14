@@ -79,6 +79,26 @@
               </span>
             </div>
             <p class="text-meta">{{ entry.description }}</p>
+
+            <!-- Highlights — the actual wins, not just responsibilities -->
+            <ul v-if="entry.highlights?.length" class="mt-3 space-y-2">
+              <li
+                v-for="h in entry.highlights"
+                :key="h"
+                class="flex gap-2.5 text-meta"
+              >
+                <span class="text-nw-primary shrink-0 select-none" aria-hidden="true">▸</span>
+                <span>
+                  <span v-if="splitHighlight(h).lead" class="text-nw-text font-medium">{{ splitHighlight(h).lead }} — </span>{{ splitHighlight(h).rest }}
+                </span>
+              </li>
+            </ul>
+
+            <!-- Stack — mixed-case, matches CERTIFIED LOADOUT legibility -->
+            <div v-if="entry.tags?.length" class="mt-3 flex items-baseline gap-2 flex-wrap">
+              <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-cyan shrink-0">STACK</span>
+              <span class="text-[13px] text-nw-text-dim">{{ entry.tags.join(' · ') }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -230,6 +250,13 @@ import type { Profile } from '~/types/profile';
 usePageTitle('About', {
   description: 'Carlos Cativo - Tech Lead & Full-Stack Software Engineer. 9 years building healthcare platforms, payment systems, and AI-powered products.',
 });
+
+// Highlights read "Project — what I did". Split so the project name can
+// lead in bold for recruiter skim, with the detail trailing.
+function splitHighlight(h: string): { lead: string; rest: string } {
+  const i = h.indexOf(' — ');
+  return i === -1 ? { lead: '', rest: h } : { lead: h.slice(0, i), rest: h.slice(i + 3) };
+}
 
 const profile: Profile = {
   name: 'Carlos Cativo',
