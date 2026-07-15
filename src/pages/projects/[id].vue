@@ -58,7 +58,7 @@
         <NuxtImg
           :src="project.heroImage"
           :alt="`${project.title} screenshot`"
-          class="w-full h-full object-cover"
+          class="w-full h-full object-contain"
           sizes="sm:100vw md:1200px lg:1200px"
           loading="lazy"
           placeholder
