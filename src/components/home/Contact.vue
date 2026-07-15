@@ -12,22 +12,24 @@
       <p class="text-nw-text-dim leading-relaxed mb-6 max-w-xl">
         <span class="text-nw-text-mute select-none"># </span>No intake forms. No synergy decks. Just a conversation about what you're building.
       </p>
-      <form @submit.prevent="submitForm" class="max-w-xl flex flex-col gap-4">
-        <BaseInput
-          v-model="form.name"
-          label="Name"
-          placeholder="Write your name"
-          required
-          :minlength="2"
-          :maxlength="100"
-        />
-        <BaseInput
-          v-model="form.email"
-          label="Email"
-          type="email"
-          placeholder="email@example.com"
-          required
-        />
+      <form @submit.prevent="submitForm" class="flex flex-col gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <BaseInput
+            v-model="form.name"
+            label="Name"
+            placeholder="Write your name"
+            required
+            :minlength="2"
+            :maxlength="100"
+          />
+          <BaseInput
+            v-model="form.email"
+            label="Email"
+            type="email"
+            placeholder="email@example.com"
+            required
+          />
+        </div>
         <BaseTextarea
           v-model="form.message"
           label="Message"
@@ -39,7 +41,7 @@
         />
         <div v-if="error" class="text-nw-red font-sys">{{ error }}</div>
 
-        <BaseButton type="submit" :loading="loading" :disabled="loading" variant="primary">
+        <BaseButton type="submit" :loading="loading" :disabled="loading" variant="primary" class="self-start">
           Open the channel →
         </BaseButton>
       </form>
