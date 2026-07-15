@@ -62,7 +62,8 @@
         </div>
 
         <!-- Form -->
-        <form v-else @submit.prevent="submitForm" class="max-w-xl flex flex-col gap-4" novalidate>
+        <form v-else @submit.prevent="submitForm" class="flex flex-col gap-4" novalidate>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="flex flex-col gap-1">
             <label for="name" class="text-nw-cyan font-stamp uppercase tracking-wide text-[11px]">NAME</label>
             <input
@@ -98,6 +99,7 @@
               {{ fieldErrors.email }}
             </p>
           </div>
+          </div>
 
           <div class="flex flex-col gap-1">
             <label for="message" class="text-nw-cyan font-stamp uppercase tracking-wide text-[11px]">MESSAGE</label>
@@ -123,7 +125,7 @@
 
           <div v-if="error" class="text-meta text-nw-red" role="alert">{{ error }}</div>
 
-          <BaseButton type="submit" :loading="loading" :disabled="loading" variant="primary">
+          <BaseButton type="submit" :loading="loading" :disabled="loading" variant="primary" class="self-start">
             {{ loading ? 'Sending...' : 'Send message' }}
           </BaseButton>
         </form>
