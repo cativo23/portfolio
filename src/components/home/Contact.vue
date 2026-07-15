@@ -1,11 +1,16 @@
 <template>
   <div class="panel" id="contact">
-    <div class="panel-header">
-      <span>OPEN CHANNEL · DIRECT LINE</span>
-    </div>
+    <!-- Terminal-prompt silhouette: no panel-header chrome — the shell
+         prompt IS the header, so this section reads differently from the
+         stacked panels above it while staying inside the Nightwire voice. -->
     <div class="panel-body p-6 lg:p-8">
-      <p class="text-nw-text-dim leading-relaxed mb-6">
-        No intake forms. No synergy decks. Just a conversation about what you're building.
+      <div class="font-sys text-sm mb-4 flex items-center gap-1.5 flex-wrap">
+        <span class="text-nw-green">cativo@cativo.dev</span><span class="text-nw-text-dim">:~$</span>
+        <span class="text-nw-text">open-channel</span>
+        <span class="caret" aria-hidden="true">_</span>
+      </div>
+      <p class="text-nw-text-dim leading-relaxed mb-6 max-w-xl">
+        <span class="text-nw-text-mute select-none"># </span>No intake forms. No synergy decks. Just a conversation about what you're building.
       </p>
       <form @submit.prevent="submitForm" class="max-w-xl flex flex-col gap-4">
         <BaseInput
@@ -35,7 +40,7 @@
         <div v-if="error" class="text-nw-red font-sys">{{ error }}</div>
 
         <BaseButton type="submit" :loading="loading" :disabled="loading" variant="primary">
-          Send message
+          Open the channel →
         </BaseButton>
       </form>
     </div>

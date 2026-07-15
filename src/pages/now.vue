@@ -216,23 +216,21 @@
       <div class="panel-header">
         <span>WHAT I'M LOOKING FOR</span>
       </div>
-      <div class="panel-body p-6 lg:p-8">
-        <ul class="space-y-2 mb-6">
-          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-            <span class="text-nw-primary shrink-0 mt-1">▸</span>
-            <span><span class="text-nw-text">Senior backend or tech lead</span> at a company building real systems — payments, AI in production where the validation layer is the hard part, distributed services, the kind of work where the messy parts are the interesting parts.</span>
-          </li>
-          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-            <span class="text-nw-primary shrink-0 mt-1">▸</span>
-            <span><span class="text-nw-text">Remote</span> (UTC-6, works well with US hours).</span>
-          </li>
-          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-            <span class="text-nw-primary shrink-0 mt-1">▸</span>
-            <span>Not actively applying, but open to the right conversation. If what you're building sounds like it belongs on this page, reach out.</span>
-          </li>
-        </ul>
+      <div class="panel-body p-0">
+        <div class="kv-row">
+          <span class="kv-label">ROLE</span>
+          <span class="kv-value"><span class="text-nw-text">Senior backend or tech lead</span> at a company building real systems — payments, AI in production where the validation layer is the hard part, distributed services, the kind of work where the messy parts are the interesting parts.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-label">LOCATION</span>
+          <span class="kv-value"><span class="text-nw-text">Remote</span> · UTC-6, works well with US hours.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-label">STATUS</span>
+          <span class="kv-value">Not actively applying, but open to the right conversation. If what you're building sounds like it belongs on this page, reach out.</span>
+        </div>
 
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-3 p-6 lg:p-8 border-t border-nw-text-line">
           <BaseButton href="/resume.pdf" variant="primary">↓ Download CV (PDF)</BaseButton>
           <BaseButton href="mailto:cativo@cativo.dev" variant="secondary">cativo@cativo.dev</BaseButton>
           <BaseButton href="https://linkedin.com/in/carlos-cativo" external variant="ghost">LinkedIn →</BaseButton>
