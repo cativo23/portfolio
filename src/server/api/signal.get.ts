@@ -212,5 +212,11 @@ export default defineCachedEventHandler(
 
     return { status: 'success', data }
   },
-  { maxAge: 60 * 60 }
+  // Cache the composed payload server-side for an hour so the rate-limited
+  // upstreams (GitHub GraphQL, npm registry) aren't hammered. `swr: true` emits
+  // `s-maxage` + `stale-while-revalidate` instead of a private `max-age`, so the
+  // browser revalidates (cheap via ETag) rather than pinning a stale copy for an
+  // hour — keeps the LIVE numbers fresh and stops payload-shape changes from
+  // replaying broken data to returning visitors.
+  { maxAge: 60 * 60, swr: true }
 )
