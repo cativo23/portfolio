@@ -22,8 +22,11 @@ interface SignalData {
     claudeStyle: NpmPackageData
     nightwire: NpmPackageData
     total: number
-    /** Total published packages (maintainer:cativo23), live from the registry. */
-    packages: number
+    /**
+     * Total published packages (maintainer:cativo23), live from the registry;
+     * null when the count couldn't be determined (so the UI shows '…', not '0').
+     */
+    packages: number | null
   }
   api: {
     version: string
@@ -126,7 +129,12 @@ async function fetchNpmPackageCount(): Promise<number> {
     'https://registry.npmjs.org/-/v1/search?text=maintainer:cativo23&size=250',
     { timeout: 5000 }
   )
-  return Array.isArray(res?.objects) ? res.objects.length : 0
+  // Throw on a malformed response so the caller degrades to null (→ '…') rather
+  // than reporting a misleading "0" as if it were a real count.
+  if (!Array.isArray(res?.objects)) {
+    throw new Error('unexpected npm registry response shape')
+  }
+  return res.objects.length
 }
 
 async function fetchInfraStats(event: H3Event): Promise<InfraStats> {
@@ -178,7 +186,7 @@ export default defineCachedEventHandler(
     const claudeStyleDl = claudeStyle.status === 'fulfilled' ? claudeStyle.value : fallbackPkg
     const nightwireDl = nightwire.status === 'fulfilled' ? nightwire.value : fallbackPkg
     const apiData = api.status === 'fulfilled' ? api.value : { version: '...', status: 'unknown' }
-    const packageCount = npmCount.status === 'fulfilled' ? npmCount.value : 0
+    const packageCount = npmCount.status === 'fulfilled' ? npmCount.value : null
     const infraData =
       infra.status === 'fulfilled'
         ? infra.value

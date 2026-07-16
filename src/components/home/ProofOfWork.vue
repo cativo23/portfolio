@@ -145,7 +145,7 @@ interface NpmPackageData {
 
 interface SignalData {
   github: { contributions: number; weeks: number[][]; publicRepos: number }
-  npm: { lumira: NpmPackageData | number; claudeStyle: NpmPackageData | number; nightwire: NpmPackageData | number; total: number; packages: number }
+  npm: { lumira: NpmPackageData | number; claudeStyle: NpmPackageData | number; nightwire: NpmPackageData | number; total: number; packages: number | null }
   api: { version: string; status: string }
   infra: { containers: number | null; stacks: number | null }
 }

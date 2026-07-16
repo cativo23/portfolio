@@ -40,6 +40,7 @@ describe('Signal API', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks()
+    vi.resetModules() // isolate the dynamic import so no module state leaks between tests
     mockFetch.mockImplementation((url: string) => defaultRoute(url))
     const module = await import('~/server/api/signal.get')
     handler = module.default
@@ -64,7 +65,7 @@ describe('Signal API', () => {
     expect(result.data.infra).toEqual({ containers: null, stacks: null })
   })
 
-  it('falls back to 0 packages when the registry search fails', async () => {
+  it('degrades package count to null when the registry search fails', async () => {
     mockFetch.mockImplementation((url: string) => {
       if (url.includes('registry.npmjs.org/-/v1/search')) {
         return Promise.reject(new Error('timeout'))
@@ -72,6 +73,17 @@ describe('Signal API', () => {
       return defaultRoute(url)
     })
     const result = await handler({} as any)
-    expect(result.data.npm.packages).toBe(0)
+    expect(result.data.npm.packages).toBeNull()
+  })
+
+  it('degrades package count to null on a malformed registry response', async () => {
+    mockFetch.mockImplementation((url: string) => {
+      if (url.includes('registry.npmjs.org/-/v1/search')) {
+        return Promise.resolve({ objects: null }) // no usable objects array
+      }
+      return defaultRoute(url)
+    })
+    const result = await handler({} as any)
+    expect(result.data.npm.packages).toBeNull()
   })
 })
