@@ -11,8 +11,12 @@ vi.stubGlobal('getRequestIP', () => undefined)
 const mockFetch = vi.fn()
 vi.stubGlobal('$fetch', mockFetch)
 
-// Cached handler wrapper — ignore cache options, return the raw handler.
-vi.stubGlobal('defineCachedEventHandler', (handler: any) => handler)
+// Cached handler wrapper — capture the cache options (asserted below), return the raw handler.
+let cachedOpts: Record<string, unknown> | undefined
+vi.stubGlobal('defineCachedEventHandler', (handler: any, opts: Record<string, unknown>) => {
+  cachedOpts = opts
+  return handler
+})
 
 /** Default happy-path routing for every upstream signal.get talks to. */
 function defaultRoute(url: string) {
@@ -49,6 +53,13 @@ describe('Signal API', () => {
   it('exposes the live npm package count from the registry', async () => {
     const result = await handler({} as any)
     expect(result.data.npm.packages).toBe(4)
+  })
+
+  it('caches server-side for an hour but uses SWR so the browser is not pinned to a stale copy', async () => {
+    // swr:true makes Nitro emit `s-maxage` + `stale-while-revalidate` (shared-cache
+    // only) instead of a private `max-age`, so returning visitors revalidate rather
+    // than replaying a stale payload for an hour. Guards the LIVE-freshness fix.
+    expect(cachedOpts).toMatchObject({ maxAge: 60 * 60, swr: true })
   })
 
   it('exposes live service/stack counts from portfolio-api', async () => {

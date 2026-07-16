@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.17.1] - 2026-07-16
+
+### Fixed
+- **SIGNAL panel no longer serves stale LIVE numbers from the browser cache** — the `/api/signal` handler now caches with `swr: true`, so Nitro emits `s-maxage` + `stale-while-revalidate` (shared-cache only) instead of a private `max-age=3600`. Returning visitors revalidate via ETag and always get the current payload, and payload-shape changes (like the recent containers → services rename) no longer replay broken data until the browser cache expires. Server-side cache TTL is unchanged, so the rate-limited upstreams stay protected. (#145)
+
+---
+
 ## [1.17.0] - 2026-07-16
 
 ### Changed
