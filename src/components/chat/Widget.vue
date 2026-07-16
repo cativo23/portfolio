@@ -74,7 +74,7 @@ watch(isOpen, (open) => open && scrollToBottom())
           <button
             type="button"
             aria-label="Close assistant"
-            class="text-nw-text-dim transition-colors hover:text-nw-text focus:outline-none focus-visible:ring-2 focus-visible:ring-nw-primary"
+            class="flex h-11 w-11 items-center justify-center -my-2 -mr-2 text-nw-text-dim transition-colors hover:text-nw-text focus:outline-none focus-visible:ring-2 focus-visible:ring-nw-primary"
             @click="isOpen = false"
           >
             <LucideX class="h-4 w-4" />

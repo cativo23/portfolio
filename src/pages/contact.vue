@@ -6,7 +6,7 @@
         <span>OPEN CHANNEL</span>
       </div>
       <div class="panel-body p-6 lg:p-8">
-        <h1 class="compressed-title text-nw-text leading-[1.05] mb-3" style="font-size: clamp(32px, 6vw, 52px);">
+        <h1 class="compressed-title title-lg text-nw-text leading-[1.05] mb-3">
           Get in <span class="text-nw-primary">touch.</span>
         </h1>
         <p class="text-nw-text-dim leading-relaxed mb-2 max-w-2xl">
@@ -62,17 +62,19 @@
         </div>
 
         <!-- Form -->
-        <form v-else @submit.prevent="submitForm" class="max-w-xl flex flex-col gap-4" novalidate>
+        <form v-else @submit.prevent="submitForm" class="flex flex-col gap-4" novalidate>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="flex flex-col gap-1">
-            <label for="name" class="text-nw-cyan font-stamp uppercase tracking-wide text-[11px]">NAME</label>
+            <label for="name" class="text-nw-primary font-stamp uppercase tracking-wide text-[11px]">NAME</label>
             <input
               type="text" id="name" v-model="form.name"
               @blur="validateField('name')"
+              @input="fieldErrors.name && validateField('name')"
               :aria-invalid="fieldErrors.name ? 'true' : 'false'"
               :aria-describedby="fieldErrors.name ? 'name-error' : undefined"
               required autocomplete="name"
-              class="w-full px-3 py-2 bg-void text-nw-text border focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
-              :class="fieldErrors.name ? 'border-nw-red' : 'border-nw-text-line'"
+              class="w-full px-3 py-2 bg-void-warm text-nw-text border focus:outline-none focus:ring-1 focus:ring-nw-primary focus:border-nw-primary font-sys placeholder-nw-text-dim transition"
+              :class="fieldErrors.name ? 'border-nw-red' : 'border-nw-primary-dim'"
               placeholder="Your name"
             >
             <p v-if="fieldErrors.name" id="name-error" class="text-meta text-nw-red mt-1" role="alert">
@@ -81,32 +83,35 @@
           </div>
 
           <div class="flex flex-col gap-1">
-            <label for="email" class="text-nw-cyan font-stamp uppercase tracking-wide text-[11px]">EMAIL</label>
+            <label for="email" class="text-nw-primary font-stamp uppercase tracking-wide text-[11px]">EMAIL</label>
             <input
               type="email" id="email" v-model="form.email"
               @blur="validateField('email')"
+              @input="fieldErrors.email && validateField('email')"
               :aria-invalid="fieldErrors.email ? 'true' : 'false'"
               :aria-describedby="fieldErrors.email ? 'email-error' : undefined"
               required autocomplete="email"
-              class="w-full px-3 py-2 bg-void text-nw-text border focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
-              :class="fieldErrors.email ? 'border-nw-red' : 'border-nw-text-line'"
+              class="w-full px-3 py-2 bg-void-warm text-nw-text border focus:outline-none focus:ring-1 focus:ring-nw-primary focus:border-nw-primary font-sys placeholder-nw-text-dim transition"
+              :class="fieldErrors.email ? 'border-nw-red' : 'border-nw-primary-dim'"
               placeholder="you@email.com"
             >
             <p v-if="fieldErrors.email" id="email-error" class="text-meta text-nw-red mt-1" role="alert">
               {{ fieldErrors.email }}
             </p>
           </div>
+          </div>
 
           <div class="flex flex-col gap-1">
-            <label for="message" class="text-nw-cyan font-stamp uppercase tracking-wide text-[11px]">MESSAGE</label>
+            <label for="message" class="text-nw-primary font-stamp uppercase tracking-wide text-[11px]">MESSAGE</label>
             <textarea
               id="message" v-model="form.message"
               @blur="validateField('message')"
+              @input="fieldErrors.message && validateField('message')"
               :aria-invalid="fieldErrors.message ? 'true' : 'false'"
               :aria-describedby="fieldErrors.message ? 'message-error' : undefined"
               required rows="4"
-              class="w-full px-3 py-2 bg-void text-nw-text border focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition resize-y"
-              :class="fieldErrors.message ? 'border-nw-red' : 'border-nw-text-line'"
+              class="w-full px-3 py-2 bg-void-warm text-nw-text border focus:outline-none focus:ring-1 focus:ring-nw-primary focus:border-nw-primary font-sys placeholder-nw-text-dim transition resize-y"
+              :class="fieldErrors.message ? 'border-nw-red' : 'border-nw-primary-dim'"
               placeholder="Type your message..."
             ></textarea>
             <p v-if="fieldErrors.message" id="message-error" class="text-meta text-nw-red mt-1" role="alert">
@@ -120,7 +125,7 @@
 
           <div v-if="error" class="text-meta text-nw-red" role="alert">{{ error }}</div>
 
-          <BaseButton type="submit" :loading="loading" :disabled="loading" variant="primary">
+          <BaseButton type="submit" :loading="loading" :disabled="loading" variant="primary" class="self-start">
             {{ loading ? 'Sending...' : 'Send message' }}
           </BaseButton>
         </form>

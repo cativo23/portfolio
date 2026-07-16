@@ -9,7 +9,7 @@
         <div class="font-stamp text-nw-cyan text-[10px] tracking-[0.2em] uppercase mb-2">
           FILE: now.md · LAST UPDATED {{ lastUpdated }}
         </div>
-        <h1 class="compressed-title text-nw-text leading-[1.05] mb-3" style="font-size: clamp(32px, 6vw, 52px);">
+        <h1 class="compressed-title title-lg text-nw-text leading-[1.05] mb-3">
           What I'm working on <span class="text-nw-primary">right now.</span>
         </h1>
         <p class="text-meta">
@@ -30,7 +30,7 @@
             v-if="nowPlaying.albumArt"
             :src="nowPlaying.albumArt"
             :alt="nowPlaying.album"
-            class="w-14 h-14 rounded-sm border border-nw-text-faint/20 shrink-0"
+            class="w-14 h-14 rounded-sm border border-nw-text-line shrink-0"
           />
           <div class="flex-1 min-w-0 space-y-1">
             <a
@@ -43,11 +43,11 @@
             </a>
             <div class="text-nw-text-dim text-xs font-mono truncate">{{ nowPlaying.artist }} · {{ nowPlaying.album }}</div>
             <div class="flex items-center gap-2">
-              <span class="text-nw-text-faint text-[10px] font-mono w-8 text-right shrink-0">{{ formatMs(nowPlaying.progressMs) }}</span>
-              <div class="flex-1 h-[3px] bg-nw-text-faint/20 rounded-full overflow-hidden">
+              <span class="text-nw-text-mute text-[10px] font-mono w-8 text-right shrink-0">{{ formatMs(nowPlaying.progressMs) }}</span>
+              <div class="flex-1 h-[3px] bg-nw-text-line rounded-full overflow-hidden">
                 <div class="h-full bg-nw-green rounded-full transition-all duration-1000" :style="{ width: progressPercent + '%' }" />
               </div>
-              <span class="text-nw-text-faint text-[10px] font-mono w-8 shrink-0">{{ formatMs(nowPlaying.durationMs) }}</span>
+              <span class="text-nw-text-mute text-[10px] font-mono w-8 shrink-0">{{ formatMs(nowPlaying.durationMs) }}</span>
             </div>
           </div>
           <a
@@ -127,34 +127,22 @@
         </NuxtLink>
       </div>
       <div class="panel-body p-0">
-        <div class="kv-row">
-          <span class="kv-label">LUMIRA</span>
-          <span class="kv-value">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · v1.14 shipped with subagent-aware rendering and git-worktree fallback · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~4k downloads/month</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">NOVA-ID</span>
-          <span class="kv-value">Self-hosted identity &amp; SSO platform (OIDC via Ory Hydra) with a role/permissions demo API · actively hardening auth flows and audit logging</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">NIGHTWIRE</span>
-          <span class="kv-value">Compressed dark design system for developer tools · semantic tokens, intensity scale, Tailwind plugin · published on <a href="https://www.npmjs.com/package/@cativo23/nightwire" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · v2 shipped</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">KOVIA</span>
-          <span class="kv-value">Smart pet adoption platform · connects rescue organizations with adopters via an automated scoring engine · NestJS + Nuxt 4 + Prisma + BullMQ</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">VITTBOT</span>
-          <span class="kv-value">Multi-agent crypto trading bot · 3 Claude agents + deterministic Risk Manager (10 hard-coded rules, never delegated to AI) · NestJS</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">CLARIFY</span>
-          <span class="kv-value">AI legal contract auditor (micro-SaaS, alpha) · Nuxt + Supabase RLS + OpenAI + Stripe credits + BullMQ</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">THIS SITE</span>
-          <span class="kv-value">The AI chat on this site is mine end-to-end · public chatbot grounded on my CV, now with multi-turn conversation memory and honest fit-boundary framing for comp/role questions · NestJS + Groq + Redis answer-cache · hardened against prompt-injection with a deterministic output sanitizer</span>
-        </div>
+        <dl class="grid grid-cols-[minmax(0,max-content)_1fr] gap-x-6 gap-y-4 px-6 py-6 lg:px-8">
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">LUMIRA</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · v1.14 shipped with subagent-aware rendering and git-worktree fallback · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~4k downloads/month</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">NOVA-ID</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Self-hosted identity &amp; SSO platform (OIDC via Ory Hydra) with a role/permissions demo API · actively hardening auth flows and audit logging</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">NIGHTWIRE</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Compressed dark design system for developer tools · semantic tokens, intensity scale, Tailwind plugin · published on <a href="https://www.npmjs.com/package/@cativo23/nightwire" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · v2 shipped</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">KOVIA</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Smart pet adoption platform · connects rescue organizations with adopters via an automated scoring engine · NestJS + Nuxt 4 + Prisma + BullMQ</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">VITTBOT</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Multi-agent crypto trading bot · 3 Claude agents + deterministic Risk Manager (10 hard-coded rules, never delegated to AI) · NestJS</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">CLARIFY</dt>
+          <dd class="text-nw-text-dim leading-relaxed">AI legal contract auditor (micro-SaaS, alpha) · Nuxt + Supabase RLS + OpenAI + Stripe credits + BullMQ</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1 whitespace-nowrap">THIS SITE</dt>
+          <dd class="text-nw-text-dim leading-relaxed">The AI chat on this site is mine end-to-end · public chatbot grounded on my CV, now with multi-turn conversation memory and honest fit-boundary framing for comp/role questions · NestJS + Groq + Redis answer-cache · hardened against prompt-injection with a deterministic output sanitizer</dd>
+        </dl>
       </div>
     </div>
 
@@ -216,26 +204,20 @@
       <div class="panel-header">
         <span>WHAT I'M LOOKING FOR</span>
       </div>
-      <div class="panel-body p-6 lg:p-8">
-        <ul class="space-y-2 mb-6">
-          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-            <span class="text-nw-primary shrink-0 mt-1">▸</span>
-            <span><span class="text-nw-text">Senior backend or tech lead</span> at a company building real systems — payments, AI in production where the validation layer is the hard part, distributed services, the kind of work where the messy parts are the interesting parts.</span>
-          </li>
-          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-            <span class="text-nw-primary shrink-0 mt-1">▸</span>
-            <span><span class="text-nw-text">Remote</span> (UTC-6, works well with US hours).</span>
-          </li>
-          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-            <span class="text-nw-primary shrink-0 mt-1">▸</span>
-            <span>Not actively applying, but open to the right conversation. If what you're building sounds like it belongs on this page, reach out.</span>
-          </li>
-        </ul>
+      <div class="panel-body p-0">
+        <dl class="grid grid-cols-[minmax(0,max-content)_1fr] gap-x-6 gap-y-4 px-6 py-6 lg:px-8">
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">ROLE</dt>
+          <dd class="text-nw-text-dim leading-relaxed"><span class="text-nw-text">Senior backend or tech lead</span> at a company building real systems — payments, AI in production where the validation layer is the hard part, distributed services, the kind of work where the messy parts are the interesting parts.</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">LOCATION</dt>
+          <dd class="text-nw-text-dim leading-relaxed"><span class="text-nw-text">Remote</span> · UTC-6, works well with US hours.</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">STATUS</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Not actively applying, but open to the right conversation. If what you're building sounds like it belongs on this page, reach out.</dd>
+        </dl>
 
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-3 p-6 lg:p-8 border-t border-nw-text-line">
           <BaseButton href="/resume.pdf" variant="primary">↓ Download CV (PDF)</BaseButton>
           <BaseButton href="mailto:cativo@cativo.dev" variant="secondary">cativo@cativo.dev</BaseButton>
-          <BaseButton href="https://linkedin.com/in/cativo23" external variant="ghost">LinkedIn →</BaseButton>
+          <BaseButton href="https://linkedin.com/in/carlos-cativo" external variant="ghost">LinkedIn →</BaseButton>
         </div>
       </div>
     </div>

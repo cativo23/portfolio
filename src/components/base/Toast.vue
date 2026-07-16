@@ -73,8 +73,8 @@ const typeConfig: Record<'success' | 'error' | 'warning' | 'info', { variant: st
           'toast flex items-start gap-3',
           typeConfig[toast.type].variant,
         ]"
-        role="alert"
-        aria-live="assertive"
+        :role="toast.type === 'error' || toast.type === 'warning' ? 'alert' : 'status'"
+        :aria-live="toast.type === 'error' || toast.type === 'warning' ? 'assertive' : 'polite'"
         @mouseenter="pauseTimer(toast.id)"
         @mouseleave="resumeTimer(toast.id)"
         @keydown.escape="onClose(toast.id)"

@@ -40,8 +40,7 @@
             </span>
           </div>
           <h1
-            class="compressed-title text-nw-text leading-[1.05] mb-2"
-            style="font-size: clamp(32px, 5.5vw, 52px);"
+            class="compressed-title title-lg text-nw-text leading-[1.05] mb-2"
           >
             {{ project.title }}
           </h1>
@@ -59,7 +58,7 @@
         <NuxtImg
           :src="project.heroImage"
           :alt="`${project.title} screenshot`"
-          class="w-full h-full object-cover"
+          class="w-full h-full object-contain"
           sizes="sm:100vw md:1200px lg:1200px"
           loading="lazy"
           placeholder
@@ -90,7 +89,7 @@
               <span>OVERVIEW</span>
             </div>
             <div class="panel-body p-6 lg:p-8">
-              <div class="prose prose-nightwire max-w-none text-nw-text-dim leading-relaxed">
+              <div class="prose prose-nightwire max-w-[72ch] text-nw-text-dim leading-relaxed">
                 <MDC v-if="project?.content || project?.description" :value="project.content || project.description" />
                 <p v-else class="text-nw-text-dim italic">No overview available.</p>
               </div>
@@ -144,7 +143,7 @@
               <span
                 v-for="tech in project.techStack"
                 :key="tech"
-                class="tag tag-info"
+                class="tech-chip"
               >
                 {{ tech }}
               </span>

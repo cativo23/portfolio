@@ -11,7 +11,7 @@
   >
     <header class="flex items-start justify-between gap-3">
       <div>
-        <div class="font-stamp uppercase tracking-[0.14em] text-[9px] text-nw-text-dim">
+        <div class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-text-dim">
           CASE-{{ String(project.id).padStart(4, '0') }}
         </div>
         <component :is="featured ? 'h3' : 'h4'" class="compressed-title text-nw-text mt-1" :class="featured ? 'title-card-lg' : 'title-card'">
@@ -37,7 +37,7 @@
       </span>
     </div>
 
-    <div class="flex justify-between items-center pt-3 border-t border-nw-text-faint font-stamp uppercase tracking-wider text-[9px] text-nw-text-dim">
+    <div class="flex justify-between items-center pt-3 border-t border-nw-text-faint font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim">
       <span>{{ year }}</span>
       <span class="text-nw-primary">OPEN FILE →</span>
     </div>
