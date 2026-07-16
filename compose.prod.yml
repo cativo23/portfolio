@@ -13,6 +13,9 @@ services:
       NUXT_API_BASE_PATH: ${NUXT_API_BASE_PATH:?NUXT_API_BASE_PATH is required}
       NUXT_API_TOKEN: ${NUXT_API_TOKEN:?NUXT_API_TOKEN is required}
       NUXT_GITHUB_TOKEN: ${POW_GH_TOKEN:?POW_GH_TOKEN is required}
+      # Work account (cativo45) token — optional; merges private work contributions
+      # into the SIGNAL heatmap. Degrades to cativo23-only if unset.
+      NUXT_GITHUB_TOKEN_WORK: ${POW_GH_TOKEN_WORK:-}
       NUXT_SPOTIFY_CLIENT_ID: ${NUXT_SPOTIFY_CLIENT_ID:-}
       NUXT_SPOTIFY_CLIENT_SECRET: ${NUXT_SPOTIFY_CLIENT_SECRET:-}
       NUXT_SPOTIFY_REFRESH_TOKEN: ${NUXT_SPOTIFY_REFRESH_TOKEN:-}

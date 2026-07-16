@@ -36,20 +36,39 @@ interface SignalData {
   infra: InfraStats
 }
 
-async function fetchGitHubContributions(token: string): Promise<{ contributions: number; weeks: number[][] }> {
+/** A single day's raw contribution count, keyed by ISO date for cross-account merging. */
+interface ContributionDay {
+  date: string
+  count: number
+}
+
+interface RawContributions {
+  contributions: number
+  /** Weeks of raw daily counts (full calendar), preserving GitHub's grid. */
+  weeks: ContributionDay[][]
+}
+
+/**
+ * Fetches one account's contribution calendar as raw daily counts. Private
+ * contributions are included when the token belongs to `login` and carries the
+ * `repo` scope — that's how the work account (cativo45) surfaces private work.
+ * Returns raw counts (not levels) so multiple accounts can be summed per-day
+ * before quantizing.
+ */
+async function fetchGitHubContributions(login: string, token: string): Promise<RawContributions> {
   if (!token) {
     return { contributions: 0, weeks: [] }
   }
 
-  const query = `query {
-    user(login: "cativo23") {
+  const query = `query($login: String!) {
+    user(login: $login) {
       contributionsCollection {
         contributionCalendar {
           totalContributions
           weeks {
             contributionDays {
+              date
               contributionCount
-              contributionLevel
             }
           }
         }
@@ -63,29 +82,62 @@ async function fetchGitHubContributions(token: string): Promise<{ contributions:
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: { query },
+    body: { query, variables: { login } },
     timeout: 8000,
   })
 
   const calendar = res?.data?.user?.contributionsCollection?.contributionCalendar
   if (!calendar) return { contributions: 0, weeks: [] }
 
-  const levelMap: Record<string, number> = {
-    NONE: 0,
-    FIRST_QUARTILE: 1,
-    SECOND_QUARTILE: 2,
-    THIRD_QUARTILE: 3,
-    FOURTH_QUARTILE: 4,
-  }
-
-  const weeks = calendar.weeks.slice(-30).map((w: any) =>
-    w.contributionDays.map((d: any) => levelMap[d.contributionLevel] ?? 0)
+  const weeks: ContributionDay[][] = calendar.weeks.map((w: any) =>
+    w.contributionDays.map((d: any) => ({ date: d.date, count: d.contributionCount ?? 0 }))
   )
 
-  return {
-    contributions: calendar.totalContributions,
-    weeks,
+  return { contributions: calendar.totalContributions, weeks }
+}
+
+/**
+ * Merges contribution calendars from multiple accounts into the frontend shape
+ * (`{ contributions, weeks: number[][] }` of 0–4 levels). Totals are summed;
+ * daily counts are summed by date, then quantized into quartile-based levels
+ * over the last 30 weeks — mirroring GitHub's own heatmap bucketing so a
+ * combined-but-quiet day and a single-account-busy day read distinctly.
+ */
+export function mergeContributions(sources: RawContributions[]): { contributions: number; weeks: number[][] } {
+  const contributions = sources.reduce((sum, s) => sum + s.contributions, 0)
+
+  // Sum every account's daily counts, keyed by date so accounts align even if
+  // GitHub returns a slightly different leading partial week.
+  const countByDate = new Map<string, number>()
+  for (const src of sources) {
+    for (const week of src.weeks) {
+      for (const day of week) {
+        countByDate.set(day.date, (countByDate.get(day.date) ?? 0) + day.count)
+      }
+    }
   }
+
+  // Use the richest account's grid as the canonical date layout.
+  const grid = sources.reduce<ContributionDay[][]>(
+    (best, s) => (s.weeks.length > best.length ? s.weeks : best),
+    []
+  )
+
+  // Quartile thresholds over non-zero merged days (GitHub-style bucketing).
+  const nonZero = [...countByDate.values()].filter((c) => c > 0).sort((a, b) => a - b)
+  const quantile = (p: number) =>
+    nonZero.length ? (nonZero[Math.min(nonZero.length - 1, Math.floor(p * nonZero.length))] ?? 0) : 0
+  const q1 = quantile(0.25)
+  const q2 = quantile(0.5)
+  const q3 = quantile(0.75)
+  const toLevel = (count: number) =>
+    count <= 0 ? 0 : count <= q1 ? 1 : count <= q2 ? 2 : count <= q3 ? 3 : 4
+
+  const weeks = grid
+    .slice(-30)
+    .map((week) => week.map((day) => toLevel(countByDate.get(day.date) ?? 0)))
+
+  return { contributions, weeks }
 }
 
 async function fetchGitHubRepos(token: string): Promise<number> {
@@ -167,10 +219,11 @@ async function fetchApiHealth(): Promise<{ version: string; status: string }> {
 
 export default defineCachedEventHandler(
   async (event) => {
-    const { githubToken } = useRuntimeConfig(event)
-    const [gh, repos, lumira, claudeStyle, nightwire, api, npmCount, infra] =
+    const { githubToken, githubTokenWork } = useRuntimeConfig(event)
+    const [ghPersonal, ghWork, repos, lumira, claudeStyle, nightwire, api, npmCount, infra] =
       await Promise.allSettled([
-        fetchGitHubContributions(githubToken),
+        fetchGitHubContributions('cativo23', githubToken),
+        fetchGitHubContributions('cativo45', githubTokenWork),
         fetchGitHubRepos(githubToken),
         fetchNpmDownloads('lumira'),
         fetchNpmDownloads('claude-style'),
@@ -180,7 +233,13 @@ export default defineCachedEventHandler(
         fetchInfraStats(event),
       ])
 
-    const ghData = gh.status === 'fulfilled' ? gh.value : { contributions: 0, weeks: [] }
+    // Merge both accounts' contributions; each is settled independently so a
+    // failure or missing work token just contributes an empty calendar.
+    const empty: RawContributions = { contributions: 0, weeks: [] }
+    const ghData = mergeContributions([
+      ghPersonal.status === 'fulfilled' ? ghPersonal.value : empty,
+      ghWork.status === 'fulfilled' ? ghWork.value : empty,
+    ])
     const repoCount = repos.status === 'fulfilled' ? repos.value : 0
     const fallbackPkg: NpmPackageData = { monthly: 0, weekly: [0, 0, 0, 0, 0, 0, 0] }
     const lumiraDl = lumira.status === 'fulfilled' ? lumira.value : fallbackPkg
