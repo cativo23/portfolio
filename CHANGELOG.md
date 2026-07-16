@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.0] - 2026-07-16
+
+### Changed
+- **SIGNAL panel numbers are now live** — the NPM-package count, running-container count, and compose-stack count under the `LIVE` badge are sourced from real data (npm registry maintainer search + portfolio-api `/api/v1/infra/stats`) instead of hardcoded values that had drifted from reality. Each degrades gracefully to a loading placeholder if its source is unreachable. (#140, #141)
+
+---
+
 ## [1.15.0] - 2026-07-16
 
 ### Added
