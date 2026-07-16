@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.18.0] - 2026-07-16
+
+### Added
+- **Work-account contributions in the SIGNAL heatmap** — the contribution total and heatmap now merge both GitHub accounts (personal `cativo23` + work `cativo45`) instead of `cativo23` alone, so private work activity is reflected. Totals are summed and daily counts merged by date before quantizing into quartile levels. The work-account token is optional and CI-managed; a missing token degrades gracefully to personal-only. (#147)
+
+---
+
 ## [1.17.1] - 2026-07-16
 
 ### Fixed
