@@ -65,7 +65,7 @@
         <form v-else @submit.prevent="submitForm" class="flex flex-col gap-4" novalidate>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="flex flex-col gap-1">
-            <label for="name" class="text-nw-cyan font-stamp uppercase tracking-wide text-[11px]">NAME</label>
+            <label for="name" class="text-nw-primary font-stamp uppercase tracking-wide text-[11px]">NAME</label>
             <input
               type="text" id="name" v-model="form.name"
               @blur="validateField('name')"
@@ -73,8 +73,8 @@
               :aria-invalid="fieldErrors.name ? 'true' : 'false'"
               :aria-describedby="fieldErrors.name ? 'name-error' : undefined"
               required autocomplete="name"
-              class="w-full px-3 py-2 bg-void text-nw-text border focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
-              :class="fieldErrors.name ? 'border-nw-red' : 'border-nw-text-line'"
+              class="w-full px-3 py-2 bg-void-warm text-nw-text border focus:outline-none focus:ring-1 focus:ring-nw-primary focus:border-nw-primary font-sys placeholder-nw-text-dim transition"
+              :class="fieldErrors.name ? 'border-nw-red' : 'border-nw-primary-dim'"
               placeholder="Your name"
             >
             <p v-if="fieldErrors.name" id="name-error" class="text-meta text-nw-red mt-1" role="alert">
@@ -83,7 +83,7 @@
           </div>
 
           <div class="flex flex-col gap-1">
-            <label for="email" class="text-nw-cyan font-stamp uppercase tracking-wide text-[11px]">EMAIL</label>
+            <label for="email" class="text-nw-primary font-stamp uppercase tracking-wide text-[11px]">EMAIL</label>
             <input
               type="email" id="email" v-model="form.email"
               @blur="validateField('email')"
@@ -91,8 +91,8 @@
               :aria-invalid="fieldErrors.email ? 'true' : 'false'"
               :aria-describedby="fieldErrors.email ? 'email-error' : undefined"
               required autocomplete="email"
-              class="w-full px-3 py-2 bg-void text-nw-text border focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition"
-              :class="fieldErrors.email ? 'border-nw-red' : 'border-nw-text-line'"
+              class="w-full px-3 py-2 bg-void-warm text-nw-text border focus:outline-none focus:ring-1 focus:ring-nw-primary focus:border-nw-primary font-sys placeholder-nw-text-dim transition"
+              :class="fieldErrors.email ? 'border-nw-red' : 'border-nw-primary-dim'"
               placeholder="you@email.com"
             >
             <p v-if="fieldErrors.email" id="email-error" class="text-meta text-nw-red mt-1" role="alert">
@@ -102,7 +102,7 @@
           </div>
 
           <div class="flex flex-col gap-1">
-            <label for="message" class="text-nw-cyan font-stamp uppercase tracking-wide text-[11px]">MESSAGE</label>
+            <label for="message" class="text-nw-primary font-stamp uppercase tracking-wide text-[11px]">MESSAGE</label>
             <textarea
               id="message" v-model="form.message"
               @blur="validateField('message')"
@@ -110,8 +110,8 @@
               :aria-invalid="fieldErrors.message ? 'true' : 'false'"
               :aria-describedby="fieldErrors.message ? 'message-error' : undefined"
               required rows="4"
-              class="w-full px-3 py-2 bg-void text-nw-text border focus:outline-none focus:ring-2 focus:ring-nw-cyan font-sys placeholder-nw-text-dim transition resize-y"
-              :class="fieldErrors.message ? 'border-nw-red' : 'border-nw-text-line'"
+              class="w-full px-3 py-2 bg-void-warm text-nw-text border focus:outline-none focus:ring-1 focus:ring-nw-primary focus:border-nw-primary font-sys placeholder-nw-text-dim transition resize-y"
+              :class="fieldErrors.message ? 'border-nw-red' : 'border-nw-primary-dim'"
               placeholder="Type your message..."
             ></textarea>
             <p v-if="fieldErrors.message" id="message-error" class="text-meta text-nw-red mt-1" role="alert">
