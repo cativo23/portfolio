@@ -116,7 +116,7 @@
       <div class="metric-cell">
         <div class="m-label">CONTAINERS</div>
         <div class="m-value">{{ signal?.infra.containers ?? '...' }}</div>
-        <div class="m-sub">self-hosted · {{ signal?.infra.stacks ?? '…' }} stacks</div>
+        <div class="m-sub">self-hosted · {{ signal?.infra.stacks ?? '...' }} stacks</div>
       </div>
     </div>
 
@@ -128,9 +128,9 @@
       <span> → </span>
       <span class="text-nw-green">"{{ signal?.api.status ?? '...' }}"</span>
       <span> · </span>
-      <span class="text-nw-yellow">{{ signal?.infra.containers ?? '…' }}</span>
+      <span class="text-nw-yellow">{{ signal?.infra.containers ?? '...' }}</span>
       <span> containers · </span>
-      <span class="text-nw-yellow">{{ signal?.infra.stacks ?? '…' }}</span>
+      <span class="text-nw-yellow">{{ signal?.infra.stacks ?? '...' }}</span>
       <span> stacks</span>
       <span class="inline-block w-[7px] h-[13px] bg-nw-green align-text-bottom" style="animation: nw-caret-blink 1s steps(2) infinite;" />
     </div>
