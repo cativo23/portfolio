@@ -138,13 +138,14 @@ async function fetchNpmPackageCount(): Promise<number> {
 }
 
 async function fetchInfraStats(event: H3Event): Promise<InfraStats> {
-  // Unversioned endpoint on portfolio-api (basePath: false). It already degrades
-  // to nulls on a docker-proxy outage; the try/catch guards a transport failure.
+  // Versioned endpoint on portfolio-api — it lives under the global /api/v1 prefix
+  // (unlike /health and /, which are excluded), so use the default basePath. The
+  // backend already degrades to null counts on a docker-proxy outage; the
+  // try/catch guards a transport failure so the panel never breaks.
   try {
     const res = await apiFetch<{ status: string; data: InfraStats }>(
       event,
-      '/infra/stats',
-      { basePath: false }
+      '/infra/stats'
     )
     return res?.data ?? { containers: null, stacks: null }
   } catch {
