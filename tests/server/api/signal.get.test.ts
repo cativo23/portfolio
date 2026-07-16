@@ -56,6 +56,16 @@ describe('Signal API', () => {
     expect(result.data.infra).toEqual({ containers: 20, stacks: 12 })
   })
 
+  it('requests the infra endpoint under the versioned /api/v1 prefix', async () => {
+    await handler({} as any)
+    // The endpoint lives behind portfolio-api's global /api/v1 prefix; a bare
+    // /infra/stats 404s in prod. Assert the composed URL includes the prefix.
+    expect(mockFetch).toHaveBeenCalledWith(
+      'https://api.example.com/api/v1/infra/stats',
+      expect.anything()
+    )
+  })
+
   it('degrades infra counts to null when the endpoint fails', async () => {
     mockFetch.mockImplementation((url: string) => {
       if (url.includes('/infra/stats')) return Promise.reject(new Error('ECONNREFUSED'))
