@@ -217,18 +217,14 @@
         <span>WHAT I'M LOOKING FOR</span>
       </div>
       <div class="panel-body p-0">
-        <div class="kv-row">
-          <span class="kv-label">ROLE</span>
-          <span class="kv-value"><span class="text-nw-text">Senior backend or tech lead</span> at a company building real systems — payments, AI in production where the validation layer is the hard part, distributed services, the kind of work where the messy parts are the interesting parts.</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">LOCATION</span>
-          <span class="kv-value"><span class="text-nw-text">Remote</span> · UTC-6, works well with US hours.</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">STATUS</span>
-          <span class="kv-value">Not actively applying, but open to the right conversation. If what you're building sounds like it belongs on this page, reach out.</span>
-        </div>
+        <dl class="grid grid-cols-[minmax(0,max-content)_1fr] gap-x-6 gap-y-4 px-6 py-6 lg:px-8">
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">ROLE</dt>
+          <dd class="text-nw-text-dim leading-relaxed"><span class="text-nw-text">Senior backend or tech lead</span> at a company building real systems — payments, AI in production where the validation layer is the hard part, distributed services, the kind of work where the messy parts are the interesting parts.</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">LOCATION</dt>
+          <dd class="text-nw-text-dim leading-relaxed"><span class="text-nw-text">Remote</span> · UTC-6, works well with US hours.</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">STATUS</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Not actively applying, but open to the right conversation. If what you're building sounds like it belongs on this page, reach out.</dd>
+        </dl>
 
         <div class="flex flex-wrap gap-3 p-6 lg:p-8 border-t border-nw-text-line">
           <BaseButton href="/resume.pdf" variant="primary">↓ Download CV (PDF)</BaseButton>
