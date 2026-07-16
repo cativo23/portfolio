@@ -84,13 +84,16 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          envs: DOCKER_USERNAME,DOCKER_PASSWORD,POW_GH_TOKEN,SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET,SPOTIFY_REFRESH_TOKEN
+          envs: DOCKER_USERNAME,DOCKER_PASSWORD,POW_GH_TOKEN,POW_GH_TOKEN_WORK,SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET,SPOTIFY_REFRESH_TOKEN
           script: |
             cd /home/cativo23/deploy/portfolio-deploy
 
-            # Sync Spotify credentials from CI secrets into .env (idempotent upsert)
+            # Sync credentials from CI secrets into .env (idempotent upsert).
+            # POW_GH_TOKEN_WORK is optional — an unset secret writes an empty value,
+            # and compose.prod.yml's `${POW_GH_TOKEN_WORK:-}` degrades to cativo23-only.
             touch .env
             for kv in \
+              "POW_GH_TOKEN_WORK=${POW_GH_TOKEN_WORK}" \
               "NUXT_SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}" \
               "NUXT_SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}" \
               "NUXT_SPOTIFY_REFRESH_TOKEN=${SPOTIFY_REFRESH_TOKEN}"; do
@@ -125,6 +128,7 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           POW_GH_TOKEN: ${{ secrets.POW_GH_TOKEN }}
+          POW_GH_TOKEN_WORK: ${{ secrets.POW_GH_TOKEN_WORK }}
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
           SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
