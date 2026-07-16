@@ -38,7 +38,7 @@ useHead({
         jobTitle: 'Backend Developer',
         sameAs: [
           'https://github.com/cativo23',
-          'https://linkedin.com/in/cativo23',
+          'https://linkedin.com/in/carlos-cativo',
           'https://x.com/cativo23'
         ],
         image: 'https://cativo.dev/img/akira.jpeg',

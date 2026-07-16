@@ -52,8 +52,11 @@ describe('Toast', () => {
     const wrapper = mount(ToastComponent)
     await flushPromises()
 
-    const alert = wrapper.find('[role="alert"]')
-    expect(alert.classes()).toContain('toast-success')
+    const toast = wrapper.find('.toast')
+    expect(toast.classes()).toContain('toast-success')
+    // success is non-interrupting: polite status, not assertive alert
+    expect(toast.attributes('role')).toBe('status')
+    expect(toast.attributes('aria-live')).toBe('polite')
   })
 
   it('renders error toast with correct styling', async () => {
@@ -63,6 +66,8 @@ describe('Toast', () => {
 
     const alert = wrapper.find('[role="alert"]')
     expect(alert.classes()).toContain('toast-danger')
+    // errors interrupt: assertive alert
+    expect(alert.attributes('aria-live')).toBe('assertive')
   })
 
   it('renders warning toast with correct styling', async () => {
@@ -72,6 +77,8 @@ describe('Toast', () => {
 
     const alert = wrapper.find('[role="alert"]')
     expect(alert.classes()).toContain('toast-warning')
+    // warnings interrupt too: assertive alert (symmetry with the error case)
+    expect(alert.attributes('aria-live')).toBe('assertive')
   })
 
   it('renders multiple toasts', async () => {
@@ -82,7 +89,7 @@ describe('Toast', () => {
     const wrapper = mount(ToastComponent)
     await flushPromises()
 
-    expect(wrapper.findAll('[role="alert"]')).toHaveLength(2)
+    expect(wrapper.findAll('.toast')).toHaveLength(2)
   })
 
   it('has correct accessibility role', () => {

@@ -12,14 +12,11 @@
             SENIOR BACKEND · TECH LEAD · 9 YRS IN PRODUCTION
           </div>
 
-          <h1
-            class="compressed-title text-nw-text leading-[1] mt-1"
-            style="font-size: clamp(36px, 6vw, 56px);"
-          >
+          <h1 class="compressed-title title-xl text-nw-text leading-[1] mt-1">
             Backends that don't<br>embarrass you<br>in <span class="text-nw-primary">production.</span>
           </h1>
 
-          <div class="font-mincho text-nw-primary-dim mt-2" style="font-size: 18px;">
+          <div class="font-mincho mincho-accent text-nw-primary-dim mt-2">
             本番環境で恥をかかないバックエンド
           </div>
 

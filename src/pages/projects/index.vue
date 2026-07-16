@@ -6,10 +6,10 @@
         <span>SELECTED WORK · {{ pagination?.total_items ?? displayed.length }} ENTRIES</span>
       </div>
       <div class="panel-body p-6 lg:p-8">
-        <h1 class="compressed-title text-nw-text leading-none mb-2" style="font-size: clamp(28px, 5vw, 44px);">
+        <h1 class="compressed-title title-md text-nw-text leading-none mb-2">
           Operations <span class="text-nw-primary">executed.</span>
         </h1>
-        <div class="font-mincho text-nw-primary-dim mb-3" style="font-size: 14px;">
+        <div class="font-mincho mincho-accent text-nw-primary-dim mb-3">
           実行済みの作戦
         </div>
         <p class="lede">
@@ -56,7 +56,7 @@
         >
           <header class="flex items-start justify-between gap-3">
             <div>
-              <div class="font-stamp uppercase tracking-[0.14em] text-[9px] text-nw-text-dim">
+              <div class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-text-dim">
                 CASE-{{ String(project.id).padStart(4, '0') }}
               </div>
               <h3 class="compressed-title title-card text-nw-text mt-1">
@@ -76,14 +76,15 @@
             <span
               v-for="tech in project.techStack"
               :key="tech"
-              class="tag tag-info"
+              class="tech-chip"
             >
               {{ tech }}
             </span>
           </div>
 
-          <div class="flex justify-between items-center pt-3 border-t border-nw-text-faint font-stamp uppercase tracking-wider text-[9px] text-nw-text-dim">
-            <span>{{ formatYear(project.createdAt) }}</span>
+          <div class="flex justify-between items-center pt-3 border-t border-nw-text-faint font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim">
+            <span v-if="formatYear(project.createdAt)">{{ formatYear(project.createdAt) }}</span>
+            <span v-else></span>
             <span class="text-nw-primary">OPEN FILE →</span>
           </div>
         </NuxtLink>
@@ -136,14 +137,15 @@ async function loadProjects(page: number = currentPage.value) {
 function handlePageChange(page: number) {
   loadProjects(page)
   if (import.meta.client) {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })
   }
 }
 
 await useAsyncData('projects-page', () => loadProjects())
 
 function formatYear(dateString?: string) {
-  if (!dateString) return '----'
+  if (!dateString) return ''
   return String(new Date(dateString).getFullYear())
 }
 

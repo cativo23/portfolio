@@ -11,16 +11,13 @@
             FILE: about.md · CLASSIFICATION: PUBLIC
           </div>
 
-          <h1
-            class="compressed-title text-nw-text leading-[1.05] mb-3"
-            style="font-size: clamp(36px, 7vw, 64px);"
-          >
+          <h1 class="compressed-title title-xl text-nw-text leading-[1.05] mb-3">
             Tech Lead. <br class="hidden sm:block" />
             El Salvador. <br class="hidden sm:block" />
             <span class="text-nw-primary">9 years</span> in production.
           </h1>
 
-          <div class="font-mincho text-nw-primary-dim mb-6" style="font-size: 16px;">
+          <div class="font-mincho mincho-accent text-nw-primary-dim mb-6">
             技術主任 · 九年間の実戦経験
           </div>
 
@@ -52,7 +49,7 @@
           <p
             v-for="(paragraph, index) in summaryParagraphs"
             :key="index"
-            class="text-nw-text-dim leading-relaxed"
+            class="text-nw-text-default leading-relaxed"
             v-html="formatSummaryParagraph(paragraph)"
           />
         </div>
@@ -82,6 +79,26 @@
               </span>
             </div>
             <p class="text-meta">{{ entry.description }}</p>
+
+            <!-- Highlights — the actual wins, not just responsibilities -->
+            <ul v-if="entry.highlights?.length" class="mt-3 space-y-2">
+              <li
+                v-for="(part, hi) in entry.highlights.map(splitHighlight)"
+                :key="hi"
+                class="flex gap-2.5 text-meta"
+              >
+                <span class="text-nw-primary shrink-0 select-none" aria-hidden="true">▸</span>
+                <span>
+                  <span v-if="part.lead" class="text-nw-text font-medium">{{ part.lead }} — </span>{{ part.rest }}
+                </span>
+              </li>
+            </ul>
+
+            <!-- Stack — mixed-case, matches CERTIFIED LOADOUT legibility -->
+            <div v-if="entry.tags?.length" class="mt-3 flex items-baseline gap-2 flex-wrap">
+              <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-cyan shrink-0">STACK</span>
+              <span class="text-[13px] text-nw-text-dim">{{ entry.tags.join(' · ') }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -175,7 +192,7 @@
             class="bg-void-warm p-5 flex flex-col gap-2"
           >
             <div class="flex items-center gap-2">
-              <span class="text-nw-text" style="font-size: 22px; line-height: 1;">{{ item.icon }}</span>
+              <span class="text-nw-text text-[22px] leading-none">{{ item.icon }}</span>
               <div class="font-stamp uppercase tracking-[0.14em] text-[11px] text-nw-primary">
                 {{ item.title }}
               </div>
@@ -233,6 +250,13 @@ import type { Profile } from '~/types/profile';
 usePageTitle('About', {
   description: 'Carlos Cativo - Tech Lead & Full-Stack Software Engineer. 9 years building healthcare platforms, payment systems, and AI-powered products.',
 });
+
+// Highlights read "Project — what I did". Split so the project name can
+// lead in bold for recruiter skim, with the detail trailing.
+function splitHighlight(h: string): { lead: string; rest: string } {
+  const i = h.indexOf(' — ');
+  return i === -1 ? { lead: '', rest: h } : { lead: h.slice(0, i), rest: h.slice(i + 3) };
+}
 
 const profile: Profile = {
   name: 'Carlos Cativo',

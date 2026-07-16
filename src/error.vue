@@ -35,10 +35,7 @@ useSeoMeta({
           <span class="tag">{{ stamp }}</span>
         </div>
         <div class="panel-body p-12 text-center" role="alert">
-          <h1
-            class="compressed-title text-nw-text leading-[1] mb-4"
-            style="font-size: clamp(48px, 9vw, 96px);"
-          >
+          <h1 class="compressed-title title-display text-nw-text leading-[1] mb-4">
             [ERR-{{ statusCode }}]
           </h1>
           <p class="font-stamp uppercase tracking-wider text-xs text-nw-red mb-4">

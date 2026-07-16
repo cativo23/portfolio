@@ -11,10 +11,20 @@
   --leading-body:    1.65;
   --leading-lede:    1.6;
 
-  /* Hero scale — more headroom for 4K / ultrawide */
-  --text-hero-xl:    clamp(40px, 4vw + 1.5rem, 88px);
-  --text-hero-sm:    clamp(36px, 3.5vw + 1.25rem, 72px);
-  --text-h2:         clamp(28px, 2.5vw + 1rem, 52px);
+  /* ── Display title scale ──────────────────────────────────────
+     Single source for every .compressed-title H1 font-size. Pair a
+     size class (.title-xl/.title-lg/.title-md/.title-display) with
+     .compressed-title (Noto Serif Display + scaleX(0.82)). Replaces
+     the per-page inline clamp() magic numbers that had drifted
+     across 6 files — change the display scale here, once. */
+  --text-title-display: clamp(48px, 9vw, 96px);         /* 404 / error only */
+  --text-title-xl:      clamp(36px, 4vw + 1rem, 60px);  /* identity: home hero, about */
+  --text-title-lg:      clamp(32px, 3vw + 1rem, 52px);  /* page H1: now, contact, project detail */
+  --text-title-md:      clamp(28px, 3vw, 44px);         /* sub-page H1: projects list */
+
+  /* Decorative JP accent line under identity headlines (was 14–18px
+     inline across three files; unified). */
+  --text-mincho-accent: 16px;
 
   /* JetBrains Mono ships with deliberately wide advance.
      -0.005em compacts just enough without killing the mono feel. */
@@ -27,6 +37,52 @@
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+/* Display title sizes — pair with .compressed-title. One class per
+   tier so H1 sizing lives in the token block, never inline. */
+.title-display { font-size: var(--text-title-display); }
+.title-xl      { font-size: var(--text-title-xl); }
+.title-lg      { font-size: var(--text-title-lg); }
+.title-md      { font-size: var(--text-title-md); }
+
+/* Decorative Japanese accent line under identity headlines. */
+.mincho-accent { font-size: var(--text-mincho-accent); }
+
+/* metric-cell value size modifiers — step down from the 20px base
+   without per-cell inline font-size. Double-class keeps specificity
+   at/above `.metric-cell .m-value` so it wins the cascade. */
+.m-value.m-value--md { font-size: 16px; }
+.m-value.m-value--sm { font-size: 14px; }
+.m-value.m-value--xs { font-size: 12px; }
+
+/* Tech chip — mixed-case mono stack tags. Unlike .tag (Saira condensed
+   UPPERCASE, for status/labels), this preserves the recognizable casing
+   of a stack (PostgreSQL, FastAPI, ISO 8583) that recruiters skim for. */
+.tech-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sys);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: normal;
+  padding: 1px 8px;
+  border-radius: var(--radius-sm);
+  color: var(--nw-text-default);
+  background: var(--void-panel);
+  border: 1px solid var(--nw-text-line);
+}
+
+/* README shields.io badges imported into project prose render as an
+   ungrouped, ragged strip on the dark theme. Normalize height + spacing
+   so they read as one tidy row instead of stray images. */
+.prose-nightwire img[src*="shields.io"] {
+  display: inline-block;
+  height: 20px;
+  width: auto;
+  margin: 0 4px 6px 0;
+  border-radius: 3px;
+  vertical-align: middle;
 }
 
 html,
@@ -56,11 +112,13 @@ body {
   line-height: 1.2;
 }
 
-/* Lede: subordinate to body, signals intro-paragraph hierarchy */
+/* Lede: primary intro reading text — sits on the brighter default tier
+   (#e6e6e6), not the dim caption tier. Reserve --nw-text-dim for
+   genuinely secondary copy (.text-meta, captions). */
 .lede {
   font-size: var(--text-lede);
   line-height: var(--leading-lede);
-  color: var(--nw-text-dim);
+  color: var(--nw-text-default);
 }
 
 /* Prose-scale supplements
