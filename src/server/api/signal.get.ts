@@ -7,7 +7,7 @@ interface NpmPackageData {
 }
 
 interface InfraStats {
-  containers: number | null
+  services: number | null
   stacks: number | null
 }
 
@@ -147,9 +147,9 @@ async function fetchInfraStats(event: H3Event): Promise<InfraStats> {
       event,
       '/infra/stats'
     )
-    return res?.data ?? { containers: null, stacks: null }
+    return res?.data ?? { services: null, stacks: null }
   } catch {
-    return { containers: null, stacks: null }
+    return { services: null, stacks: null }
   }
 }
 
@@ -191,7 +191,7 @@ export default defineCachedEventHandler(
     const infraData =
       infra.status === 'fulfilled'
         ? infra.value
-        : { containers: null, stacks: null }
+        : { services: null, stacks: null }
 
     const data: SignalData = {
       github: {
