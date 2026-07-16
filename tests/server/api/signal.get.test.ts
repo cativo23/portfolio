@@ -108,3 +108,62 @@ describe('Signal API', () => {
     expect(result.data.npm.packages).toBeNull()
   })
 })
+
+describe('mergeContributions', () => {
+  let mergeContributions: (
+    sources: { contributions: number; weeks: { date: string; count: number }[][] }[]
+  ) => { contributions: number; weeks: number[][] }
+
+  beforeEach(async () => {
+    vi.resetModules()
+    const mod = await import('~/server/api/signal.get')
+    mergeContributions = mod.mergeContributions
+  })
+
+  const week = (days: [string, number][]) => days.map(([date, count]) => ({ date, count }))
+
+  it('sums contribution totals across every account', () => {
+    const a = { contributions: 100, weeks: [week([['2026-01-01', 3]])] }
+    const b = { contributions: 250, weeks: [week([['2026-01-01', 5]])] }
+    expect(mergeContributions([a, b]).contributions).toBe(350)
+  })
+
+  it('sums per-day counts by date, keeping a zero day at level 0', () => {
+    const a = { contributions: 0, weeks: [week([['2026-01-01', 0], ['2026-01-02', 2]])] }
+    const b = { contributions: 0, weeks: [week([['2026-01-01', 0], ['2026-01-02', 3]])] }
+    const { weeks } = mergeContributions([a, b])
+    expect(weeks[0][0]).toBe(0) // both accounts idle → level 0
+    expect(weeks[0][1]).toBeGreaterThanOrEqual(1) // merged count 5 → active
+  })
+
+  it('quantizes higher merged counts to higher-or-equal levels, capped at 4', () => {
+    const days: [string, number][] = [
+      ['2026-01-01', 1], ['2026-01-02', 3], ['2026-01-03', 6], ['2026-01-04', 12],
+    ]
+    const { weeks } = mergeContributions([
+      { contributions: 0, weeks: [week(days)] },
+      { contributions: 0, weeks: [] },
+    ])
+    const levels = weeks[0]
+    expect(levels[0]).toBeLessThanOrEqual(levels[1])
+    expect(levels[1]).toBeLessThanOrEqual(levels[2])
+    expect(levels[2]).toBeLessThanOrEqual(levels[3])
+    expect(Math.max(...levels)).toBeLessThanOrEqual(4)
+  })
+
+  it('tolerates an empty work source and keeps the personal grid', () => {
+    const personal = { contributions: 50, weeks: [week([['2026-01-01', 2], ['2026-01-02', 4]])] }
+    const { contributions, weeks } = mergeContributions([personal, { contributions: 0, weeks: [] }])
+    expect(contributions).toBe(50)
+    expect(weeks[0]).toHaveLength(2)
+  })
+
+  it('returns an empty calendar when all sources are empty', () => {
+    expect(
+      mergeContributions([
+        { contributions: 0, weeks: [] },
+        { contributions: 0, weeks: [] },
+      ])
+    ).toEqual({ contributions: 0, weeks: [] })
+  })
+})

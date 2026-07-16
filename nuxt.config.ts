@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     apiBasePath: '',
     apiToken: '',
     githubToken: '',
+    githubTokenWork: '',
     spotifyClientId: '',
     spotifyClientSecret: '',
     spotifyRefreshToken: '',
