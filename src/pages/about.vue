@@ -83,13 +83,13 @@
             <!-- Highlights — the actual wins, not just responsibilities -->
             <ul v-if="entry.highlights?.length" class="mt-3 space-y-2">
               <li
-                v-for="h in entry.highlights"
-                :key="h"
+                v-for="(part, hi) in entry.highlights.map(splitHighlight)"
+                :key="hi"
                 class="flex gap-2.5 text-meta"
               >
                 <span class="text-nw-primary shrink-0 select-none" aria-hidden="true">▸</span>
                 <span>
-                  <span v-if="splitHighlight(h).lead" class="text-nw-text font-medium">{{ splitHighlight(h).lead }} — </span>{{ splitHighlight(h).rest }}
+                  <span v-if="part.lead" class="text-nw-text font-medium">{{ part.lead }} — </span>{{ part.rest }}
                 </span>
               </li>
             </ul>

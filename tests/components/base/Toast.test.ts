@@ -77,6 +77,8 @@ describe('Toast', () => {
 
     const alert = wrapper.find('[role="alert"]')
     expect(alert.classes()).toContain('toast-warning')
+    // warnings interrupt too: assertive alert (symmetry with the error case)
+    expect(alert.attributes('aria-live')).toBe('assertive')
   })
 
   it('renders multiple toasts', async () => {
