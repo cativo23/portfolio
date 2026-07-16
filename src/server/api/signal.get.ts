@@ -1,6 +1,14 @@
+import type { H3Event } from 'h3'
+import { apiFetch } from '~/server/utils/api'
+
 interface NpmPackageData {
   monthly: number
   weekly: number[]
+}
+
+interface InfraStats {
+  containers: number | null
+  stacks: number | null
 }
 
 interface SignalData {
@@ -14,11 +22,18 @@ interface SignalData {
     claudeStyle: NpmPackageData
     nightwire: NpmPackageData
     total: number
+    /**
+     * Total published packages (maintainer:cativo23), live from the registry;
+     * null when the count couldn't be determined (so the UI shows '…', not '0').
+     */
+    packages: number | null
   }
   api: {
     version: string
     status: string
   }
+  /** Live self-hosted infra counts, sourced from portfolio-api. */
+  infra: InfraStats
 }
 
 async function fetchGitHubContributions(token: string): Promise<{ contributions: number; weeks: number[][] }> {
@@ -106,6 +121,37 @@ async function fetchNpmDownloads(pkg: string): Promise<NpmPackageData> {
   return { monthly, weekly }
 }
 
+async function fetchNpmPackageCount(): Promise<number> {
+  // `objects.length` is the exact returned set; size=250 comfortably covers a
+  // personal account, so it won't be capped. Preferred over `total`, which the
+  // registry can inflate for fuzzy maintainer matches.
+  const res = await $fetch<any>(
+    'https://registry.npmjs.org/-/v1/search?text=maintainer:cativo23&size=250',
+    { timeout: 5000 }
+  )
+  // Throw on a malformed response so the caller degrades to null (→ '…') rather
+  // than reporting a misleading "0" as if it were a real count.
+  if (!Array.isArray(res?.objects)) {
+    throw new Error('unexpected npm registry response shape')
+  }
+  return res.objects.length
+}
+
+async function fetchInfraStats(event: H3Event): Promise<InfraStats> {
+  // Unversioned endpoint on portfolio-api (basePath: false). It already degrades
+  // to nulls on a docker-proxy outage; the try/catch guards a transport failure.
+  try {
+    const res = await apiFetch<{ status: string; data: InfraStats }>(
+      event,
+      '/infra/stats',
+      { basePath: false }
+    )
+    return res?.data ?? { containers: null, stacks: null }
+  } catch {
+    return { containers: null, stacks: null }
+  }
+}
+
 async function fetchApiHealth(): Promise<{ version: string; status: string }> {
   try {
     const res = await $fetch<any>('https://api.cativo.dev', { timeout: 5000 })
@@ -121,14 +167,17 @@ async function fetchApiHealth(): Promise<{ version: string; status: string }> {
 export default defineCachedEventHandler(
   async (event) => {
     const { githubToken } = useRuntimeConfig(event)
-    const [gh, repos, lumira, claudeStyle, nightwire, api] = await Promise.allSettled([
-      fetchGitHubContributions(githubToken),
-      fetchGitHubRepos(githubToken),
-      fetchNpmDownloads('lumira'),
-      fetchNpmDownloads('claude-style'),
-      fetchNpmDownloads('@cativo23/nightwire'),
-      fetchApiHealth(),
-    ])
+    const [gh, repos, lumira, claudeStyle, nightwire, api, npmCount, infra] =
+      await Promise.allSettled([
+        fetchGitHubContributions(githubToken),
+        fetchGitHubRepos(githubToken),
+        fetchNpmDownloads('lumira'),
+        fetchNpmDownloads('claude-style'),
+        fetchNpmDownloads('@cativo23/nightwire'),
+        fetchApiHealth(),
+        fetchNpmPackageCount(),
+        fetchInfraStats(event),
+      ])
 
     const ghData = gh.status === 'fulfilled' ? gh.value : { contributions: 0, weeks: [] }
     const repoCount = repos.status === 'fulfilled' ? repos.value : 0
@@ -137,6 +186,11 @@ export default defineCachedEventHandler(
     const claudeStyleDl = claudeStyle.status === 'fulfilled' ? claudeStyle.value : fallbackPkg
     const nightwireDl = nightwire.status === 'fulfilled' ? nightwire.value : fallbackPkg
     const apiData = api.status === 'fulfilled' ? api.value : { version: '...', status: 'unknown' }
+    const packageCount = npmCount.status === 'fulfilled' ? npmCount.value : null
+    const infraData =
+      infra.status === 'fulfilled'
+        ? infra.value
+        : { containers: null, stacks: null }
 
     const data: SignalData = {
       github: {
@@ -149,8 +203,10 @@ export default defineCachedEventHandler(
         claudeStyle: claudeStyleDl,
         nightwire: nightwireDl,
         total: lumiraDl.monthly + claudeStyleDl.monthly + nightwireDl.monthly,
+        packages: packageCount,
       },
       api: apiData,
+      infra: infraData,
     }
 
     return { status: 'success', data }
