@@ -17,7 +17,7 @@ vi.stubGlobal('defineCachedEventHandler', (handler: any) => handler)
 /** Default happy-path routing for every upstream signal.get talks to. */
 function defaultRoute(url: string) {
   if (url.includes('/infra/stats')) {
-    return Promise.resolve({ status: 'success', data: { containers: 20, stacks: 12 } })
+    return Promise.resolve({ status: 'success', data: { services: 17, stacks: 12 } })
   }
   if (url.includes('registry.npmjs.org/-/v1/search')) {
     return Promise.resolve({ objects: [{}, {}, {}, {}] }) // 4 packages
@@ -51,9 +51,9 @@ describe('Signal API', () => {
     expect(result.data.npm.packages).toBe(4)
   })
 
-  it('exposes live container/stack counts from portfolio-api', async () => {
+  it('exposes live service/stack counts from portfolio-api', async () => {
     const result = await handler({} as any)
-    expect(result.data.infra).toEqual({ containers: 20, stacks: 12 })
+    expect(result.data.infra).toEqual({ services: 17, stacks: 12 })
   })
 
   it('requests the infra endpoint under the versioned /api/v1 prefix', async () => {
@@ -72,7 +72,7 @@ describe('Signal API', () => {
       return defaultRoute(url)
     })
     const result = await handler({} as any)
-    expect(result.data.infra).toEqual({ containers: null, stacks: null })
+    expect(result.data.infra).toEqual({ services: null, stacks: null })
   })
 
   it('degrades package count to null when the registry search fails', async () => {
