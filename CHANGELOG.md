@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.15.0] - 2026-07-16
+
+### Added
+- **Display-title type scale** — `--text-title-{display,xl,lg,md}` tokens + `.title-*` classes as the single source for every compressed-title heading, replacing per-page inline `font-size` clamps. (#138)
+- **Experience highlights on `/about`** — deployment-history entries surface role wins (sofIA, ISO 8583 payments, FEL invoicing) with bold project leads and a mixed-case stack line. (#138)
+
+### Changed
+- **Nightwire submodule → v2.0.1 line** — picks up upstream v2.x refinements plus new `faint`/`line` text tokens and a reduced-motion-safe button `:active` press. (#138)
+- **`/now` side-projects + looking-for** rebuilt as semantic `<dl>` spec grids for aligned, legible label/value rows. (#138)
+- **Contact forms** (home + `/contact`) fill the panel width with one unified input style; home Contact adopts a terminal-prompt silhouette. (#138)
+- **Project detail** — hero screenshots letterbox instead of cropping; overview prose capped to a comfortable measure; README badges normalized on dark; stack shown as mixed-case chips. (#138)
+- **Legibility** — primary reading text promoted off the dim tier; informational card stamps floored to a legible size. (#138)
+
+### Fixed
+- **Invisible active pagination page** (black-on-near-black) → legible. (#138)
+- **LinkedIn handle** canonicalized to `carlos-cativo` across the site + JSON-LD. (#138)
+- **Accessibility** — chat send/close meet 44px touch targets; success/info toasts announce politely (assertive reserved for errors/warnings); contact fields re-validate live; pagination scroll respects reduced-motion. (#138)
+
+### Removed
+- **5 orphaned components** (`Badge` + four unused `about/*`) and their tests. (#138)
+
+---
+
 ## [1.14.2] - 2026-07-14
 
 ### Changed
