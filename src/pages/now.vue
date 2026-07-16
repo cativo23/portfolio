@@ -127,34 +127,22 @@
         </NuxtLink>
       </div>
       <div class="panel-body p-0">
-        <div class="kv-row">
-          <span class="kv-label">LUMIRA</span>
-          <span class="kv-value">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · v1.14 shipped with subagent-aware rendering and git-worktree fallback · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~4k downloads/month</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">NOVA-ID</span>
-          <span class="kv-value">Self-hosted identity &amp; SSO platform (OIDC via Ory Hydra) with a role/permissions demo API · actively hardening auth flows and audit logging</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">NIGHTWIRE</span>
-          <span class="kv-value">Compressed dark design system for developer tools · semantic tokens, intensity scale, Tailwind plugin · published on <a href="https://www.npmjs.com/package/@cativo23/nightwire" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · v2 shipped</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">KOVIA</span>
-          <span class="kv-value">Smart pet adoption platform · connects rescue organizations with adopters via an automated scoring engine · NestJS + Nuxt 4 + Prisma + BullMQ</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">VITTBOT</span>
-          <span class="kv-value">Multi-agent crypto trading bot · 3 Claude agents + deterministic Risk Manager (10 hard-coded rules, never delegated to AI) · NestJS</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">CLARIFY</span>
-          <span class="kv-value">AI legal contract auditor (micro-SaaS, alpha) · Nuxt + Supabase RLS + OpenAI + Stripe credits + BullMQ</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-label">THIS SITE</span>
-          <span class="kv-value">The AI chat on this site is mine end-to-end · public chatbot grounded on my CV, now with multi-turn conversation memory and honest fit-boundary framing for comp/role questions · NestJS + Groq + Redis answer-cache · hardened against prompt-injection with a deterministic output sanitizer</span>
-        </div>
+        <dl class="grid grid-cols-[minmax(0,max-content)_1fr] gap-x-6 gap-y-4 px-6 py-6 lg:px-8">
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">LUMIRA</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · v1.14 shipped with subagent-aware rendering and git-worktree fallback · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~4k downloads/month</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">NOVA-ID</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Self-hosted identity &amp; SSO platform (OIDC via Ory Hydra) with a role/permissions demo API · actively hardening auth flows and audit logging</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">NIGHTWIRE</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Compressed dark design system for developer tools · semantic tokens, intensity scale, Tailwind plugin · published on <a href="https://www.npmjs.com/package/@cativo23/nightwire" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · v2 shipped</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">KOVIA</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Smart pet adoption platform · connects rescue organizations with adopters via an automated scoring engine · NestJS + Nuxt 4 + Prisma + BullMQ</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">VITTBOT</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Multi-agent crypto trading bot · 3 Claude agents + deterministic Risk Manager (10 hard-coded rules, never delegated to AI) · NestJS</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">CLARIFY</dt>
+          <dd class="text-nw-text-dim leading-relaxed">AI legal contract auditor (micro-SaaS, alpha) · Nuxt + Supabase RLS + OpenAI + Stripe credits + BullMQ</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1 whitespace-nowrap">THIS SITE</dt>
+          <dd class="text-nw-text-dim leading-relaxed">The AI chat on this site is mine end-to-end · public chatbot grounded on my CV, now with multi-turn conversation memory and honest fit-boundary framing for comp/role questions · NestJS + Groq + Redis answer-cache · hardened against prompt-injection with a deterministic output sanitizer</dd>
+        </dl>
       </div>
     </div>
 
