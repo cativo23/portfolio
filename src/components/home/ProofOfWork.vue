@@ -53,7 +53,7 @@
         </div>
         <div class="metric-cell">
           <div class="m-value" style="color: var(--nw-primary); text-shadow: 0 0 6px rgba(102,153,255,0.3);">
-            4
+            {{ signal?.npm.packages ?? '...' }}
           </div>
           <div class="m-label">NPM Packages</div>
         </div>
@@ -115,8 +115,8 @@
       </div>
       <div class="metric-cell">
         <div class="m-label">CONTAINERS</div>
-        <div class="m-value">16</div>
-        <div class="m-sub">self-hosted · 6 stacks</div>
+        <div class="m-value">{{ signal?.infra.containers ?? '...' }}</div>
+        <div class="m-sub">self-hosted · {{ signal?.infra.stacks ?? '…' }} stacks</div>
       </div>
     </div>
 
@@ -128,9 +128,9 @@
       <span> → </span>
       <span class="text-nw-green">"{{ signal?.api.status ?? '...' }}"</span>
       <span> · </span>
-      <span class="text-nw-yellow">16</span>
+      <span class="text-nw-yellow">{{ signal?.infra.containers ?? '…' }}</span>
       <span> containers · </span>
-      <span class="text-nw-yellow">6</span>
+      <span class="text-nw-yellow">{{ signal?.infra.stacks ?? '…' }}</span>
       <span> stacks</span>
       <span class="inline-block w-[7px] h-[13px] bg-nw-green align-text-bottom" style="animation: nw-caret-blink 1s steps(2) infinite;" />
     </div>
@@ -145,8 +145,9 @@ interface NpmPackageData {
 
 interface SignalData {
   github: { contributions: number; weeks: number[][]; publicRepos: number }
-  npm: { lumira: NpmPackageData | number; claudeStyle: NpmPackageData | number; nightwire: NpmPackageData | number; total: number }
+  npm: { lumira: NpmPackageData | number; claudeStyle: NpmPackageData | number; nightwire: NpmPackageData | number; total: number; packages: number }
   api: { version: string; status: string }
+  infra: { containers: number | null; stacks: number | null }
 }
 
 const { data: raw } = useFetch<{ status: string; data: SignalData }>('/api/signal', {
