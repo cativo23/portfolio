@@ -95,7 +95,7 @@
           Questions about any of this? Reach me at
           <a href="mailto:cativo@cativo.dev" class="text-nw-primary hover:text-nw-primary-hot underline">cativo@cativo.dev</a>.
         </p>
-        <p class="text-[10px] font-stamp uppercase tracking-[0.18em] text-nw-text-faint mt-3">
+        <p class="text-[10px] font-stamp uppercase tracking-[0.18em] text-nw-text-dim mt-3">
           Not legal boilerplate — just how the stack actually works.
         </p>
       </div>
