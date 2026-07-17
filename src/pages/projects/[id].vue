@@ -70,6 +70,21 @@
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-0.5">
         <!-- MAIN -->
         <div class="space-y-0.5 order-2 lg:order-1 min-w-0">
+          <!-- SPINE: problem -> role -> outcome (curated recruiter-skim summary) -->
+          <div v-if="project.problem && project.role && project.outcome" class="panel">
+            <div class="panel-header">
+              <span>SPINE</span>
+            </div>
+            <dl class="grid grid-cols-[minmax(0,max-content)_1fr] gap-x-6 gap-y-4 px-6 py-6 lg:px-8">
+              <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">PROBLEM</dt>
+              <dd class="text-nw-text-dim leading-relaxed">{{ project.problem }}</dd>
+              <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">ROLE</dt>
+              <dd class="text-nw-text-dim leading-relaxed">{{ project.role }}</dd>
+              <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">OUTCOME</dt>
+              <dd class="text-nw-text-dim leading-relaxed">{{ project.outcome }}</dd>
+            </dl>
+          </div>
+
           <!-- KEY FEATURES -->
           <div v-if="project.features && project.features.length > 0" class="panel">
             <div class="panel-header">

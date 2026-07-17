@@ -13,4 +13,7 @@ export interface Project {
     heroImage?: string;
     features?: string[];
     status?: string;
+    problem?: string;
+    role?: string;
+    outcome?: string;
 }
