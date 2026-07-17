@@ -34,6 +34,9 @@ export default defineNuxtConfig({
     spotifyClientId: '',
     spotifyClientSecret: '',
     spotifyRefreshToken: '',
+    // Internal Umami container on space-server_web; over/ridable via NUXT_UMAMI_URL.
+    // The tracker script (/u.js) and event collector (/api/send) proxy to this.
+    umamiUrl: 'http://umami:3000',
     public: {
       baseTitle: 'Carlos Cativo',
       defaultOgImage: '/img/akira.jpeg',
@@ -67,6 +70,16 @@ export default defineNuxtConfig({
         {
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Saira+Extra+Condensed:wght@400;600;700;800&family=Shippori+Mincho+B1:wght@500;700;800&display=swap'
+        },
+      ],
+      script: [
+        // Umami analytics, loaded same-origin (/u.js proxies the tracker) so the
+        // strict CSP stays intact. nuxt-security stamps the nonce needed under
+        // script-src 'strict-dynamic'. website-id is public (sent to every visitor).
+        {
+          src: '/u.js',
+          defer: true,
+          'data-website-id': '2cecff23-b9d4-4d11-8fae-a0037e4a6b42',
         },
       ],
     },
@@ -126,5 +139,7 @@ export default defineNuxtConfig({
     '/api/chat': { security: { xssValidator: false } },
     '/api/contacts': { security: { xssValidator: false } },
     '/api/csp-report': { security: { xssValidator: false } },
+    // Umami event payloads are JSON with URLs/referrers that trip the XSS validator.
+    '/api/send': { security: { xssValidator: false } },
   },
 })

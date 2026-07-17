@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.19.0] - 2026-07-16
+
+### Added
+- **Self-hosted analytics (Umami)** — privacy-focused, cookieless page analytics loaded **same-origin**: the tracker is served first-party from `/u.js` and events proxy through `/api/send` to the internal Umami container, so the site's strict CSP stays `connect-src 'self'` and ad-blockers don't drop first-party requests. The collector forwards the real client IP + User-Agent (needed for Umami's session hashing) and degrades quietly if Umami is unreachable. Dashboard is VPN-gated at analytics.cativo.dev (space-server F48). (#149)
+
+---
+
 ## [1.18.0] - 2026-07-16
 
 ### Added
