@@ -58,6 +58,11 @@
             class="text-nw-primary hover:text-nw-primary-hot transition-colors"
           >X</a>
           <span class="text-nw-text-faint">·</span>
+          <NuxtLink
+            to="/privacy"
+            class="text-nw-primary hover:text-nw-primary-hot transition-colors"
+          >Privacy</NuxtLink>
+          <span class="text-nw-text-faint">·</span>
           <span>© {{ currentYear }}</span>
         </div>
       </div>
