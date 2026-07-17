@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.21.0] - 2026-07-17
+
+### Added
+- **Project detail "SPINE" panel** — a curated problem → role → outcome summary now renders on project detail pages when the backend has curated content for that project, giving recruiters a skimmable summary instead of only the raw README dump. Uses the same `<dl>` label/description pattern already used on /now's spec grids. Falls back to the existing behavior (no panel) for projects without curated content. (#160)
+
+---
+
 ## [1.20.3] - 2026-07-17
 
 ### Fixed
