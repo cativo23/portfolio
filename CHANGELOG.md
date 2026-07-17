@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.20.0] - 2026-07-16
+
+### Added
+- **`/privacy` page** — a themed transparency notice (linked from the footer) covering how the site handles data now that analytics is live: cookieless self-hosted Umami (no consent banner needed — it sets no cookies), plus what the contact form and chat assistant collect. Transparency disclosure, not a consent gate. (#151)
+
+---
+
 ## [1.19.0] - 2026-07-16
 
 ### Added
