@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.20.3] - 2026-07-17
+
+### Fixed
+- **`build-cv-pdf.sh` pointed at the wrong local dev port** — defaulted to the retired `localhost:3001`; now defaults to `localhost:3002`. Dev tooling only, no runtime change. (#157)
+
+### Added
+- **Regression test guarding the `apiFetch` convention** — a static-scan test now fails the suite if any `server/api/**` route references `config.apiBaseUrl` directly instead of going through the centralized `apiFetch()` helper (which forwards the real client IP for per-visitor rate limiting). (#158)
+
+---
+
 ## [1.20.2] - 2026-07-16
 
 ### Fixed
