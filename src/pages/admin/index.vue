@@ -3,7 +3,7 @@
     <div class="font-stamp text-[13px] tracking-[0.14em] uppercase text-nw-text">Dashboard</div>
 
     <!-- Metrics strip -->
-    <div class="grid grid-cols-4 gap-px bg-nw-text-faint border border-nw-text-faint">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-nw-text-faint border border-nw-text-faint">
       <div class="bg-void-warm px-4 py-3">
         <div class="font-stamp text-[9px] tracking-[0.14em] uppercase text-nw-primary mb-1">Projects</div>
         <div class="text-[24px] font-bold text-nw-green leading-none" style="text-shadow: 0 0 8px rgba(122,237,122,0.35);">{{ projectCount }}</div>
