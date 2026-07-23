@@ -129,7 +129,7 @@
       <div class="panel-body p-0">
         <dl class="grid grid-cols-[minmax(0,max-content)_1fr] gap-x-6 gap-y-4 px-6 py-6 lg:px-8">
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">LUMIRA</dt>
-          <dd class="text-nw-text-dim leading-relaxed">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · v1.14 shipped with subagent-aware rendering and git-worktree fallback · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~4k downloads/month</dd>
+          <dd class="text-nw-text-dim leading-relaxed">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · v1.14 shipped with subagent-aware rendering and git-worktree fallback · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~1.8k downloads/month</dd>
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">NOVA-ID</dt>
           <dd class="text-nw-text-dim leading-relaxed">Self-hosted identity &amp; SSO platform (OIDC via Ory Hydra) with a role/permissions demo API · actively hardening auth flows and audit logging</dd>
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">NIGHTWIRE</dt>
