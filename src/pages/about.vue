@@ -90,6 +90,15 @@
                 <span class="text-nw-primary shrink-0 select-none" aria-hidden="true">▸</span>
                 <span>
                   <span v-if="part.lead" class="text-nw-text font-medium">{{ part.lead }} — </span>{{ part.rest }}
+                  <a
+                    v-if="part.lead === 'Payment Service'"
+                    href="https://blog.cativo.dev/payment-service-one-interface-many-processors/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-nw-primary hover:text-nw-primary-hot whitespace-nowrap"
+                  >
+                    Read the full case study →
+                  </a>
                 </span>
               </li>
             </ul>
