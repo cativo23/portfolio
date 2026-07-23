@@ -357,13 +357,13 @@ const profile: Profile = {
 const ossPackages = [
   {
     name: 'lumira',
-    downloads: '~3.4K dl/mo',
+    downloads: '~1.8K dl/mo',
     stack: 'TypeScript · npm',
     description: 'Real-time statusline HUD for Claude Code and Qwen Code. Session analytics, latency overhead widget, quota projection. Zero deps.'
   },
   {
     name: 'nightwire',
-    downloads: '~475 dl/mo',
+    downloads: '~84 dl/mo',
     stack: 'CSS · npm',
     description: 'Dark cyberpunk UI design system. Semantic color roles, neon palette, CLI installer.'
   }
