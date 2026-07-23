@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.21.2] - 2026-07-23
+
+### Added
+- **Link to the new Payment Service case study on /about** — the "Read the full case study →" link under the Payment Service highlight now points to the published blog post at blog.cativo.dev. (#164)
+
+---
+
 ## [1.21.1] - 2026-07-23
 
 ### Fixed
