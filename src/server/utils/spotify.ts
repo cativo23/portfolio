@@ -42,24 +42,56 @@ interface SpotifyCurrentlyPlayingResponse {
   } | null
 }
 
+export interface SpotifyRecentlyPlayedItem {
+  track: string
+  artist: string
+  album: string
+  albumArt?: string
+  spotifyUrl?: string
+  playedAt: string
+}
+
+interface SpotifyRecentlyPlayedResponse {
+  items: {
+    played_at: string
+    track: {
+      name: string
+      artists: SpotifyArtist[]
+      album: {
+        name: string
+        images: SpotifyImage[]
+      }
+      external_urls: {
+        spotify: string
+      }
+    }
+  }[]
+}
+
 let cachedToken: { token: string; expiresAt: number } | null = null
 let cachedState: { data: SpotifyNowPlaying; fetchedAt: number } | null = null
+let cachedRecentlyPlayed: { data: SpotifyRecentlyPlayedItem[]; fetchedAt: number } | null = null
 let rateLimitedUntil = 0
 
 // In-flight dedupe promises
 let inFlightToken: Promise<string> | null = null
 let inFlightNowPlaying: Promise<SpotifyNowPlaying> | null = null
+let inFlightRecentlyPlayed: Promise<SpotifyRecentlyPlayedItem[]> | null = null
 
 // For testing purposes
 export function _clearSpotifyCache() {
   cachedToken = null
   cachedState = null
+  cachedRecentlyPlayed = null
   rateLimitedUntil = 0
   inFlightToken = null
   inFlightNowPlaying = null
+  inFlightRecentlyPlayed = null
 }
 
 const POLL_INTERVAL = 5_000
+const RECENTLY_PLAYED_POLL_INTERVAL = 60_000
+const RECENTLY_PLAYED_LIMIT = 5
 const MAX_CACHE_BYTES = 200_000
 const INFLIGHT_TIMEOUT_MS = 10_000
 
@@ -189,4 +221,84 @@ export async function fetchNowPlaying(clientId: string, clientSecret: string, re
   })()
 
   return inFlightNowPlaying
+}
+
+export async function fetchRecentlyPlayed(clientId: string, clientSecret: string, refreshToken: string): Promise<SpotifyRecentlyPlayedItem[]> {
+  if (!clientId || !clientSecret || !refreshToken) {
+    return []
+  }
+
+  // If we're rate limited, return cached or empty
+  if (Date.now() < rateLimitedUntil) {
+    return cachedRecentlyPlayed?.data ?? []
+  }
+
+  // Fast path: respect the (longer) recently-played poll interval
+  if (cachedRecentlyPlayed && Date.now() - cachedRecentlyPlayed.fetchedAt < RECENTLY_PLAYED_POLL_INTERVAL) {
+    return cachedRecentlyPlayed.data
+  }
+
+  // Dedupe in-flight recently-played requests
+  if (inFlightRecentlyPlayed) {
+    try {
+      return await Promise.race([inFlightRecentlyPlayed, new Promise<SpotifyRecentlyPlayedItem[]>((_, rej) => setTimeout(() => rej(new Error('recently-played timeout')), INFLIGHT_TIMEOUT_MS))])
+    } catch (e) {
+      inFlightRecentlyPlayed = null
+      // continue to start a new fetch
+    }
+  }
+
+  inFlightRecentlyPlayed = (async () => {
+    try {
+      const token = await getAccessToken(clientId, clientSecret, refreshToken)
+
+      const res = await $fetch<SpotifyRecentlyPlayedResponse>(`https://api.spotify.com/v1/me/player/recently-played?limit=${RECENTLY_PLAYED_LIMIT}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        timeout: 5000,
+      }).catch((err) => {
+        console.error('[Spotify API] Request failed:', {
+          message: err.message,
+          status: err.response?.status,
+          data: err.response?._data,
+        })
+        if (err?.response?.status !== 429) {
+          console.warn('[Spotify API] Error fetching recently played:', err.message || err)
+        }
+        throw err
+      })
+
+      const data: SpotifyRecentlyPlayedItem[] = (res?.items ?? []).map(({ played_at, track }) => ({
+        track: track.name,
+        artist: track.artists?.map((a: any) => a.name).join(', '),
+        album: track.album?.name,
+        albumArt: track.album?.images?.[0]?.url,
+        spotifyUrl: track.external_urls?.spotify,
+        playedAt: played_at,
+      }))
+
+      // Defensive cache-size guard (same bound as now-playing)
+      try {
+        const approxSize = JSON.stringify(data).length
+        if (approxSize <= MAX_CACHE_BYTES) {
+          cachedRecentlyPlayed = { data, fetchedAt: Date.now() }
+        } else {
+          console.warn('[Spotify] recently-played response too large to cache (%d bytes), skipping cache', approxSize)
+        }
+      } catch (e) {
+        console.warn('[Spotify] failed to serialize recently-played data for caching', e)
+      }
+
+      return data
+    } catch (err: any) {
+      if (err?.response?.status === 429) {
+        const retryAfter = parseInt(err.response.headers?.get?.('retry-after') || '30', 10)
+        rateLimitedUntil = Date.now() + retryAfter * 1000
+      }
+      return cachedRecentlyPlayed?.data ?? []
+    } finally {
+      inFlightRecentlyPlayed = null
+    }
+  })()
+
+  return inFlightRecentlyPlayed
 }

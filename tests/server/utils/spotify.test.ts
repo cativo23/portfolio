@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { fetchNowPlaying, _clearSpotifyCache } from '../../../src/server/utils/spotify'
+import { fetchNowPlaying, fetchRecentlyPlayed, _clearSpotifyCache } from '../../../src/server/utils/spotify'
 
 // Mock the global $fetch
 const viFetch = vi.fn()
@@ -195,5 +195,91 @@ describe('fetchNowPlaying', () => {
     const res2 = await fetchNowPlaying('c', 's', 'r')
     // res2 should be whatever the second call returned (nothing playing -> false)
     expect(res2.isPlaying).toBe(false)
+  })
+})
+
+describe('fetchRecentlyPlayed', () => {
+  beforeEach(() => {
+    vi.resetAllMocks()
+    vi.useFakeTimers()
+    _clearSpotifyCache()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('should return an empty array if credentials are missing', async () => {
+    const res = await fetchRecentlyPlayed('', '', '')
+    expect(res).toEqual([])
+  })
+
+  it('should get a token and fetch recently played tracks', async () => {
+    viFetch.mockResolvedValueOnce({
+      access_token: 'mock-token',
+      expires_in: 3600,
+    })
+
+    viFetch.mockResolvedValueOnce({
+      items: [
+        {
+          played_at: '2026-08-27T10:00:00Z',
+          track: {
+            name: 'Recent Track',
+            artists: [{ name: 'Recent Artist' }],
+            album: {
+              name: 'Recent Album',
+              images: [{ url: 'recent-art.jpg', height: 300, width: 300 }],
+            },
+            external_urls: { spotify: 'https://spotify.com/recent-track' },
+          },
+        },
+      ],
+    })
+
+    const res = await fetchRecentlyPlayed('client', 'secret', 'refresh')
+
+    expect(res).toEqual([
+      {
+        track: 'Recent Track',
+        artist: 'Recent Artist',
+        album: 'Recent Album',
+        albumArt: 'recent-art.jpg',
+        spotifyUrl: 'https://spotify.com/recent-track',
+        playedAt: '2026-08-27T10:00:00Z',
+      },
+    ])
+
+    expect(viFetch).toHaveBeenNthCalledWith(1, 'https://accounts.spotify.com/api/token', expect.any(Object))
+    expect(viFetch).toHaveBeenNthCalledWith(2, 'https://api.spotify.com/v1/me/player/recently-played?limit=5', {
+      headers: { Authorization: 'Bearer mock-token' },
+      timeout: 5000,
+    })
+  })
+
+  it('should return an empty array on API error', async () => {
+    viFetch.mockResolvedValueOnce({ access_token: 'mock-token', expires_in: 3600 })
+    viFetch.mockRejectedValueOnce(new Error('boom'))
+
+    const res = await fetchRecentlyPlayed('client', 'secret', 'refresh')
+    expect(res).toEqual([])
+  })
+
+  it('should return cached data if called within the recently-played poll interval', async () => {
+    vi.setSystemTime(new Date('2026-01-01T00:00:00Z'))
+
+    viFetch.mockResolvedValueOnce({ access_token: 'token', expires_in: 3600 })
+    viFetch.mockResolvedValueOnce({
+      items: [{ played_at: 't', track: { name: 'Track A', artists: [], album: { images: [] }, external_urls: {} } }],
+    })
+
+    await fetchRecentlyPlayed('c', 's', 'r')
+
+    vi.advanceTimersByTime(5_000)
+
+    const res2 = await fetchRecentlyPlayed('c', 's', 'r')
+
+    expect(res2[0].track).toBe('Track A')
+    expect(viFetch).toHaveBeenCalledTimes(2)
   })
 })
