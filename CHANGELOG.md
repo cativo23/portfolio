@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.22.0] - 2026-08-27
+
+### Added
+- **Recently played tracks on /now** — a new "RECENTLY PLAYED · SPOTIFY" panel always shows the last 5 tracks listened to, alongside the now-playing panel. Backed by a new `/api/spotify/recently-played` endpoint (60s cache, separate from the 5s now-playing poll). (#166)
+- **Ambient Spotify now-playing redesign** — the "NOW PLAYING" panel now shows the current track's blurred album art as an ambient backdrop, with a per-track accent color extracted server-side (`node-vibrant`) replacing the fixed Nightwire cyan. Falls back to the original flat, cyan-accented look when nothing is playing. (#167)
+
+### Changed
+- `scripts/spotify-token.mjs` gains a `--prod` flag to set the Spotify refresh-token secrets directly as GitHub Actions secrets via `gh secret set`, instead of printing them to paste into `.env`.
+
 ## [1.21.2] - 2026-07-23
 
 ### Added

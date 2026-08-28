@@ -19,12 +19,23 @@
     </div>
 
     <!-- NOW PLAYING -->
-    <div class="panel">
-      <div class="panel-header">
-        <span>NOW PLAYING · SPOTIFY</span>
+    <div
+      class="panel now-playing-panel"
+      :style="nowPlaying?.isPlaying && nowPlaying.accentColor ? { '--np-accent': nowPlaying.accentColor } : undefined"
+    >
+      <div class="panel-header" style="position: relative; z-index: 2;">
+        <span :style="nowPlaying?.isPlaying && nowPlaying.accentColor ? { color: 'var(--np-accent)' } : undefined">NOW PLAYING · SPOTIFY</span>
         <NowPlayingBars v-if="nowPlaying?.isPlaying" />
       </div>
-      <div class="panel-body p-4">
+
+      <div
+        v-if="nowPlaying?.isPlaying && nowPlaying.albumArt"
+        class="now-playing-backdrop"
+        :style="{ backgroundImage: `url(${nowPlaying.albumArt})` }"
+      />
+      <div v-if="nowPlaying?.isPlaying && nowPlaying.albumArt" class="now-playing-overlay" />
+
+      <div class="panel-body p-4" style="position: relative; z-index: 2;">
         <div v-if="nowPlaying?.isPlaying" class="flex items-center gap-4">
           <img
             v-if="nowPlaying.albumArt"
@@ -45,7 +56,11 @@
             <div class="flex items-center gap-2">
               <span class="text-nw-text-mute text-[10px] font-mono w-8 text-right shrink-0">{{ formatMs(nowPlaying.progressMs) }}</span>
               <div class="flex-1 h-[3px] bg-nw-text-line rounded-full overflow-hidden">
-                <div class="h-full bg-nw-green rounded-full transition-all duration-1000" :style="{ width: progressPercent + '%' }" />
+                <div
+                  class="h-full rounded-full transition-all duration-1000"
+                  :class="nowPlaying.accentColor ? '' : 'bg-nw-green'"
+                  :style="nowPlaying.accentColor ? { width: progressPercent + '%', background: 'var(--np-accent)' } : { width: progressPercent + '%' }"
+                />
               </div>
               <span class="text-nw-text-mute text-[10px] font-mono w-8 shrink-0">{{ formatMs(nowPlaying.durationMs) }}</span>
             </div>
@@ -61,6 +76,44 @@
         </div>
         <div v-else class="text-nw-text-dim text-xs font-mono py-1">
           Nothing playing right now.
+        </div>
+      </div>
+    </div>
+
+    <!-- RECENTLY PLAYED -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>RECENTLY PLAYED · SPOTIFY</span>
+      </div>
+      <div class="panel-body p-0">
+        <ul v-if="recentlyPlayed.length" class="divide-y divide-nw-text-line">
+          <li
+            v-for="(item, index) in recentlyPlayed"
+            :key="`${item.spotifyUrl}-${item.playedAt}-${index}`"
+            class="flex items-center gap-3 px-4 py-2"
+          >
+            <img
+              v-if="item.albumArt"
+              :src="item.albumArt"
+              :alt="item.album"
+              class="w-8 h-8 rounded-sm border border-nw-text-line shrink-0"
+            />
+            <div class="flex-1 min-w-0">
+              <a
+                :href="item.spotifyUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block text-nw-text font-mono text-xs hover:text-nw-primary-hot transition-colors truncate"
+              >
+                {{ item.track }}
+              </a>
+              <div class="text-nw-text-dim text-[11px] font-mono truncate">{{ item.artist }}</div>
+            </div>
+            <span class="text-nw-text-mute text-[10px] font-mono shrink-0">{{ formatRelativeTime(item.playedAt) }}</span>
+          </li>
+        </ul>
+        <div v-else class="text-nw-text-dim text-xs font-mono py-3 px-4">
+          Nothing tracked yet.
         </div>
       </div>
     </div>
@@ -230,6 +283,7 @@ import NowPlayingBars from '~/components/ui/NowPlayingBars.vue';
 const lastUpdated = '2026-07-14';
 
 const { nowPlaying } = useNowPlaying();
+const { recentlyPlayed } = useRecentlyPlayed();
 
 function formatMs(ms?: number): string {
   if (!ms) return '0:00';
@@ -237,6 +291,17 @@ function formatMs(ms?: number): string {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   return `${minutes}:${String(seconds).padStart(2, '0')}`;
+}
+
+function formatRelativeTime(iso: string): string {
+  const diffMs = Date.now() - new Date(iso).getTime();
+  const minutes = Math.floor(diffMs / 60_000);
+  if (minutes < 1) return 'just now';
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
 }
 
 const progressPercent = computed(() => {
@@ -248,3 +313,34 @@ usePageTitle('Now', {
   description: 'What Carlos Cativo is working on right now — at Blue Medical Guatemala, on side projects, on his self-hosted infra, and what kind of next role he\'s looking for.',
 });
 </script>
+
+<style scoped>
+.now-playing-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.now-playing-backdrop {
+  position: absolute;
+  inset: -30%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(38px) saturate(1.3);
+  opacity: 0.5;
+  transition: opacity 400ms ease;
+  z-index: 0;
+}
+
+.now-playing-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0.88) 78%, rgba(10, 10, 10, 0.96) 100%);
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .now-playing-backdrop {
+    transition: none;
+  }
+}
+</style>
