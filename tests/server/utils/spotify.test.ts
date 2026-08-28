@@ -219,6 +219,79 @@ describe('fetchNowPlaying', () => {
     // res2 should be whatever the second call returned (nothing playing -> false)
     expect(res2.isPlaying).toBe(false)
   })
+
+  it('should attach accentColor extracted from the current track album art', async () => {
+    vi.mocked(Vibrant.from).mockReturnValueOnce({
+      getPalette: () => Promise.resolve({
+        Vibrant: { hex: '#ff6a3d', hsl: [0.05, 0.8, 0.6] },
+        LightVibrant: null,
+        Muted: null,
+        DarkVibrant: null,
+        LightMuted: null,
+        DarkMuted: null,
+      }),
+    } as any)
+
+    viFetch.mockResolvedValueOnce({ access_token: 'token', expires_in: 3600 })
+    viFetch.mockResolvedValueOnce({
+      is_playing: true,
+      progress_ms: 0,
+      item: {
+        name: 'Accent Track',
+        duration_ms: 1000,
+        artists: [{ name: 'Artist' }],
+        album: { name: 'Album', images: [{ url: 'https://i.scdn.co/image/accent', height: 300, width: 300 }] },
+        external_urls: { spotify: 'u' },
+      },
+    })
+
+    const res = await fetchNowPlaying('c', 's', 'r')
+    expect(res.accentColor).toBe('#ff6a3d')
+  })
+
+  it('should not re-extract accentColor when the track has not changed', async () => {
+    vi.setSystemTime(new Date('2026-01-01T00:00:00Z'))
+    vi.mocked(Vibrant.from).mockClear()
+    vi.mocked(Vibrant.from).mockReturnValueOnce({
+      getPalette: () => Promise.resolve({
+        Vibrant: { hex: '#66ddff', hsl: [0.55, 0.8, 0.6] },
+        LightVibrant: null,
+        Muted: null,
+        DarkVibrant: null,
+        LightMuted: null,
+        DarkMuted: null,
+      }),
+    } as any)
+
+    const sameItem = {
+      is_playing: true,
+      progress_ms: 0,
+      item: {
+        name: 'Same Track',
+        duration_ms: 1000,
+        artists: [{ name: 'Artist' }],
+        album: { name: 'Album', images: [{ url: 'https://i.scdn.co/image/same', height: 300, width: 300 }] },
+        external_urls: { spotify: 'u' },
+      },
+    }
+
+    viFetch.mockResolvedValueOnce({ access_token: 'token', expires_in: 3600 })
+    viFetch.mockResolvedValueOnce(sameItem)
+    const res1 = await fetchNowPlaying('c', 's', 'r')
+    expect(res1.accentColor).toBe('#66ddff')
+
+    // Advance past the 5s now-playing POLL_INTERVAL so the *outer* cache expires and
+    // a real fetch happens again — this is what actually exercises the accent-reuse
+    // logic (lastAccent), instead of short-circuiting on the outer cache.
+    vi.advanceTimersByTime(6_000)
+
+    // Cached token is still valid (only 6s passed, expires in 3600s) — no token mock needed.
+    viFetch.mockResolvedValueOnce(sameItem)
+    const res2 = await fetchNowPlaying('c', 's', 'r')
+
+    expect(res2.accentColor).toBe('#66ddff')
+    expect(vi.mocked(Vibrant.from)).toHaveBeenCalledTimes(1)
+  })
 })
 
 describe('fetchRecentlyPlayed', () => {

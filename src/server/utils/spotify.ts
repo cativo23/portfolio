@@ -74,6 +74,7 @@ interface SpotifyRecentlyPlayedResponse {
 let cachedToken: { token: string; expiresAt: number } | null = null
 let cachedState: { data: SpotifyNowPlaying; fetchedAt: number } | null = null
 let cachedRecentlyPlayed: { data: SpotifyRecentlyPlayedItem[]; fetchedAt: number } | null = null
+let lastAccent: { albumArt: string; color: string | undefined } | null = null
 let rateLimitedUntil = 0
 
 // In-flight dedupe promises
@@ -86,6 +87,7 @@ export function _clearSpotifyCache() {
   cachedToken = null
   cachedState = null
   cachedRecentlyPlayed = null
+  lastAccent = null
   rateLimitedUntil = 0
   inFlightToken = null
   inFlightNowPlaying = null
@@ -237,6 +239,18 @@ export async function fetchNowPlaying(clientId: string, clientSecret: string, re
             progressMs: res.progress_ms ?? 0,
             durationMs: res.item.duration_ms ?? 0,
           }
+
+      if (data.isPlaying && data.albumArt) {
+        if (lastAccent && lastAccent.albumArt === data.albumArt) {
+          data.accentColor = lastAccent.color
+        } else {
+          const color = await extractAccentColor(data.albumArt)
+          lastAccent = { albumArt: data.albumArt, color }
+          if (color) {
+            data.accentColor = color
+          }
+        }
+      }
 
       // Defensive cache-size guard
       try {
