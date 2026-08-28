@@ -1,3 +1,5 @@
+import { Vibrant } from 'node-vibrant/node'
+
 export interface SpotifyNowPlaying {
   isPlaying: boolean
   track?: string
@@ -7,6 +9,7 @@ export interface SpotifyNowPlaying {
   spotifyUrl?: string
   progressMs?: number
   durationMs?: number
+  accentColor?: string
 }
 
 interface SpotifyTokenResponse {
@@ -94,6 +97,46 @@ const RECENTLY_PLAYED_POLL_INTERVAL = 60_000
 const RECENTLY_PLAYED_LIMIT = 5
 const MAX_CACHE_BYTES = 200_000
 const INFLIGHT_TIMEOUT_MS = 10_000
+
+const ACCENT_MIN_LIGHTNESS = 0.4
+const ACCENT_TARGET_LIGHTNESS = 0.55
+const ACCENT_EXTRACTION_TIMEOUT_MS = 3_000
+
+function lightenHex(h: number, s: number, l: number): string {
+  const a = s * Math.min(l, 1 - l)
+  const f = (n: number) => {
+    const hueDeg = h * 360
+    const k = (n + hueDeg / 30) % 12
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1)
+    return Math.round(255 * color).toString(16).padStart(2, '0')
+  }
+  return `#${f(0)}${f(8)}${f(4)}`
+}
+
+export async function extractAccentColor(albumArtUrl: string): Promise<string | undefined> {
+  try {
+    const palette = await Promise.race([
+      Vibrant.from(albumArtUrl).getPalette(),
+      new Promise<never>((_, rej) => setTimeout(() => rej(new Error('accent color extraction timeout')), ACCENT_EXTRACTION_TIMEOUT_MS)),
+    ])
+
+    const swatch = palette.Vibrant ?? palette.LightVibrant ?? palette.Muted ?? palette.DarkVibrant ?? palette.LightMuted ?? palette.DarkMuted
+
+    if (!swatch) {
+      return undefined
+    }
+
+    const [h, s, l] = swatch.hsl
+    if (l < ACCENT_MIN_LIGHTNESS) {
+      return lightenHex(h, s, ACCENT_TARGET_LIGHTNESS)
+    }
+
+    return swatch.hex
+  } catch (err: any) {
+    console.warn('[Spotify] failed to extract accent color:', err?.message || err)
+    return undefined
+  }
+}
 
 async function getAccessToken(clientId: string, clientSecret: string, refreshToken: string): Promise<string> {
   if (cachedToken && Date.now() < cachedToken.expiresAt) {

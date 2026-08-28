@@ -1,15 +1,38 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { fetchNowPlaying, fetchRecentlyPlayed, _clearSpotifyCache } from '../../../src/server/utils/spotify'
+import { fetchNowPlaying, fetchRecentlyPlayed, extractAccentColor, _clearSpotifyCache } from '../../../src/server/utils/spotify'
+import { Vibrant } from 'node-vibrant/node'
+
+vi.mock('node-vibrant/node', () => ({
+  Vibrant: {
+    from: vi.fn(),
+  },
+}))
 
 // Mock the global $fetch
 const viFetch = vi.fn()
 global.$fetch = viFetch as any
+
+// Default: no usable swatch — tests that don't care about color extraction
+// (i.e. every existing fetchNowPlaying/fetchRecentlyPlayed test) get accentColor: undefined.
+function defaultVibrantMock() {
+  vi.mocked(Vibrant.from).mockReturnValue({
+    getPalette: () => Promise.resolve({
+      Vibrant: null,
+      LightVibrant: null,
+      Muted: null,
+      DarkVibrant: null,
+      LightMuted: null,
+      DarkMuted: null,
+    }),
+  } as any)
+}
 
 describe('fetchNowPlaying', () => {
   beforeEach(() => {
     vi.resetAllMocks()
     vi.useFakeTimers()
     _clearSpotifyCache()
+    defaultVibrantMock()
   })
 
   afterEach(() => {
@@ -203,6 +226,7 @@ describe('fetchRecentlyPlayed', () => {
     vi.resetAllMocks()
     vi.useFakeTimers()
     _clearSpotifyCache()
+    defaultVibrantMock()
   })
 
   afterEach(() => {
@@ -281,5 +305,75 @@ describe('fetchRecentlyPlayed', () => {
 
     expect(res2[0].track).toBe('Track A')
     expect(viFetch).toHaveBeenCalledTimes(2)
+  })
+})
+
+describe('extractAccentColor', () => {
+  beforeEach(() => {
+    vi.mocked(Vibrant.from).mockClear()
+    defaultVibrantMock()
+  })
+
+  it('should return the Vibrant swatch hex when it is light enough', async () => {
+    vi.mocked(Vibrant.from).mockReturnValueOnce({
+      getPalette: () => Promise.resolve({
+        Vibrant: { hex: '#ff6a3d', hsl: [0.05, 0.8, 0.6] },
+        LightVibrant: null,
+        Muted: null,
+        DarkVibrant: null,
+        LightMuted: null,
+        DarkMuted: null,
+      }),
+    } as any)
+
+    const color = await extractAccentColor('https://i.scdn.co/image/abc')
+    expect(color).toBe('#ff6a3d')
+  })
+
+  it('should lighten a swatch that is too dark instead of returning it as-is', async () => {
+    vi.mocked(Vibrant.from).mockReturnValueOnce({
+      getPalette: () => Promise.resolve({
+        Vibrant: { hex: '#1a0d08', hsl: [0.05, 0.8, 0.1] },
+        LightVibrant: null,
+        Muted: null,
+        DarkVibrant: null,
+        LightMuted: null,
+        DarkMuted: null,
+      }),
+    } as any)
+
+    const color = await extractAccentColor('https://i.scdn.co/image/dark')
+    expect(color).not.toBe('#1a0d08')
+    expect(color).toMatch(/^#[0-9a-f]{6}$/)
+  })
+
+  it('should fall back through the swatch priority order when Vibrant is null', async () => {
+    vi.mocked(Vibrant.from).mockReturnValueOnce({
+      getPalette: () => Promise.resolve({
+        Vibrant: null,
+        LightVibrant: { hex: '#cceeff', hsl: [0.55, 0.6, 0.85] },
+        Muted: null,
+        DarkVibrant: null,
+        LightMuted: null,
+        DarkMuted: null,
+      }),
+    } as any)
+
+    const color = await extractAccentColor('https://i.scdn.co/image/fallback')
+    expect(color).toBe('#cceeff')
+  })
+
+  it('should return undefined when no swatch is usable', async () => {
+    const color = await extractAccentColor('https://i.scdn.co/image/none')
+    expect(color).toBeUndefined()
+  })
+
+  it('should return undefined instead of throwing when Vibrant rejects', async () => {
+    vi.mocked(Vibrant.from).mockReturnValueOnce({
+      getPalette: () => Promise.reject(new Error('decode failed')),
+    } as any)
+
+    const color = await extractAccentColor('https://i.scdn.co/image/broken')
+    expect(color).toBeUndefined()
   })
 })
