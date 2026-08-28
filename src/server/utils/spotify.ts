@@ -1,3 +1,5 @@
+import { Vibrant } from 'node-vibrant/node'
+
 export interface SpotifyNowPlaying {
   isPlaying: boolean
   track?: string
@@ -7,6 +9,7 @@ export interface SpotifyNowPlaying {
   spotifyUrl?: string
   progressMs?: number
   durationMs?: number
+  accentColor?: string
 }
 
 interface SpotifyTokenResponse {
@@ -71,6 +74,7 @@ interface SpotifyRecentlyPlayedResponse {
 let cachedToken: { token: string; expiresAt: number } | null = null
 let cachedState: { data: SpotifyNowPlaying; fetchedAt: number } | null = null
 let cachedRecentlyPlayed: { data: SpotifyRecentlyPlayedItem[]; fetchedAt: number } | null = null
+let lastAccent: { albumArt: string; color: string | undefined } | null = null
 let rateLimitedUntil = 0
 
 // In-flight dedupe promises
@@ -83,6 +87,7 @@ export function _clearSpotifyCache() {
   cachedToken = null
   cachedState = null
   cachedRecentlyPlayed = null
+  lastAccent = null
   rateLimitedUntil = 0
   inFlightToken = null
   inFlightNowPlaying = null
@@ -94,6 +99,66 @@ const RECENTLY_PLAYED_POLL_INTERVAL = 60_000
 const RECENTLY_PLAYED_LIMIT = 5
 const MAX_CACHE_BYTES = 200_000
 const INFLIGHT_TIMEOUT_MS = 10_000
+
+const ACCENT_MIN_LIGHTNESS = 0.4
+const ACCENT_TARGET_LIGHTNESS = 0.55
+const ACCENT_EXTRACTION_TIMEOUT_MS = 3_000
+
+function lightenHex(h: number, s: number, l: number): string {
+  const a = s * Math.min(l, 1 - l)
+  const f = (n: number) => {
+    const hueDeg = h * 360
+    const k = (n + hueDeg / 30) % 12
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1)
+    return Math.round(255 * color).toString(16).padStart(2, '0')
+  }
+  return `#${f(0)}${f(8)}${f(4)}`
+}
+
+// Spotify serves album art exclusively from this CDN. Reject anything else before it
+// ever reaches Vibrant/Jimp's HTTP fetch — the URL comes from Spotify's own API response,
+// but validating the host anyway avoids handing an unvalidated URL to a server-side
+// fetch (SSRF hardening in depth).
+const ALLOWED_ALBUM_ART_HOSTS = /(^|\.)scdn\.co$/
+
+function isAllowedAlbumArtUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url)
+    return parsed.protocol === 'https:' && ALLOWED_ALBUM_ART_HOSTS.test(parsed.hostname)
+  } catch {
+    return false
+  }
+}
+
+export async function extractAccentColor(albumArtUrl: string): Promise<string | undefined> {
+  if (!isAllowedAlbumArtUrl(albumArtUrl)) {
+    console.warn('[Spotify] refusing to extract accent color from untrusted host:', albumArtUrl)
+    return undefined
+  }
+
+  try {
+    const palette = await Promise.race([
+      Vibrant.from(albumArtUrl).getPalette(),
+      new Promise<never>((_, rej) => setTimeout(() => rej(new Error('accent color extraction timeout')), ACCENT_EXTRACTION_TIMEOUT_MS)),
+    ])
+
+    const swatch = palette.Vibrant ?? palette.LightVibrant ?? palette.Muted ?? palette.DarkVibrant ?? palette.LightMuted ?? palette.DarkMuted
+
+    if (!swatch) {
+      return undefined
+    }
+
+    const [h, s, l] = swatch.hsl
+    if (l < ACCENT_MIN_LIGHTNESS) {
+      return lightenHex(h, s, ACCENT_TARGET_LIGHTNESS)
+    }
+
+    return swatch.hex
+  } catch (err: any) {
+    console.warn('[Spotify] failed to extract accent color:', err?.message || err)
+    return undefined
+  }
+}
 
 async function getAccessToken(clientId: string, clientSecret: string, refreshToken: string): Promise<string> {
   if (cachedToken && Date.now() < cachedToken.expiresAt) {
@@ -194,6 +259,18 @@ export async function fetchNowPlaying(clientId: string, clientSecret: string, re
             progressMs: res.progress_ms ?? 0,
             durationMs: res.item.duration_ms ?? 0,
           }
+
+      if (data.isPlaying && data.albumArt) {
+        if (lastAccent && lastAccent.albumArt === data.albumArt) {
+          data.accentColor = lastAccent.color
+        } else {
+          const color = await extractAccentColor(data.albumArt)
+          lastAccent = { albumArt: data.albumArt, color }
+          if (color) {
+            data.accentColor = color
+          }
+        }
+      }
 
       // Defensive cache-size guard
       try {
