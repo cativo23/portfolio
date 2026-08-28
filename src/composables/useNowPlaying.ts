@@ -9,6 +9,7 @@ interface NowPlayingData {
   spotifyUrl?: string
   progressMs?: number
   durationMs?: number
+  accentColor?: string
 }
 
 // Singletons so multiple components sharing this composable don't create duplicate intervals
