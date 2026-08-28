@@ -22,7 +22,7 @@ if (!clientId || !clientSecret) {
 
 const PORT = 8888;
 const REDIRECT_URI = `http://127.0.0.1:${PORT}/callback`;
-const SCOPES = 'user-read-currently-playing user-read-playback-state';
+const SCOPES = 'user-read-currently-playing user-read-playback-state user-read-recently-played';
 
 const authUrl = new URL('https://accounts.spotify.com/authorize');
 authUrl.searchParams.set('client_id', clientId);
