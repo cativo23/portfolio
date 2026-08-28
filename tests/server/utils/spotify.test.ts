@@ -449,4 +449,27 @@ describe('extractAccentColor', () => {
     const color = await extractAccentColor('https://i.scdn.co/image/broken')
     expect(color).toBeUndefined()
   })
+
+  it('should refuse to extract from a URL not on Spotify\'s CDN, without calling Vibrant', async () => {
+    vi.mocked(Vibrant.from).mockReturnValueOnce({
+      getPalette: () => Promise.resolve({
+        Vibrant: { hex: '#ff6a3d', hsl: [0.05, 0.8, 0.6] },
+        LightVibrant: null,
+        Muted: null,
+        DarkVibrant: null,
+        LightMuted: null,
+        DarkMuted: null,
+      }),
+    } as any)
+
+    const color = await extractAccentColor('https://evil.example.com/ssrf-probe')
+    expect(color).toBeUndefined()
+    expect(Vibrant.from).not.toHaveBeenCalled()
+  })
+
+  it('should refuse a non-https URL even on an allowed host', async () => {
+    const color = await extractAccentColor('http://i.scdn.co/image/insecure')
+    expect(color).toBeUndefined()
+    expect(Vibrant.from).not.toHaveBeenCalled()
+  })
 })

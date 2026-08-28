@@ -115,7 +115,27 @@ function lightenHex(h: number, s: number, l: number): string {
   return `#${f(0)}${f(8)}${f(4)}`
 }
 
+// Spotify serves album art exclusively from this CDN. Reject anything else before it
+// ever reaches Vibrant/Jimp's HTTP fetch — the URL comes from Spotify's own API response,
+// but validating the host anyway avoids handing an unvalidated URL to a server-side
+// fetch (SSRF hardening in depth).
+const ALLOWED_ALBUM_ART_HOSTS = /(^|\.)scdn\.co$/
+
+function isAllowedAlbumArtUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url)
+    return parsed.protocol === 'https:' && ALLOWED_ALBUM_ART_HOSTS.test(parsed.hostname)
+  } catch {
+    return false
+  }
+}
+
 export async function extractAccentColor(albumArtUrl: string): Promise<string | undefined> {
+  if (!isAllowedAlbumArtUrl(albumArtUrl)) {
+    console.warn('[Spotify] refusing to extract accent color from untrusted host:', albumArtUrl)
+    return undefined
+  }
+
   try {
     const palette = await Promise.race([
       Vibrant.from(albumArtUrl).getPalette(),
