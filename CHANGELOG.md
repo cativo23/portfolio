@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.22.2] - 2026-08-30
+
+### Changed
+- **Project heroes rebuilt in the Nightwire palette.** They were still Tokyo Night and broke three rules written in `.nightwire/DESIGN.md`: a navy background gradient where the system requires pure `#000000` and forbids gradients, rounded chips where it allows only sharp edges, and four chip colours carrying no meaning where colour must always be semantic. Colour now follows the system's own table — blue for UI chrome, green for data values, cyan for metadata — and each hero states real, verified figures about its own project. Total hero weight drops from 66 KB to 43 KB. (#171)
+
+### Added
+- **`scripts/build-project-heroes.py`** — regenerates all fifteen heroes from the live project registry, so a palette change is one edit and one command instead of fifteen hand-edited SVGs. Standard library only. Projects with no verifiable figure ship with no metrics row rather than an invented one.
+
+### Fixed
+- **Stale figures in four project records**, corrected against live sources: lumira (npm reported 2,050 downloads/month, not 3.5K; 55 published releases, not "15+"), portfolio-api (54 releases and 96.9% line coverage, against "43 releases, 94%" in the tagline and "32+" in the outcome), space-server (42 containers across 21 public subdomains, up from a "20 across 12" snapshot), and nightwire (20 git tags, not 19). The lumira download count is now removed rather than restated — it is a figure that goes stale on its own.
+- **Quote escaping in the hero generator's attribute context** — `aria-label` was fed by a text-node escaper, so a double quote in a project tagline would have closed the attribute early. No record contained one.
+
+### Removed
+- `cliproxy-qwen-monitor.svg` — referenced by neither the repo nor the production registry.
+
+---
+
 ## [1.22.1] - 2026-08-30
 
 ### Added
