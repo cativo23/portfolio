@@ -1,64 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480" role="img" aria-label="portfolio-api — Production NestJS REST API powering cativo.dev">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0a0e1a"/>
-      <stop offset="100%" stop-color="#1a1b26"/>
-    </linearGradient>
-    <filter id="softGlow" x="-10%" y="-10%" width="120%" height="120%">
-      <feGaussianBlur stdDeviation="1.4" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <style>
-      .mono { font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, 'Courier New', monospace; }
-      .sans { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    </style>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480" role="img" aria-label="portfolio-api — Production NestJS REST API powering cativo.dev. 54 releases, 96% line coverage, JWT + API keys, 3-tier rate limiting">
+  <style>
+    .mono  { font-family: 'JetBrains Mono','Cascadia Mono',Consolas,'Courier New',monospace; }
+    .stamp { font-family: 'Saira Extra Condensed',Impact,'Arial Narrow',sans-serif; }
+    .title { font-family: 'Noto Serif Display','Times New Roman',serif; }
+    .kanji { font-family: 'Shippori Mincho B1',YuMincho,serif; }
+  </style>
 
-  <rect width="1200" height="480" fill="url(#bg)"/>
+  <rect width="1200" height="480" fill="#000000"/>
+  <rect width="1200" height="46" fill="#0a0a0a"/>
+  <rect y="46" width="1200" height="1" fill="rgba(255,255,255,0.12)"/>
+  <text class="stamp" x="56" y="30" font-size="15" fill="#6699ff" letter-spacing="2.2">CASE-0002 · PORTFOLIO-API</text>
+  <text class="kanji" x="1144" y="30" font-size="15" fill="#5a5a5a" text-anchor="end">接続基盤</text>
 
-  <g opacity="0.06" stroke="#7aa2f7" stroke-width="1">
-    <line x1="0"   y1="120" x2="1200" y2="120"/>
-    <line x1="0"   y1="360" x2="1200" y2="360"/>
-    <line x1="60"  y1="0"   x2="60"   y2="480"/>
-    <line x1="1140" y1="0"  x2="1140" y2="480"/>
+  <g transform="translate(56,176) scale(0.82,1)">
+    <text class="title" x="0" y="0" font-size="76" fill="#ffffff">portfolio-api</text>
   </g>
 
-  <text class="mono" x="60" y="80" font-size="14" fill="#7aa2f7" opacity="0.65">cativo23@github:~$ yarn start:debug</text>
+  <text class="mono" x="56" y="228" font-size="22" fill="#aaaaaa">Production NestJS REST API powering cativo.dev. 54 releases, 96% line</text>
+  <text class="mono" x="56" y="258" font-size="22" fill="#aaaaaa">coverage, JWT + API keys, 3-tier rate limiting.</text>
+  <text class="mono" x="56" y="294" font-size="14" fill="#5a5a5a">JWT and API-key auth · tiered per-endpoint rate limiting</text>
 
-  <g class="mono" font-size="22" fill="#7aa2f7" filter="url(#softGlow)" font-weight="600">
-    <text x="60" y="151" xml:space="preserve">                  __  ___     ___                    _</text>
-    <text x="60" y="177" xml:space="preserve">   ___  ___  ____/ /_/ _/__  / (_)__  _______ ____  (_)</text>
-    <text x="60" y="203" xml:space="preserve">  / _ \/ _ \/ __/ __/ _/ _ \/ / / _ \/___/ _ `/ _ \/ /</text>
-    <text x="60" y="229" xml:space="preserve"> / .__/\___/_/  \__/_/ \___/_/_/\___/    \_,_/ .__/_/</text>
-    <text x="60" y="255" xml:space="preserve">/_/                                         /_/</text>
-  </g>
+  <rect x="56" y="292" width="1088" height="1" fill="rgba(255,255,255,0.06)"/>
+  <text class="stamp" x="56" y="330" font-size="12" fill="#6699ff" letter-spacing="1.6">RELEASES</text>
+  <text class="mono" x="56" y="360" font-size="25" fill="#7aed7a">54</text>
+  <text class="stamp" x="178" y="330" font-size="12" fill="#6699ff" letter-spacing="1.6">LINE COVERAGE</text>
+  <text class="mono" x="178" y="360" font-size="25" fill="#7aed7a">96.9%</text>
 
-  <rect x="684" y="237" width="12" height="22" fill="#7aa2f7" opacity="0.85"/>
+  <rect x="56" y="404" width="94" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text class="mono" x="103" y="424" font-size="12" fill="#66ddff" text-anchor="middle">NestJS 11</text>
+  <rect x="158" y="404" width="102" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text class="mono" x="209" y="424" font-size="12" fill="#66ddff" text-anchor="middle">TypeScript</text>
+  <rect x="268" y="404" width="78" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text class="mono" x="307" y="424" font-size="12" fill="#66ddff" text-anchor="middle">TypeORM</text>
+  <rect x="354" y="404" width="78" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text class="mono" x="393" y="424" font-size="12" fill="#66ddff" text-anchor="middle">MySQL 8</text>
+  <rect x="440" y="404" width="62" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text class="mono" x="471" y="424" font-size="12" fill="#66ddff" text-anchor="middle">Redis</text>
 
-  <text class="sans" x="60" y="320" font-size="26" fill="#c0caf5" font-weight="500">Production NestJS REST API powering cativo.dev</text>
-  <text class="sans" x="60" y="350" font-size="15" fill="#a9b1d6" opacity="0.85">35+ releases · 94% coverage · JWT + API keys · 3-tier rate limiting</text>
-
-  <g class="mono" font-size="13">
-      <g transform="translate(60,408)">
-        <rect width="108" height="32" rx="6" ry="6" fill="#1f2335" stroke="#f7768e" stroke-opacity="0.45"/>
-        <text x="54" y="21" fill="#f7768e" text-anchor="middle">NestJS 11</text>
-      </g>
-      <g transform="translate(178,408)">
-        <rect width="92" height="32" rx="6" ry="6" fill="#1f2335" stroke="#7aa2f7" stroke-opacity="0.45"/>
-        <text x="46" y="21" fill="#7aa2f7" text-anchor="middle">TypeORM</text>
-      </g>
-      <g transform="translate(280,408)">
-        <rect width="92" height="32" rx="6" ry="6" fill="#1f2335" stroke="#7aa2f7" stroke-opacity="0.45"/>
-        <text x="46" y="21" fill="#7aa2f7" text-anchor="middle">MySQL 8</text>
-      </g>
-      <g transform="translate(382,408)">
-        <rect width="76" height="32" rx="6" ry="6" fill="#1f2335" stroke="#f7768e" stroke-opacity="0.45"/>
-        <text x="38" y="21" fill="#f7768e" text-anchor="middle">Redis</text>
-      </g>
-  </g>
-
-  <text class="mono" x="1140" y="430" font-size="12" fill="#565f89" text-anchor="end" opacity="0.7">MIT · cativo23/portfolio-api</text>
+  <text class="mono" x="1144" y="424" font-size="12" fill="#66ddff" text-anchor="end">api.cativo.dev/docs</text>
 </svg>
