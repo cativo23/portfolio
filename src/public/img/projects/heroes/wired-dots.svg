@@ -1,63 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480" role="img" aria-label="wired-dots — Cyberpunk Hyprland setup for Arch Linux">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0a0e1a"/>
-      <stop offset="100%" stop-color="#1a1b26"/>
-    </linearGradient>
-    <filter id="softGlow" x="-10%" y="-10%" width="120%" height="120%">
-      <feGaussianBlur stdDeviation="1.4" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <style>
-      .mono { font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, 'Courier New', monospace; }
-      .sans { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    </style>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480" role="img" aria-label="wired-dots — Cyberpunk Hyprland setup for Arch — one script from fresh install to NERV-grade desktop. Tokyo Night, Wayland, hardware-agnostic">
+  <style>
+    .mono  { font-family: 'JetBrains Mono','Cascadia Mono',Consolas,'Courier New',monospace; }
+    .stamp { font-family: 'Saira Extra Condensed',Impact,'Arial Narrow',sans-serif; }
+    .title { font-family: 'Noto Serif Display','Times New Roman',serif; }
+    .kanji { font-family: 'Shippori Mincho B1',YuMincho,serif; }
+  </style>
 
-  <rect width="1200" height="480" fill="url(#bg)"/>
+  <rect width="1200" height="480" fill="#000000"/>
+  <rect width="1200" height="46" fill="#0a0a0a"/>
+  <rect y="46" width="1200" height="1" fill="rgba(255,255,255,0.12)"/>
+  <text class="stamp" x="56" y="30" font-size="15" fill="#6699ff" letter-spacing="2.2">CASE-0011 · WIRED-DOTS</text>
+  <text class="kanji" x="1144" y="30" font-size="15" fill="#5a5a5a" text-anchor="end">環境設定</text>
 
-  <g opacity="0.06" stroke="#9ece6a" stroke-width="1">
-    <line x1="0"   y1="120" x2="1200" y2="120"/>
-    <line x1="0"   y1="360" x2="1200" y2="360"/>
-    <line x1="60"  y1="0"   x2="60"   y2="480"/>
-    <line x1="1140" y1="0"  x2="1140" y2="480"/>
+  <g transform="translate(56,176) scale(0.82,1)">
+    <text class="title" x="0" y="0" font-size="76" fill="#ffffff">wired-dots</text>
   </g>
 
-  <text class="mono" x="60" y="80" font-size="14" fill="#7aa2f7" opacity="0.65">cativo23@github:~$ ./install.sh --kb-layout=us</text>
+  <text class="mono" x="56" y="228" font-size="22" fill="#aaaaaa">Cyberpunk Hyprland setup for Arch — one script from fresh install to</text>
+  <text class="mono" x="56" y="258" font-size="22" fill="#aaaaaa">NERV-grade desktop. Tokyo Night, Wayland, hardware-agnostic.</text>
+  <text class="mono" x="56" y="294" font-size="14" fill="#5a5a5a">one script on a fresh Arch install · hardware-agnostic</text>
 
-  <g class="mono" font-size="22" fill="#9ece6a" filter="url(#softGlow)" font-weight="600">
-    <text x="60" y="164" xml:space="preserve">         _            __       __     __</text>
-    <text x="60" y="190" xml:space="preserve"> _    __(_)______ ___/ /______/ /__  / /____</text>
-    <text x="60" y="216" xml:space="preserve">| |/|/ / / __/ -_) _  /___/ _  / _ \/ __(_-&lt;</text>
-    <text x="60" y="242" xml:space="preserve">|__,__/_/_/  \__/\_,_/    \_,_/\___/\__/___/</text>
-  </g>
 
-  <rect x="644" y="224" width="12" height="22" fill="#9ece6a" opacity="0.85"/>
 
-  <text class="sans" x="60" y="320" font-size="26" fill="#c0caf5" font-weight="500">Cyberpunk Hyprland setup for Arch Linux</text>
-  <text class="sans" x="60" y="350" font-size="15" fill="#a9b1d6" opacity="0.85">One script · hardware-agnostic · Tokyo Night · Wayland</text>
+  <rect x="56" y="404" width="86" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text class="mono" x="99" y="424" font-size="12" fill="#66ddff" text-anchor="middle">Hyprland</text>
+  <rect x="150" y="404" width="78" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text class="mono" x="189" y="424" font-size="12" fill="#66ddff" text-anchor="middle">Wayland</text>
+  <rect x="236" y="404" width="102" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text class="mono" x="287" y="424" font-size="12" fill="#66ddff" text-anchor="middle">Arch Linux</text>
+  <rect x="346" y="404" width="78" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text class="mono" x="385" y="424" font-size="12" fill="#66ddff" text-anchor="middle">Bash 5+</text>
+  <rect x="432" y="404" width="70" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
+  <text class="mono" x="467" y="424" font-size="12" fill="#66ddff" text-anchor="middle">Waybar</text>
 
-  <g class="mono" font-size="13">
-      <g transform="translate(60,408)">
-        <rect width="100" height="32" rx="6" ry="6" fill="#1f2335" stroke="#7aa2f7" stroke-opacity="0.45"/>
-        <text x="50" y="21" fill="#7aa2f7" text-anchor="middle">Hyprland</text>
-      </g>
-      <g transform="translate(170,408)">
-        <rect width="68" height="32" rx="6" ry="6" fill="#1f2335" stroke="#7dcfff" stroke-opacity="0.45"/>
-        <text x="34" y="21" fill="#7dcfff" text-anchor="middle">Arch</text>
-      </g>
-      <g transform="translate(248,408)">
-        <rect width="68" height="32" rx="6" ry="6" fill="#1f2335" stroke="#9ece6a" stroke-opacity="0.45"/>
-        <text x="34" y="21" fill="#9ece6a" text-anchor="middle">Bash</text>
-      </g>
-      <g transform="translate(326,408)">
-        <rect width="92" height="32" rx="6" ry="6" fill="#1f2335" stroke="#bb9af7" stroke-opacity="0.45"/>
-        <text x="46" y="21" fill="#bb9af7" text-anchor="middle">Wayland</text>
-      </g>
-  </g>
-
-  <text class="mono" x="1140" y="430" font-size="12" fill="#565f89" text-anchor="end" opacity="0.7">v1.0.0-rc3 · MIT · cativo23/wired-dots</text>
+  <text class="mono" x="1144" y="424" font-size="12" fill="#66ddff" text-anchor="end">github.com/cativo23/wired-dots</text>
 </svg>
