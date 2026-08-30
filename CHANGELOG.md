@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.22.1] - 2026-08-30
+
+### Added
+- **Hero image for the `pokemon-route` project entry** — `pokemon.cativo.dev`, a route for playing the whole Pokémon series with no story repeated, is now a project on the registry. Follows the existing hero pattern (1200×480, Tokyo Night, mono prompt, figlet title), with the site's own twelve-stop era ramp in place of the usual ornament so the image describes the project rather than only matching the palette. (#169)
+
+---
+
 ## [1.22.0] - 2026-08-27
 
 ### Added
