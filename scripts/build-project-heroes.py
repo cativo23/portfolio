@@ -85,7 +85,13 @@ BLUE, GREEN, CYAN = "#6699ff", "#7aed7a", "#66ddff"
 TEXT, TEXT_DIM, TEXT_MUTE = "#ffffff", "#aaaaaa", "#5a5a5a"
 
 W, HH, HDR, PAD = 1200, 480, 46, 56
+# Dos escapes, porque los contextos son distintos. `e` vale para el texto de
+# un nodo, donde solo < y & son especiales. `a` es para valores de atributo:
+# ahi unas comillas cerrarian el atributo antes de tiempo y el resto del texto
+# se parsearia como marcado. Estos SVG se sirven desde cativo.dev y, abiertos
+# por su URL directa, se renderizan como documento en ese origen.
 e = lambda s: H.escape(str(s), quote=False)
+a = lambda s: H.escape(str(s), quote=True)
 
 
 def wrap(text, limit, lines=2):
@@ -159,7 +165,7 @@ def hero(s):
 
   <text class="mono" x="%d" y="424" font-size="12" fill="%s" text-anchor="end">%s</text>
 </svg>
-''' % (W, HH, W, HH, e(s["alt"]),
+''' % (W, HH, W, HH, a(s["alt"]),
        W, HH, VOID, W, HDR, VOID_WARM, HDR, W, LINE,
        PAD, BLUE, e(s["label"]), W - PAD, TEXT_MUTE, e(s["kanji"]),
        title, head, sub, body, chips,
