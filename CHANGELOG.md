@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.22.3] - 2026-08-30
+
+### Fixed
+- **The project registry rendered empty when `/projects` was opened directly.** Landing on the page from a search result, a shared link or a bookmark showed `0 ENTRIES · NO ACTIVE CASE FILES`, while reaching it through the nav worked. `useProjects()` creates its refs inside the composable, and `useAsyncData` only serialises what its handler *returns* — so on hydration it found the cached `projects-page` key, skipped the handler, and left those refs empty. Nothing threw and no request was made, which is why the console stayed clean and no call to `/api/projects` appeared. The page now reads `displayed` and `pagination` from `useAsyncData`'s own data, and page changes go through a watched ref instead of a second manual load path. (#173)
+
+---
+
 ## [1.22.2] - 2026-08-30
 
 ### Changed
