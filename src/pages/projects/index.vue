@@ -109,40 +109,43 @@ usePageTitle('Case Files', {
 
 const route = useRoute()
 const router = useRouter()
-const { projects, pagination, loading, error, fetchProjects } = useProjects()
-
-const currentPage = computed(() => {
-  const raw = Number(route.query.page)
-  if (!Number.isFinite(raw) || raw < 1) return 1
-  return Math.floor(raw)
-})
+// Solo la funcion: los refs internos del composable no sobreviven a la
+// hidratacion, asi que lo que se pinta tiene que salir de useAsyncData.
+const { fetchProjects } = useProjects()
 
 const itemsPerPage = 6
-const displayed = computed(() => projects.value ?? [])
 
-async function loadProjects(page: number = currentPage.value) {
-  try {
-    await fetchProjects({ page, per_page: itemsPerPage })
-    if (import.meta.client) {
-      router.replace({
-        query: { ...route.query, page: page > 1 ? page : undefined },
-      })
-    }
-    return projects.value
-  } catch (_e) {
-    return []
-  }
-}
+const page = ref((() => {
+  const raw = Number(route.query.page)
+  return !Number.isFinite(raw) || raw < 1 ? 1 : Math.floor(raw)
+})())
 
-function handlePageChange(page: number) {
-  loadProjects(page)
+/* El payload es la fuente de verdad.
+ *
+ * Antes se leia de los refs de useProjects() y se usaba useAsyncData solo para
+ * disparar la carga. En el servidor funcionaba: el handler corria, llenaba los
+ * refs y el SSR pintaba las fichas. Pero useAsyncData solo serializa lo que su
+ * handler DEVUELVE, no esos refs -- asi que al hidratar encontraba la clave ya
+ * cacheada, no volvia a ejecutar el handler, y los refs se quedaban vacios.
+ * Resultado: entrar directo a /projects mostraba "0 ENTRIES", mientras que
+ * llegar navegando desde el menu funcionaba, porque ahi no hay payload previo. */
+const { data, pending: loading, error } = await useAsyncData(
+  'projects-page',
+  () => fetchProjects({ page: page.value, per_page: itemsPerPage }),
+  { watch: [page] },
+)
+
+const displayed = computed(() => data.value?.data ?? [])
+const pagination = computed(() => data.value?.meta?.pagination ?? null)
+
+function handlePageChange(next: number) {
+  page.value = next
   if (import.meta.client) {
+    router.replace({ query: { ...route.query, page: next > 1 ? next : undefined } })
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })
   }
 }
-
-await useAsyncData('projects-page', () => loadProjects())
 
 function formatYear(dateString?: string) {
   if (!dateString) return ''
