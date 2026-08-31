@@ -41,3 +41,6 @@ coverage-*.json
 
 # Security assessment — NEVER commit (contains live creds, infra map, PoCs)
 SECURITY-ASSESSMENT.md
+
+# El proyecto usa yarn; un package-lock.json solo puede desincronizarse.
+package-lock.json
