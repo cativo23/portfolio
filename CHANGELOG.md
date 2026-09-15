@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.22.4] - 2026-09-15
+
+### Changed
+- **`/now` page refreshed for September 2026.** Work-in-progress entries now describe skills, patterns, and impact rather than naming specific Blue Medical internal project names and vendor integrations, following a disclosure-risk review. Removed completed/stale learning items, updated job-search status to actively looking, refreshed Lumira's version and download count, and noted the GitHub heatmap feature under this site's own changelog entry. `lastUpdated` bumped to 2026-09-15.
+
+---
+
 ## [1.22.3] - 2026-08-30
 
 ### Fixed
