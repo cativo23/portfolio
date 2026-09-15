@@ -125,16 +125,6 @@
       </div>
       <div class="panel-body p-6 lg:p-8 space-y-5">
         <div>
-          <div class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-cyan mb-2">▶ ACTIVELY BUILDING</div>
-          <ul class="space-y-3">
-            <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-              <span class="text-nw-green shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">CCCV CRM</span> — building the internal CRM for Blue Medical's commercial and medical operations. Laravel backend wired to the existing service mesh, centralizing doctor affiliations, commercial workflows, and scheduling data.</span>
-            </li>
-          </ul>
-        </div>
-
-        <div>
           <div class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-primary mb-2">● OWNING IN PRODUCTION</div>
           <p class="text-meta mb-2">
             Systems I built that are now on stable cadence — maintenance, hardening, and incremental improvements rather than ground-up new builds.
@@ -142,19 +132,19 @@
           <ul class="space-y-2">
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">sofIA</span> — primary author of a multi-agent voice system for healthcare scheduling, live in production. Built on ElevenLabs ConvAI + n8n with a FastAPI + Nuxt management platform. Recently tightened the validation layer around the LLM; now extending it to a WhatsApp confirmation channel alongside voice.</span>
+              <span>A multi-agent voice system for healthcare scheduling — built and maintained end-to-end, live in production, stable.</span>
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">Payment Service</span> — multi-gateway abstraction stable in production, recently extended with a new payment provider. Strategy Pattern keeps each integration scoped to its own DTO, strategy class, and job queue.</span>
+              <span>A multi-gateway payment abstraction — Strategy Pattern keeps each integration scoped to its own DTO, strategy class, and job queue. Recently extended with a new provider.</span>
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">Invoice Service</span> — Guatemala FEL e-invoicing through an authorized provider, with a Strategy Pattern for future provider swaps. SAP integration, multi-establishment support. Now expanding the tax-model seam to support Costa Rica.</span>
+              <span>A government-authorized e-invoicing compliance service — Strategy Pattern for provider swaps, multi-establishment support. Recently extended to a second country's tax model.</span>
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
-              <span><span class="text-nw-text">BlueMeds Platform</span> — medication subscription delivery with 10+ third-party integrations (ERP, support, messaging, healthcare middleware, AI calling).</span>
+              <span>A medication delivery platform — broad third-party integration layer spanning ERP, support, messaging, and AI calling.</span>
             </li>
           </ul>
         </div>
@@ -164,7 +154,7 @@
           <ul class="space-y-2">
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-yellow shrink-0 mt-1">▸</span>
-              <span>More complex AI chatbots beyond sofIA's scheduling scope. Scope and architecture still being defined — likely multi-agent orchestration with stronger deterministic guardrails.</span>
+              <span>More complex AI chatbots beyond the current scheduling scope. Scope and architecture still being defined — likely multi-agent orchestration with stronger deterministic guardrails.</span>
             </li>
           </ul>
         </div>
@@ -182,7 +172,7 @@
       <div class="panel-body p-0">
         <dl class="grid grid-cols-[minmax(0,max-content)_1fr] gap-x-6 gap-y-4 px-6 py-6 lg:px-8">
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">LUMIRA</dt>
-          <dd class="text-nw-text-dim leading-relaxed">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · v1.14 shipped with subagent-aware rendering and git-worktree fallback · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~1.8k downloads/month</dd>
+          <dd class="text-nw-text-dim leading-relaxed">Real-time statusline for Claude Code &amp; Qwen Code · TypeScript, zero runtime deps · v1.18 shipped · published on <a href="https://www.npmjs.com/package/lumira" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">npm</a> · ~1.5k downloads/month</dd>
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">NOVA-ID</dt>
           <dd class="text-nw-text-dim leading-relaxed">Self-hosted identity &amp; SSO platform (OIDC via Ory Hydra) with a role/permissions demo API · actively hardening auth flows and audit logging</dd>
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">NIGHTWIRE</dt>
@@ -194,7 +184,7 @@
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">CLARIFY</dt>
           <dd class="text-nw-text-dim leading-relaxed">AI legal contract auditor (micro-SaaS, alpha) · Nuxt + Supabase RLS + OpenAI + Stripe credits + BullMQ</dd>
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1 whitespace-nowrap">THIS SITE</dt>
-          <dd class="text-nw-text-dim leading-relaxed">The AI chat on this site is mine end-to-end · public chatbot grounded on my CV, now with multi-turn conversation memory and honest fit-boundary framing for comp/role questions · NestJS + Groq + Redis answer-cache · hardened against prompt-injection with a deterministic output sanitizer</dd>
+          <dd class="text-nw-text-dim leading-relaxed">The AI chat on this site is mine end-to-end · public chatbot grounded on my CV, now with multi-turn conversation memory and honest fit-boundary framing for comp/role questions · NestJS + Groq + Redis answer-cache · hardened against prompt-injection with a deterministic output sanitizer · GitHub heatmap merges contributions across both my accounts into one real activity signal</dd>
         </dl>
       </div>
     </div>
@@ -240,14 +230,6 @@
             <span class="text-nw-cyan shrink-0 mt-1">▸</span>
             <span>LLM evals and prompt engineering — output scoring, rubric-based benchmarks, systematic regression testing for AI pipelines. Making "does this actually work" answerable.</span>
           </li>
-          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-            <span class="text-nw-cyan shrink-0 mt-1">▸</span>
-            <span>Payment network internals — network tokenization, card scheme authorization flows, PCI scope reduction. Goes deeper than most backend engineers need, but I'm already here.</span>
-          </li>
-          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
-            <span class="text-nw-cyan shrink-0 mt-1">▸</span>
-            <span>Application security in practice — I ran an owner-authorized pentest against my own stack, then shipped the fixes: enforced CSP, real rate-limiting, prompt-injection defenses, and key-only SSH. Security as something you do, not just read about.</span>
-          </li>
         </ul>
       </div>
     </div>
@@ -264,7 +246,7 @@
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">LOCATION</dt>
           <dd class="text-nw-text-dim leading-relaxed"><span class="text-nw-text">Remote</span> · UTC-6, works well with US hours.</dd>
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">STATUS</dt>
-          <dd class="text-nw-text-dim leading-relaxed">Not actively applying, but open to the right conversation. If what you're building sounds like it belongs on this page, reach out.</dd>
+          <dd class="text-nw-text-dim leading-relaxed">Actively looking for the next role. If what you're building sounds like it belongs on this page, let's talk.</dd>
         </dl>
 
         <div class="flex flex-wrap gap-3 p-6 lg:p-8 border-t border-nw-text-line">
@@ -280,7 +262,7 @@
 <script setup lang="ts">
 import NowPlayingBars from '~/components/ui/NowPlayingBars.vue';
 
-const lastUpdated = '2026-07-14';
+const lastUpdated = '2026-09-15';
 
 const { nowPlaying } = useNowPlaying();
 const { recentlyPlayed } = useRecentlyPlayed();
