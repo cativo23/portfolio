@@ -183,6 +183,8 @@
           <dd class="text-nw-text-dim leading-relaxed">Multi-agent crypto trading bot · 3 Claude agents + deterministic Risk Manager (10 hard-coded rules, never delegated to AI) · NestJS</dd>
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">CLARIFY</dt>
           <dd class="text-nw-text-dim leading-relaxed">AI legal contract auditor (micro-SaaS, alpha) · Nuxt + Supabase RLS + OpenAI + Stripe credits + BullMQ</dd>
+          <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">TCGVAULT</dt>
+          <dd class="text-nw-text-dim leading-relaxed">Pokémon TCG card value tracker · Laravel 13 · Phase 1 syncs card/set data and daily price snapshots from the <a href="https://tcgdex.dev/" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">tcgdex</a> API · early days, live at <a href="https://tcgvault.cativo.dev/cativo23" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">tcgvault.cativo.dev</a></dd>
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1 whitespace-nowrap">THIS SITE</dt>
           <dd class="text-nw-text-dim leading-relaxed">The AI chat on this site is mine end-to-end · public chatbot grounded on my CV, now with multi-turn conversation memory and honest fit-boundary framing for comp/role questions · NestJS + Groq + Redis answer-cache · hardened against prompt-injection with a deterministic output sanitizer · GitHub heatmap merges contributions across both my accounts into one real activity signal</dd>
         </dl>
@@ -210,6 +212,33 @@
           <li class="flex gap-3 text-nw-text-dim leading-relaxed">
             <span class="text-nw-cyan shrink-0 mt-1">▸</span>
             <span>GitFlow CI/CD: a release branch triggers an automated GitHub Release, image build, and zero-touch deploy over SSH. Merge to main, walk away.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- OFF THE CLOCK -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>OFF THE CLOCK</span>
+      </div>
+      <div class="panel-body p-6 lg:p-8">
+        <ul class="space-y-2">
+          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
+            <span class="text-nw-cyan shrink-0 mt-1">▸</span>
+            <span>Getting into Pokémon TCG collecting — tracking my card values with <a href="https://tcgvault.cativo.dev/cativo23" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">TCGVault</a>, the project above.</span>
+          </li>
+          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
+            <span class="text-nw-cyan shrink-0 mt-1">▸</span>
+            <span>Playing through the mainline Pokémon games on my own <a href="https://pokemon.cativo.dev/" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">pokemon.cativo.dev</a> route, no story repeated.</span>
+          </li>
+          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
+            <span class="text-nw-cyan shrink-0 mt-1">▸</span>
+            <span>Daily-driving and slowly modding a Civic Type R FK8 — PRL intake and intercooler, Morimoto V2 headlights, AlphaRex NOVA-Series tail lights so far.</span>
+          </li>
+          <li class="flex gap-3 text-nw-text-dim leading-relaxed">
+            <span class="text-nw-cyan shrink-0 mt-1">▸</span>
+            <span>Reading <em>The Call of Cthulhu and Other Weird Stories</em> by H.P. Lovecraft.</span>
           </li>
         </ul>
       </div>
