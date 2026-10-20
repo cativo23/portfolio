@@ -32,7 +32,7 @@
       </div>
 
       <!-- Stats grid 2x3 -->
-      <div class="grid grid-cols-3 md:grid-cols-2 gap-px bg-nw-text-faint border-t border-nw-text-faint md:border-t-0 md:shrink-0 md:w-[340px]">
+      <div class="grid grid-cols-2 min-[360px]:grid-cols-3 md:grid-cols-2 gap-px bg-nw-text-faint border-t border-nw-text-faint md:border-t-0 md:shrink-0 md:w-[340px]">
         <div class="metric-cell">
           <div class="m-value" style="color: var(--nw-green); text-shadow: 0 0 6px rgba(122,237,122,0.3);">
             {{ signal?.github.contributions ?? '...' }}
@@ -172,24 +172,9 @@ const npmPackages = computed(() => {
   ].filter(p => p.monthly > 0 || p.weekly.length > 0)
 })
 
-const MONTH_NAMES = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-
-const monthLabels = computed(() => {
-  if (!signal.value?.github.weeks.length) return []
-  const weeks = signal.value.github.weeks
-  const labels: { name: string; index: number }[] = []
-  let lastMonth = -1
-  const now = new Date()
-  weeks.forEach((_, wi) => {
-    const approxDate = new Date(now.getTime() - (weeks.length - 1 - wi) * 7 * 24 * 60 * 60 * 1000)
-    const month = approxDate.getMonth()
-    if (month !== lastMonth) {
-      labels.push({ name: MONTH_NAMES[month] ?? '', index: wi })
-      lastMonth = month
-    }
-  })
-  return labels
-})
+const monthLabels = computed(() =>
+  buildMonthLabels(signal.value?.github.weeks.length ?? 0, new Date())
+)
 
 const heatColors = [
   'var(--void-panel)',

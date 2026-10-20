@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.23.1] - 2026-10-20
+
+### Fixed
+- **The CV is readable on phones.** `/cv` only had print styles, so on a phone the paper padding and the no-wrap date column pushed the contact line and dates off the page, even at 375px. A screen-only layout under 600px trims the padding, stacks each job title over its dates and lets the contact line wrap between items. Print and desktop are unchanged. (#184)
+- **Heatmap month labels no longer overlap.** When the calendar opened on the last days of a month, its label printed on top of the next one ("MARAPR"); that partial month is now dropped, as GitHub does. Below 360px the SIGNAL metrics drop to two columns so "CONTRIBUTIONS" stays in its cell. (#184)
+- **Project status badges stay inside their card** on narrow screens, on the home page and `/projects`. (#184)
+- **The identity headline fits on 320px screens** — "PRODUCTION." no longer runs past the panel on the home hero and `/about`. (#184)
+
+---
+
 ## [1.23.0] - 2026-10-19
 
 ### Removed
