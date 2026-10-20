@@ -14,7 +14,8 @@
         </h1>
         <p class="text-meta">
           Short version: almost nothing. No cookies, no tracking, no third-party
-          ad networks, nothing sold. Everything here is self-hosted on my own box.
+          ad networks, nothing sold. Everything runs on my own box, except the
+          fonts: they load from Google Fonts, so Google sees your IP when the page loads.
         </p>
       </div>
     </div>
