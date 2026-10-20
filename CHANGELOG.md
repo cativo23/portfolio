@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.22.6] - 2026-10-19
+
+### Fixed
+- **npm download counts can no longer go stale.** `/about`, `/cv` and `/now` hardcoded lumira at ~1.8K/~1.5K downloads a month while npm reports ~580 — the second time those figures drifted. A new `useNpmDownloads` composable reads lumira's live monthly count from the cached `/api/signal` payload during SSR, so it lands in the HTML and the printed CV; if the lookup fails or takes longer than 2s the badge is hidden rather than showing a wrong number. nightwire's badge is dropped. (#180)
+- **Removed the hardcoded "16 containers across 6 stacks" from `/about` and `/cv`.** Prod is at 24 services across 21 stacks and keeps growing; the copy now describes the stack, and the live count stays in the SIGNAL panel. (#180)
+- **Blue Medical tenure on `/about` updated to 4+ years** (was 3+). (#180)
+
+---
+
 ## [1.22.5] - 2026-09-15
 
 ### Added
