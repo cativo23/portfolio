@@ -22,37 +22,12 @@
     <!-- ANALYTICS -->
     <div class="panel">
       <div class="panel-header">
-        <span>ANALYTICS · UMAMI</span>
+        <span>ANALYTICS · NONE</span>
       </div>
-      <div class="panel-body p-6 lg:p-8 space-y-3">
+      <div class="panel-body p-6 lg:p-8">
         <p class="text-sm text-nw-text-dim leading-relaxed">
-          Page visits are counted with <span class="text-nw-text">Umami</span> — a
-          privacy-first, <span class="text-nw-primary">cookieless</span> analytics tool
-          I run on my own server. It sets <span class="text-nw-text">no cookies</span>,
-          stores nothing on your device, and never tracks you across other sites.
-        </p>
-        <div class="grid sm:grid-cols-2 gap-x-8 gap-y-2 pt-1">
-          <div>
-            <div class="m-label">Collected (aggregate only)</div>
-            <ul class="text-sm text-nw-text-dim font-mono space-y-1 mt-2">
-              <li>· page URL &amp; referrer</li>
-              <li>· browser, OS, device type</li>
-              <li>· country (from IP, not stored)</li>
-            </ul>
-          </div>
-          <div>
-            <div class="m-label">Never collected</div>
-            <ul class="text-sm text-nw-text-dim font-mono space-y-1 mt-2">
-              <li>· cookies / local storage</li>
-              <li>· names, emails, personal data</li>
-              <li>· cross-site or ad tracking</li>
-            </ul>
-          </div>
-        </div>
-        <p class="text-xs text-nw-text-mute leading-relaxed pt-1">
-          Visitors are counted with a daily-rotating one-way hash — your raw IP is
-          used to compute it and then discarded, never saved. Because there are no
-          cookies, there's nothing to consent to and nothing to clear.
+          There's no analytics on this site. No tracking script runs, and nothing
+          counts your visit or follows you around.
         </p>
       </div>
     </div>
@@ -104,10 +79,10 @@
 </template>
 
 <script setup lang="ts">
-const lastUpdated = '2026-07-16'
+const lastUpdated = '2026-10-19'
 
 usePageTitle('Privacy', {
   description:
-    'How cativo.dev handles data: cookieless self-hosted analytics (Umami), no tracking, no ad networks, nothing sold. What the contact form and chat assistant collect.',
+    'How cativo.dev handles data: no analytics, no tracking, no ad networks, nothing sold. What the contact form and chat assistant collect.',
 })
 </script>
