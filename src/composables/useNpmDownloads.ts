@@ -19,10 +19,13 @@ export function formatMonthlyDownloads(count: number | null | undefined): string
  * Live lumira monthly downloads, read from the cached /api/signal payload so the
  * about/cv/now pages never drift from npm again. Fetched during SSR so the
  * number is in the HTML (and the printed CV); a failed fetch hides the badge.
+ * The timeout caps how long a cold /api/signal (fresh deploy) can hold up SSR —
+ * past it the badge is simply skipped for that render.
  */
 export function useNpmDownloads() {
   const { data } = useFetch('/api/signal', {
     key: 'npm-downloads',
+    timeout: 2000,
     transform: (res: { data?: { npm?: { lumira?: { monthly?: number } } } }) =>
       res?.data?.npm?.lumira?.monthly ?? null,
   })
