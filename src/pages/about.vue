@@ -281,7 +281,7 @@ const profile: Profile = {
     {
       role: 'Tech Lead / Full-Stack Engineer',
       company: 'Blue Medical Guatemala',
-      period: 'Apr 2022 → Present · 3+ yrs',
+      period: 'Apr 2022 → Present · 4+ yrs',
       location: 'Guatemala (Remote)',
       description: "Leading development across multiple healthcare systems simultaneously. Code reviews, requirement refinement, technical guidance for the team, and hands-on delivery of the hardest parts.",
       highlights: [
