@@ -150,7 +150,7 @@ const print = () => {
           </li>
           <li>
             <strong>cativo.dev infrastructure</strong> — Self-hosted production stack (apps, blog, mail,
-            analytics, monitoring, proxy, databases) on my own infrastructure.
+            monitoring, proxy, databases) on my own infrastructure.
             <em>Docker Compose, Linux, UFW, TLS, DNS.</em>
           </li>
         </ul>
