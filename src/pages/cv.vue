@@ -383,6 +383,26 @@ li {
 
 a { color: #111; }
 
+/* ---------- Small screens ---------- */
+/* Recruiters open this on phones: the 56px paper padding and the
+   nowrap date column squeezed the text to ~230px and pushed the contact
+   line and dates off the page. Screen-only so print layout is untouched. */
+@media screen and (max-width: 600px) {
+  .cv { padding: 28px 20px; }
+  /* Wrap between contact items, never inside one ("l|inkedin"). Vue's
+     whitespace condensing leaves no spaces between the items, so a
+     flex row is what gives the line somewhere to break. */
+  .contact { display: flex; flex-wrap: wrap; align-items: baseline; }
+  .contact a, .contact span { white-space: nowrap; }
+  .job-head {
+    flex-direction: column;
+    gap: 2px;
+  }
+  .when { white-space: normal; }
+  .skills { grid-template-columns: 1fr; gap: 2px; }
+  .skills dd { margin-bottom: 8px; }
+}
+
 /* ---------- Print ---------- */
 @media print {
   @page {
