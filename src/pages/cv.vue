@@ -15,6 +15,8 @@ useHead({
   bodyAttrs: { class: 'cv-body' },
 })
 
+const { lumira: lumiraDownloads } = useNpmDownloads()
+
 const print = () => {
   if (typeof window !== 'undefined') window.print()
 }
@@ -147,8 +149,8 @@ const print = () => {
             <em>Nuxt, Supabase (Postgres + RLS), OpenAI, Stripe, BullMQ + Redis.</em>
           </li>
           <li>
-            <strong>cativo.dev infrastructure</strong> — Self-hosted production stack: 16 containers across
-            6 stacks (apps, blog, mail, monitoring, proxy, databases) on my own infrastructure.
+            <strong>cativo.dev infrastructure</strong> — Self-hosted production stack (apps, blog, mail,
+            analytics, monitoring, proxy, databases) on my own infrastructure.
             <em>Docker Compose, Linux, UFW, TLS, DNS.</em>
           </li>
         </ul>
@@ -158,12 +160,12 @@ const print = () => {
         <h2>Open Source · npm</h2>
         <ul class="projects">
           <li>
-            <strong>lumira</strong> <span class="proj-tag">~1.8K dl/mo</span> — Real-time statusline HUD
+            <strong>lumira</strong> <span v-if="lumiraDownloads" class="proj-tag">{{ lumiraDownloads }} dl/mo</span> — Real-time statusline HUD
             for Claude Code and Qwen Code. Session analytics, latency overhead widget, quota projection.
             Zero deps. <em>TypeScript, npm.</em>
           </li>
           <li>
-            <strong>nightwire</strong> <span class="proj-tag">~84 dl/mo</span> — Dark cyberpunk UI design
+            <strong>nightwire</strong> — Dark cyberpunk UI design
             system. Semantic color roles, neon palette, CLI installer. <em>CSS, npm.</em>
           </li>
         </ul>
