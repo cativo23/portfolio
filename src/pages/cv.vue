@@ -15,6 +15,8 @@ useHead({
   bodyAttrs: { class: 'cv-body' },
 })
 
+const { lumira: lumiraDownloads } = useNpmDownloads()
+
 const print = () => {
   if (typeof window !== 'undefined') window.print()
 }
@@ -158,12 +160,12 @@ const print = () => {
         <h2>Open Source · npm</h2>
         <ul class="projects">
           <li>
-            <strong>lumira</strong> <span class="proj-tag">~1.8K dl/mo</span> — Real-time statusline HUD
+            <strong>lumira</strong> <span v-if="lumiraDownloads" class="proj-tag">{{ lumiraDownloads }} dl/mo</span> — Real-time statusline HUD
             for Claude Code and Qwen Code. Session analytics, latency overhead widget, quota projection.
             Zero deps. <em>TypeScript, npm.</em>
           </li>
           <li>
-            <strong>nightwire</strong> <span class="proj-tag">~84 dl/mo</span> — Dark cyberpunk UI design
+            <strong>nightwire</strong> — Dark cyberpunk UI design
             system. Semantic color roles, neon palette, CLI installer. <em>CSS, npm.</em>
           </li>
         </ul>

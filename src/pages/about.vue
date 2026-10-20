@@ -134,7 +134,7 @@
             <div class="flex items-baseline justify-between gap-3 flex-wrap mb-1">
               <div class="flex items-baseline gap-3 flex-wrap">
                 <span class="compressed-title title-card text-nw-text">{{ pkg.name }}</span>
-                <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-cyan">{{ pkg.downloads }}</span>
+                <span v-if="pkg.downloads" class="font-stamp uppercase tracking-wider text-[10px] text-nw-cyan">{{ pkg.downloads }}</span>
               </div>
               <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim">
                 {{ pkg.stack }}
@@ -363,20 +363,22 @@ const profile: Profile = {
   website: 'https://cativo.dev',
 };
 
-const ossPackages = [
+const { lumira: lumiraDownloads } = useNpmDownloads()
+
+const ossPackages = computed(() => [
   {
     name: 'lumira',
-    downloads: '~1.8K dl/mo',
+    downloads: lumiraDownloads.value ? `${lumiraDownloads.value} dl/mo` : null,
     stack: 'TypeScript · npm',
     description: 'Real-time statusline HUD for Claude Code and Qwen Code. Session analytics, latency overhead widget, quota projection. Zero deps.'
   },
   {
     name: 'nightwire',
-    downloads: '~84 dl/mo',
+    downloads: null,
     stack: 'CSS · npm',
     description: 'Dark cyberpunk UI design system. Semantic color roles, neon palette, CLI installer.'
   }
-]
+])
 
 const summaryParagraphs = computed(() => {
   if (!profile.summary) return [];
