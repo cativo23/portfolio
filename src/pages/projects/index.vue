@@ -55,7 +55,7 @@
           class="bg-void-raised hover:bg-void-panel border border-nw-text-line hover:border-nw-primary-dim transition-colors duration-150 p-5 flex flex-col gap-3"
         >
           <header class="flex items-start justify-between gap-3">
-            <div>
+            <div class="min-w-0">
               <div class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-text-dim">
                 CASE-{{ String(project.id).padStart(4, '0') }}
               </div>
@@ -63,7 +63,7 @@
                 {{ project.title }}
               </h3>
             </div>
-            <span v-if="project.status" class="badge" :class="badgeClass(project.status)">
+            <span v-if="project.status" class="badge shrink-0" :class="badgeClass(project.status)">
               {{ project.status }}
             </span>
           </header>
