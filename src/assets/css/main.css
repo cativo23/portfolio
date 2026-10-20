@@ -31,6 +31,12 @@
   --tracking-body:   -0.005em;
 }
 
+/* Below 360px (iPhone SE and friends) the 36px floor of title-xl pushes
+   "PRODUCTION." past the panel edge on the home hero and /about. */
+@media (max-width: 359px) {
+  :root { --text-title-xl: 32px; }
+}
+
 /* GPU-accelerate compressed titles to prevent clipping artefacts
    from the scaleX(0.82) transform on low-DPI displays. */
 .compressed-title {
