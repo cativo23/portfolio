@@ -275,7 +275,7 @@ const profile: Profile = {
   summary: [
     "9 years writing backends in El Salvador. Most of that has been microservices and full-stack tech leadership at Blue Medical Guatemala — leading BlueMeds end-to-end (Laravel API + Angular/Ionic admin), then breaking out Payment Service and Invoice Service as standalone Laravel microservices that real clinics bill against every day. The fintech and tax stack down here is hard in a specific way: no nice SDKs, sparse docs, heterogeneous protocols across processors. I've implemented multi-gateway payment integration by hand — ISO 8583, SOAP/XML, REST — behind a Strategy Pattern so the next processor is a config swap, not a rewrite. Same approach on Invoice Service for Guatemala's FEL e-invoicing through an authorized provider. Long enough in this stack to know when the framework is the wrong choice — and I have the incident reports to prove it.",
     "The last ~6 months I've been extending into AI work on top of the backend foundation. I'm the primary author of sofIA, a multi-agent voice system at Blue Medical for healthcare scheduling on ElevenLabs ConvAI, currently in production. Most of the engineering work has been on the parts AI demos skip: state-machine workflow design, validation layers around tool calls, retry and recovery logic, and the operations dashboard the team uses to see what the agent actually did. On the side (in development): VittBot, a multi-agent crypto trading bot with three Claude agents plus a deterministic Risk Manager that never delegates the actual go/no-go to AI; Clarify, a legal contract auditor with Stripe credit billing. The pattern I care about isn't \"call an LLM\" — it's the deterministic safeguards around the LLM that keep it from blowing up in production.",
-    "I also run my own infra at cativo.dev — apps, blog, mail, analytics and monitoring, all self-hosted. Running it yourself is the only way to actually understand what you ship into prod."
+    "I also run my own infra at cativo.dev — apps, blog, mail and monitoring, all self-hosted. Running it yourself is the only way to actually understand what you ship into prod."
   ],
   experience: [
     {
@@ -355,7 +355,7 @@ const profile: Profile = {
     {
       title: 'Self-hosting tinkering',
       icon: '📡',
-      description: 'cativo.dev runs apps, blog, mail, analytics and monitoring on my own server. Nothing teaches infra like running your own.'
+      description: 'cativo.dev runs apps, blog, mail and monitoring on my own server. Nothing teaches infra like running your own.'
     }
   ],
   github: 'https://github.com/cativo23',
