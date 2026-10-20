@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.23.0] - 2026-10-19
+
+### Removed
+- **Umami analytics.** Umami is no longer used and its server had been stopped, yet every page still loaded `/u.js` only to receive an empty stub. The tracker tag, the `/u.js` and `/api/send` proxies, the `umamiUrl` runtime config and the `/api/send` XSS-validator exemption are gone. The CSP is unchanged — the tracker never needed an exception. (#182)
+
+### Changed
+- **`/privacy` tells the truth about what runs.** The analytics panel now says there is no analytics, and the intro discloses that fonts load from Google Fonts, so Google sees the visitor's IP — it previously claimed everything was self-hosted. (#182)
+- **About and CV no longer list analytics in the self-hosted stack.** (#182)
+
+---
+
 ## [1.22.6] - 2026-10-19
 
 ### Fixed
