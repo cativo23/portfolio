@@ -10,7 +10,7 @@
     ]"
   >
     <header class="flex items-start justify-between gap-3">
-      <div>
+      <div class="min-w-0">
         <div class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-text-dim">
           CASE-{{ String(project.id).padStart(4, '0') }}
         </div>
@@ -18,7 +18,7 @@
           {{ project.title }}
         </component>
       </div>
-      <span v-if="project.status" class="badge" :class="badgeClass">
+      <span v-if="project.status" class="badge shrink-0" :class="badgeClass">
         {{ project.status }}
       </span>
     </header>
