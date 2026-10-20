@@ -149,8 +149,8 @@ const print = () => {
             <em>Nuxt, Supabase (Postgres + RLS), OpenAI, Stripe, BullMQ + Redis.</em>
           </li>
           <li>
-            <strong>cativo.dev infrastructure</strong> — Self-hosted production stack: 16 containers across
-            6 stacks (apps, blog, mail, monitoring, proxy, databases) on my own infrastructure.
+            <strong>cativo.dev infrastructure</strong> — Self-hosted production stack (apps, blog, mail,
+            analytics, monitoring, proxy, databases) on my own infrastructure.
             <em>Docker Compose, Linux, UFW, TLS, DNS.</em>
           </li>
         </ul>
