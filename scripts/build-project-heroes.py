@@ -44,7 +44,7 @@ METRICS = {
   "pokemon-route":          [("stops", "12"), ("weight", "190KB"), ("deps", "0"), ("ci checks", "33")],
   "portfolio":              [],
   "portfolio-api":          [("releases", "56"), ("line coverage", "96%+")],
-  "tcg-vault":              [("version", "1.6.5"), ("price sources", "2")],
+  "tcg-vault":              [("price sources", "2")],
   "engram":                 [],
   "memrem":                 [("version", "0.1.1"), ("network calls", "0")],
   "space-server":           [("containers", "~50"), ("services", "24"), ("hosts", "1")],
