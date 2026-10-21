@@ -37,5 +37,5 @@
   <rect x="400" y="404" width="126" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
   <text class="mono" x="463" y="424" font-size="12" fill="#66ddff" text-anchor="middle">GSD framework</text>
 
-  <text class="mono" x="1144" y="424" font-size="12" fill="#66ddff" text-anchor="end">www.npmjs.com/package/claude-setup</text>
+  <text class="mono" x="1144" y="424" font-size="12" fill="#66ddff" text-anchor="end">github.com/cativo23/claude-setup</text>
 </svg>
