@@ -218,7 +218,7 @@
         </div>
         <div class="panel-body p-6 lg:p-8">
           <p class="text-nw-text leading-relaxed mb-6">
-            Building something remote that needs payment systems shipped under pressure, multi-agent AI with real safeguards, or a healthcare integration untangled at midnight? Let's talk.
+            Building something remote that needs payment systems shipped under pressure, multi-agent AI with real safeguards, or a third-party integration untangled at midnight? Let's talk.
           </p>
 
           <div class="flex flex-wrap gap-3 items-center">
@@ -257,7 +257,7 @@ import LatestPosts from '@/components/home/LatestPosts.vue';
 import type { Profile } from '~/types/profile';
 
 usePageTitle('About', {
-  description: 'Carlos Cativo - Tech Lead & Full-Stack Software Engineer. 9 years building healthcare platforms, payment systems, and AI-powered products.',
+  description: 'Carlos Cativo - Senior Backend Engineer & Tech Lead. 9 years building payment systems, integrations, and AI-powered products.',
 });
 
 // Highlights read "Project — what I did". Split so the project name can

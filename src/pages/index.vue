@@ -24,6 +24,6 @@ import PortfolioSection from '@/components/home/portfolio/PortfolioSection.vue';
 import ProofOfWork from '@/components/home/ProofOfWork.vue';
 
 usePageTitle('Home', {
-  description: 'Carlos Cativo - Tech Lead & Full-Stack Software Engineer. 9 years building healthcare platforms, payment systems, and AI-powered products.',
+  description: 'Carlos Cativo - Senior Backend Engineer & Tech Lead. 9 years building payment systems, integrations, and AI-powered products.',
 });
 </script>
