@@ -22,7 +22,7 @@
 
   <rect x="56" y="292" width="1088" height="1" fill="rgba(255,255,255,0.06)"/>
   <text class="stamp" x="56" y="330" font-size="12" fill="#6699ff" letter-spacing="1.6">NPM RELEASES</text>
-  <text class="mono" x="56" y="360" font-size="25" fill="#7aed7a">55</text>
+  <text class="mono" x="56" y="360" font-size="25" fill="#7aed7a">59</text>
   <text class="stamp" x="210" y="330" font-size="12" fill="#6699ff" letter-spacing="1.6">RUNTIME DEPS</text>
   <text class="mono" x="210" y="360" font-size="25" fill="#7aed7a">0</text>
 

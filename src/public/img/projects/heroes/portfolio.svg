@@ -18,11 +18,9 @@
 
   <text class="mono" x="56" y="228" font-size="22" fill="#aaaaaa">Personal site &amp; blog at cativo.dev — terminal-themed Nuxt 4 + Vue 3 with</text>
   <text class="mono" x="56" y="258" font-size="22" fill="#aaaaaa">Tokyo Night palette and SSR.</text>
-  <text class="mono" x="56" y="294" font-size="14" fill="#5a5a5a">Nuxt 4 · Markdown blog · strict TypeScript · full CI/CD</text>
+  <text class="mono" x="56" y="294" font-size="14" fill="#5a5a5a">Nuxt 4 · AI chat · strict TypeScript · full CI/CD</text>
 
-  <rect x="56" y="292" width="1088" height="1" fill="rgba(255,255,255,0.06)"/>
-  <text class="stamp" x="56" y="330" font-size="12" fill="#6699ff" letter-spacing="1.6">COVERAGE</text>
-  <text class="mono" x="56" y="360" font-size="25" fill="#7aed7a">&gt;80%</text>
+
 
   <rect x="56" y="404" width="70" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
   <text class="mono" x="91" y="424" font-size="12" fill="#66ddff" text-anchor="middle">Nuxt 4</text>

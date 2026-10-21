@@ -21,10 +21,10 @@
   <text class="mono" x="56" y="294" font-size="14" fill="#5a5a5a">pure black surfaces · no decorative colour · agent-readable</text>
 
   <rect x="56" y="292" width="1088" height="1" fill="rgba(255,255,255,0.06)"/>
-  <text class="stamp" x="56" y="330" font-size="12" fill="#6699ff" letter-spacing="1.6">GIT TAGS</text>
-  <text class="mono" x="56" y="360" font-size="25" fill="#7aed7a">20</text>
-  <text class="stamp" x="178" y="330" font-size="12" fill="#6699ff" letter-spacing="1.6">VERSION</text>
-  <text class="mono" x="178" y="360" font-size="25" fill="#7aed7a">2.0.1</text>
+  <text class="stamp" x="56" y="330" font-size="12" fill="#6699ff" letter-spacing="1.6">COMPONENTS</text>
+  <text class="mono" x="56" y="360" font-size="25" fill="#7aed7a">50+</text>
+  <text class="stamp" x="194" y="330" font-size="12" fill="#6699ff" letter-spacing="1.6">DESIGN TOKENS</text>
+  <text class="mono" x="194" y="360" font-size="25" fill="#7aed7a">60+</text>
 
   <rect x="56" y="404" width="46" height="30" fill="none" stroke="rgba(255,255,255,0.12)"/>
   <text class="mono" x="79" y="424" font-size="12" fill="#66ddff" text-anchor="middle">CSS</text>

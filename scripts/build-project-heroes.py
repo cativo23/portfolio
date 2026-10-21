@@ -32,19 +32,22 @@ API = os.environ.get("PROJECTS_API", "https://cativo.dev/api/projects?per_page=1
 
 METRICS = {
   "clarify":                [("analysis tiers", "3")],
-  "claude-session-manager": [("runtime deps", "0"), ("platforms", "2")],
+  "claude-session-manager": [("platforms", "3")],
   "claude-setup":           [("setup", "5 min"), ("plugins", "5")],
   "claude-style":           [("behaviour ported", "~60%")],
   "ghost-blog":             [],
-  "kovia":                  [("tests", "356"), ("regression bugs", "2")],
-  "lumira":                 [("npm releases", "55"), ("runtime deps", "0")],
+  "kovia":                  [("regression bugs", "2")],
+  "lumira":                 [("npm releases", "59"), ("runtime deps", "0")],
   "myths-and-legends-api":  [],
-  "nightwire":              [("git tags", "20"), ("version", "2.0.1")],
+  "nightwire":              [("components", "50+"), ("design tokens", "60+")],
   "nova-id":                [("frontends", "3"), ("access rules", "15")],
-  "pokemon-route":          [("stops", "12"), ("weight", "196KB"), ("deps", "0"), ("ci checks", "33")],
-  "portfolio":              [("coverage", ">80%")],
-  "portfolio-api":          [("releases", "54"), ("line coverage", "96.9%")],
-  "space-server":           [("containers", "42"), ("subdomains", "21"), ("hosts", "1")],
+  "pokemon-route":          [("stops", "12"), ("weight", "190KB"), ("deps", "0"), ("ci checks", "33")],
+  "portfolio":              [],
+  "portfolio-api":          [("releases", "56"), ("line coverage", "96%+")],
+  "tcg-vault":              [("version", "1.6.5"), ("price sources", "2")],
+  "engram":                 [],
+  "memrem":                 [("version", "0.1.1"), ("network calls", "0")],
+  "space-server":           [("containers", "~50"), ("services", "24"), ("hosts", "1")],
   "wired-dots":             [],
 }
 
@@ -54,12 +57,13 @@ KANJI = {
   "lumira": "状態表示", "myths-and-legends-api": "民話目録", "nightwire": "設計体系",
   "nova-id": "認証基盤", "pokemon-route": "経路記録", "portfolio": "作品目録",
   "portfolio-api": "接続基盤", "space-server": "自主運用", "wired-dots": "環境設定",
+  "tcg-vault": "収集台帳", "engram": "記憶痕跡", "memrem": "記憶整理",
  }
 
 # Segunda linea: rasgos reales, en minusculas, separados por punto medio.
 SUBLINE = {
   "clarify": "upload · queued job · AI analysis · realtime dashboard",
-  "claude-session-manager": "TUI and CLI · zero runtime dependencies · CI-tested",
+  "claude-session-manager": "Ink TUI and CLI · /csm slash command · on npm as claudesm",
   "claude-setup": "one curl pipe · plugins, MCP servers, rules, skills",
   "claude-style": "prompts and rules · honest about what RLHF cannot port",
   "ghost-blog": "custom Handlebars theme · series support · self-hosted",
@@ -69,9 +73,12 @@ SUBLINE = {
   "nightwire": "pure black surfaces · no decorative colour · agent-readable",
   "nova-id": "Ory stack · Oathkeeper the only public bridge",
   "pokemon-route": "twelve games · no version played twice · no build step",
-  "portfolio": "Nuxt 4 · Markdown blog · strict TypeScript · full CI/CD",
+  "portfolio": "Nuxt 4 · AI chat · strict TypeScript · full CI/CD",
   "portfolio-api": "JWT and API-key auth · tiered per-endpoint rate limiting",
   "space-server": "Traefik edge · mail · observability · alerting",
+  "tcg-vault": "daily price sync · public galleries · TCGplayer import",
+  "engram": "agentic retrieval · local embeddings · citations as a contract",
+  "memrem": "idempotent · secrets scrubbed on ingest · no telemetry",
   "wired-dots": "one script on a fresh Arch install · hardware-agnostic",
 }
 
