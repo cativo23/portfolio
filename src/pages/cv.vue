@@ -35,7 +35,7 @@ const print = () => {
     <main class="cv">
       <header class="head">
         <h1>Carlos Cativo</h1>
-        <p class="role">Senior Tech Lead — Payments, Healthcare Platforms &amp; Backend Architecture</p>
+        <p class="role">Senior Backend Engineer &amp; Tech Lead</p>
         <p class="contact">
           <a href="mailto:cativo@cativo.dev">cativo@cativo.dev</a>
           <span class="sep">·</span>
@@ -54,7 +54,7 @@ const print = () => {
       <section>
         <h2>Summary</h2>
         <p class="summary">
-          Tech Lead with 9 years building production backend systems, currently leading a team of 5 engineers at Blue Medical Guatemala. Scaled a payment platform from ~$30K to ~$450K USD/mo while shipping 3 services from scratch: a multi-gateway payment processor (VGS tokenization, PCI-DSS scope reduction), an electronic invoicing system with SAP integration, and a multi-agent AI voice product. Stack-fluid across Laravel/PHP, TypeScript/NestJS, and Python/FastAPI. Open to Senior Backend, Tech Lead, and Engineering Manager roles — remote-first or with relocation sponsorship.
+          Tech Lead with 9 years building production backend systems, currently leading a team of 5 engineers at Blue Medical Guatemala. Replaced a single-script subscription charger with a fault-tolerant, multi-gateway payment service — now ~$500K USD/mo. Also built an electronic invoicing service with SAP integration and a multi-agent AI voice product from scratch. Stack-fluid across Laravel/PHP, TypeScript/NestJS, and Python/FastAPI. Open to Senior Backend, Tech Lead, and Staff roles — remote-first or with relocation sponsorship.
         </p>
       </section>
 
@@ -78,17 +78,17 @@ const print = () => {
               per gateway, Livewire ops dashboard. Led an OWASP-grade audit and ongoing security hardening.
             </li>
             <li>
-              Shipped Guatemala FEL e-invoicing service through an authorized provider with multi-establishment support, async
+              Shipped Guatemala FEL e-invoicing service through authorized providers with multi-establishment support, async
               processing on Horizon/Redis, SAP integration for results and credit notes, and a Livewire ops
               dashboard with response-time analytics.
             </li>
             <li>
-              Built BlueMeds, a medication subscription platform: lifecycle, delivery scheduling, insurance
-              authorization, referral codes, Meilisearch catalog search, and 10+ third-party integrations
-              across ERP, CRM, messaging, AI calling, and healthcare middleware.
+              Tech lead for BlueMeds, a medication subscription platform: lifecycle, delivery scheduling,
+              referral codes, Meilisearch catalog search, and integrations across ERP, support, messaging
+              and payment systems.
             </li>
             <li>
-              Primary author of sofIA, a multi-agent voice system on ElevenLabs ConvAI + n8n for healthcare
+              Primary author of sofIA, a multi-agent voice system on ElevenLabs ConvAI + n8n for appointment
               scheduling, currently in production. State-machine workflow with deterministic validation,
               retry, and recovery layers around tool calls. FastAPI control plane + Nuxt dashboard + Typer CLI.
             </li>
