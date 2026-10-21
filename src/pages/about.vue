@@ -279,7 +279,7 @@ const profile: Profile = {
   ],
   experience: [
     {
-      role: 'Tech Lead / Full-Stack Engineer',
+      role: 'Tech Lead',
       company: 'Blue Medical Guatemala',
       period: 'Apr 2022 → Present · 4+ yrs',
       location: 'Guatemala (Remote)',

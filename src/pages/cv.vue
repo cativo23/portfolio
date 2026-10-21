@@ -63,7 +63,7 @@ const print = () => {
 
         <article class="job">
           <div class="job-head">
-            <h3>Tech Lead / Full-Stack Engineer — Blue Medical</h3>
+            <h3>Tech Lead — Blue Medical</h3>
             <span class="when">Apr 2022 — Present · Guatemala (Remote)</span>
           </div>
           <ul>
