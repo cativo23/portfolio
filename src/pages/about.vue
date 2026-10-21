@@ -257,7 +257,7 @@ import LatestPosts from '@/components/home/LatestPosts.vue';
 import type { Profile } from '~/types/profile';
 
 usePageTitle('About', {
-  description: 'Carlos Cativo - Tech Lead & Full-Stack Software Engineer. 9 years building healthcare platforms, payment systems, and AI-powered products.',
+  description: 'Carlos Cativo - Senior Backend Engineer & Tech Lead. 9 years building payment systems, healthcare platforms, integrations, and AI-powered products.',
 });
 
 // Highlights read "Project — what I did". Split so the project name can
@@ -269,27 +269,27 @@ function splitHighlight(h: string): { lead: string; rest: string } {
 
 const profile: Profile = {
   name: 'Carlos Cativo',
-  title: 'Tech Lead / Full-Stack Engineer',
+  title: 'Senior Backend Engineer & Tech Lead',
   yearsOfExperience: 9,
   location: 'El Salvador',
   summary: [
-    "9 years writing backends in El Salvador. Most of that has been microservices and full-stack tech leadership at Blue Medical Guatemala — leading BlueMeds end-to-end (Laravel API + Angular/Ionic admin), then breaking out Payment Service and Invoice Service as standalone Laravel microservices that real clinics bill against every day. The fintech and tax stack down here is hard in a specific way: no nice SDKs, sparse docs, heterogeneous protocols across processors. I've implemented multi-gateway payment integration by hand — ISO 8583, SOAP/XML, REST — behind a Strategy Pattern so the next processor is a config swap, not a rewrite. Same approach on Invoice Service for Guatemala's FEL e-invoicing through an authorized provider. Long enough in this stack to know when the framework is the wrong choice — and I have the incident reports to prove it.",
-    "The last ~6 months I've been extending into AI work on top of the backend foundation. I'm the primary author of sofIA, a multi-agent voice system at Blue Medical for healthcare scheduling on ElevenLabs ConvAI, currently in production. Most of the engineering work has been on the parts AI demos skip: state-machine workflow design, validation layers around tool calls, retry and recovery logic, and the operations dashboard the team uses to see what the agent actually did. On the side (in development): VittBot, a multi-agent crypto trading bot with three Claude agents plus a deterministic Risk Manager that never delegates the actual go/no-go to AI; Clarify, a legal contract auditor with Stripe credit billing. The pattern I care about isn't \"call an LLM\" — it's the deterministic safeguards around the LLM that keep it from blowing up in production.",
+    "9 years writing backends in El Salvador. Most of that has been microservices and full-stack tech leadership at Blue Medical Guatemala — tech lead for BlueMeds (Laravel API + Angular/Ionic admin), then breaking out Payment Service and Invoice Service as standalone Laravel microservices used in production daily by real business users. The fintech and tax stack down here is hard in a specific way: no nice SDKs, sparse docs, heterogeneous protocols across processors. I've implemented multi-gateway payment integration by hand — ISO 8583, SOAP/XML, REST — behind a Strategy Pattern so the next processor is a config swap, not a rewrite. Same approach on Invoice Service for Guatemala's FEL e-invoicing through authorized providers. Long enough in this stack to know when the framework is the wrong choice — and I have the incident reports to prove it.",
+    "The last ~6 months I've been extending into AI work on top of the backend foundation. I'm the primary author of sofIA, a multi-agent voice system at Blue Medical for appointment scheduling on ElevenLabs ConvAI, currently in production. Most of the engineering work has been on the parts AI demos skip: state-machine workflow design, validation layers around tool calls, retry and recovery logic, and the operations dashboard the team uses to see what the agent actually did. On the side (in development): VittBot, a multi-agent crypto trading bot with three Claude agents plus a deterministic Risk Manager that never delegates the actual go/no-go to AI. Separately, Clarify, a legal contract auditor built on OpenAI models with Stripe credit billing. The pattern I care about isn't \"call an LLM\" — it's the deterministic safeguards around the LLM that keep it from blowing up in production.",
     "I also run my own infra at cativo.dev — apps, blog, mail and monitoring, all self-hosted. Running it yourself is the only way to actually understand what you ship into prod."
   ],
   experience: [
     {
-      role: 'Tech Lead / Full-Stack Engineer',
+      role: 'Tech Lead',
       company: 'Blue Medical Guatemala',
       period: 'Apr 2022 → Present · 4+ yrs',
       location: 'Guatemala (Remote)',
       description: "Leading development across multiple healthcare systems simultaneously. Code reviews, requirement refinement, technical guidance for the team, and hands-on delivery of the hardest parts.",
       highlights: [
-        "sofIA — Multi-agent voice system for healthcare scheduling, currently in production. Primary author of a state-machine workflow on ElevenLabs ConvAI + n8n with deterministic validation, retry, and recovery layers around tool calls. Designed the management platform: FastAPI API + Nuxt dashboard + Typer CLI.",
+        "sofIA — Multi-agent voice system for appointment scheduling, currently in production. Primary author of a state-machine workflow on ElevenLabs ConvAI + n8n with deterministic validation, retry, and recovery layers around tool calls. Designed the management platform: FastAPI API + Nuxt dashboard + Typer CLI.",
         "Payment Service — Built from scratch in Laravel. Multi-gateway abstraction (Strategy Pattern) over heterogeneous protocols (ISO 8583, SOAP/XML, REST). VGS card vault for PCI-friendly tokenization — raw PAN never touches the service DB. Per-commerce / per-card-token gateway routing. Async via Horizon with dedicated queues per gateway. Livewire ops dashboard with KPIs and per-commerce breakdowns. Led an OWASP-grade security audit, plus ongoing hardening waves (defense-in-depth on internal routes, retry / idempotency on payment jobs, network tokenization on top of the vault).",
-        "Invoice Service — Built from scratch in Laravel. Integrates Guatemala's FEL e-invoicing through an authorized provider, with a Strategy Pattern designed for future provider swaps. SAP integration, async pipeline via Redis/Horizon, QR code generation, multi-establishment support, Livewire analytics dashboard.",
-        "BlueMeds API — Core developer on medication subscription platform. 10+ third-party integrations across ERP, support tools, messaging, AI calling, and healthcare middleware. PostgreSQL with Meilisearch full-text and JSONB expression indexes.",
-        "BlueMeds Admin Panel — Angular/Ionic admin for the pharmaceutical platform with i18n EN/ES, Capacitor mobile build, Tailwind."
+        "Invoice Service — Built from scratch in Laravel. Integrates Guatemala's FEL e-invoicing through authorized providers, with a Strategy Pattern designed for future provider swaps. SAP integration, async pipeline via Redis/Horizon, QR code generation, multi-establishment support, Livewire analytics dashboard.",
+        "BlueMeds API — Tech lead for BlueMeds, a subscription platform. Integrations across ERP, support, messaging and payment systems. PostgreSQL with Meilisearch full-text and JSONB expression indexes.",
+        "BlueMeds Admin Panel — Angular/Ionic admin for the platform with i18n EN/ES, Capacitor mobile build, Tailwind."
       ],
       tags: ['Laravel', 'NestJS', 'Python', 'Angular', 'Vue/Nuxt', 'ISO 8583', 'FEL', 'ElevenLabs', 'n8n', 'PostgreSQL', 'Redis', 'AWS', 'Docker', 'Bitbucket Pipelines']
     },
@@ -324,7 +324,7 @@ const profile: Profile = {
     { name: 'Data', skills: [{ name: 'PostgreSQL' }, { name: 'MySQL / Redis' }, { name: 'Meilisearch' }, { name: 'Supabase / Prisma' }, { name: 'TypeORM' }, { name: 'SQLAlchemy' }]},
     { name: 'Infra & DevOps', skills: [{ name: 'Docker' }, { name: 'AWS (S3, ECR, EC2) / Traefik' }, { name: 'Nginx' }, { name: 'Cloudflare / GitHub Actions' }, { name: 'Bitbucket Pipelines' }]},
     { name: 'Specialty', skills: [{ name: 'Multi-gateway payments over heterogeneous protocols (ISO 8583, SOAP/XML, REST)' }, { name: 'VGS card vault tokenization' }, { name: 'Network tokenization' }, { name: 'Multi-provider FEL integration' }, { name: 'SAP integration' }, { name: 'Ory IAM (Kratos / Hydra / Keto)' }, { name: 'Multi-agent LLM systems' }]},
-    { name: 'Integrations', skills: [{ name: 'Stripe' }, { name: 'Odoo ERP' }, { name: 'WhatsApp / Botmaker' }, { name: 'FreshDesk' }, { name: 'SAP' }, { name: 'Bland AI' }, { name: 'ElevenLabs ConvAI' }, { name: 'n8n' }, { name: 'Claude / OpenAI APIs' }]},
+    { name: 'Integrations', skills: [{ name: 'Stripe' }, { name: 'Odoo ERP' }, { name: 'WhatsApp / Botmaker' }, { name: 'FreshDesk' }, { name: 'SAP' }, { name: 'ElevenLabs ConvAI' }, { name: 'n8n' }, { name: 'Claude / OpenAI APIs' }]},
   ],
   outsideCode: [
     {

@@ -101,7 +101,7 @@
       <div class="metric-cell">
         <div class="m-label">YEARS</div>
         <div class="m-value">9</div>
-        <div class="m-sub">backend since 2016</div>
+        <div class="m-sub">backend since 2017</div>
       </div>
       <div class="metric-cell">
         <div class="m-label">CURRENT ROLE</div>
