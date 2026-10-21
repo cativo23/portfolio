@@ -132,7 +132,7 @@
           <ul class="space-y-2">
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
-              <span>A multi-agent voice system for healthcare scheduling — built and maintained end-to-end, live in production, stable.</span>
+              <span>A multi-agent voice system for appointment scheduling — built and maintained end-to-end, live in production, stable.</span>
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
@@ -140,11 +140,11 @@
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
-              <span>A government-authorized e-invoicing compliance service — Strategy Pattern for provider swaps, multi-establishment support. Recently extended to a second country's tax model.</span>
+              <span>A government-authorized e-invoicing compliance service — Strategy Pattern for provider swaps, multi-establishment support. Recently extended to additional tax requirements.</span>
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
-              <span>A medication delivery platform — broad third-party integration layer spanning ERP, support, messaging, and AI calling.</span>
+              <span>A subscription platform — broad third-party integration layer spanning ERP, support, messaging, and payments.</span>
             </li>
           </ul>
         </div>
