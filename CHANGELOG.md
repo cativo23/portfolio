@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.23.2] - 2026-10-20
+
+### Changed
+- **CV, about and /now match an audit of every public claim.** The payment-service headline now describes what was built (a fault-tolerant, multi-gateway service replacing a single-script charger, ~$500K USD/mo) instead of a growth curve; invoicing goes "through authorized providers"; BlueMeds is described by role (tech lead) and integration areas instead of a count; sofIA is "appointment scheduling". Medication/pharmaceutical wording and an AI-calling vendor were dropped. `resume.pdf` regenerated from `/cv`. (#187)
+- **One title and one target everywhere.** "Senior Backend Engineer & Tech Lead" in the CV, about and search snippets; the Blue Medical role is "Tech Lead"; target roles are Senior Backend / Tech Lead / Staff — Engineering Manager is gone. Healthcare stays as one domain among several, not the only one. (#187)
+- **SIGNAL says "backend since 2017"**, the actual first backend job (was 2016). (#187)
+- **/about no longer groups Clarify with VittBot's Claude agents** — Clarify runs on OpenAI models. (#187)
+- **Favicon uses a real font glyph** instead of a hand-drawn C. (#186)
+
+---
+
 ## [1.23.1] - 2026-10-20
 
 ### Fixed
