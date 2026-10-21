@@ -184,7 +184,7 @@
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">CLARIFY</dt>
           <dd class="text-nw-text-dim leading-relaxed">AI legal contract auditor (micro-SaaS, alpha) · Nuxt + Supabase RLS + OpenAI + Stripe credits + BullMQ</dd>
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">TCGVAULT</dt>
-          <dd class="text-nw-text-dim leading-relaxed">Pokémon TCG card value tracker · Laravel 13 · Phase 1 syncs card/set data and daily price snapshots from the <a href="https://tcgdex.dev/" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">tcgdex</a> API · early days, live at <a href="https://tcgvault.cativo.dev/cativo23" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">tcgvault.cativo.dev</a></dd>
+          <dd class="text-nw-text-dim leading-relaxed">Pokémon TCG collection tracker · Laravel 13 + Livewire · daily-synced prices from <a href="https://tcgdex.dev/" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">tcgdex</a>, public galleries, TCGplayer import · in invite-only beta at <a href="https://tcgvault.cativo.dev/cativo23" target="_blank" rel="noopener noreferrer" class="text-nw-primary hover:text-nw-primary-hot">tcgvault.cativo.dev</a></dd>
           <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1 whitespace-nowrap">THIS SITE</dt>
           <dd class="text-nw-text-dim leading-relaxed">The AI chat on this site is mine end-to-end · public chatbot grounded on my CV, now with multi-turn conversation memory and honest fit-boundary framing for comp/role questions · NestJS + Groq + Redis answer-cache · hardened against prompt-injection with a deterministic output sanitizer · GitHub heatmap merges contributions across both my accounts into one real activity signal</dd>
         </dl>
@@ -291,7 +291,7 @@
 <script setup lang="ts">
 import NowPlayingBars from '~/components/ui/NowPlayingBars.vue';
 
-const lastUpdated = '2026-09-15';
+const lastUpdated = '2026-10-20';
 
 const { nowPlaying } = useNowPlaying();
 const { recentlyPlayed } = useRecentlyPlayed();
