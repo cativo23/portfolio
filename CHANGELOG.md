@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.23.3] - 2026-10-20
+
+### Added
+- **Hero images for tcg-vault, engram and memrem**, built with the same generator and template as the rest. (#189)
+
+### Changed
+- **Every project hero regenerated from the audited records.** The old images still showed figures the audit removed — 356 tests, 42 containers across 21 subdomains, 55 releases, >80% coverage, a Markdown blog — and now match the approved numbers. (#189)
+- **/now: tcg-vault is an invite-only beta**, not "early days". (#189)
+
+---
+
 ## [1.23.2] - 2026-10-20
 
 ### Changed
