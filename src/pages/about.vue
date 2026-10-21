@@ -218,7 +218,7 @@
         </div>
         <div class="panel-body p-6 lg:p-8">
           <p class="text-nw-text leading-relaxed mb-6">
-            Building something remote that needs payment systems shipped under pressure, multi-agent AI with real safeguards, or a third-party integration untangled at midnight? Let's talk.
+            Building something remote that needs payment systems shipped under pressure, multi-agent AI with real safeguards, or a healthcare integration untangled at midnight? Let's talk.
           </p>
 
           <div class="flex flex-wrap gap-3 items-center">
@@ -257,7 +257,7 @@ import LatestPosts from '@/components/home/LatestPosts.vue';
 import type { Profile } from '~/types/profile';
 
 usePageTitle('About', {
-  description: 'Carlos Cativo - Senior Backend Engineer & Tech Lead. 9 years building payment systems, integrations, and AI-powered products.',
+  description: 'Carlos Cativo - Senior Backend Engineer & Tech Lead. 9 years building payment systems, healthcare platforms, integrations, and AI-powered products.',
 });
 
 // Highlights read "Project — what I did". Split so the project name can
@@ -288,8 +288,8 @@ const profile: Profile = {
         "sofIA — Multi-agent voice system for appointment scheduling, currently in production. Primary author of a state-machine workflow on ElevenLabs ConvAI + n8n with deterministic validation, retry, and recovery layers around tool calls. Designed the management platform: FastAPI API + Nuxt dashboard + Typer CLI.",
         "Payment Service — Built from scratch in Laravel. Multi-gateway abstraction (Strategy Pattern) over heterogeneous protocols (ISO 8583, SOAP/XML, REST). VGS card vault for PCI-friendly tokenization — raw PAN never touches the service DB. Per-commerce / per-card-token gateway routing. Async via Horizon with dedicated queues per gateway. Livewire ops dashboard with KPIs and per-commerce breakdowns. Led an OWASP-grade security audit, plus ongoing hardening waves (defense-in-depth on internal routes, retry / idempotency on payment jobs, network tokenization on top of the vault).",
         "Invoice Service — Built from scratch in Laravel. Integrates Guatemala's FEL e-invoicing through authorized providers, with a Strategy Pattern designed for future provider swaps. SAP integration, async pipeline via Redis/Horizon, QR code generation, multi-establishment support, Livewire analytics dashboard.",
-        "BlueMeds API — Tech lead for BlueMeds, a medication subscription platform. Integrations across ERP, support, messaging and payment systems. PostgreSQL with Meilisearch full-text and JSONB expression indexes.",
-        "BlueMeds Admin Panel — Angular/Ionic admin for the pharmaceutical platform with i18n EN/ES, Capacitor mobile build, Tailwind."
+        "BlueMeds API — Tech lead for BlueMeds, a subscription platform. Integrations across ERP, support, messaging and payment systems. PostgreSQL with Meilisearch full-text and JSONB expression indexes.",
+        "BlueMeds Admin Panel — Angular/Ionic admin for the platform with i18n EN/ES, Capacitor mobile build, Tailwind."
       ],
       tags: ['Laravel', 'NestJS', 'Python', 'Angular', 'Vue/Nuxt', 'ISO 8583', 'FEL', 'ElevenLabs', 'n8n', 'PostgreSQL', 'Redis', 'AWS', 'Docker', 'Bitbucket Pipelines']
     },
@@ -324,7 +324,7 @@ const profile: Profile = {
     { name: 'Data', skills: [{ name: 'PostgreSQL' }, { name: 'MySQL / Redis' }, { name: 'Meilisearch' }, { name: 'Supabase / Prisma' }, { name: 'TypeORM' }, { name: 'SQLAlchemy' }]},
     { name: 'Infra & DevOps', skills: [{ name: 'Docker' }, { name: 'AWS (S3, ECR, EC2) / Traefik' }, { name: 'Nginx' }, { name: 'Cloudflare / GitHub Actions' }, { name: 'Bitbucket Pipelines' }]},
     { name: 'Specialty', skills: [{ name: 'Multi-gateway payments over heterogeneous protocols (ISO 8583, SOAP/XML, REST)' }, { name: 'VGS card vault tokenization' }, { name: 'Network tokenization' }, { name: 'Multi-provider FEL integration' }, { name: 'SAP integration' }, { name: 'Ory IAM (Kratos / Hydra / Keto)' }, { name: 'Multi-agent LLM systems' }]},
-    { name: 'Integrations', skills: [{ name: 'Stripe' }, { name: 'Odoo ERP' }, { name: 'WhatsApp / Botmaker' }, { name: 'FreshDesk' }, { name: 'SAP' }, { name: 'Bland AI' }, { name: 'ElevenLabs ConvAI' }, { name: 'n8n' }, { name: 'Claude / OpenAI APIs' }]},
+    { name: 'Integrations', skills: [{ name: 'Stripe' }, { name: 'Odoo ERP' }, { name: 'WhatsApp / Botmaker' }, { name: 'FreshDesk' }, { name: 'SAP' }, { name: 'ElevenLabs ConvAI' }, { name: 'n8n' }, { name: 'Claude / OpenAI APIs' }]},
   ],
   outsideCode: [
     {

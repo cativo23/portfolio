@@ -13,7 +13,7 @@
           実行済みの作戦
         </div>
         <p class="lede">
-          Selected production work — payment systems, backend integrations, AI agents, and self-hosted infra. Click a file to read the mission report.
+          Selected production work — payment systems, healthcare platforms, integrations, AI agents, and self-hosted infra. Click a file to read the mission report.
         </p>
       </div>
     </div>
@@ -104,7 +104,7 @@
 import { useProjects } from '~/composables/useProjects'
 
 usePageTitle('Case Files', {
-  description: 'Production work — payment systems, backend integrations, AI agents, and self-hosted infra.',
+  description: 'Production work — payment systems, healthcare platforms, integrations, AI agents, and self-hosted infra.',
 })
 
 const route = useRoute()

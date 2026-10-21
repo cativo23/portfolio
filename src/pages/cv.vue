@@ -83,7 +83,7 @@ const print = () => {
               dashboard with response-time analytics.
             </li>
             <li>
-              Tech lead for BlueMeds, a medication subscription platform: lifecycle, delivery scheduling,
+              Tech lead for BlueMeds, a subscription platform: lifecycle, delivery scheduling,
               referral codes, Meilisearch catalog search, and integrations across ERP, support, messaging
               and payment systems.
             </li>
@@ -183,7 +183,7 @@ const print = () => {
           <dt>Data</dt>
           <dd>PostgreSQL (Prisma, SQLAlchemy, Eloquent), MySQL, Redis, Meilisearch, Supabase</dd>
           <dt>AI / Integrations</dt>
-          <dd>Anthropic Claude API, OpenAI, ElevenLabs ConvAI, multi-agent design, n8n, Stripe, Odoo, SAP, WhatsApp/Botmaker, Bland AI</dd>
+          <dd>Anthropic Claude API, OpenAI, ElevenLabs ConvAI, multi-agent design, n8n, Stripe, Odoo, SAP, WhatsApp/Botmaker</dd>
           <dt>Payments / Tax</dt>
           <dd>Multi-gateway integration over heterogeneous protocols (ISO 8583, SOAP/XML, REST), VGS card vault, network tokenization, FEL e-invoicing (Guatemala), SAP</dd>
           <dt>Infra / DevOps</dt>

@@ -144,7 +144,7 @@
             </li>
             <li class="flex gap-3 text-nw-text-dim leading-relaxed">
               <span class="text-nw-text-dim shrink-0 mt-1">▸</span>
-              <span>A medication delivery platform — broad third-party integration layer spanning ERP, support, messaging, and AI calling.</span>
+              <span>A subscription platform — broad third-party integration layer spanning ERP, support, messaging, and payments.</span>
             </li>
           </ul>
         </div>
