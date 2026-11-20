@@ -1,29 +1,24 @@
 <template>
-  <div class="space-y-0.5 pb-12">
+  <div class="space-y-10 pb-12">
     <!-- HEADER PANEL -->
     <div class="panel">
-      <div class="panel-header">
-        <span>SELECTED WORK · {{ pagination?.total_items ?? displayed.length }} ENTRIES</span>
-      </div>
-      <div class="panel-body p-6 lg:p-8">
-        <h1 class="compressed-title title-md text-nw-text leading-none mb-2">
-          Operations <span class="text-nw-primary">executed.</span>
-        </h1>
-        <div class="font-mincho mincho-accent text-nw-primary-dim mb-3">
-          実行済みの作戦
-        </div>
-        <p class="lede">
-          Selected production work — payment systems, healthcare platforms, integrations, AI agents, and self-hosted infra. Click a file to read the mission report.
-        </p>
+      <BasePageHead
+        :level="1"
+        idx="00"
+        :label="`Selected work · ${pagination?.total_items ?? displayed.length} entries`"
+        kanji="案"
+        title="Operations executed."
+      >
+        Selected production work — payment systems, healthcare platforms, integrations, AI agents, and self-hosted infra. Click a file to read the mission report.
+      </BasePageHead>
+      <div class="font-mincho mincho-accent text-nw-text-mute mt-3">
+        実行済みの作戦
       </div>
     </div>
 
     <!-- VAULT CARD GRID -->
     <div class="panel">
-      <div class="panel-header">
-        <span>REGISTRY</span>
-      </div>
-      <div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <!-- Loading -->
         <template v-if="loading">
           <div class="col-span-1 md:col-span-2 text-center py-12 bg-void-warm font-stamp uppercase tracking-wider text-xs text-nw-text-dim" role="status" aria-live="polite">
