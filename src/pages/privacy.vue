@@ -1,31 +1,21 @@
 <template>
-  <div class="space-y-2 pb-16">
+  <div class="space-y-16 pb-16">
     <!-- HEADER -->
     <div class="panel">
-      <div class="panel-header">
-        <span>PRIVACY</span>
-      </div>
-      <div class="panel-body p-6 lg:p-8">
-        <div class="font-stamp text-nw-cyan text-[10px] tracking-[0.2em] uppercase mb-2">
-          FILE: privacy.md · LAST UPDATED {{ lastUpdated }}
-        </div>
-        <h1 class="compressed-title title-lg text-nw-text leading-[1.05] mb-3">
-          What this site does <span class="text-nw-primary">with your data.</span>
-        </h1>
-        <p class="text-meta">
-          Short version: almost nothing. No cookies, no tracking, no third-party
-          ad networks, nothing sold. Everything runs on my own box, except the
-          fonts: they load from Google Fonts, so Google sees your IP when the page loads.
-        </p>
+      <BasePageHead :level="1" idx="00" label="Privacy" kanji="私" title="Your data.">
+        Short version: almost nothing. No cookies, no tracking, no third-party
+        ad networks, nothing sold. Everything runs on my own box, except the
+        fonts: they load from Google Fonts, so Google sees your IP when the page loads.
+      </BasePageHead>
+      <div class="font-stamp text-nw-text-mute text-[10px] tracking-[0.2em] uppercase mt-4">
+        FILE: privacy.md · LAST UPDATED {{ lastUpdated }}
       </div>
     </div>
 
     <!-- ANALYTICS -->
     <div class="panel">
-      <div class="panel-header">
-        <span>ANALYTICS · NONE</span>
-      </div>
-      <div class="panel-body p-6 lg:p-8">
+      <BasePageHead idx="01" label="Analytics · none" kanji="無" title="No analytics." />
+      <div class="panel-body">
         <p class="text-sm text-nw-text-dim leading-relaxed">
           There's no analytics on this site. No tracking script runs, and nothing
           counts your visit or follows you around.
@@ -35,12 +25,10 @@
 
     <!-- WHAT YOU SEND ME -->
     <div class="panel">
-      <div class="panel-header">
-        <span>WHAT YOU SEND ME</span>
-      </div>
-      <div class="panel-body p-6 lg:p-8 space-y-4">
+      <BasePageHead idx="02" label="What you send me" kanji="送" title="What you send." />
+      <div class="panel-body space-y-4">
         <div>
-          <div class="font-stamp text-nw-green text-[10px] tracking-[0.18em] uppercase mb-1.5">
+          <div class="font-stamp text-nw-text-mute text-[10px] tracking-[0.18em] uppercase mb-1.5">
             Contact form
           </div>
           <p class="text-sm text-nw-text-dim leading-relaxed">
@@ -50,7 +38,7 @@
           </p>
         </div>
         <div>
-          <div class="font-stamp text-nw-green text-[10px] tracking-[0.18em] uppercase mb-1.5">
+          <div class="font-stamp text-nw-text-mute text-[10px] tracking-[0.18em] uppercase mb-1.5">
             The chat assistant
           </div>
           <p class="text-sm text-nw-text-dim leading-relaxed">
@@ -66,7 +54,7 @@
 
     <!-- FOOTER NOTE -->
     <div class="panel">
-      <div class="panel-body p-6 lg:p-8">
+      <div class="panel-body">
         <p class="text-sm text-nw-text-dim leading-relaxed">
           Questions about any of this? Reach me at
           <a href="mailto:cativo@cativo.dev" class="text-nw-primary hover:text-nw-primary-hot underline">cativo@cativo.dev</a>.
