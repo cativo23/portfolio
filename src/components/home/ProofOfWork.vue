@@ -33,25 +33,25 @@
       <!-- Stats grid 2x3 -->
       <div class="grid grid-cols-2 min-[360px]:grid-cols-3 md:grid-cols-2 gap-px bg-nw-text-faint border-t border-nw-text-faint md:border-t-0 md:shrink-0 md:w-[340px]">
         <div class="metric-cell">
-          <div class="m-value" style="color: var(--nw-green); text-shadow: 0 0 6px rgba(122,237,122,0.3);">
+          <div class="m-value">
             {{ signal?.github.contributions ?? '...' }}
           </div>
           <div class="m-label">Contributions</div>
         </div>
         <div class="metric-cell">
-          <div class="m-value" style="color: var(--nw-cyan); text-shadow: 0 0 6px rgba(102,221,255,0.3);">
+          <div class="m-value">
             {{ signal?.github.publicRepos ?? '...' }}
           </div>
           <div class="m-label">Public Repos</div>
         </div>
         <div class="metric-cell">
-          <div class="m-value" style="color: var(--nw-purple); text-shadow: 0 0 6px rgba(178,102,224,0.3);">
+          <div class="m-value">
             {{ formatNumber(signal?.npm.total) }}
           </div>
           <div class="m-label">NPM DL / mo</div>
         </div>
         <div class="metric-cell">
-          <div class="m-value" style="color: var(--nw-primary); text-shadow: 0 0 6px rgba(102,153,255,0.3);">
+          <div class="m-value">
             {{ signal?.npm.packages ?? '...' }}
           </div>
           <div class="m-label">NPM Packages</div>
@@ -86,11 +86,11 @@
               :data-tip="formatNumber(val)"
               :style="{
                 height: sparkBarHeight(val, pkg.weekly) + 'px',
-                background: val === sparkMax(pkg.weekly) ? 'var(--nw-primary)' : 'var(--nw-primary-dim)',
+                background: val === sparkMax(pkg.weekly) ? 'var(--nw-green)' : 'rgba(122,237,122,0.35)',
               }"
             />
           </div>
-          <span class="text-nw-cyan font-bold text-[11px]">{{ formatNumber(pkg.monthly) }}</span>
+          <span class="text-nw-text-strong font-bold text-[11px]">{{ formatNumber(pkg.monthly) }}</span>
         </div>
       </div>
     </div>
@@ -99,17 +99,17 @@
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-nw-text-faint">
       <div class="metric-cell">
         <div class="m-label">YEARS</div>
-        <div class="m-value">9</div>
+        <div class="m-value !text-nw-text-strong">9</div>
         <div class="m-sub">backend since 2017</div>
       </div>
       <div class="metric-cell">
         <div class="m-label">CURRENT ROLE</div>
-        <div class="m-value m-value--md">TECH LEAD</div>
+        <div class="m-value m-value--md !text-nw-text-strong">TECH LEAD</div>
         <div class="m-sub">Blue Medical Guatemala</div>
       </div>
       <div class="metric-cell highlight">
         <div class="m-label">SPECIALTY</div>
-        <div class="m-value m-value--xs">PAYMENTS · FEL</div>
+        <div class="m-value m-value--xs !text-nw-text-strong">PAYMENTS · FEL</div>
         <div class="m-sub">ISO 8583 · multi-gateway</div>
       </div>
       <div class="metric-cell">
@@ -121,15 +121,15 @@
 
     <!-- Terminal one-liner -->
     <div class="px-5 py-3 border-t border-nw-text-faint font-sys text-[11px] text-nw-text-dim leading-relaxed">
-      <span class="text-nw-green">$</span>
+      <span class="text-nw-text-mute">$</span>
       <span> curl </span>
-      <span class="text-nw-cyan">api.cativo.dev</span>
+      <span class="text-nw-text-strong">api.cativo.dev</span>
       <span> → </span>
       <span class="text-nw-green">"{{ signal?.api.status ?? '...' }}"</span>
       <span> · </span>
-      <span class="text-nw-yellow">{{ signal?.infra.services ?? '...' }}</span>
+      <span class="text-nw-text-strong">{{ signal?.infra.services ?? '...' }}</span>
       <span> services · </span>
-      <span class="text-nw-yellow">{{ signal?.infra.stacks ?? '...' }}</span>
+      <span class="text-nw-text-strong">{{ signal?.infra.stacks ?? '...' }}</span>
       <span> stacks</span>
       <span class="inline-block w-[7px] h-[13px] bg-nw-green align-text-bottom" style="animation: nw-caret-blink 1s steps(2) infinite;" />
     </div>
@@ -177,10 +177,10 @@ const monthLabels = computed(() =>
 
 const heatColors = [
   'var(--void-panel)',
-  'rgba(102,153,255,0.18)',
-  'rgba(80,130,220,0.45)',
-  'rgba(90,145,240,0.72)',
-  '#6699ff',
+  'rgba(122,237,122,0.16)',
+  'rgba(122,237,122,0.38)',
+  'rgba(122,237,122,0.64)',
+  'var(--nw-green)',
 ]
 
 function sparkMax(weekly: number[]): number {
@@ -215,7 +215,7 @@ function formatNumber(n: number | undefined): string {
   aspect-ratio: 1;
   width: 100%;
   border-radius: 2px;
-  border: 1px solid rgba(102, 153, 255, 0.08);
+  border: 1px solid var(--nw-line);
 }
 
 /* Month axis */
