@@ -13,7 +13,7 @@
           </div>
 
           <h1 class="nw-display">
-            Backends that don't<br>embarrass you<br>in production.
+            Backends that don't<br>embarrass you<br>in <span class="text-nw-primary">production.</span>
           </h1>
 
           <div class="font-mincho mincho-accent text-nw-text-mute mt-2">
