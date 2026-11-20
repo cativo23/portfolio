@@ -1,20 +1,20 @@
 <template>
   <div class="panel">
-    <div class="panel-header">
-      <div class="flex items-center gap-3">
-        <span>WRITING · LATEST</span>
-        <span class="flex items-center gap-1.5 text-nw-green font-stamp text-[8px] tracking-[0.12em] uppercase">
-          <span class="led blink" data-state="ok" aria-hidden="true" />
-          FEED · LIVE
-        </span>
-      </div>
+    <BasePageHead idx="03" label="Writing" kanji="筆" title="Latest notes.">
+      Fresh from blog.cativo.dev.
+    </BasePageHead>
+    <div class="flex items-center justify-between gap-3 mt-4">
+      <span class="flex items-center gap-1.5 text-nw-text-mute font-stamp text-[8px] tracking-[0.12em] uppercase">
+        <span class="led blink" data-state="ok" aria-hidden="true" />
+        FEED · LIVE
+      </span>
       <a
         href="https://blog.cativo.dev"
         target="_blank"
         rel="noopener noreferrer"
-        class="text-nw-primary hover:text-nw-primary-hot text-[10px] font-stamp uppercase tracking-wider"
+        class="nw-link-arrow"
       >
-        BLOG.CATIVO.DEV →
+        blog.cativo.dev →
       </a>
     </div>
     <div class="panel-body p-0">

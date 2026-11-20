@@ -1,9 +1,8 @@
 <template>
   <div class="panel">
-    <div class="panel-header">
-      <span>SIGNAL · PROOF OF WORK</span>
-      <span class="text-nw-green font-stamp uppercase tracking-wider text-[10px]">LIVE</span>
-    </div>
+    <BasePageHead idx="01" label="Signal" kanji="証" title="Proof of work.">
+      Live from GitHub, npm and api.cativo.dev.
+    </BasePageHead>
 
     <!-- Row 1: Heatmap with month axis + Stats Grid 2x3 -->
     <div class="flex flex-col md:flex-row items-stretch border-b border-nw-text-faint">

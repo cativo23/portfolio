@@ -1,9 +1,9 @@
 <template>
   <!-- PERSONNEL DOSSIER -->
   <div class="panel">
-      <div class="panel-header">
-        <span>PERSONNEL DOSSIER · ID-SV-001</span>
-        <span class="tag">人事ファイル</span>
+      <div class="nw-section-head" data-idx="00">
+        <span>Personnel dossier · ID-SV-001</span>
+        <span class="kanji" aria-hidden="true">人</span>
       </div>
       <div class="panel-body grid grid-cols-1 lg:grid-cols-[1fr_180px] gap-8 lg:gap-10 p-6 lg:p-8">
         <!-- Identity block -->
@@ -12,8 +12,8 @@
             SENIOR BACKEND · TECH LEAD · 9 YRS IN PRODUCTION
           </div>
 
-          <h1 class="compressed-title title-xl text-nw-text leading-[1] mt-1">
-            Backends that don't<br>embarrass you<br>in <span class="text-nw-primary">production.</span>
+          <h1 class="nw-display">
+            Backends that don't<br>embarrass you<br>in production.
           </h1>
 
           <div class="font-mincho mincho-accent text-nw-primary-dim mt-2">
