@@ -65,7 +65,7 @@
         </div>
         <div class="metric-cell">
           <div class="m-value m-value--sm">
-            <span class="led blink" :class="signal?.api.status === 'operational' ? 'green' : 'red'" style="display: inline-block;" />
+            <span class="led blink" :data-state="signal?.api.status === 'operational' ? 'ok' : 'error'" style="display: inline-block;" />
           </div>
           <div class="m-label">Status</div>
           <div class="m-sub">api.cativo.dev</div>
