@@ -5,7 +5,7 @@
         <span>Personnel dossier · ID-SV-001</span>
         <span class="kanji" aria-hidden="true">人</span>
       </div>
-      <div class="panel-body grid grid-cols-1 lg:grid-cols-[1fr_180px] gap-8 lg:gap-10 p-6 lg:p-8">
+      <div class="panel-body grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-8 lg:gap-10 p-6 lg:p-8">
         <!-- Identity block -->
         <div class="order-2 lg:order-1">
           <div class="font-stamp text-nw-text-mute text-[10px] tracking-[0.2em] uppercase mb-2">
@@ -64,24 +64,24 @@
 
         <!-- Avatar + ID metadata -->
         <aside class="order-1 lg:order-2 mx-auto lg:mx-0">
-          <div class="relative">
-            <div class="absolute inset-0 bg-nw-primary/10 blur-2xl" aria-hidden="true" />
+          <div class="nw-reticle">
+            <div class="nw-reticle-meta"><span>00 // CATIVO-01</span><span>■</span></div>
             <NuxtImg
               src="/img/akira.jpeg"
               alt="Carlos Cativo digital avatar"
               width="180"
               height="180"
               loading="eager"
-              class="relative w-[180px] h-[180px] object-cover border border-nw-primary-dim shadow-[0_0_28px_rgba(102,153,255,0.18),0_0_56px_rgba(102,153,255,0.07)]"
+              class="w-[180px] h-[180px] object-cover"
               style="border-radius: 0;"
               quality="80"
             />
+            <div class="mt-3">
+              <div class="kv-row"><span class="kv-label">Operator</span><span class="kv-value">CATIVO-01</span></div>
+              <div class="kv-row"><span class="kv-label">Clearance</span><span class="kv-value">TECH-LEAD</span></div>
+              <div class="kv-row"><span class="kv-label">Unit</span><span class="kv-value">BLUE-MEDICAL-GT</span></div>
+            </div>
           </div>
-          <dl class="mt-3 font-stamp uppercase tracking-wider text-[9px] text-nw-text-dim space-y-0.5">
-            <div class="flex justify-between gap-2"><dt class="text-nw-primary">OPERATOR</dt><dd class="text-nw-text">CATIVO-01</dd></div>
-            <div class="flex justify-between gap-2"><dt class="text-nw-primary">CLEARANCE</dt><dd class="text-nw-text">TECH-LEAD</dd></div>
-            <div class="flex justify-between gap-2"><dt class="text-nw-primary">UNIT</dt><dd class="text-nw-text">BLUE-MEDICAL-GT</dd></div>
-          </dl>
         </aside>
       </div>
     </div>
