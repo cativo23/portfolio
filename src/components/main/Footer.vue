@@ -18,7 +18,7 @@
       <div class="flex flex-col md:flex-row justify-between items-center gap-2 font-stamp uppercase tracking-[0.1em] text-[10px]">
         <!-- Left: System status + version -->
         <div class="flex items-center gap-2 text-nw-text-dim">
-          <span class="led" :class="ledClass" />
+          <span class="led" :class="{ blink: ledBlink }" :data-state="ledState" />
           <span class="text-nw-text">cativo.dev API</span>
           <span class="text-nw-text-faint">·</span>
           <span :class="getApiStatusColor(apiStatus)">{{ loading ? 'checking…' : apiStatus.toLowerCase() }}</span>
@@ -102,12 +102,14 @@ const getApiStatusColor = (status: string) => {
   return 'text-nw-red';
 };
 
-const ledClass = computed(() => {
-  if (loading.value) return '';
-  if (apiStatus.value === 'Operational') return 'green blink';
-  if (apiStatus.value === 'Degraded') return 'yellow blink';
-  return 'red';
+// Nightwire v3 colours the LED through data-state, not a colour class
+const ledState = computed(() => {
+  if (loading.value) return undefined;
+  if (apiStatus.value === 'Operational') return 'ok';
+  if (apiStatus.value === 'Degraded') return 'warn';
+  return 'error';
 });
+const ledBlink = computed(() => ledState.value === 'ok' || ledState.value === 'warn');
 
 async function fetchApiStatus() {
   try {
