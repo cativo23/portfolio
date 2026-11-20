@@ -3,7 +3,7 @@
     <BasePageHead idx="04" label="Open channel" kanji="話" title="Let's talk." />
     <div class="panel-body">
       <div class="font-sys text-sm mb-4 flex items-center gap-1.5 flex-wrap">
-        <span class="text-nw-green">cativo@cativo.dev</span><span class="text-nw-text-dim">:~$</span>
+        <span class="text-nw-text-mute">cativo@cativo.dev</span><span class="text-nw-text-dim">:~$</span>
         <span class="text-nw-text">open-channel</span>
         <span class="caret" aria-hidden="true">_</span>
       </div>
