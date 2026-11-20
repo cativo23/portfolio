@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.24.0] - 2026-11-20
+
+### Changed
+- **The site moves to the Nightwire v3 look.** The design-system submodule goes to v3.0.0 and every visitor-facing page follows the approved mockup: film grain on the body, section heads with an index and a kanji, serif display headlines, an open layout with hairlines instead of boxes, and neutral colour where it only decorated. (#191)
+- **Colour now carries meaning.** Blue stays for focus and one accent word, green for live data (contribution heatmap, metrics, status LEDs), purple for the AI assistant, and status badges keep their own colour. (#191)
+- **Pages restyled:** home, /about, /now, /contact, /privacy, /projects, the case-file report and the error page. /cv stays as it was: it is the printable light page behind resume.pdf. (#191)
+- **Shell:** the page is capped at 1180px with a responsive gutter; the header, footer, form fields and chat widget lose their decorative blue. (#191)
+- **Case-file cards** are outlined, with square mono chips; the featured card uses a reticle frame instead of the blue halo. (#191)
+- **Status LEDs** are driven through `data-state` instead of colour classes. (#191)
+
+### Added
+- **`PageHead` component** for the section head, headline and lede, shared by every restyled page. (#191)
+
+---
+
 ## [1.23.3] - 2026-10-20
 
 ### Added
