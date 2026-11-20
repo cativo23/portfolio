@@ -1,23 +1,24 @@
 <template>
-  <div class="space-y-2 pb-16">
+  <div class="space-y-16 pb-16">
     <template v-if="profile">
       <!-- BRIEFING -->
       <div class="panel">
-        <div class="panel-header">
-          <span>OPERATIVE BRIEFING</span>
+        <div class="nw-section-head" data-idx="00">
+          <span>Operative briefing</span>
+          <span class="kanji" aria-hidden="true">人</span>
         </div>
-        <div class="panel-body p-6 lg:p-8">
-          <div class="font-stamp text-nw-cyan text-[10px] tracking-[0.2em] uppercase mb-2">
+        <div class="panel-body">
+          <div class="font-stamp text-nw-text-mute text-[10px] tracking-[0.2em] uppercase mb-2">
             FILE: about.md · CLASSIFICATION: PUBLIC
           </div>
 
-          <h1 class="compressed-title title-xl text-nw-text leading-[1.05] mb-3">
+          <h1 class="nw-display" style="font-size: var(--text-title-xl);">
             Tech Lead. <br class="hidden sm:block" />
             El Salvador. <br class="hidden sm:block" />
             <span class="text-nw-primary">9 years</span> in production.
           </h1>
 
-          <div class="font-mincho mincho-accent text-nw-primary-dim mb-6">
+          <div class="font-mincho mincho-accent text-nw-text-mute mb-6">
             技術主任 · 九年間の実戦経験
           </div>
 
@@ -42,10 +43,8 @@
 
       <!-- BACKGROUND -->
       <div class="panel">
-        <div class="panel-header">
-          <span>BACKGROUND</span>
-        </div>
-        <div class="panel-body p-6 lg:p-8 space-y-5">
+        <BasePageHead idx="01" label="Background" kanji="経" title="The long version." />
+        <div class="panel-body space-y-5">
           <p
             v-for="(paragraph, index) in summaryParagraphs"
             :key="index"
@@ -57,22 +56,18 @@
 
       <!-- DEPLOYMENT HISTORY -->
       <div class="panel">
-        <div class="panel-header">
-          <span>DEPLOYMENT HISTORY</span>
-          <NuxtLink to="/cv" class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary hover:text-nw-primary-hot">
-            FULL CV →
-          </NuxtLink>
-        </div>
+        <BasePageHead idx="02" label="Deployment history" kanji="歴" title="Where it shipped." />
+        <NuxtLink to="/cv" class="nw-link-arrow mb-3">Full CV →</NuxtLink>
         <div class="panel-body p-0">
           <div
             v-for="entry in profile.experience"
             :key="entry.company"
-            class="px-5 py-4 border-b border-nw-text-faint last:border-b-0"
+            class="px-0 py-4 border-b border-nw-text-faint last:border-b-0"
           >
             <div class="flex items-baseline justify-between gap-3 flex-wrap mb-1">
               <div class="flex items-baseline gap-3 flex-wrap">
                 <span class="compressed-title title-card text-nw-text">{{ entry.company }}</span>
-                <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-cyan">{{ entry.role }}</span>
+                <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-mute">{{ entry.role }}</span>
               </div>
               <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim">
                 {{ entry.period }}
@@ -87,7 +82,7 @@
                 :key="hi"
                 class="flex gap-2.5 text-meta"
               >
-                <span class="text-nw-primary shrink-0 select-none" aria-hidden="true">▸</span>
+                <span class="text-nw-text-mute shrink-0 select-none" aria-hidden="true">▸</span>
                 <span>
                   <span v-if="part.lead" class="text-nw-text font-medium">{{ part.lead }} — </span>{{ part.rest }}
                   <a
@@ -105,7 +100,7 @@
 
             <!-- Stack — mixed-case, matches CERTIFIED LOADOUT legibility -->
             <div v-if="entry.tags?.length" class="mt-3 flex items-baseline gap-2 flex-wrap">
-              <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-cyan shrink-0">STACK</span>
+              <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-mute shrink-0">STACK</span>
               <span class="text-[13px] text-nw-text-dim">{{ entry.tags.join(' · ') }}</span>
             </div>
           </div>
@@ -114,27 +109,25 @@
 
       <!-- OPEN SOURCE / NPM -->
       <div class="panel">
-        <div class="panel-header">
-          <span>OPEN SOURCE · NPM</span>
-          <a
-            href="https://www.npmjs.com/~cativo23"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-nw-primary hover:text-nw-primary-hot text-[10px] font-stamp uppercase tracking-wider"
-          >
-            NPMJS.COM/~CATIVO23 →
-          </a>
-        </div>
+        <BasePageHead idx="03" label="Open source · npm" kanji="源" title="Published code." />
+        <a
+          href="https://www.npmjs.com/~cativo23"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="nw-link-arrow mb-3"
+        >
+          npmjs.com/~cativo23 →
+        </a>
         <div class="panel-body p-0">
           <div
             v-for="pkg in ossPackages"
             :key="pkg.name"
-            class="px-5 py-4 border-b border-nw-text-faint last:border-b-0"
+            class="px-0 py-4 border-b border-nw-text-faint last:border-b-0"
           >
             <div class="flex items-baseline justify-between gap-3 flex-wrap mb-1">
               <div class="flex items-baseline gap-3 flex-wrap">
                 <span class="compressed-title title-card text-nw-text">{{ pkg.name }}</span>
-                <span v-if="pkg.downloads" class="font-stamp uppercase tracking-wider text-[10px] text-nw-cyan">{{ pkg.downloads }}</span>
+                <span v-if="pkg.downloads" class="font-stamp uppercase tracking-wider text-[10px] text-nw-green">{{ pkg.downloads }}</span>
               </div>
               <span class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim">
                 {{ pkg.stack }}
@@ -147,9 +140,7 @@
 
       <!-- CERTIFIED LOADOUT (Stack) -->
       <div class="panel">
-        <div class="panel-header">
-          <span>CERTIFIED LOADOUT</span>
-        </div>
+        <BasePageHead idx="04" label="Certified loadout" kanji="装" title="The stack." />
         <table class="nw-table">
           <thead>
             <tr>
@@ -159,41 +150,22 @@
           </thead>
           <tbody>
             <tr v-for="category in profile.skills" :key="category.name">
-              <td class="text-nw-primary uppercase tracking-wide">{{ category.name }}</td>
+              <td class="text-nw-text-mute uppercase tracking-wide">{{ category.name }}</td>
               <td>{{ category.skills.map(s => s.name).join(' · ') }}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <!-- WRITING -->
-      <div class="panel">
-        <div class="panel-header">
-          <span>WRITING</span>
-          <a
-            href="https://blog.cativo.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-nw-primary hover:text-nw-primary-hot text-[10px] font-stamp uppercase tracking-wider"
-          >
-            BLOG.CATIVO.DEV →
-          </a>
-        </div>
-        <div class="panel-body p-6 lg:p-8">
-          <p class="text-nw-text-dim leading-relaxed">
-            Failure-first writeups — migrations that broke, audits, the day my server caught fire. Mostly written when I'm angry about something I shipped.
-          </p>
-        </div>
-      </div>
-
       <!-- LATEST POSTS (standalone) -->
-      <LatestPosts />
+      <LatestPosts
+        idx="05"
+        lede="Failure-first writeups: migrations that broke, audits, the day my server caught fire. Mostly written when I'm angry about something I shipped."
+      />
 
       <!-- OFF-DUTY -->
       <div class="panel">
-        <div class="panel-header">
-          <span>OFF-DUTY</span>
-        </div>
+        <BasePageHead idx="06" label="Off-duty" kanji="休" title="Outside the code." />
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-px bg-nw-text-faint">
           <div
             v-for="item in profile?.outsideCode"
@@ -202,7 +174,7 @@
           >
             <div class="flex items-center gap-2">
               <span class="text-nw-text text-[22px] leading-none">{{ item.icon }}</span>
-              <div class="font-stamp uppercase tracking-[0.14em] text-[11px] text-nw-primary">
+              <div class="font-stamp uppercase tracking-[0.14em] text-[11px] text-nw-text-strong">
                 {{ item.title }}
               </div>
             </div>
@@ -213,10 +185,8 @@
 
       <!-- CLOSING / CONTACT REQUEST -->
       <div class="panel">
-        <div class="panel-header">
-          <span>GET IN TOUCH</span>
-        </div>
-        <div class="panel-body p-6 lg:p-8">
+        <BasePageHead idx="07" label="Get in touch" kanji="話" title="Let's talk." />
+        <div class="panel-body">
           <p class="text-nw-text leading-relaxed mb-6">
             Building something remote that needs payment systems shipped under pressure, multi-agent AI with real safeguards, or a healthcare integration untangled at midnight? Let's talk.
           </p>
@@ -392,8 +362,6 @@ const summaryParagraphs = computed(() => {
 function formatSummaryParagraph(text: string) {
   const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   return escaped
-    .replace(/(9 years)/g, '<span class="text-nw-cyan font-semibold">$1</span>')
-    .replace(/(sofIA|VittBot|Clarify)/g, '<span class="text-nw-purple font-medium">$1</span>')
-    .replace(/(Payment Service|Invoice Service|FEL|cativo\.dev)/g, '<span class="text-nw-primary font-medium">$1</span>')
+    .replace(/(9 years|sofIA|VittBot|Clarify|Payment Service|Invoice Service|FEL|cativo\.dev)/g, '<span class="text-nw-text-strong font-medium">$1</span>')
 }
 </script>
