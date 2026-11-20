@@ -67,7 +67,7 @@
       </div>
 
       <!-- 2-COL LAYOUT: main + sidebar of 3 panels -->
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-0.5">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
         <!-- MAIN -->
         <div class="space-y-0.5 order-2 lg:order-1 min-w-0">
           <!-- SPINE: problem -> role -> outcome (curated recruiter-skim summary) -->
