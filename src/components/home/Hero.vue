@@ -12,7 +12,7 @@
             SENIOR BACKEND · TECH LEAD · 9 YRS IN PRODUCTION
           </div>
 
-          <h1 class="nw-display">
+          <h1 class="nw-display" style="font-size: var(--text-title-xl);">
             Backends that don't<br>embarrass you<br>in <span class="text-nw-primary">production.</span>
           </h1>
 
