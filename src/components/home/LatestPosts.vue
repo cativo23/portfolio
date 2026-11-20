@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
-    <BasePageHead idx="03" label="Writing" kanji="筆" title="Latest notes.">
-      Fresh from blog.cativo.dev.
+    <BasePageHead :idx="idx" label="Writing" kanji="筆" title="Latest notes.">
+      {{ lede }}
     </BasePageHead>
     <div class="flex items-center justify-between gap-3 mt-4">
       <span class="flex items-center gap-1.5 text-nw-text-mute font-stamp text-[8px] tracking-[0.12em] uppercase">
@@ -38,7 +38,7 @@
           :href="post.url"
           target="_blank"
           rel="noopener noreferrer"
-          class="block px-5 py-4 border-b border-nw-text-faint last:border-b-0 hover:bg-void-panel transition-colors"
+          class="block px-0 py-4 border-b border-nw-text-faint last:border-b-0 hover:bg-void-panel transition-colors"
         >
           <div class="flex items-baseline justify-between gap-3 mb-1">
             <h3 class="text-nw-text font-medium title-card leading-snug">{{ post.title }}</h3>
@@ -54,6 +54,11 @@
 </template>
 
 <script setup lang="ts">
+withDefaults(defineProps<{ idx?: string; lede?: string }>(), {
+  idx: '03',
+  lede: 'Fresh from blog.cativo.dev.',
+})
+
 interface BlogPost {
   title: string
   url: string
