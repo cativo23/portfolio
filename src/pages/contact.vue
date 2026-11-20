@@ -1,57 +1,44 @@
 <template>
-  <div class="space-y-2 pb-16">
+  <div class="space-y-16 pb-16">
     <!-- HEADER -->
     <div class="panel">
-      <div class="panel-header">
-        <span>OPEN CHANNEL</span>
-      </div>
-      <div class="panel-body p-6 lg:p-8">
-        <h1 class="compressed-title title-lg text-nw-text leading-[1.05] mb-3">
-          Get in <span class="text-nw-primary">touch.</span>
-        </h1>
-        <p class="text-nw-text-dim leading-relaxed mb-2 max-w-2xl">
-          Best for hiring managers, recruiters, and engineers who want to talk shop. I read every message — fastest reply via email or LinkedIn.
-        </p>
-        <p class="text-meta max-w-2xl">
-          Open to senior backend / tech lead / staff roles. Remote-first, open to relocation for the right role with sponsorship.
-        </p>
-      </div>
+      <BasePageHead :level="1" idx="00" label="Open channel" kanji="話" title="Get in touch.">
+        Best for hiring managers, recruiters, and engineers who want to talk shop. I read every message — fastest reply via email or LinkedIn.
+      </BasePageHead>
+      <p class="text-meta max-w-2xl mt-4">
+        Open to senior backend / tech lead / staff roles. Remote-first, open to relocation for the right role with sponsorship.
+      </p>
     </div>
 
     <!-- DIRECT CHANNELS -->
     <div class="panel">
-      <div class="panel-header">
-        <span>DIRECT CHANNELS</span>
-      </div>
+      <BasePageHead idx="01" label="Direct channels" kanji="線" title="Reach me." />
       <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-nw-text-faint">
         <a href="mailto:cativo@cativo.dev"
            class="bg-void-warm hover:bg-void-panel p-5 transition-colors">
           <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">EMAIL</div>
-          <div class="text-meta text-nw-primary font-sys">cativo@cativo.dev</div>
+          <div class="text-meta text-nw-text-strong font-sys">cativo@cativo.dev</div>
         </a>
         <a href="https://linkedin.com/in/carlos-cativo" target="_blank" rel="noopener noreferrer"
            class="bg-void-warm hover:bg-void-panel p-5 transition-colors">
           <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">LINKEDIN</div>
-          <div class="text-meta text-nw-primary font-sys">/in/carlos-cativo →</div>
+          <div class="text-meta text-nw-text-strong font-sys">/in/carlos-cativo →</div>
         </a>
         <a href="/resume.pdf" download="cativo-cv.pdf"
            class="bg-void-warm hover:bg-void-panel p-5 transition-colors">
           <div class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim mb-1">CV / RESUME</div>
-          <div class="text-meta text-nw-primary font-sys">↓ Download PDF</div>
+          <div class="text-meta text-nw-text-strong font-sys">↓ Download PDF</div>
         </a>
       </div>
     </div>
 
     <!-- MESSAGE FORM -->
     <div class="panel">
-      <div class="panel-header">
-        <span>SEND A MESSAGE</span>
-        <a href="https://calendly.com/cativo23" target="_blank" rel="noopener noreferrer"
-           class="text-nw-primary hover:text-nw-primary-hot text-[10px] font-stamp uppercase tracking-wider">
-          OR BOOK 30 MIN →
-        </a>
-      </div>
-      <div class="panel-body p-6 lg:p-8">
+      <BasePageHead idx="02" label="Send a message" kanji="送" title="Write to me." />
+      <a href="https://calendly.com/cativo23" target="_blank" rel="noopener noreferrer" class="nw-link-arrow mb-3">
+        Or book 30 min →
+      </a>
+      <div class="panel-body">
         <!-- Success State -->
         <div v-if="successMessage" class="bg-nw-green/10 border border-nw-green/30 p-6 text-center" role="status">
           <p class="text-nw-green font-stamp uppercase tracking-wide font-bold mb-2">Message Sent!</p>
@@ -65,7 +52,7 @@
         <form v-else @submit.prevent="submitForm" class="flex flex-col gap-4" novalidate>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="flex flex-col gap-1">
-            <label for="name" class="text-nw-primary font-stamp uppercase tracking-wide text-[11px]">NAME</label>
+            <label for="name" class="text-nw-text-mute font-stamp uppercase tracking-wide text-[11px]">NAME</label>
             <input
               type="text" id="name" v-model="form.name"
               @blur="validateField('name')"
@@ -74,7 +61,7 @@
               :aria-describedby="fieldErrors.name ? 'name-error' : undefined"
               required autocomplete="name"
               class="w-full px-3 py-2 bg-void-warm text-nw-text border focus:outline-none focus:ring-1 focus:ring-nw-primary focus:border-nw-primary font-sys placeholder-nw-text-dim transition"
-              :class="fieldErrors.name ? 'border-nw-red' : 'border-nw-primary-dim'"
+              :class="fieldErrors.name ? 'border-nw-red' : 'border-nw-line-strong'"
               placeholder="Your name"
             >
             <p v-if="fieldErrors.name" id="name-error" class="text-meta text-nw-red mt-1" role="alert">
@@ -83,7 +70,7 @@
           </div>
 
           <div class="flex flex-col gap-1">
-            <label for="email" class="text-nw-primary font-stamp uppercase tracking-wide text-[11px]">EMAIL</label>
+            <label for="email" class="text-nw-text-mute font-stamp uppercase tracking-wide text-[11px]">EMAIL</label>
             <input
               type="email" id="email" v-model="form.email"
               @blur="validateField('email')"
@@ -92,7 +79,7 @@
               :aria-describedby="fieldErrors.email ? 'email-error' : undefined"
               required autocomplete="email"
               class="w-full px-3 py-2 bg-void-warm text-nw-text border focus:outline-none focus:ring-1 focus:ring-nw-primary focus:border-nw-primary font-sys placeholder-nw-text-dim transition"
-              :class="fieldErrors.email ? 'border-nw-red' : 'border-nw-primary-dim'"
+              :class="fieldErrors.email ? 'border-nw-red' : 'border-nw-line-strong'"
               placeholder="you@email.com"
             >
             <p v-if="fieldErrors.email" id="email-error" class="text-meta text-nw-red mt-1" role="alert">
@@ -102,7 +89,7 @@
           </div>
 
           <div class="flex flex-col gap-1">
-            <label for="message" class="text-nw-primary font-stamp uppercase tracking-wide text-[11px]">MESSAGE</label>
+            <label for="message" class="text-nw-text-mute font-stamp uppercase tracking-wide text-[11px]">MESSAGE</label>
             <textarea
               id="message" v-model="form.message"
               @blur="validateField('message')"
@@ -111,7 +98,7 @@
               :aria-describedby="fieldErrors.message ? 'message-error' : undefined"
               required rows="4"
               class="w-full px-3 py-2 bg-void-warm text-nw-text border focus:outline-none focus:ring-1 focus:ring-nw-primary focus:border-nw-primary font-sys placeholder-nw-text-dim transition resize-y"
-              :class="fieldErrors.message ? 'border-nw-red' : 'border-nw-primary-dim'"
+              :class="fieldErrors.message ? 'border-nw-red' : 'border-nw-line-strong'"
               placeholder="Type your message..."
             ></textarea>
             <p v-if="fieldErrors.message" id="message-error" class="text-meta text-nw-red mt-1" role="alert">
