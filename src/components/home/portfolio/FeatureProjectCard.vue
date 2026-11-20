@@ -2,11 +2,10 @@
   <NuxtLink
     :to="`/projects/${project.id}`"
     :class="[
-      'bg-void-raised hover:bg-void-panel border transition-all duration-200 p-5 flex flex-col gap-3',
+      'group transition-colors duration-150 p-5 flex flex-col gap-3',
       featured
-        ? 'border-nw-primary/40 border-l-[3px] border-l-nw-primary shadow-[inset_3px_0_16px_rgba(102,153,255,0.06),0_4px_24px_rgba(102,153,255,0.07)] hover:border-nw-primary-hot/50'
-        : 'border-nw-text-line hover:border-nw-primary-dim',
-      'hover:-translate-y-0.5',
+        ? 'nw-reticle hover:bg-void-panel'
+        : 'hover:bg-void-panel border border-nw-line hover:border-nw-line-strong',
     ]"
   >
     <header class="flex items-start justify-between gap-3">
@@ -31,7 +30,7 @@
       <span
         v-for="tech in project.techStack"
         :key="tech"
-        class="tag tag-info"
+        class="nw-chip"
       >
         {{ tech }}
       </span>
@@ -39,7 +38,7 @@
 
     <div class="flex justify-between items-center pt-3 border-t border-nw-text-faint font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim">
       <span>{{ year }}</span>
-      <span class="text-nw-primary">OPEN FILE →</span>
+      <span class="text-nw-text-mute group-hover:text-nw-text-strong transition-colors">OPEN FILE →</span>
     </div>
   </NuxtLink>
 </template>

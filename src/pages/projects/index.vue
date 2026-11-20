@@ -52,7 +52,7 @@
           :key="project.id || project.title"
           :to="`/projects/${project.id}`"
           :prefetch="false"
-          class="bg-void-raised hover:bg-void-panel border border-nw-text-line hover:border-nw-primary-dim transition-colors duration-150 p-5 flex flex-col gap-3"
+          class="group hover:bg-void-panel border border-nw-line hover:border-nw-line-strong transition-colors duration-150 p-5 flex flex-col gap-3"
         >
           <header class="flex items-start justify-between gap-3">
             <div class="min-w-0">
@@ -76,7 +76,7 @@
             <span
               v-for="tech in project.techStack"
               :key="tech"
-              class="tech-chip"
+              class="nw-chip"
             >
               {{ tech }}
             </span>
@@ -85,7 +85,7 @@
           <div class="flex justify-between items-center pt-3 border-t border-nw-text-faint font-stamp uppercase tracking-wider text-[10px] text-nw-text-dim">
             <span v-if="formatYear(project.createdAt)">{{ formatYear(project.createdAt) }}</span>
             <span v-else></span>
-            <span class="text-nw-primary">OPEN FILE →</span>
+            <span class="text-nw-text-mute group-hover:text-nw-text-strong transition-colors">OPEN FILE →</span>
           </div>
         </NuxtLink>
       </div>
