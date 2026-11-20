@@ -1,12 +1,12 @@
 <template>
-  <header class="bg-void border-b border-nw-primary-dim px-4 py-3 sticky top-0 z-10">
-    <nav class="container mx-auto flex justify-between items-center gap-4">
+  <header class="bg-void border-b border-nw-line px-0 py-3 sticky top-0 z-10">
+    <nav class="mx-auto w-full max-w-[1180px] px-[clamp(16px,4vw,48px)] flex justify-between items-center gap-4">
       <!-- Org mark -->
       <NuxtLink to="/" class="flex flex-col leading-none shrink-0">
         <span class="font-title font-black tracking-[0.15em] uppercase text-nw-text text-base md:text-lg">
-          cativo<span class="text-nw-primary">.dev</span><span class="caret" aria-hidden="true">_</span>
+          cativo<span class="text-nw-text-mute">.dev</span><span class="caret" aria-hidden="true">_</span>
         </span>
-        <span class="hidden md:block font-mincho text-nw-primary-dim text-[11px] mt-0.5">
+        <span class="hidden md:block font-mincho text-nw-text-mute text-[11px] mt-0.5">
           個人作戦記録
         </span>
       </NuxtLink>
@@ -18,8 +18,8 @@
             <NuxtLink
               :to="item.path"
               :class="isActive(item.path)
-                ? 'text-nw-primary border-b border-nw-primary pb-0.5'
-                : 'text-nw-text-dim hover:text-nw-primary'"
+                ? 'text-nw-text-strong border-b border-nw-text-strong pb-0.5'
+                : 'text-nw-text-mute hover:text-nw-text-strong'"
               class="transition-colors duration-150"
             >
               {{ item.label }}

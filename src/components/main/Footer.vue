@@ -1,6 +1,6 @@
 <template>
   <footer class="sticky bottom-0 z-40 bg-void border-t border-nw-text-faint">
-    <div class="container mx-auto px-4 py-2">
+    <div class="mx-auto w-full max-w-[1180px] px-[clamp(16px,4vw,48px)] py-2">
       <!-- Now Playing -->
       <div v-if="nowPlaying?.isPlaying" class="flex items-center justify-center gap-2 pb-1.5 mb-1.5 border-b border-white/30">
         <span class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-text-faint shrink-0">NOW PLAYING</span>
@@ -25,7 +25,7 @@
           <span v-if="apiVersion" class="text-nw-text-faint">·</span>
           <span v-if="apiVersion" class="font-mono normal-case text-nw-text-dim tracking-normal">v{{ apiVersion }}</span>
           <span class="text-nw-text-faint">·</span>
-          <span class="font-mincho text-nw-primary-dim normal-case tracking-normal text-[12px]">自家管理</span>
+          <span class="font-mincho text-nw-text-mute normal-case tracking-normal text-[12px]">自家管理</span>
         </div>
 
         <!-- Center: live clock SV -->
@@ -41,26 +41,26 @@
             href="https://github.com/cativo23"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-nw-primary hover:text-nw-primary-hot transition-colors"
+            class="text-nw-text-mute hover:text-nw-text-strong transition-colors"
           >GitHub</a>
           <span class="text-nw-text-faint">·</span>
           <a
             href="https://linkedin.com/in/carlos-cativo"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-nw-primary hover:text-nw-primary-hot transition-colors"
+            class="text-nw-text-mute hover:text-nw-text-strong transition-colors"
           >LinkedIn</a>
           <span class="text-nw-text-faint">·</span>
           <a
             href="https://x.com/cativo23"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-nw-primary hover:text-nw-primary-hot transition-colors"
+            class="text-nw-text-mute hover:text-nw-text-strong transition-colors"
           >X</a>
           <span class="text-nw-text-faint">·</span>
           <NuxtLink
             to="/privacy"
-            class="text-nw-primary hover:text-nw-primary-hot transition-colors"
+            class="text-nw-text-mute hover:text-nw-text-strong transition-colors"
           >Privacy</NuxtLink>
           <span class="text-nw-text-faint">·</span>
           <span>© {{ currentYear }}</span>

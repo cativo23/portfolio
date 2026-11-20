@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col min-h-screen bg-void-warm text-nw-text font-sys">
     <Header />
-    <main class="container mx-auto p-4 pb-20 flex-grow">
+    <main class="mx-auto w-full max-w-[1180px] px-[clamp(16px,4vw,48px)] py-4 pb-20 flex-grow">
       <slot />
     </main>
     <Footer />
