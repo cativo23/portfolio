@@ -12,12 +12,23 @@ describe('StatusIndicator', () => {
 
     const indicator = wrapper.find('[role="status"] > span:first-child')
     expect(indicator.classes()).toContain('led')
-    expect(indicator.classes()).toContain('green')
+    expect(indicator.attributes('data-state')).toBe('ok')
 
     expect(wrapper.text()).toBe('')
   })
 
-  it('renders with specific status colors', async () => {
+  it('should_not_use_v2_colour_classes_on_the_led', async () => {
+    const wrapper = mount(StatusIndicator, { props: { status: 'success' } })
+    const v2Colours = ['green', 'red', 'yellow', 'blue']
+
+    for (const status of ['success', 'error', 'warning', 'info', 'unknown'] as const) {
+      await wrapper.setProps({ status })
+      const classes = wrapper.find('[role="status"] > span:first-child').classes()
+      for (const colour of v2Colours) expect(classes).not.toContain(colour)
+    }
+  })
+
+  it('should_map_each_status_to_its_v3_data_state', async () => {
     const wrapper = mount(StatusIndicator, {
       props: {
         status: 'error'
@@ -25,19 +36,23 @@ describe('StatusIndicator', () => {
     })
 
     let indicator = wrapper.find('[role="status"] > span:first-child')
-    expect(indicator.classes()).toContain('red')
+    expect(indicator.attributes('data-state')).toBe('error')
 
     await wrapper.setProps({ status: 'warning' })
     indicator = wrapper.find('[role="status"] > span:first-child')
-    expect(indicator.classes()).toContain('yellow')
+    expect(indicator.attributes('data-state')).toBe('warn')
 
     await wrapper.setProps({ status: 'info' })
     indicator = wrapper.find('[role="status"] > span:first-child')
-    expect(indicator.classes()).toContain('blue')
+    expect(indicator.attributes('data-state')).toBe('active')
+  })
 
-    await wrapper.setProps({ status: 'unknown' })
-    indicator = wrapper.find('[role="status"] > span:first-child')
+  it('should_omit_data_state_when_status_is_unknown', () => {
+    const wrapper = mount(StatusIndicator, { props: { status: 'unknown' } })
+    const indicator = wrapper.find('[role="status"] > span:first-child')
+
     expect(indicator.classes()).toContain('led')
+    expect(indicator.attributes()).not.toHaveProperty('data-state')
   })
 
   it('renders text when provided via prop', () => {

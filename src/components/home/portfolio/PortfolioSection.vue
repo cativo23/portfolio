@@ -1,8 +1,6 @@
 <template>
   <div class="panel">
-    <div class="panel-header">
-      <span>SELECTED WORK · FEATURED</span>
-    </div>
+    <BasePageHead idx="02" label="Selected work" kanji="案" title="Case files." />
     <div class="panel-body p-5 grid grid-cols-1 md:grid-cols-2 gap-5">
       <!-- Loading State -->
       <template v-if="pending">

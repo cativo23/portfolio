@@ -1,11 +1,9 @@
 <template>
   <div class="panel" id="contact">
-    <!-- Terminal-prompt silhouette: no panel-header chrome — the shell
-         prompt IS the header, so this section reads differently from the
-         stacked panels above it while staying inside the Nightwire voice. -->
-    <div class="panel-body p-6 lg:p-8">
+    <BasePageHead idx="04" label="Open channel" kanji="話" title="Let's talk." />
+    <div class="panel-body">
       <div class="font-sys text-sm mb-4 flex items-center gap-1.5 flex-wrap">
-        <span class="text-nw-green">cativo@cativo.dev</span><span class="text-nw-text-dim">:~$</span>
+        <span class="text-nw-text-mute">cativo@cativo.dev</span><span class="text-nw-text-dim">:~$</span>
         <span class="text-nw-text">open-channel</span>
         <span class="caret" aria-hidden="true">_</span>
       </div>

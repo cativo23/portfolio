@@ -18,35 +18,30 @@
       </div>
     </div>
 
-    <article v-else class="space-y-0.5 pb-12">
+    <article v-else class="space-y-10 pb-12">
       <!-- Back link strip -->
       <div class="text-[10px] font-stamp uppercase tracking-wider mb-2">
-        <NuxtLink to="/projects" class="text-nw-text-dim hover:text-nw-primary inline-flex items-center gap-2">
+        <NuxtLink to="/projects" class="text-nw-text-mute hover:text-nw-text-strong inline-flex items-center gap-2">
           <LucideArrowLeft class="w-3 h-3" /> Case Files
         </NuxtLink>
       </div>
 
       <!-- HEADER PANEL -->
       <div class="panel">
-        <div class="panel-header">
-          <span>CASE-{{ String(project.id).padStart(4, '0') }} · MISSION REPORT</span>
-          <span class="tag">任務報告</span>
-        </div>
-        <div class="panel-body p-6 lg:p-8">
-          <div class="flex flex-wrap gap-2 mb-3">
-            <span v-if="project.isFeatured" class="badge badge-success">FEATURED</span>
-            <span v-if="project.status" class="badge" :class="badgeClass(project.status)">
-              {{ project.status }}
-            </span>
-          </div>
-          <h1
-            class="compressed-title title-lg text-nw-text leading-[1.05] mb-2"
-          >
-            {{ project.title }}
-          </h1>
-          <p class="lede max-w-[70ch]">
-            {{ project.shortDescription || project.description }}
-          </p>
+        <BasePageHead
+          :level="1"
+          :idx="`CASE-${String(project.id).padStart(4, '0')}`"
+          label="Mission report"
+          kanji="任"
+          :title="project.title"
+        >
+          {{ project.shortDescription || project.description }}
+        </BasePageHead>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span v-if="project.isFeatured" class="badge badge-success">FEATURED</span>
+          <span v-if="project.status" class="badge" :class="badgeClass(project.status)">
+            {{ project.status }}
+          </span>
         </div>
       </div>
 
@@ -67,20 +62,21 @@
       </div>
 
       <!-- 2-COL LAYOUT: main + sidebar of 3 panels -->
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-0.5">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10">
         <!-- MAIN -->
-        <div class="space-y-0.5 order-2 lg:order-1 min-w-0">
+        <div class="space-y-10 order-2 lg:order-1 min-w-0">
           <!-- SPINE: problem -> role -> outcome (curated recruiter-skim summary) -->
           <div v-if="project.problem && project.role && project.outcome" class="panel">
             <div class="panel-header">
               <span>SPINE</span>
+              <span class="kanji" aria-hidden="true">軸</span>
             </div>
-            <dl class="grid grid-cols-[minmax(0,max-content)_1fr] gap-x-6 gap-y-4 px-6 py-6 lg:px-8">
-              <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">PROBLEM</dt>
+            <dl class="grid grid-cols-[minmax(0,max-content)_1fr] gap-x-6 gap-y-4 px-0 py-4">
+              <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-mute pt-1">PROBLEM</dt>
               <dd class="text-nw-text-dim leading-relaxed">{{ project.problem }}</dd>
-              <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">ROLE</dt>
+              <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-mute pt-1">ROLE</dt>
               <dd class="text-nw-text-dim leading-relaxed">{{ project.role }}</dd>
-              <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-primary pt-1">OUTCOME</dt>
+              <dt class="font-stamp uppercase tracking-wider text-[10px] text-nw-text-mute pt-1">OUTCOME</dt>
               <dd class="text-nw-text-dim leading-relaxed">{{ project.outcome }}</dd>
             </dl>
           </div>
@@ -89,10 +85,11 @@
           <div v-if="project.features && project.features.length > 0" class="panel">
             <div class="panel-header">
               <span>KEY FEATURES</span>
+              <span class="kanji" aria-hidden="true">機</span>
             </div>
-            <ul class="panel-body p-6 lg:p-8 space-y-2">
+            <ul class="panel-body space-y-2">
               <li v-for="(feature, index) in project.features" :key="index" class="flex items-start gap-3">
-                <span class="text-nw-green mt-1 shrink-0">▸</span>
+                <span class="text-nw-text-mute mt-1 shrink-0">▸</span>
                 <span class="text-nw-text-dim leading-relaxed">{{ feature }}</span>
               </li>
             </ul>
@@ -102,8 +99,9 @@
           <div class="panel">
             <div class="panel-header">
               <span>OVERVIEW</span>
+              <span class="kanji" aria-hidden="true">概</span>
             </div>
-            <div class="panel-body p-6 lg:p-8">
+            <div class="panel-body">
               <div class="prose prose-nightwire max-w-[72ch] text-nw-text-dim leading-relaxed">
                 <MDC v-if="project?.content || project?.description" :value="project.content || project.description" />
                 <p v-else class="text-nw-text-dim italic">No overview available.</p>
@@ -113,13 +111,14 @@
         </div>
 
         <!-- SIDEBAR (3 separate panels) -->
-        <aside class="order-1 lg:order-2 space-y-0.5">
+        <aside class="order-1 lg:order-2 space-y-10">
           <!-- LINKS -->
           <div class="panel">
             <div class="panel-header">
               <span>LINKS</span>
+              <span class="kanji" aria-hidden="true">繋</span>
             </div>
-            <div class="panel-body p-4 flex flex-col gap-2">
+            <div class="panel-body flex flex-col gap-2">
               <BaseButton
                 v-if="sanitizeRepoUrl(project.repoUrl)"
                 variant="primary"
@@ -153,12 +152,13 @@
           <div class="panel" v-if="project.techStack?.length">
             <div class="panel-header">
               <span>STACK</span>
+              <span class="kanji" aria-hidden="true">技</span>
             </div>
-            <div class="panel-body p-4 flex flex-wrap gap-1.5">
+            <div class="panel-body flex flex-wrap gap-1.5">
               <span
                 v-for="tech in project.techStack"
                 :key="tech"
-                class="tech-chip"
+                class="nw-chip"
               >
                 {{ tech }}
               </span>
@@ -169,6 +169,7 @@
           <div class="panel">
             <div class="panel-header">
               <span>METADATA</span>
+              <span class="kanji" aria-hidden="true">情</span>
             </div>
             <div class="panel-body p-0">
               <div class="kv-row" v-if="project.status">

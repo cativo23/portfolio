@@ -22,7 +22,7 @@
       <div class="bg-void-warm px-4 py-3">
         <div class="font-stamp text-[9px] tracking-[0.14em] uppercase text-nw-primary mb-2">System</div>
         <div class="flex items-center gap-2">
-          <span class="led green blink" />
+          <span class="led blink" data-state="ok" />
           <span class="font-stamp text-[11px] text-nw-green">NOMINAL</span>
         </div>
       </div>

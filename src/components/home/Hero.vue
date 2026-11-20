@@ -1,22 +1,22 @@
 <template>
   <!-- PERSONNEL DOSSIER -->
   <div class="panel">
-      <div class="panel-header">
-        <span>PERSONNEL DOSSIER · ID-SV-001</span>
-        <span class="tag">人事ファイル</span>
+      <div class="nw-section-head" data-idx="00">
+        <span>Personnel dossier · ID-SV-001</span>
+        <span class="kanji" aria-hidden="true">人</span>
       </div>
-      <div class="panel-body grid grid-cols-1 lg:grid-cols-[1fr_180px] gap-8 lg:gap-10 p-6 lg:p-8">
+      <div class="panel-body grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-8 lg:gap-10 p-6 lg:p-8">
         <!-- Identity block -->
         <div class="order-2 lg:order-1">
-          <div class="font-stamp text-nw-cyan text-[10px] tracking-[0.2em] uppercase mb-2">
+          <div class="font-stamp text-nw-text-mute text-[10px] tracking-[0.2em] uppercase mb-2">
             SENIOR BACKEND · TECH LEAD · 9 YRS IN PRODUCTION
           </div>
 
-          <h1 class="compressed-title title-xl text-nw-text leading-[1] mt-1">
+          <h1 class="nw-display" style="font-size: var(--text-title-xl);">
             Backends that don't<br>embarrass you<br>in <span class="text-nw-primary">production.</span>
           </h1>
 
-          <div class="font-mincho mincho-accent text-nw-primary-dim mt-2">
+          <div class="font-mincho mincho-accent text-nw-text-mute mt-2">
             本番環境で恥をかかないバックエンド
           </div>
 
@@ -25,7 +25,7 @@
           </p>
 
           <div class="mt-5 flex items-center gap-2 text-meta">
-            <span class="led green blink" aria-hidden="true"></span>
+            <span class="led blink" data-state="ok" aria-hidden="true"></span>
             <span class="font-stamp uppercase tracking-wider text-nw-green">
               OPEN TO SENIOR BACKEND / TECH LEAD / STAFF ROLES
             </span>
@@ -64,24 +64,24 @@
 
         <!-- Avatar + ID metadata -->
         <aside class="order-1 lg:order-2 mx-auto lg:mx-0">
-          <div class="relative">
-            <div class="absolute inset-0 bg-nw-primary/10 blur-2xl" aria-hidden="true" />
+          <div class="nw-reticle">
+            <div class="nw-reticle-meta"><span>00 // CATIVO-01</span><span>■</span></div>
             <NuxtImg
               src="/img/akira.jpeg"
               alt="Carlos Cativo digital avatar"
               width="180"
               height="180"
               loading="eager"
-              class="relative w-[180px] h-[180px] object-cover border border-nw-primary-dim shadow-[0_0_28px_rgba(102,153,255,0.18),0_0_56px_rgba(102,153,255,0.07)]"
+              class="w-[180px] h-[180px] object-cover"
               style="border-radius: 0;"
               quality="80"
             />
+            <div class="mt-3">
+              <div class="kv-row"><span class="kv-label">Operator</span><span class="kv-value">CATIVO-01</span></div>
+              <div class="kv-row"><span class="kv-label">Clearance</span><span class="kv-value">TECH-LEAD</span></div>
+              <div class="kv-row"><span class="kv-label">Unit</span><span class="kv-value">BLUE-MEDICAL-GT</span></div>
+            </div>
           </div>
-          <dl class="mt-3 font-stamp uppercase tracking-wider text-[9px] text-nw-text-dim space-y-0.5">
-            <div class="flex justify-between gap-2"><dt class="text-nw-primary">OPERATOR</dt><dd class="text-nw-text">CATIVO-01</dd></div>
-            <div class="flex justify-between gap-2"><dt class="text-nw-primary">CLEARANCE</dt><dd class="text-nw-text">TECH-LEAD</dd></div>
-            <div class="flex justify-between gap-2"><dt class="text-nw-primary">UNIT</dt><dd class="text-nw-text">BLUE-MEDICAL-GT</dd></div>
-          </dl>
         </aside>
       </div>
     </div>

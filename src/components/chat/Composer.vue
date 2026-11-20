@@ -23,7 +23,7 @@ function onSend() {
 </script>
 
 <template>
-  <div class="flex items-end gap-2 border-t border-nw-faint bg-void-warm p-3">
+  <div class="flex items-end gap-2 border-t border-nw-line bg-void-warm p-3">
     <textarea
       v-model="text"
       :disabled="blocked"
@@ -31,7 +31,7 @@ function onSend() {
       maxlength="500"
       placeholder="Ask about Carlos…"
       aria-label="Ask the assistant a question about Carlos"
-      class="w-full resize-none rounded-none border border-nw-primary-dim bg-void-warm px-3 py-2 font-sys text-sm text-nw-text placeholder-nw-text-dim transition focus:border-nw-primary focus:outline-none focus:ring-1 focus:ring-nw-primary disabled:opacity-50"
+      class="w-full resize-none rounded-none border border-nw-line-strong bg-void-warm px-3 py-2 font-sys text-sm text-nw-text placeholder-nw-text-dim transition focus:border-nw-primary focus:outline-none focus:ring-1 focus:ring-nw-primary disabled:opacity-50"
       @keydown.enter.exact.prevent="onSend"
     />
     <BaseButton

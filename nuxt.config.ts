@@ -58,7 +58,7 @@ export default defineNuxtConfig({
         class: "h-full",
       },
       bodyAttrs: {
-        class: "antialiased bg-void text-nw-text font-sys min-h-screen",
+        class: "antialiased bg-void text-nw-text font-sys min-h-screen nw-grain",
       },
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
