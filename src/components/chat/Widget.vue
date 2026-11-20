@@ -68,7 +68,7 @@ watch(isOpen, (open) => open && scrollToBottom())
           <span
             class="flex items-center gap-2 font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-ai"
           >
-            <span class="led blue blink" />
+            <span class="led blink" data-state="active" />
             AI DEBRIEF
           </span>
           <button
@@ -90,7 +90,7 @@ watch(isOpen, (open) => open && scrollToBottom())
             v-if="messages.length === 0"
             class="flex h-full flex-col items-center justify-center gap-2 text-center"
           >
-            <span class="led blue blink" />
+            <span class="led blink" data-state="active" />
             <p
               class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-text-dim"
             >
