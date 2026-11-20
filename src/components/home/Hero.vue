@@ -25,7 +25,7 @@
           </p>
 
           <div class="mt-5 flex items-center gap-2 text-meta">
-            <span class="led green blink" aria-hidden="true"></span>
+            <span class="led blink" data-state="ok" aria-hidden="true"></span>
             <span class="font-stamp uppercase tracking-wider text-nw-green">
               OPEN TO SENIOR BACKEND / TECH LEAD / STAFF ROLES
             </span>

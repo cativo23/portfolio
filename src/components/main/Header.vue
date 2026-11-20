@@ -27,7 +27,7 @@
           </li>
         </ul>
         <span class="hidden lg:flex items-center gap-2 pl-5 border-l border-nw-text-faint text-[12px] font-stamp uppercase tracking-wider">
-          <span class="led green blink" aria-hidden="true"></span>
+          <span class="led blink" data-state="ok" aria-hidden="true"></span>
           <span class="text-nw-green">OPEN TO ROLES</span>
         </span>
       </div>
@@ -80,7 +80,7 @@
           </li>
         </ul>
         <div class="absolute bottom-8 flex items-center gap-2 text-[11px] font-stamp uppercase tracking-wider">
-          <span class="led green blink" aria-hidden="true"></span>
+          <span class="led blink" data-state="ok" aria-hidden="true"></span>
           <span class="text-nw-green">OPEN TO ROLES</span>
         </div>
       </div>

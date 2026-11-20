@@ -29,7 +29,7 @@
           </p>
 
           <div class="flex items-center gap-3 mb-2">
-            <span class="led green blink"></span>
+            <span class="led blink" data-state="ok"></span>
             <span class="text-meta text-nw-green font-stamp uppercase tracking-wider">
               OPEN TO OPPORTUNITIES · SENIOR BACKEND / TECH LEAD / STAFF
             </span>
