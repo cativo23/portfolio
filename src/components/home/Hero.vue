@@ -8,7 +8,7 @@
       <div class="panel-body grid grid-cols-1 lg:grid-cols-[1fr_180px] gap-8 lg:gap-10 p-6 lg:p-8">
         <!-- Identity block -->
         <div class="order-2 lg:order-1">
-          <div class="font-stamp text-nw-cyan text-[10px] tracking-[0.2em] uppercase mb-2">
+          <div class="font-stamp text-nw-text-mute text-[10px] tracking-[0.2em] uppercase mb-2">
             SENIOR BACKEND · TECH LEAD · 9 YRS IN PRODUCTION
           </div>
 
@@ -16,7 +16,7 @@
             Backends that don't<br>embarrass you<br>in production.
           </h1>
 
-          <div class="font-mincho mincho-accent text-nw-primary-dim mt-2">
+          <div class="font-mincho mincho-accent text-nw-text-mute mt-2">
             本番環境で恥をかかないバックエンド
           </div>
 
