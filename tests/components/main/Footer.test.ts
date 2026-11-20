@@ -70,4 +70,16 @@ describe('Footer', () => {
       }
     }
   })
+
+  it('should_draw_the_now_playing_divider_in_white_at_30_percent', () => {
+    vi.stubGlobal('useNowPlaying', () => ({
+      nowPlaying: ref({ isPlaying: true, track: 'T', artist: 'A', spotifyUrl: 'https://example.com' }),
+    }))
+    vi.stubGlobal('$fetch', vi.fn(() => new Promise(() => {})))
+    const wrapper = mount(Footer, { global: { stubs } })
+    const divider = wrapper.find('.border-b')
+
+    expect(divider.classes()).toContain('border-white/30')
+    expect(divider.classes()).not.toContain('border-nw-text-faint/30')
+  })
 })

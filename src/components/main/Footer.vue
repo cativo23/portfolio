@@ -2,7 +2,7 @@
   <footer class="sticky bottom-0 z-40 bg-void border-t border-nw-text-faint">
     <div class="container mx-auto px-4 py-2">
       <!-- Now Playing -->
-      <div v-if="nowPlaying?.isPlaying" class="flex items-center justify-center gap-2 pb-1.5 mb-1.5 border-b border-nw-text-faint/30">
+      <div v-if="nowPlaying?.isPlaying" class="flex items-center justify-center gap-2 pb-1.5 mb-1.5 border-b border-white/30">
         <span class="font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-text-faint shrink-0">NOW PLAYING</span>
         <NowPlayingBars />
         <a
