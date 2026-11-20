@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-0.5">
+  <div class="space-y-16">
     <Hero />
 
     <!-- PROOF OF WORK -->

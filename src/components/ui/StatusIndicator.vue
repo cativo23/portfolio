@@ -4,7 +4,7 @@
     role="status"
     :aria-label="ariaLabel || (text ? undefined : status)"
   >
-    <span class="led" :class="[ledColor, { blink: pulse }, sizeClasses]" />
+    <span class="led" :class="[{ blink: pulse }, sizeClasses]" :data-state="ledState || undefined" />
     <span v-if="text || $slots.default" class="text-nw-text text-sm">
       <slot>{{ text }}</slot>
     </span>
@@ -28,11 +28,12 @@ const props = withDefaults(defineProps<Props>(), {
   ariaLabel: ''
 });
 
+// Nightwire v3 colours the LED through data-state, not a colour class
 const ledMap: Record<Props['status'], string> = {
-  success: 'green',
-  error: 'red',
-  warning: 'yellow',
-  info: 'blue',
+  success: 'ok',
+  error: 'error',
+  warning: 'warn',
+  info: 'active',
   unknown: ''
 };
 
@@ -42,6 +43,6 @@ const sizeMap: Record<NonNullable<Props['size']>, string> = {
   lg: '!w-3 !h-3'
 };
 
-const ledColor = computed(() => ledMap[props.status]);
+const ledState = computed(() => ledMap[props.status]);
 const sizeClasses = computed(() => sizeMap[props.size]);
 </script>
