@@ -22,14 +22,14 @@ const bubbleClass = computed(() => {
   if (isUser.value)
     return 'ml-8 bg-void-raised border border-nw-line text-nw-text'
   if (isAssistant.value)
-    return 'mr-8 bg-void-panel border border-nw-ai-mute text-nw-text-dim shadow-[0_0_8px_rgba(178,102,224,0.12)]'
+    return 'mr-8 bg-void-panel border border-nw-ai-mute text-nw-text-dim'
   if (isRateLimit.value)
     return 'bg-nw-yellow/10 border border-nw-yellow text-nw-yellow'
   return 'bg-nw-red-fill border border-nw-red text-nw-red'
 })
 
 const labelClass = computed(() => {
-  if (isUser.value) return 'text-nw-primary'
+  if (isUser.value) return 'text-nw-text-mute'
   if (isAssistant.value) return 'text-nw-ai'
   if (isRateLimit.value) return 'text-nw-yellow'
   return 'text-nw-red'

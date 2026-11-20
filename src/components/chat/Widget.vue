@@ -37,7 +37,7 @@ watch(isOpen, (open) => open && scrollToBottom())
       :class="
         isOpen
           ? 'border-nw-ai-mute bg-void-panel text-nw-text-dim'
-          : 'border-nw-ai bg-nw-ai text-void hover:bg-nw-ai/90 hover:shadow-[0_0_16px_rgba(178,102,224,0.5)]'
+          : 'border-nw-ai bg-nw-ai text-void hover:bg-nw-ai/90'
       "
       @click="toggle"
     >
@@ -59,11 +59,11 @@ watch(isOpen, (open) => open && scrollToBottom())
         role="dialog"
         aria-modal="true"
         aria-label="AI assistant — ask about Carlos"
-        class="fixed inset-0 z-40 flex flex-col border-nw-ai-mute bg-void-warm sm:inset-auto sm:bottom-20 sm:right-4 sm:h-[560px] sm:max-h-[80vh] sm:w-[360px] sm:rounded-nw-sm sm:border"
+        class="fixed inset-0 z-40 flex flex-col border-nw-line-strong bg-void-warm sm:inset-auto sm:bottom-20 sm:right-4 sm:h-[560px] sm:max-h-[80vh] sm:w-[360px] sm:rounded-nw-sm sm:border"
       >
         <!-- Header -->
         <header
-          class="flex items-center justify-between border-b border-nw-ai-mute px-3 py-2"
+          class="nw-section-head justify-between px-3 py-2"
         >
           <span
             class="flex items-center gap-2 font-stamp uppercase tracking-[0.14em] text-[10px] text-nw-ai"
